@@ -63,6 +63,8 @@
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\ValueAccessorExtensions.cs" />
     <Compile Include="Handlers\DelimiterHandler.cs" />
+    <Compile Include="Handlers\CloseParanthesisHandler.cs" />
+    <Compile Include="Handlers\OpenParanthesisHandler.cs" />
     <Compile Include="Handlers\QuoteHandler.cs" />
     <Compile Include="Interfaces\IDictionaryDefaultValueProvider.cs" />
     <Compile Include="Interfaces\IFilterExpressionParser.cs" />

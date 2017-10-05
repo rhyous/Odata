@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Rows xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:x="urn:Row">
+  <!-- Schema -->
+  <xsd:schema targetNamespace="urn:Row" attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema" >
+    <xsd:element name="Row">
+      <xsd:complexType>
+        <xsd:sequence>
+          <xsd:element type="xsd:string" name="Query"/>
+          <xsd:element type="xsd:string" name="ExpectedExpression"/>
+          <xsd:element type="xsd:string" name="Message"/>
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <!--End Schema-->
+  <!-- String Contains -->
+  <x:Row>
+    <x:Query>contains(Name,'are')</x:Query>
+    <x:ExpectedExpression>e => e.Name.Contains("are")</x:ExpectedExpression>
+    <x:Message>Expression should result in this expression: {0}.</x:Message>
+  </x:Row>
+  <!-- String EndsWith -->
+  <x:Row>
+    <x:Query>endswith(Name,'are')</x:Query>
+    <x:ExpectedExpression>e => e.Name.EndsWith("ared")</x:ExpectedExpression>
+    <x:Message>Expression should result in this expression: {0}.</x:Message>
+  </x:Row>
+  <!-- String StartsWith -->
+  <x:Row>
+    <x:Query>startswith(Name,'are')</x:Query>
+    <x:ExpectedExpression>e => e.Name.StartsWith("jare")</x:ExpectedExpression>
+    <x:Message>Expression should result in this expression: {0}.</x:Message>
+  </x:Row>
+</Rows>

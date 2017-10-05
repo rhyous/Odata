@@ -3,6 +3,7 @@ using Rhyous.StringLibrary;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 
 namespace Rhyous.Odata
 {
@@ -98,7 +99,7 @@ namespace Rhyous.Odata
             }
             else
             {
-                var methodInfo = propType.GetMethod(filter.Method, new[] { propType });
+                var methodInfo = propType.GetMethod(filter.Method, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance, null, new[] { propType }, null);
                 method = Expression.Call(left, methodInfo, right);
             }
             return Expression.Lambda<Func<TEntity, bool>>(filter.Not ? Expression.Not(method) : method, parameter);

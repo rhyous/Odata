@@ -1,15 +1,20 @@
 ﻿using System;
-using System.Linq;
 
 namespace Rhyous.Odata
 {
+    /// <summary>
+    /// Handles the delimiter character.
+    /// </summary>
+    /// <typeparam name="TEntity"></typeparam>
     class DelimiterHandler<TEntity> : IHandler<ParserState<TEntity>>
     {
         public Action<ParserState<TEntity>> Action => HandlerMethod;
 
         internal void HandlerMethod(ParserState<TEntity> state)
         {
-            if (state.AppendIfInWrappedGroup())
+            if (state.AppendIfInQuoteGroup())
+                return;
+            if (state.Builder.Length == 0) // Handle extra spaces
                 return;
             var str = state.Builder.ToString();
             if (str.ToEnum<Operator>(false) != null)

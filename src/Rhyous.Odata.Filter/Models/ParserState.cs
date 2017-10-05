@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Reflection;
 using System.Text;
 
 namespace Rhyous.Odata
@@ -16,13 +13,13 @@ namespace Rhyous.Odata
 
         public Filter<TEntity> CurrentFilter = new Filter<TEntity>();
         public StringBuilder Builder { get; set; } = new StringBuilder();
-        public Group Group { get; set; } = new Group();
+        public Group QuoteGroup { get; set; } = new Group();
 
         public void Append() { Builder.Append(Char); }
 
-        public bool AppendIfInWrappedGroup()
+        public bool AppendIfInQuoteGroup()
         {
-            if (Group.IsOpen && Group.WrapChar != Char)
+            if (QuoteGroup.IsOpen && QuoteGroup.WrapChar != Char)
             {
                 Append();
                 return true;

@@ -15,33 +15,39 @@
   </xsd:schema>
   <!--End Schema-->
   <!--String value has quoted string -->
-  <!--<x:Row>
+  <x:Row>
     <x:Query>Name eq 'Jared Barneck'</x:Query>
     <x:ExpectedExpression>e => (e.Name == "Jared Barneck")</x:ExpectedExpression>
     <x:Message>Expression should result in this expression: {0}.</x:Message>
   </x:Row>
-   Or 
+   <!--Or--> 
   <x:Row>
     <x:Query>Name eq 'Jared Barneck' or Name eq 'Jared Abram Barneck'</x:Query>
     <x:ExpectedExpression>e => ((e.Name == "Jared Barneck") OrElse (e.Name == "Jared Abram Barneck"))</x:ExpectedExpression>
     <x:Message>Expression should result in this expression: {0}.</x:Message>
   </x:Row>
-   And 
+   <!--And--> 
   <x:Row>
     <x:Query>Id eq 1 and Name eq 'Jared Barneck'</x:Query>
     <x:ExpectedExpression>e => ((e.Id == 1) AndAlso (e.Name == "Jared Barneck"))</x:ExpectedExpression>
     <x:Message>Expression should result in this expression: {0}.</x:Message>
   </x:Row>
-   And then Or  no paranthesis 
+   <!--And then Or  no paranthesis--> 
   <x:Row>
     <x:Query>Id eq 1 and Name eq 'Jared Barneck' or Name eq 'Jared Abram Barneck'</x:Query>
     <x:ExpectedExpression>e => (((e.Id == 1) AndAlso (e.Name == "Jared Barneck")) OrElse (e.Name == "Jared Abram Barneck"))</x:ExpectedExpression>
     <x:Message>Expression should result in this expression: {0}. This expression is correct, but the logic, due to the lack of paranethesis is probably wrong.</x:Message>
   </x:Row>
-  --><!-- Or then And no paranthesis-->
+  <!-- Or then And no paranthesis-->
   <x:Row>
     <x:Query>Name eq 'Jared Barneck' or Name eq 'Jared Abram Barneck' and Id eq 1</x:Query>
     <x:ExpectedExpression>e => ((e.Name == "Jared Barneck") OrElse ((e.Name == "Jared Abram Barneck") AndAlso (e.Id == 1)))</x:ExpectedExpression>
+    <x:Message>Expression should result in this expression: {0}. This is to test AND has precendence. The expression is correctly built according to precedence, but inpput logic, due to the lack of paranethesis, is probably wrong.</x:Message>
+  </x:Row>
+  <!-- Or with a string method-->
+  <x:Row>
+    <x:Query>Name eq 'Jared Barneck' or contains(Name, 'Jared') and Id eq 1</x:Query>
+    <x:ExpectedExpression>e => ((e.Name == "Jared Barneck") OrElse (e.Name.Contains("Jared") AndAlso (e.Id == 1)))</x:ExpectedExpression>
     <x:Message>Expression should result in this expression: {0}. This is to test AND has precendence. The expression is correctly built according to precedence, but inpput logic, due to the lack of paranethesis, is probably wrong.</x:Message>
   </x:Row>
 </Rows>

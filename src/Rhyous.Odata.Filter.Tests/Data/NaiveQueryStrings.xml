@@ -139,4 +139,81 @@
     <x:ExpectedExpression>e => (e.Guid != c1aa6176-425d-4981-be4a-8f5c459e0ff9)</x:ExpectedExpression>
     <x:Message>Expression should result in this expression: {0}.</x:Message>
   </x:Row>
+  <!--Double equals-->
+  <x:Row>
+    <x:Query>Cost eq 1.10</x:Query>
+    <x:ExpectedExpression>e => (e.Cost == 1.1)</x:ExpectedExpression>
+    <x:Message>Expression should result in this expression: {0}.</x:Message>
+  </x:Row>
+  <x:Row>
+    <x:Query>Cost eq 2.95</x:Query>
+    <x:ExpectedExpression>e => (e.Cost == 2.95)</x:ExpectedExpression>
+    <x:Message>Expression should result in this expression: {0}.</x:Message>
+  </x:Row>
+  <!--Double not equals-->
+  <x:Row>
+    <x:Query>Cost ne 1.10</x:Query>
+    <x:ExpectedExpression>e => (e.Cost != 1.1)</x:ExpectedExpression>
+    <x:Message>Expression should result in this expression: {0}.</x:Message>
+  </x:Row>
+  <x:Row>
+    <x:Query>Cost ne 20.0</x:Query>
+    <x:ExpectedExpression>e => (e.Cost != 20)</x:ExpectedExpression>
+    <x:Message>Expression should result in this expression: {0}.</x:Message>
+  </x:Row>
+  <!--Double Greater than-->
+  <x:Row>
+    <x:Query>Cost gt 1.10</x:Query>
+    <x:ExpectedExpression>e => (e.Cost > 1.1)</x:ExpectedExpression>
+    <x:Message>Expression should result in this expression: {0}.</x:Message>
+  </x:Row>
+  <x:Row>
+    <x:Query>Cost gt 0.0</x:Query>
+    <x:ExpectedExpression>e => (e.Cost > 0)</x:ExpectedExpression>
+    <x:Message>Expression should result in this expression: {0}.</x:Message>
+  </x:Row>
+  <!--Double Greater than or equal to-->
+  <x:Row>
+    <x:Query>Cost ge 2.15</x:Query>
+    <x:ExpectedExpression>e => (e.Cost >= 2.15)</x:ExpectedExpression>
+    <x:Message>Expression should result in this expression: {0}.</x:Message>
+  </x:Row>
+  <x:Row>
+    <x:Query>Cost ge 0.0</x:Query>
+    <x:ExpectedExpression>e => (e.Cost >= 0)</x:ExpectedExpression>
+    <x:Message>Expression should result in this expression: {0}.</x:Message>
+  </x:Row>
+  <x:Row>
+    <x:Query>Cost ge 100.0</x:Query>
+    <x:ExpectedExpression>e => (e.Cost >= 100)</x:ExpectedExpression>
+    <x:Message>Expression should result in this expression: {0}.</x:Message>
+  </x:Row>
+  <!--Double less than-->
+  <x:Row>
+    <x:Query>Cost lt 100.0</x:Query>
+    <x:ExpectedExpression>e => (e.Cost &lt; 100)</x:ExpectedExpression>
+    <x:Message>Expression should result in this expression: {0}.</x:Message>
+  </x:Row>
+  <x:Row>
+    <x:Query>Cost lt 0.0</x:Query>
+    <x:ExpectedExpression>e => (e.Cost &lt; 0)</x:ExpectedExpression>
+    <x:Message>Expression should result in this expression: {0}.</x:Message>
+  </x:Row>
+  <!--Double less than or equal to-->
+  <x:Row>
+    <x:Query>Cost le 0.0</x:Query>
+    <x:ExpectedExpression>e => (e.Cost &lt;= 0)</x:ExpectedExpression>
+    <x:Message>Expression should result in this expression: {0}.</x:Message>
+  </x:Row>
+  <x:Row>
+    <x:Query>Cost le 0.0</x:Query>
+    <x:ExpectedExpression>e => (e.Cost &lt;= 0)</x:ExpectedExpression>
+    <x:Message>Expression should result in this expression: {0}.</x:Message>
+  </x:Row>
+  <!-- Extra spaces ignroed -->
+  <x:Row>
+    <x:Query>Id   ne   1</x:Query>
+    <x:ExpectedExpression>e => (e.Id != 1)</x:ExpectedExpression>
+    <x:Message>Expression should result in this expression: {0}.</x:Message>
+  </x:Row>
 </Rows>

@@ -22,8 +22,8 @@ namespace Rhyous.Odata.Tests.Handlers
             handler.Action(state);
 
             // Assert
-            Assert.AreEqual('\'', state.Group.WrapChar);
-            Assert.IsTrue(state.Group.IsOpen);
+            Assert.AreEqual('\'', state.QuoteGroup.WrapChar);
+            Assert.IsTrue(state.QuoteGroup.IsOpen);
             Assert.AreEqual(0, state.Builder.Length, "Builder should be empty.");
             Assert.AreEqual(8, state.CharIndex, "CharIndex should not be updated. The loop updates it and this test bypasses the loop.");
         }
