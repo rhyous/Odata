@@ -1,6 +1,4 @@
-﻿using Microsoft.Data.Edm;
-using Microsoft.Data.OData.Query;
-using Rhyous.StringLibrary;
+﻿using Rhyous.StringLibrary;
 using System;
 using System.Linq.Expressions;
 
