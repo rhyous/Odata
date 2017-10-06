@@ -22,13 +22,13 @@
   </x:Row>
   <!-- String EndsWith -->
   <x:Row>
-    <x:Query>endswith(Name,'are')</x:Query>
+    <x:Query>endswith(Name,'ared')</x:Query>
     <x:ExpectedExpression>e => e.Name.EndsWith("ared")</x:ExpectedExpression>
     <x:Message>Expression should result in this expression: {0}.</x:Message>
   </x:Row>
   <!-- String StartsWith -->
   <x:Row>
-    <x:Query>startswith(Name,'are')</x:Query>
+    <x:Query>startswith(Name,'jare')</x:Query>
     <x:ExpectedExpression>e => e.Name.StartsWith("jare")</x:ExpectedExpression>
     <x:Message>Expression should result in this expression: {0}.</x:Message>
   </x:Row>
