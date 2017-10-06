@@ -10,12 +10,18 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NuGet", "NuGet", "{48C515B4-E2F1-44F2-A834-9EC5909765CB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rhyous.Odata.Filter.NuGet", "Rhyous.Odata.Filter.NuGet\Rhyous.Odata.Filter.NuGet.csproj", "{0451BAEF-DF2E-4B98-8644-94EE9415E389}"
+	ProjectSection(ProjectDependencies) = postProject
+		{723DD23C-8D87-49BD-B456-80BAE0C78D69} = {723DD23C-8D87-49BD-B456-80BAE0C78D69}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rhyous.Odata.Csdl", "..\Rhyous.Odata.Csdl\Rhyous.Odata.Csdl.csproj", "{3EF7ECF7-58C7-483A-A22E-54BAF06F5AF2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rhyous.Odata.Csdl.Tests", "..\Rhyous.Odata.Csdl.Tests\Rhyous.Odata.Csdl.Tests.csproj", "{55828995-8BD6-41B5-812F-5456922C73EE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rhyous.Odata.Csdl.NuGet", "Rhyous.Odata.Csdl.NuGet\Rhyous.Odata.Csdl.NuGet.csproj", "{E9C8CB31-BCAD-4CA7-8B68-017934273D6C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3EF7ECF7-58C7-483A-A22E-54BAF06F5AF2} = {3EF7ECF7-58C7-483A-A22E-54BAF06F5AF2}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
