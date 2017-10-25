@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>Rhyous.Odata.Filter</id>
-    <version>1.0.1</version>
-    <title>Rhyous.Odata.Filter</title>
+    <id>Rhyous.Odata</id>
+    <version>1.0.0</version>
+    <title>Rhyous.Odata</title>
     <authors>Jared Barneck (Rhyous)</authors>
     <owners>Jared Barneck (Rhyous)</owners>
-    <description>A library to aid in meeting the odata specification for $filter.</description>
+    <description>A library to aid in meeting the odata specification.</description>
     <releaseNotes></releaseNotes>
-    <summary>A library to aid in meeting the odata specification for $filter.</summary>
+    <summary>A library to aid in meeting the odata specification.</summary>
     <language>en-US</language>
     <projectUrl>https://github.com/rhyous/Odata</projectUrl>
     <iconUrl>https://nuget.org/Content/Images/packageDefaultIcon-50x50.png</iconUrl>

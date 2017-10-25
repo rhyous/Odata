@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{3EF7ECF7-58C7-483A-A22E-54BAF06F5AF2}</ProjectGuid>
+    <ProjectGuid>{AC113E7B-4BD4-4DAF-8620-DF934FEE493A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Rhyous.Odata.Csdl</RootNamespace>
-    <AssemblyName>Rhyous.Odata.Csdl</AssemblyName>
+    <RootNamespace>Rhyous.Odata</RootNamespace>
+    <AssemblyName>Rhyous.Odata</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\NuGet\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
@@ -41,12 +44,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Extensions\CsdlExtensions.cs" />
-    <Compile Include="Models\CsdlEntity.cs" />
-    <Compile Include="Dictionaries\CsdlFormatDictionary.cs" />
-    <Compile Include="Models\CsdlProperty.cs" />
-    <Compile Include="Dictionaries\CsdlTypeDictionary.cs" />
+    <Compile Include="Models\OdataObject.cs" />
+    <Compile Include="Models\OdataUri.cs" />
+    <Compile Include="Models\RelatedEntity.cs" />
+    <Compile Include="Models\RelatedEntityCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
