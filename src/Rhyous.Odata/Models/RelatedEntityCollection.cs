@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
@@ -19,12 +18,12 @@ namespace Rhyous.Odata
         [IgnoreDataMember]
         public string EntityId { get; set; }
 
-        [DataMember(Name = "Entity", Order = 1)]
-        [JsonProperty(PropertyName = "Entity", Order = 1)]
+        [DataMember(Order = 1)]
+        [JsonProperty(Order = 1)]
         public string RelatedEntity { get; set; }
 
         [DataMember(Order = 2)]
-        [JsonProperty(PropertyName = "Entities", Order = 2)]
+        [JsonProperty(Order = 2)]
         public List<RelatedEntity> Entities
         {
             get { return _RelatedEntities ?? (_RelatedEntities = new List<RelatedEntity>()); }
