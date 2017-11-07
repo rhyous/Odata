@@ -15,5 +15,17 @@ namespace Rhyous.Odata
             if (string.IsNullOrWhiteSpace(Id))
                 throw new InvalidOperationException("The object must have an Id property or the IdProperty must be specified.");
         }
+
+        /// <summary>
+        /// The entity relationship type.
+        /// </summary>
+        public enum Type
+        {
+            OneToOne,        // Current entity has a foreign key or id property for the related entity and this foreign key or id property is unique.
+            OneToOneForeign, // The related entity has a foreign key or id property for the current entity and this foreign key or id property is unique.
+            OneToMany,       // The related entity has a foreign key or id property for current entity
+            ManyToOne,       // Current entity has a foreign key or id property for the related entity
+            ManyToMany       // Mapping table has mapping Id properties
+        }
     }
 }

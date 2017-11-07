@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
@@ -42,13 +43,6 @@ namespace Rhyous.Odata
             }
         } private TEntity _Object;
 
-        internal protected virtual void SetId(TEntity value)
-        {
-            var idProp = value.GetType().GetProperty(IdProperty);
-            if (idProp != null)
-                Id = (TId)idProp.GetValue(value);
-        }
-
         /// <summary>
         /// Any related entity for the entity.
         /// </summary>
@@ -64,5 +58,16 @@ namespace Rhyous.Odata
         /// </summary>
         [DataMember(Order = 5)]
         public virtual List<OdataUri> PropertyUris { get; set; }
+
+        internal protected virtual void SetId(TEntity value)
+        {
+            var idProp = value.GetType().GetProperty(IdProperty);
+            if (idProp != null)
+                Id = (TId)idProp.GetValue(value);
+        }
+
+        [JsonIgnore]
+        [IgnoreDataMember]
+        public OdataObjectCollection<TEntity, TId> Parent { get; set; }
     }
 }

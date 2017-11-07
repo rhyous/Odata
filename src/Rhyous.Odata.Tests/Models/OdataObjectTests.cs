@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Rhyous.Odata.Tests.Models
+namespace Rhyous.Odata.Tests
 {
     [TestClass]
     public class OdataObjectTests

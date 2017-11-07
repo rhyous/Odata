@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.12
+VisualStudioVersion = 15.0.27004.2006
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rhyous.Odata.Filter", "..\Rhyous.Odata.Filter\Rhyous.Odata.Filter.csproj", "{723DD23C-8D87-49BD-B456-80BAE0C78D69}"
 EndProject
@@ -81,7 +81,6 @@ Global
 		{273389F9-16C4-48D6-9D58-5D9D121D6B21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{273389F9-16C4-48D6-9D58-5D9D121D6B21}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{273389F9-16C4-48D6-9D58-5D9D121D6B21}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{273389F9-16C4-48D6-9D58-5D9D121D6B21}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4524163C-99CE-4BC5-AF26-AB91875A3CA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4524163C-99CE-4BC5-AF26-AB91875A3CA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4524163C-99CE-4BC5-AF26-AB91875A3CA9}.Release|Any CPU.ActiveCfg = Release|Any CPU

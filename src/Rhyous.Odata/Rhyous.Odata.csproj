@@ -44,10 +44,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AttributeInterfaces\IRelatedEntity.cs" />
+    <Compile Include="Attributes\RelatedEntityAttribute.cs" />
+    <Compile Include="Attributes\RelatedEntityMappingAttribute.cs" />
+    <Compile Include="Dictionaries\SortMethodDictionary.cs" />
+    <Compile Include="Interfaces\IRelatedEntitySorter.cs" />
+    <Compile Include="Business\RelatedEntitySorter.cs" />
+    <Compile Include="Extensions\OdataExtensions.cs" />
+    <Compile Include="Models\OdataObjectCollection.cs" />
     <Compile Include="Models\OdataObject.cs" />
     <Compile Include="Models\OdataUri.cs" />
     <Compile Include="Models\RelatedEntity.cs" />
     <Compile Include="Models\RelatedEntityCollection.cs" />
+    <Compile Include="Models\SortDetails.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
