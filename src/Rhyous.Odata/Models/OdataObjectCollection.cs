@@ -14,8 +14,16 @@ namespace Rhyous.Odata
     public class OdataObjectCollection<TEntity, TId> : IList<OdataObject<TEntity, TId>>
     {
         /// <summary>
+        /// The name of the Entity type returned
+        /// </summary>
+        [DataMember]
+        [JsonProperty]
+        public string Entity { get { return typeof(TEntity).Name; } internal set { } }
+
+        /// <summary>
         /// A list of Entities
         /// </summary>
+        [DataMember]
         [JsonProperty]
         internal List<OdataObject<TEntity, TId>> Entities
         {
@@ -28,6 +36,7 @@ namespace Rhyous.Odata
         /// so they don't have to be repeated. This will result in much smaller json/xml serialization.
         /// Imagine a list of users that each are a member of a UserGroup. 
         /// </summary>
+        [DataMember]
         [JsonProperty]
         public virtual List<RelatedEntityCollection> RelatedEntities
         {
@@ -50,10 +59,7 @@ namespace Rhyous.Odata
             }
         }
 
-        public int IndexOf(OdataObject<TEntity, TId> item)
-        {
-            return Entities.IndexOf(item);
-        }
+        public int IndexOf(OdataObject<TEntity, TId> item) => Entities.IndexOf(item);
 
         public void Insert(int index, OdataObject<TEntity, TId> item)
         {
@@ -61,42 +67,23 @@ namespace Rhyous.Odata
             item.Parent = this;
         }
 
-        public void RemoveAt(int index)
-        {
-            Entities.RemoveAt(index);
-        }
+        public void RemoveAt(int index) => Entities.RemoveAt(index);
 
-        public void Clear()
-        {
-            Entities.Clear();
-        }
+        public void Clear() => Entities.Clear();
 
-        public bool Contains(OdataObject<TEntity, TId> item)
-        {
-            return Entities.Contains(item);
-        }
+        public bool Contains(OdataObject<TEntity, TId> item) => Entities.Contains(item);
 
-        public void CopyTo(OdataObject<TEntity, TId>[] array, int arrayIndex)
-        {
-            Entities.CopyTo(array, arrayIndex);
-        }
+        public void CopyTo(OdataObject<TEntity, TId>[] array, int arrayIndex) => Entities.CopyTo(array, arrayIndex);
 
-        public bool Remove(OdataObject<TEntity, TId> item)
-        {
-            return Entities.Remove(item);
-        }
+        public bool Remove(OdataObject<TEntity, TId> item) => Entities.Remove(item);
 
-        public IEnumerator<OdataObject<TEntity, TId>> GetEnumerator()
-        {
-            return Entities.GetEnumerator();
-        }
+        public IEnumerator<OdataObject<TEntity, TId>> GetEnumerator() => Entities.GetEnumerator();
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        public int Count => Entities.Count;
+        [DataMember]
+        [JsonProperty]
+        public int Count { get { return Entities.Count; } internal set { } }
 
         [JsonIgnore]
         [IgnoreDataMember]

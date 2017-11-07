@@ -27,7 +27,11 @@ namespace Rhyous.Odata
         /// <summary>
         /// If the Id property is not Id, the property name must be specified.
         /// </summary>
-        public string IdProperty { get; set; } = "Id";
+        public string IdProperty
+        {
+            get { return _IdProperty ?? (_IdProperty = "Id"); }
+            set { _IdProperty = value; }
+        } private string _IdProperty;
 
         /// <summary>
         /// The entity instance.
