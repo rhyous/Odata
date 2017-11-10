@@ -22,7 +22,6 @@ namespace Rhyous.Odata.Tests
         }
     
         [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
         public void SettingObjectNoIdPropertyTest()
         {
             // Arrange
@@ -32,7 +31,8 @@ namespace Rhyous.Odata.Tests
             // Act
             relatedEntity.Object = new JRaw(json);
 
-            // Assert - see Expected Exception
+            // Assert
+            Assert.IsNull(relatedEntity.Id);
         }
 
         [TestMethod]

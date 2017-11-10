@@ -21,7 +21,7 @@ namespace Rhyous.Odata.Tests.Models
             var user = new User { Id = 1, Name = "User1" };
             var odataObject = user.AsOdata<User, int>();
             var expected = "{\"Uri\":null,\"Id\":1,\"Object\":{\"Id\":1,\"Name\":\"User1\",\"UserTypeId\":0},\"RelatedEntities\":[],\"PropertyUris\":[]}";
-            var serializer = new DataContractJsonSerializer(typeof(OdataObject<User,int>));
+            var serializer = new DataContractJsonSerializer(typeof(OdataObject<User, int>));
 
             // Act
             var json = Serialize(odataObject, serializer);
@@ -52,10 +52,11 @@ namespace Rhyous.Odata.Tests.Models
             // Arrange
             var user = new User { Id = 1, Name = "User1" };
             var odataObject = user.AsOdata<User, int>();
-            var expected = "{\"Uri\":null,\"Id\":1,\"Object\":{\"Id\":1,\"Name\":\"User1\",\"UserTypeId\":0},\"RelatedEntities\":[],\"PropertyUris\":[]}";
-            
+            var expected = "{\"Id\":1,\"Object\":{\"Id\":1,\"Name\":\"User1\",\"UserTypeId\":0},\"PropertyUris\":[],\"RelatedEntities\":[],\"Uri\":null}";
+            var settings = new JsonSerializerSettings() { ContractResolver = new OrderedContractResolver() };
+             
             // Act
-            var json = JsonConvert.SerializeObject(odataObject);
+            var json = JsonConvert.SerializeObject(odataObject, settings);
 
             // Assert
             Assert.AreEqual(expected, json);
@@ -68,7 +69,7 @@ namespace Rhyous.Odata.Tests.Models
             var json = "{\"Uri\":null,\"Id\":1,\"Object\":{\"Id\":1,\"Name\":\"User1\",\"UserTypeId\":0},\"RelatedEntities\":[],\"PropertyUris\":[]}";
 
             // Act
-            var odataObjectUser = JsonConvert.DeserializeObject<OdataObject<User,int>>(json);
+            var odataObjectUser = JsonConvert.DeserializeObject<OdataObject<User, int>>(json);
 
             // Assert
             Assert.AreEqual(1, odataObjectUser.Id);
@@ -137,11 +138,13 @@ namespace Rhyous.Odata.Tests.Models
             var odataObject1 = user1.AsOdata<User, int>();
             var odataObject2 = user2.AsOdata<User, int>();
             var odataObject3 = user3.AsOdata<User, int>();
-            var expected = "{\"Entity\":\"User\",\"Entities\":[{\"Uri\":null,\"Id\":1,\"Object\":{\"Id\":1,\"Name\":\"User1\",\"UserTypeId\":0},\"RelatedEntities\":[],\"PropertyUris\":[]},{\"Uri\":null,\"Id\":2,\"Object\":{\"Id\":2,\"Name\":\"User2\",\"UserTypeId\":0},\"RelatedEntities\":[],\"PropertyUris\":[]},{\"Uri\":null,\"Id\":3,\"Object\":{\"Id\":3,\"Name\":\"User3\",\"UserTypeId\":0},\"RelatedEntities\":[],\"PropertyUris\":[]}],\"RelatedEntities\":[],\"Count\":3}";
+            var expected = "{\"Count\":3,\"Entities\":[{\"Id\":1,\"Object\":{\"Id\":1,\"Name\":\"User1\",\"UserTypeId\":0},\"PropertyUris\":[],\"RelatedEntities\":[],\"Uri\":null},{\"Id\":2,\"Object\":{\"Id\":2,\"Name\":\"User2\",\"UserTypeId\":0},\"PropertyUris\":[],\"RelatedEntities\":[],\"Uri\":null},{\"Id\":3,\"Object\":{\"Id\":3,\"Name\":\"User3\",\"UserTypeId\":0},\"PropertyUris\":[],\"RelatedEntities\":[],\"Uri\":null}],\"Entity\":\"User\",\"RelatedEntities\":[]}";
             var collection = new OdataObjectCollection<User, int>();
-            collection.AddRange(new[] { odataObject1, odataObject2, odataObject3 });
+            collection.AddRange(new[] { odataObject1, odataObject2, odataObject3 });            
+            var settings = new JsonSerializerSettings() { ContractResolver = new OrderedContractResolver() };
+
             // Act
-            var json = JsonConvert.SerializeObject(collection);
+            var json = JsonConvert.SerializeObject(collection, settings);
 
             // Assert
             Assert.AreEqual(expected, json);
@@ -163,7 +166,7 @@ namespace Rhyous.Odata.Tests.Models
                 }
             }
         }
-                
+
         public static T Deserialize<T>(string json, XmlObjectSerializer serializer)
         {
             MemoryStream ms = new MemoryStream(Encoding.UTF8.GetBytes(json));
