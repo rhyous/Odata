@@ -19,18 +19,37 @@ namespace Rhyous.Odata
         {
             if (relatedEntities == null || !relatedEntities.Any() || relatedEntities.Count() > 1)
                 return null;
-            // ManyToOneSort is the same method, except for the requirement in the above if of only having 1 related entity.
+            // ManyToOneSort is the same method, except for the requirement in the above if statement to only having 1 related entity.
             return ManyToOneSort(entities, relatedEntities, details); 
         }
 
         internal List<RelatedEntityCollection> OneToOneForeignSort(IEnumerable<T> entities, IEnumerable<RelatedEntity> relatedEntities, SortDetails details)
         {
-            throw new NotImplementedException();
+            if (relatedEntities == null || !relatedEntities.Any() || relatedEntities.Count() > 1)
+                return null;
+            // OneToManySort is the same method, except for the requirement in the  above if statement to only having 1 related entity.
+            return OneToManySort(entities, relatedEntities, details);
         }
 
         internal List<RelatedEntityCollection> OneToManySort(IEnumerable<T> entities, IEnumerable<RelatedEntity> relatedEntities, SortDetails details)
         {
-            throw new NotImplementedException();
+            if (entities == null || !entities.Any() || relatedEntities == null || !relatedEntities.Any())
+                return null;
+            var list = new List<RelatedEntityCollection>();
+            var entityRelatedIdPropInfo = relatedEntities.First()?.GetType().GetProperty(details.EntityToRelatedEntityProperty);
+            foreach (var entity in entities)
+            {
+                var id = entity.GetType().GetProperty(details.EntityIdProperty).GetValue(entity).ToString();
+                var collection = new RelatedEntityCollection
+                {
+                    Entity = details.EntityName,
+                    EntityId = id,
+                    RelatedEntity = details.RelatedEntity,
+                };
+                collection.Entities.AddRange(relatedEntities.Where(re => entityRelatedIdPropInfo.GetValue(re)?.ToString() == id));
+                list.Add(collection);
+            }
+            return list;
         }
 
         internal List<RelatedEntityCollection> ManyToOneSort(IEnumerable<T> entities, IEnumerable<RelatedEntity> relatedEntities, SortDetails details)
@@ -38,6 +57,7 @@ namespace Rhyous.Odata
             if (entities == null || !entities.Any() || relatedEntities == null || !relatedEntities.Any())
                 return null;
             var list = new List<RelatedEntityCollection>();
+            var entityRelatedIdPropInfo = entities.First()?.GetType().GetProperty(details.EntityToRelatedEntityProperty);
             foreach (var entity in entities)
             {
                 var collection = new RelatedEntityCollection
@@ -46,7 +66,7 @@ namespace Rhyous.Odata
                     EntityId = entity.GetType().GetProperty(details.EntityIdProperty).GetValue(entity).ToString(),
                     RelatedEntity = details.RelatedEntity,
                 };
-                collection.Entities.AddRange(relatedEntities.Where(re => re.Id == entity.GetType().GetProperty(details.EntityToRelatedEntityProperty).GetValue(entity).ToString()));
+                collection.Entities.AddRange(relatedEntities.Where(re => re.Id == entityRelatedIdPropInfo.GetValue(entity).ToString()));
                 list.Add(collection);
             }
             return list;

@@ -9,9 +9,8 @@ namespace Rhyous.Odata
     /// <summary>
     /// This object is used to return any entity and provide data about that entity.
     /// </summary>
-    /// <typeparam name="TEntity">The entity type.</typeparam>
     [DataContract]
-    public class OdataObject<TEntity, TId> : IRelatedEntities
+    public class OdataObject : IRelatedEntities
     {
         /// <summary>
         /// The entity's web service uri.
@@ -23,7 +22,7 @@ namespace Rhyous.Odata
         /// The entity instance.
         /// </summary>
         [DataMember(Order = 1)]
-        public virtual TId Id { get; set; }
+        public virtual string Id { get; set; }
 
         /// <summary>
         /// If the Id property is not Id, the property name must be specified.
@@ -44,17 +43,17 @@ namespace Rhyous.Odata
         /// The entity instance.
         /// </summary>
         [DataMember(Order = 2)]
-        public virtual TEntity Object
+        public virtual JRaw Object
         {
             get { return _Object; }
             set
             {
-                if (_Object.Equals(value))
+                if (_Object == value)
                     return;
                 _Object = value;
                 SetId(value);
             }
-        } private TEntity _Object;
+        } private JRaw _Object;
 
         /// <summary>
         /// Any related entity for the entity.
@@ -72,21 +71,20 @@ namespace Rhyous.Odata
         [DataMember(Order = 5)]
         public virtual List<OdataUri> PropertyUris { get; set; }
 
-        internal protected virtual void SetId(TEntity value)
+        internal protected void SetId(JRaw value)
         {
-            if (value == null)
+            if (value == null || string.IsNullOrWhiteSpace(value.ToString()))
                 return;
-            var idProp = value.GetType().GetProperty(IdProperty);
-            if (idProp != null)
-                Id = (TId)idProp.GetValue(value);
+            var jObj = JObject.Parse(value.ToString());
+            Id = jObj.GetIdDynamic() ?? Id;
         }
 
         [JsonIgnore]
         [IgnoreDataMember]
-        public OdataObjectCollection<TEntity, TId> Parent { get; set; }
+        public OdataObjectCollection Parent { get; set; }
 
         #region Implicit Operator
-        public static implicit operator RelatedEntity(OdataObject<TEntity, TId> o)
+        public static implicit operator RelatedEntity(OdataObject o)
         {
             return o.AsRelatedEntity();
         }

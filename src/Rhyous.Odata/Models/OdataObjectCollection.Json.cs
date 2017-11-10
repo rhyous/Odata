@@ -12,25 +12,25 @@ namespace Rhyous.Odata
     /// <typeparam name="TEntity">The entity type.</typeparam>
     [JsonObject]
     [DataContract]
-    public class OdataObjectCollection<TEntity, TId> : IList<OdataObject<TEntity, TId>>, IRelatedEntities
+    public class OdataObjectCollection : IList<OdataObject>, IRelatedEntities
     {
         /// <summary>
         /// The name of the Entity type returned
         /// </summary>
         [DataMember]
         [JsonProperty]
-        public string Entity { get { return typeof(TEntity).Name; } internal set { } }
+        public string Entity { get; set; }
 
         /// <summary>
         /// A list of Entities
         /// </summary>
         [DataMember]
         [JsonProperty]
-        internal List<OdataObject<TEntity, TId>> Entities
+        internal List<OdataObject> Entities
         {
-            get { return _Entities ?? (_Entities = new List<OdataObject<TEntity, TId>>()); }
+            get { return _Entities ?? (_Entities = new List<OdataObject>()); }
             set { _Entities = value; }
-        } private List<OdataObject<TEntity, TId>> _Entities;
+        } private List<OdataObject> _Entities;
 
         /// <summary>
         /// A list of RelatedEntityCollections. This provides a place for common entities to be included,
@@ -51,7 +51,7 @@ namespace Rhyous.Odata
         /// which Entity or EntityId it is related to and so these properties shoudl be set.
         /// </summary>
         /// <param name="c"></param>
-        public static implicit operator RelatedEntityCollection(OdataObjectCollection<TEntity, TId> c)
+        public static implicit operator RelatedEntityCollection(OdataObjectCollection c)
         {
             var rec = new RelatedEntityCollection()
             {                
@@ -63,13 +63,13 @@ namespace Rhyous.Odata
         #endregion
 
         #region IList implementation
-        public void Add(OdataObject<TEntity, TId> item)
+        public void Add(OdataObject item)
         {
             Entities.Add(item);
             item.Parent = this;
         }
 
-        public void AddRange(IEnumerable<OdataObject<TEntity, TId>> items)
+        public void AddRange(IEnumerable<OdataObject> items)
         {
             Entities.AddRange(items);
             foreach (var item in items)
@@ -78,9 +78,9 @@ namespace Rhyous.Odata
             }
         }
 
-        public int IndexOf(OdataObject<TEntity, TId> item) => Entities.IndexOf(item);
+        public int IndexOf(OdataObject item) => Entities.IndexOf(item);
 
-        public void Insert(int index, OdataObject<TEntity, TId> item)
+        public void Insert(int index, OdataObject item)
         {
             Entities.Insert(index, item);
             item.Parent = this;
@@ -90,13 +90,13 @@ namespace Rhyous.Odata
 
         public void Clear() => Entities.Clear();
 
-        public bool Contains(OdataObject<TEntity, TId> item) => Entities.Contains(item);
+        public bool Contains(OdataObject item) => Entities.Contains(item);
 
-        public void CopyTo(OdataObject<TEntity, TId>[] array, int arrayIndex) => Entities.CopyTo(array, arrayIndex);
+        public void CopyTo(OdataObject[] array, int arrayIndex) => Entities.CopyTo(array, arrayIndex);
 
-        public bool Remove(OdataObject<TEntity, TId> item) => Entities.Remove(item);
+        public bool Remove(OdataObject item) => Entities.Remove(item);
 
-        public IEnumerator<OdataObject<TEntity, TId>> GetEnumerator() => Entities.GetEnumerator();
+        public IEnumerator<OdataObject> GetEnumerator() => Entities.GetEnumerator();
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
@@ -108,7 +108,7 @@ namespace Rhyous.Odata
         [IgnoreDataMember]
         public bool IsReadOnly => false;
 
-        public OdataObject<TEntity, TId> this[int index]
+        public OdataObject this[int index]
         {
             get { return Entities[index]; }
             set { Entities[index] = value; }

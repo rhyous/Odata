@@ -51,6 +51,7 @@
     <Compile Include="ExpandPathComparer.cs" />
     <Compile Include="ExpandParserTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="AttributeEvaluatorTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -59,6 +60,14 @@
     <ProjectReference Include="..\Rhyous.Odata.Expand\Rhyous.Odata.Expand.csproj">
       <Project>{b271f848-e84c-428b-8b1b-45e47b41ede3}</Project>
       <Name>Rhyous.Odata.Expand</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Rhyous.Odata.Tests\Rhyous.Odata.Tests.csproj">
+      <Project>{4524163c-99ce-4bc5-af26-ab91875a3ca9}</Project>
+      <Name>Rhyous.Odata.Tests</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Rhyous.Odata\Rhyous.Odata.csproj">
+      <Project>{AC113E7B-4BD4-4DAF-8620-DF934FEE493A}</Project>
+      <Name>Rhyous.Odata</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

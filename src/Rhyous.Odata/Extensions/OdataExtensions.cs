@@ -37,11 +37,14 @@ namespace Rhyous.Odata
         #endregion
 
         #region multiple entities
-        public static List<OdataObject<T, TId>> AsOdata<T, TId>(this IEnumerable<T> ts, Uri uri = null, params string[] properties)
+        public static OdataObjectCollection<T, TId> AsOdata<T, TId>(this IEnumerable<T> ts, Uri uri = null, params string[] properties)
         {
             var leftPart = uri?.GetLeftPart(UriPartial.Path);
             var uriKind = uri != null && uri.IsAbsoluteUri ? UriKind.Absolute : UriKind.Relative;
-            return ts.Select(t => t.AsOdata<T, TId>(leftPart, true, uriKind, properties)).ToList();
+            var entities = ts.Select(t => t.AsOdata<T, TId>(leftPart, true, uriKind, properties)).ToList();
+            var collection = new OdataObjectCollection<T, TId>();
+            collection.AddRange(entities);
+            return collection;
         }
         #endregion
 

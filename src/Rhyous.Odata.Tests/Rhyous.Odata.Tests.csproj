@@ -60,7 +60,9 @@
     <Compile Include="Models\OdataObjectTests.cs" />
     <Compile Include="Models\SortDetailsTests.cs" />
     <Compile Include="Models\SerializationTests.cs" />
+    <Compile Include="Models\RelatedEntityOneToManyTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestModels\Token.cs" />
     <Compile Include="TestModels\UserGroupMembership.cs" />
     <Compile Include="TestModels\UserGroup.cs" />
     <Compile Include="TestModels\UserType.cs" />

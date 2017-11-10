@@ -40,9 +40,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AttributeEvaluator.cs" />
+    <Compile Include="ExpandConstants.cs" />
     <Compile Include="ExpandParser.cs" />
     <Compile Include="ExpandPath.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Rhyous.Odata\Rhyous.Odata.csproj">
+      <Project>{ac113e7b-4bd4-4daf-8620-df934fee493a}</Project>
+      <Name>Rhyous.Odata</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

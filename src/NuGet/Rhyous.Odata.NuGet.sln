@@ -30,8 +30,14 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rhyous.Odata.Expand.Tests", "..\Rhyous.Odata.Expand.Tests\Rhyous.Odata.Expand.Tests.csproj", "{F51F8BCD-D0C3-4EEC-9F82-88EDEB044474}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rhyous.Odata.Expand.NuGet", "Rhyous.Odata.Expand.NuGet\Rhyous.Odata.Expand.NuGet.csproj", "{BE60364D-B9AB-4180-A184-824DDAC3EF0F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B271F848-E84C-428B-8B1B-45E47B41EDE3} = {B271F848-E84C-428B-8B1B-45E47B41EDE3}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rhyous.Odata.NuGet", "Rhyous.Odata.NuGet\Rhyous.Odata.NuGet.csproj", "{273389F9-16C4-48D6-9D58-5D9D121D6B21}"
+	ProjectSection(ProjectDependencies) = postProject
+		{AC113E7B-4BD4-4DAF-8620-DF934FEE493A} = {AC113E7B-4BD4-4DAF-8620-DF934FEE493A}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rhyous.Odata.Tests", "..\Rhyous.Odata.Tests\Rhyous.Odata.Tests.csproj", "{4524163C-99CE-4BC5-AF26-AB91875A3CA9}"
 EndProject
