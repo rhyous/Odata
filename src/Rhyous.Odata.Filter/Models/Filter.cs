@@ -32,9 +32,9 @@ namespace Rhyous.Odata
             set { SafeSet(value, ref _Method); }
         } private string _Method;
         
-        private void SafeSet<T>(T value, ref T _backingField, T parent = default(T))
+        internal void SafeSet<T>(T value, ref T _backingField, T parent = default(T))
         {
-            if (value.Equals(_backingField))
+            if (Equals(value, _backingField))
                 return;
             _backingField = value;
             if (value != null)

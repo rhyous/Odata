@@ -62,5 +62,55 @@ namespace Rhyous.Odata.Tests
             // Act & Assert
             Assert.IsTrue(filter.IsComplete); ;
         }
+
+        [TestMethod]
+        public void SafeSetValueNullToExistingNull()
+        {
+            // Arrange
+            Filter<Entity1> filter = "test";
+
+            // Act
+            string s = null;
+            filter.SafeSet(null, ref s);
+
+            // Assert
+            Assert.IsNull(s);
+        }
+
+        [TestMethod]
+        public void SafeSetValueNullToExistingValue()
+        {
+            // Arrange
+            Filter<Entity1> filter = "test";
+
+            // Act
+            string s = "a";
+            filter.SafeSet(null, ref s);
+
+            // Assert
+            Assert.IsNull(s);
+        }
+
+        [TestMethod]
+        public void SafeSetValueParent()
+        {
+            // Arrange
+            Filter<Entity1> filter = "test";
+
+            // Act
+            A backingField = null;
+            A child = new A();
+            A parent = new A();
+            filter.SafeSet(child, ref backingField, parent);
+
+            // Assert
+            Assert.AreEqual(backingField, child);
+            Assert.AreEqual(child.Parent, parent);
+        }
+        
+        public class A : IParent<A>
+        {
+            public A Parent { get ; set; }
+        }
     }
 }

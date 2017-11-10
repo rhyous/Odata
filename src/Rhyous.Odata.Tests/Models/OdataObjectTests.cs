@@ -22,6 +22,33 @@ namespace Rhyous.Odata.Tests
         }
 
         [TestMethod]
+        public void SettingObjectNullTest()
+        {
+            // Arrange
+            var odataObj = new OdataObject<Entity1, int>();
+
+            // Act
+            odataObj.Object = null;
+
+            // Assert
+            Assert.IsNull(odataObj.Object);
+        }
+
+        [TestMethod]
+        public void SettingObjectNullPreviousValueNotNullTest()
+        {
+            // Arrange
+            var odataObj = new OdataObject<Entity1, int> { Object = new Entity1 { Id = 10 } };
+
+            // Act
+            odataObj.Object = null;
+
+            // Assert
+            Assert.IsNull(odataObj.Object);
+            Assert.AreEqual(10, odataObj.Id, "Changing object to null doesn't alter the id.");
+        }
+
+        [TestMethod]
         public void CastObjNullTest()
         {
             // Arrange

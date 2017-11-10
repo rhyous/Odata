@@ -49,7 +49,7 @@ namespace Rhyous.Odata
             get { return _Object; }
             set
             {
-                if (_Object.Equals(value))
+                if (Equals(value, _Object))
                     return;
                 _Object = value;
                 SetId(value);
