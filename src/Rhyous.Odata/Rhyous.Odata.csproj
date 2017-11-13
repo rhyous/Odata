@@ -66,6 +66,7 @@
     <Compile Include="Models\RelatedEntityCollection.cs" />
     <Compile Include="Models\SortDetails.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Serialization\ExcludeEmptyEnumerablesContractResolver.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
