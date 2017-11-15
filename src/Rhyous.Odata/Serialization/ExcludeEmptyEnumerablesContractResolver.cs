@@ -1,8 +1,10 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 namespace Rhyous.Odata
@@ -24,9 +26,10 @@ namespace Rhyous.Odata
         
         internal static void IgnoreEmptyLists(IList<JsonProperty> orderedProperties)
         {
+            var skipTypes = new[] { typeof(string), typeof(JRaw) };
             foreach (var prop in orderedProperties)
             {
-                if (prop.PropertyType == typeof(string))
+                if (skipTypes.Contains(prop.PropertyType))
                     continue;
                 if (typeof(ICollection).IsAssignableFrom(prop.PropertyType) || typeof(IEnumerable).IsAssignableFrom(prop.PropertyType))
                 {
@@ -42,9 +45,8 @@ namespace Rhyous.Odata
         {
             if (o == null)
                 return false;
-            PropertyInfo propInfo;
-            if (!Cache.TryGetValue(prop, out propInfo))
-                Cache[prop] = propInfo = o.GetType().GetProperty(prop.PropertyName);
+            if (!Cache.TryGetValue(prop, out PropertyInfo propInfo))
+                Cache[prop] = propInfo = o.GetType().GetProperty(prop.PropertyName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
             var value = propInfo.GetValue(o);
             return ShouldSerialize(value);
         }
@@ -53,8 +55,7 @@ namespace Rhyous.Odata
         {
             if (value == null)
                 return false;
-            var collection = value as ICollection;
-            if (collection != null)
+            if (value is ICollection collection)
                 return collection.Count > 0;
 
             var enumerable = value as IEnumerable;
