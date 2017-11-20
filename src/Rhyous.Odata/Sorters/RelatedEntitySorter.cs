@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Rhyous.Odata
 {
-    public class RelatedEntitySorter<T, TId> : IRelatedEntitySorter<T, TId>
+    public class RelatedEntitySorter<T, TId> : IRelatedEntitySorter<T>, IRelatedEntityCollater<T, TId>
     {
         public void Collate(IEnumerable<OdataObject<T, TId>> odataEntities, IEnumerable<RelatedEntityCollection> collections)
         {

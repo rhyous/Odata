@@ -12,7 +12,7 @@ namespace Rhyous.Odata
         public const string DefaultForeignKey = "Id";
         public const string DefaultMappingKey = "{0}Id";
 
-        public RelatedEntityMappingAttribute(string relatedEntity, string mappingEntity, string entity, [Optional] string mappingKey, [Optional] string mappingForeignKey, [Optional] string foreignKey, [Optional] Type foreignKeyType, [Optional] bool autoExpand)
+        public RelatedEntityMappingAttribute(string relatedEntity, string mappingEntity, string entity, [Optional] string mappingKey, [Optional] string mappingForeignKey, [Optional] string foreignKey, [Optional] Type foreignKeyType, [Optional] bool autoExpand, [Optional] bool getAll)
         {
             MappingEntity = mappingEntity;
             RelatedEntity = relatedEntity;
@@ -22,6 +22,7 @@ namespace Rhyous.Odata
             foreignKeyType = foreignKeyType ?? typeof(int);
             AutoExpand = autoExpand;
             Entity = entity;
+            GetAll = getAll;
         }
         /// <summary>
         /// This entity the attribute is applied to.

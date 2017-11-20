@@ -2,10 +2,8 @@
 
 namespace Rhyous.Odata
 {
-    public interface IRelatedEntitySorter<T, TId>
+    public interface IRelatedEntitySorter<T>
     {
-        void Collate(IEnumerable<OdataObject<T, TId>> odataEntities, IEnumerable<RelatedEntityCollection> collections);
         List<RelatedEntityCollection> Sort(IEnumerable<T> entities, IEnumerable<RelatedEntity> relatedEntities, SortDetails details);        
-
     }
 }

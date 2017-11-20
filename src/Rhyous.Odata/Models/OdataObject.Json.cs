@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Serialization;
 
 namespace Rhyous.Odata
@@ -10,7 +11,7 @@ namespace Rhyous.Odata
     /// This object is used to return any entity and provide data about that entity.
     /// </summary>
     [DataContract]
-    public class OdataObject : IRelatedEntities
+    public class OdataObject : IOdataChild, IOdataParent
     {
         /// <summary>
         /// The entity's web service uri.
@@ -81,7 +82,15 @@ namespace Rhyous.Odata
 
         [JsonIgnore]
         [IgnoreDataMember]
-        public OdataObjectCollection Parent { get; set; }
+        public IOdataParent Parent { get; set; }
+
+        [JsonIgnore]
+        [IgnoreDataMember]
+        List<IOdataChild> IOdataParent.Children
+        {
+            get { return RelatedEntities.ToList<IOdataChild>(); }
+            set { RelatedEntities = value.Select(i => i as RelatedEntityCollection).ToList(); }
+        }
 
         #region Implicit Operator
         public static implicit operator RelatedEntity(OdataObject o)

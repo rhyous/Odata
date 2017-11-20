@@ -52,7 +52,7 @@ namespace Rhyous.Odata.Tests.Models
             // Arrange
             var user = new User { Id = 1, Name = "User1" };
             var odataObject = user.AsOdata<User, int>();
-            var expected = "{\"Id\":1,\"Object\":{\"Id\":1,\"Name\":\"User1\",\"UserTypeId\":0},\"PropertyUris\":[],\"RelatedEntities\":[],\"Uri\":null}";
+            var expected = "{\"Id\":1,\"Object\":{\"Id\":1,\"Name\":\"User1\",\"UserTypeId\":0},\"Uri\":null}";
             var settings = new JsonSerializerSettings() { ContractResolver = new OrderedContractResolver() };
              
             // Act
@@ -138,7 +138,7 @@ namespace Rhyous.Odata.Tests.Models
             var odataObject1 = user1.AsOdata<User, int>();
             var odataObject2 = user2.AsOdata<User, int>();
             var odataObject3 = user3.AsOdata<User, int>();
-            var expected = "{\"Count\":3,\"Entities\":[{\"Id\":1,\"Object\":{\"Id\":1,\"Name\":\"User1\",\"UserTypeId\":0},\"PropertyUris\":[],\"RelatedEntities\":[],\"Uri\":null},{\"Id\":2,\"Object\":{\"Id\":2,\"Name\":\"User2\",\"UserTypeId\":0},\"PropertyUris\":[],\"RelatedEntities\":[],\"Uri\":null},{\"Id\":3,\"Object\":{\"Id\":3,\"Name\":\"User3\",\"UserTypeId\":0},\"PropertyUris\":[],\"RelatedEntities\":[],\"Uri\":null}],\"Entity\":\"User\",\"RelatedEntities\":[]}";
+            var expected = "{\"Count\":3,\"Entities\":[{\"Id\":1,\"Object\":{\"Id\":1,\"Name\":\"User1\",\"UserTypeId\":0},\"Uri\":null},{\"Id\":2,\"Object\":{\"Id\":2,\"Name\":\"User2\",\"UserTypeId\":0},\"Uri\":null},{\"Id\":3,\"Object\":{\"Id\":3,\"Name\":\"User3\",\"UserTypeId\":0},\"Uri\":null}],\"Entity\":\"User\"}";
             var collection = new OdataObjectCollection<User, int>();
             collection.AddRange(new[] { odataObject1, odataObject2, odataObject3 });            
             var settings = new JsonSerializerSettings() { ContractResolver = new OrderedContractResolver() };

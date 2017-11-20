@@ -8,73 +8,29 @@ namespace Rhyous.Odata
     {
         public SortMethodDictionary()
         {
-            Add(RelatedEntity.Type.OneToOne, OneToOneSort);
-            Add(RelatedEntity.Type.OneToOneForeign, OneToOneForeignSort);
-            Add(RelatedEntity.Type.OneToMany, OneToManySort);
-            Add(RelatedEntity.Type.ManyToOne, ManyToOneSort);
-            Add(RelatedEntity.Type.ManyToMany, ManyToManySort);
+            Add(RelatedEntity.Type.OneToOne, ManyToOneSorter.Sort);        // No enforcement yet of only one
+            Add(RelatedEntity.Type.OneToOneForeign, OneToManySorter.Sort); // No enforcement yet of only one
+            Add(RelatedEntity.Type.OneToMany, OneToManySorter.Sort);
+            Add(RelatedEntity.Type.ManyToOne, ManyToOneSorter.Sort);
+            Add(RelatedEntity.Type.ManyToMany, ManyToManySorter.Sort);
         }
 
-        internal List<RelatedEntityCollection> OneToOneSort(IEnumerable<T> entities, IEnumerable<RelatedEntity> relatedEntities, SortDetails details)
+        public IRelatedEntitySorter<T> ManyToManySorter
         {
-            if (relatedEntities == null || !relatedEntities.Any() || relatedEntities.Count() > 1)
-                return null;
-            // ManyToOneSort is the same method, except for the requirement in the above if statement to only having 1 related entity.
-            return ManyToOneSort(entities, relatedEntities, details); 
-        }
+            get { return _ManyToManySorter ?? (_ManyToManySorter = new RelatedEntityManyToManySorter<T>()); }
+            set { _ManyToManySorter = value; }
+        } private IRelatedEntitySorter<T> _ManyToManySorter;
 
-        internal List<RelatedEntityCollection> OneToOneForeignSort(IEnumerable<T> entities, IEnumerable<RelatedEntity> relatedEntities, SortDetails details)
+        public IRelatedEntitySorter<T> OneToManySorter
         {
-            if (relatedEntities == null || !relatedEntities.Any() || relatedEntities.Count() > 1)
-                return null;
-            // OneToManySort is the same method, except for the requirement in the  above if statement to only having 1 related entity.
-            return OneToManySort(entities, relatedEntities, details);
+            get { return _OneToManySorter ?? (_OneToManySorter = new RelatedEntityOneToManySorter<T>()); }
+            set { _OneToManySorter = value; }
         }
-
-        internal List<RelatedEntityCollection> OneToManySort(IEnumerable<T> entities, IEnumerable<RelatedEntity> relatedEntities, SortDetails details)
+        private IRelatedEntitySorter<T> _OneToManySorter;
+        public IRelatedEntitySorter<T> ManyToOneSorter
         {
-            if (entities == null || !entities.Any() || relatedEntities == null || !relatedEntities.Any())
-                return null;
-            var list = new List<RelatedEntityCollection>();
-            var entityRelatedIdPropInfo = relatedEntities.First()?.GetType().GetProperty(details.EntityToRelatedEntityProperty);
-            foreach (var entity in entities)
-            {
-                var id = entity.GetType().GetProperty(details.EntityIdProperty).GetValue(entity).ToString();
-                var collection = new RelatedEntityCollection
-                {
-                    Entity = details.EntityName,
-                    EntityId = id,
-                    RelatedEntity = details.RelatedEntity,
-                };
-                collection.Entities.AddRange(relatedEntities.Where(re => entityRelatedIdPropInfo.GetValue(re)?.ToString() == id));
-                list.Add(collection);
-            }
-            return list;
-        }
-
-        internal List<RelatedEntityCollection> ManyToOneSort(IEnumerable<T> entities, IEnumerable<RelatedEntity> relatedEntities, SortDetails details)
-        {
-            if (entities == null || !entities.Any() || relatedEntities == null || !relatedEntities.Any())
-                return null;
-            var list = new List<RelatedEntityCollection>();
-            var entityRelatedIdPropInfo = entities.First()?.GetType().GetProperty(details.EntityToRelatedEntityProperty);
-            foreach (var entity in entities)
-            {
-                var collection = new RelatedEntityCollection
-                {
-                    Entity = details.EntityName,
-                    EntityId = entity.GetType().GetProperty(details.EntityIdProperty).GetValue(entity).ToString(),
-                    RelatedEntity = details.RelatedEntity,
-                };
-                collection.Entities.AddRange(relatedEntities.Where(re => re.Id == entityRelatedIdPropInfo.GetValue(entity).ToString()));
-                list.Add(collection);
-            }
-            return list;
-        }
-
-        internal List<RelatedEntityCollection> ManyToManySort(IEnumerable<T> entities, IEnumerable<RelatedEntity> relatedEntities, SortDetails details)
-        {
-            throw new NotImplementedException();
-        }
+            get { return _ManyToOneSorter ?? (_ManyToOneSorter = new RelatedEntityManyToOneSorter<T>()); }
+            set { _ManyToOneSorter = value; }
+        } private IRelatedEntitySorter<T> _ManyToOneSorter;        
     }
 }

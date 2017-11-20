@@ -54,7 +54,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Business\RelatedEntitySorterTests.cs" />
-    <Compile Include="Dictionaries\SortMethodDictionaryTests.cs" />
+    <Compile Include="Dictionaries\RelatedEntityManyToManySorterTests.cs" />
+    <Compile Include="Dictionaries\RelatedEntityOneToManySorterTests.cs" />
+    <Compile Include="Dictionaries\RelatedEntityOneToOneSorterTests.cs" />
     <Compile Include="Extensions\OdataExtensionsTests.cs" />
     <Compile Include="Models\RelatedEntityTests.cs" />
     <Compile Include="Models\OdataObjectTests.cs" />

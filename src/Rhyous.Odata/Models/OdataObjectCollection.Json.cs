@@ -12,7 +12,7 @@ namespace Rhyous.Odata
     /// <typeparam name="TEntity">The entity type.</typeparam>
     [JsonObject]
     [DataContract]
-    public class OdataObjectCollection : IList<OdataObject>, IRelatedEntities
+    public class OdataObjectCollection : IList<OdataObject>, IOdataParent
     {
         /// <summary>
         /// The name of the Entity type returned
@@ -44,7 +44,13 @@ namespace Rhyous.Odata
             get { return _RelatedEntities ?? (_RelatedEntities = new List<RelatedEntityCollection>()); }
             set { _RelatedEntities = value; }
         } private List<RelatedEntityCollection> _RelatedEntities;
-        
+
+        List<IOdataChild> IOdataParent.Children
+        {
+            get { return RelatedEntities.ToList<IOdataChild>(); }
+            set { RelatedEntities = value.Select(i => i as RelatedEntityCollection).ToList(); }
+        }
+
         #region Implicit Operator
         /// <summary>
         /// This will convert an ODataObjectCollection to a RelatedEntityCollection, but it won't know
