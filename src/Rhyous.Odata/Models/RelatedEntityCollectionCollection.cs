@@ -11,12 +11,12 @@ namespace Rhyous.Odata.Models
         /// <summary>
         /// Items in this list go to the parent of the related entities
         /// </summary>
-        public List<RelatedEntityCollection> RelatedEntities { get; set; }
+        public List<RelatedEntityCollection> RelatedEntityCollection { get; set; }
 
         List<IOdataChild> IOdataParent.Children
         {
-            get { return RelatedEntities.ToList<IOdataChild>(); }
-            set { RelatedEntities = value.Select(i => i as RelatedEntityCollection).ToList(); }
+            get { return RelatedEntityCollection.ToList<IOdataChild>(); }
+            set { RelatedEntityCollection = value.Select(i => i as RelatedEntityCollection).ToList(); }
         }
     }
 }

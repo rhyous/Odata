@@ -11,7 +11,8 @@ namespace Rhyous.Odata
                 return;
             foreach (var odataEntity in odataEntities)
             {
-                odataEntity.RelatedEntityCollection.AddRange(collections.Where(c=>c.EntityId == odataEntity.Id.ToString()));
+                var matchingCollections = collections.Where(c => c.EntityId == odataEntity.Id.ToString()).ToList();
+                odataEntity.RelatedEntityCollection.AddRange(matchingCollections);
             }
         }
         public List<RelatedEntityCollection> Sort(IEnumerable<T> entities, IEnumerable<RelatedEntity> relatedEntities, SortDetails details)

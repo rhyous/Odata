@@ -63,9 +63,9 @@ namespace Rhyous.Odata
         [DataMember(Order = 4)]
         public virtual List<RelatedEntityCollection> RelatedEntityCollection
         {
-            get { return _RelatedEntities ?? (_RelatedEntities = new List<RelatedEntityCollection>()); }
-            set { _RelatedEntities = value; }
-        } private List<RelatedEntityCollection> _RelatedEntities;
+            get { return _RelatedEntityCollection ?? (_RelatedEntityCollection = new List<RelatedEntityCollection>()); }
+            set { _RelatedEntityCollection = value; }
+        } private List<RelatedEntityCollection> _RelatedEntityCollection;
 
         /// <summary>
         /// A list of uris that can manage each entity property individually.

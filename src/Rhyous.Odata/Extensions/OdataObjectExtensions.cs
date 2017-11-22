@@ -12,7 +12,7 @@ namespace Rhyous.Odata
             re.IdProperty = o.IdProperty;
             re.Object = o.Object;
             re.PropertyUris = o.PropertyUris;
-            re.RelatedEntityCollection = o.RelatedEntities;
+            re.RelatedEntityCollection = o.RelatedEntityCollection;
             re.Uri = o.Uri;
             return re;
         }

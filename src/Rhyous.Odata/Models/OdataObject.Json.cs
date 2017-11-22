@@ -60,11 +60,11 @@ namespace Rhyous.Odata
         /// Any related entity for the entity.
         /// </summary>
         [DataMember(Order = 4)]
-        public virtual List<RelatedEntityCollection> RelatedEntities
+        public virtual List<RelatedEntityCollection> RelatedEntityCollection
         {
-            get { return _RelatedEntities ?? (_RelatedEntities = new List<RelatedEntityCollection>()); }
-            set { _RelatedEntities = value; }
-        } private List<RelatedEntityCollection> _RelatedEntities;
+            get { return _RelatedEntityCollection ?? (_RelatedEntityCollection = new List<RelatedEntityCollection>()); }
+            set { _RelatedEntityCollection = value; }
+        } private List<RelatedEntityCollection> _RelatedEntityCollection;
 
         /// <summary>
         /// A list of uris that can manage each entity property individually.
@@ -88,8 +88,8 @@ namespace Rhyous.Odata
         [IgnoreDataMember]
         List<IOdataChild> IOdataParent.Children
         {
-            get { return RelatedEntities.ToList<IOdataChild>(); }
-            set { RelatedEntities = value.Select(i => i as RelatedEntityCollection).ToList(); }
+            get { return RelatedEntityCollection.ToList<IOdataChild>(); }
+            set { RelatedEntityCollection = value.Select(i => i as RelatedEntityCollection).ToList(); }
         }
 
         #region Implicit Operator

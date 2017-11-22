@@ -89,7 +89,7 @@ namespace Rhyous.Odata.Tests.Models
             var odataObject3 = user3.AsOdata<User, int>();
             var collection = new OdataObjectCollection<User, int>();
             collection.AddRange(new[] { odataObject1, odataObject2, odataObject3 });
-            var expected = "{\"Count\":3,\"Entities\":[{\"Uri\":null,\"Id\":1,\"Object\":{\"Id\":1,\"Name\":\"User1\",\"UserTypeId\":0},\"RelatedEntityCollection\":[],\"PropertyUris\":[]},{\"Uri\":null,\"Id\":2,\"Object\":{\"Id\":2,\"Name\":\"User2\",\"UserTypeId\":0},\"RelatedEntityCollection\":[],\"PropertyUris\":[]},{\"Uri\":null,\"Id\":3,\"Object\":{\"Id\":3,\"Name\":\"User3\",\"UserTypeId\":0},\"RelatedEntityCollection\":[],\"PropertyUris\":[]}],\"Entity\":\"User\",\"RelatedEntities\":[]}";
+            var expected = "{\"Count\":3,\"Entities\":[{\"Uri\":null,\"Id\":1,\"Object\":{\"Id\":1,\"Name\":\"User1\",\"UserTypeId\":0},\"RelatedEntityCollection\":[],\"PropertyUris\":[]},{\"Uri\":null,\"Id\":2,\"Object\":{\"Id\":2,\"Name\":\"User2\",\"UserTypeId\":0},\"RelatedEntityCollection\":[],\"PropertyUris\":[]},{\"Uri\":null,\"Id\":3,\"Object\":{\"Id\":3,\"Name\":\"User3\",\"UserTypeId\":0},\"RelatedEntityCollection\":[],\"PropertyUris\":[]}],\"Entity\":\"User\",\"RelatedEntityCollection\":[]}";
 
             var serializer = new DataContractJsonSerializer(typeof(OdataObjectCollection<User, int>), new[] { typeof(OdataObject<User, int>) });
 
@@ -148,6 +148,20 @@ namespace Rhyous.Odata.Tests.Models
 
             // Assert
             Assert.AreEqual(expected, json);
+        }
+
+        [TestMethod]
+        public void TestDeserialization()
+        {
+            // Arrange
+            var json = "{\"Count\":1,\"Entities\":[{\"Id\":1,\"Object\":{\"Id\":1,\"UserGroupId\":1,\"UserId\":1},\"RelatedEntityCollection\":[{\"Count\":1,\"RelatedEntity\":\"UserGroup\",\"RelatedEntities\":[{\"Id\":\"1\",\"Object\":{\"Id\":1,\"Name\":\"System Users\",\"CreateDate\":\"2017-08-22T16:47:28.283\",\"CreatedBy\":1,\"Description\":null,\"LastUpdated\":null,\"LastUpdatedBy\":null},\"Uri\":\"http://localhost:3896/UserGroupService.svc/UserGroups/Ids(1)\"}]}],\"Uri\":\"http://localhost:3896/UserGroupMembershipService.svc/UserGroupMemberships/UserId/Values(1)\"}],\"Entity\":\"UserGroupMembership\"}";
+
+            // Act
+            var collection = JsonConvert.DeserializeObject<OdataObjectCollection>(json);
+
+            // Assert
+            Assert.AreEqual(1, collection.Entities.Count);
+            Assert.AreEqual(1, collection.Entities[0].RelatedEntityCollection.Count);
         }
 
         #region Helper methods
