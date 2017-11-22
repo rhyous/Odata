@@ -14,7 +14,7 @@ namespace Rhyous.Odata
                 IdProperty = re.IdProperty,
                 Object = new JRaw(JsonConvert.SerializeObject(re.Object)),
                 PropertyUris = re.PropertyUris,
-                RelatedEntities = re.RelatedEntities,
+                RelatedEntityCollection = re.RelatedEntityCollection,
                 Uri = re.Uri
             };
         }

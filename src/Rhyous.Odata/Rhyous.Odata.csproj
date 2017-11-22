@@ -46,11 +46,11 @@
   <ItemGroup>
     <Compile Include="AttributeInterfaces\IRelatedEntity.cs" />
     <Compile Include="Attributes\RelatedEntityAttribute.cs" />
-    <Compile Include="Attributes\RelatedEntityMappingAttribute.cs" />
+    <Compile Include="Attributes\RelatedEntityForeignAttribute.cs" />
     <Compile Include="Interfaces\IRelatedEntityCollater.cs" />
+    <Compile Include="Sorters\RelatedEntityManyToManySorter.cs" />
     <Compile Include="Sorters\RelatedEntityManyToOneSorter.cs" />
     <Compile Include="Sorters\RelatedEntityOneToManySorter.cs" />
-    <Compile Include="Sorters\RelatedEntityManyToManySorter.cs" />
     <Compile Include="Dictionaries\SortMethodDictionary.cs" />
     <Compile Include="Extensions\JRawExtensions.cs" />
     <Compile Include="Extensions\OdataObjectExtensions.cs" />

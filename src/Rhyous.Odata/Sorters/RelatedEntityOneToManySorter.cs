@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Rhyous.Odata
@@ -10,7 +11,6 @@ namespace Rhyous.Odata
             if (entities == null || !entities.Any() || relatedEntities == null || !relatedEntities.Any())
                 return null;
             var list = new List<RelatedEntityCollection>();
-            var entityRelatedIdPropInfo = relatedEntities.First()?.GetType().GetProperty(details.EntityToRelatedEntityProperty);
             foreach (var entity in entities)
             {
                 var id = entity.GetType().GetProperty(details.EntityIdProperty).GetValue(entity).ToString();
@@ -20,7 +20,13 @@ namespace Rhyous.Odata
                     EntityId = id,
                     RelatedEntity = details.RelatedEntity,
                 };
-                collection.Entities.AddRange(relatedEntities.Where(re => entityRelatedIdPropInfo.GetValue(re)?.ToString() == id));
+                foreach (var re in relatedEntities)
+                {
+                    var jsonObj = JObject.Parse(re.Object.ToString());
+                    var value = jsonObj[details.EntityToRelatedEntityProperty].ToString();
+                    if (value == id.ToString())
+                        collection.RelatedEntities.Add(re);
+                }
                 list.Add(collection);
             }
             return list;

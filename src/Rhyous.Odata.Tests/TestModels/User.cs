@@ -1,6 +1,6 @@
 ﻿namespace Rhyous.Odata.Tests
 {
-    [RelatedEntityMapping("UserGroup", "UserGroupMembership", "User", GetAll = true)]
+    [RelatedEntityForeignAttribute("UserGroup", "UserGroupMembership", "User", GetAll = true)]
     public class User
     {
         public int Id { get; set; }

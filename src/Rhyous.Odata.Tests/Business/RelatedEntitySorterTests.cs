@@ -27,13 +27,13 @@ namespace Rhyous.Odata.Tests.Business
             var relatedEntity3 = new RelatedEntity { Object = userType2Json };
 
             var collection1 = new RelatedEntityCollection { Entity = "User", EntityId = "1", RelatedEntity = "UserType" };
-            collection1.Entities.Add(relatedEntity1);
+            collection1.RelatedEntities.Add(relatedEntity1);
 
             var collection2 = new RelatedEntityCollection { Entity = "User", EntityId = "2", RelatedEntity = "UserType" };
-            collection2.Entities.Add(relatedEntity2);
+            collection2.RelatedEntities.Add(relatedEntity2);
 
             var collection3 = new RelatedEntityCollection { Entity = "User", EntityId = "3", RelatedEntity = "UserType" };
-            collection3.Entities.Add(relatedEntity3);
+            collection3.RelatedEntities.Add(relatedEntity3);
 
             var collections = new List<RelatedEntityCollection> { collection1, collection2, collection3 };
 
@@ -43,14 +43,14 @@ namespace Rhyous.Odata.Tests.Business
             sorter.Collate(entities, collections);
 
             // Assert
-            Assert.AreEqual(1, user1.RelatedEntities.Count);
-            Assert.AreEqual(user1.RelatedEntities[0], collection1);
+            Assert.AreEqual(1, user1.RelatedEntityCollection.Count);
+            Assert.AreEqual(user1.RelatedEntityCollection[0], collection1);
 
-            Assert.AreEqual(1, user2.RelatedEntities.Count);
-            Assert.AreEqual(user2.RelatedEntities[0], collection2);
+            Assert.AreEqual(1, user2.RelatedEntityCollection.Count);
+            Assert.AreEqual(user2.RelatedEntityCollection[0], collection2);
 
-            Assert.AreEqual(1, user3.RelatedEntities.Count);
-            Assert.AreEqual(user3.RelatedEntities[0], collection3);
+            Assert.AreEqual(1, user3.RelatedEntityCollection.Count);
+            Assert.AreEqual(user3.RelatedEntityCollection[0], collection3);
         }
     }
 }

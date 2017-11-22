@@ -7,9 +7,11 @@ namespace Rhyous.Odata
     {
         public void Collate(IEnumerable<OdataObject<T, TId>> odataEntities, IEnumerable<RelatedEntityCollection> collections)
         {
+            if (odataEntities == null || !odataEntities.Any() || collections == null || !collections.Any())
+                return;
             foreach (var odataEntity in odataEntities)
             {
-                odataEntity.RelatedEntities.AddRange(collections.Where(c=>c.EntityId == odataEntity.Id.ToString()));
+                odataEntity.RelatedEntityCollection.AddRange(collections.Where(c=>c.EntityId == odataEntity.Id.ToString()));
             }
         }
         public List<RelatedEntityCollection> Sort(IEnumerable<T> entities, IEnumerable<RelatedEntity> relatedEntities, SortDetails details)

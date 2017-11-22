@@ -24,14 +24,14 @@ namespace Rhyous.Odata.Expand
         }
 
         /// <summary>
-        /// Looks for RelatedEntity attributes to expand. These are related entities that are related through a mapping table.
+        /// Looks for RelatedEntity attributes to expand. These are related entities that are related through a property on the foreign entity.
         /// </summary>
-        /// <param name="t">The type that might have a RelatedEntityMappingAttribute applied to the class.</param>
+        /// <param name="t">The type that might have a RelatedEntityForeignAttribute applied to the class.</param>
         /// <param name="entitiesToExpand"></param>
-        /// <returns>A RelatedEntityMappingAttribute list of related entities to expand.</returns>
-        public IEnumerable<RelatedEntityMappingAttribute> GetMappingAttributesToExpand(Type t, IEnumerable<string> entitiesToExpand = null)
+        /// <returns>A RelatedEntityForeignAttribute list of related entities to expand.</returns>
+        public IEnumerable<RelatedEntityForeignAttribute> GetForeignAttributesToExpand(Type t, IEnumerable<string> entitiesToExpand = null)
         {
-            var attribs = t.GetCustomAttributes<RelatedEntityMappingAttribute>();
+            var attribs = t.GetCustomAttributes<RelatedEntityForeignAttribute>();
             return GetAttributesToExpand(entitiesToExpand, attribs);
         }
 

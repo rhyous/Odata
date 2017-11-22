@@ -12,7 +12,7 @@ namespace Rhyous.Odata
             re.IdProperty = o.IdProperty;
             re.Object = o.Object;
             re.PropertyUris = o.PropertyUris;
-            re.RelatedEntities = o.RelatedEntities;
+            re.RelatedEntityCollection = o.RelatedEntities;
             re.Uri = o.Uri;
             return re;
         }
@@ -24,7 +24,7 @@ namespace Rhyous.Odata
             re.IdProperty = o.IdProperty;
             re.Object = o.Object;
             re.PropertyUris = o.PropertyUris;
-            re.RelatedEntities = o.RelatedEntities;
+            re.RelatedEntityCollection = o.RelatedEntityCollection;
             re.Uri = o.Uri;
             return re;
         }
@@ -37,7 +37,7 @@ namespace Rhyous.Odata
             re.IdProperty = obj.IdProperty;
             re.Object = rawObj;
             re.PropertyUris = obj.PropertyUris;
-            re.RelatedEntities = obj.RelatedEntities;
+            re.RelatedEntityCollection = obj.RelatedEntityCollection;
             re.Uri = obj.Uri;
             return re;
         }

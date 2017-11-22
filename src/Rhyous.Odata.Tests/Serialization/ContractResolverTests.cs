@@ -89,7 +89,7 @@ namespace Rhyous.Odata.Tests
             var odata = new OdataObject<Addendum, long>() { Object = new Addendum { Id = 10, Property = "A", Value = "B" } };
 
             // Act & Assert
-            Assert.IsFalse(ExcludeEmptyEnumerablesContractResolver.ShouldSerialize(odata, new JsonProperty { PropertyName = "RelatedEntities" }));
+            Assert.IsFalse(ExcludeEmptyEnumerablesContractResolver.ShouldSerialize(odata, new JsonProperty { PropertyName = "RelatedEntityCollection" }));
         }
 
         [TestMethod]
@@ -106,10 +106,10 @@ namespace Rhyous.Odata.Tests
             relatedEntityCollection.Add(relatedEntity1);
             relatedEntityCollection.Add(relatedEntity2);
             var odata = new OdataObject<Addendum, long>() { Object = new Addendum { Id = 10, Property = "A", Value = "B" } };
-            odata.RelatedEntities.Add(relatedEntityCollection);
+            odata.RelatedEntityCollection.Add(relatedEntityCollection);
 
             // Act & Assert
-            Assert.IsTrue(ExcludeEmptyEnumerablesContractResolver.ShouldSerialize(odata, new JsonProperty { PropertyName = "RelatedEntities"}));
+            Assert.IsTrue(ExcludeEmptyEnumerablesContractResolver.ShouldSerialize(odata, new JsonProperty { PropertyName = "RelatedEntityCollection" }));
         }
     }
 }

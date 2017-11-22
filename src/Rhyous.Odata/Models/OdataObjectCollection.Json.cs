@@ -63,7 +63,7 @@ namespace Rhyous.Odata
             {                
                 RelatedEntity = c.Entity                
             };
-            rec.Entities.AddRange(c.Entities.Select(e => (RelatedEntity)e));
+            rec.RelatedEntities.AddRange(c.Entities.Select(e => (RelatedEntity)e));
             return rec;
         }
         #endregion

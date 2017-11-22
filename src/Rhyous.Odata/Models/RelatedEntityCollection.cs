@@ -33,7 +33,7 @@ namespace Rhyous.Odata
 
         [DataMember(Order = 2)]
         [JsonProperty(Order = 2)]
-        internal List<RelatedEntity> Entities
+        internal List<RelatedEntity> RelatedEntities
         {
             get { return _RelatedEntities ?? (_RelatedEntities = new List<RelatedEntity>()); }
             set { _RelatedEntities = value; }
@@ -42,43 +42,46 @@ namespace Rhyous.Odata
         [JsonIgnore]
         [IgnoreDataMember]
         public IOdataParent Parent { get; set; }
+
+        [JsonIgnore]
+        [IgnoreDataMember]
         public List<IOdataChild> Children
         {
-            get { return Entities.ToList<IOdataChild>(); }
+            get { return RelatedEntities.ToList<IOdataChild>(); }
             set { }
         }
 
         #region IList implementation
-        public int Count => Entities.Count;
+        public int Count => RelatedEntities.Count;
 
         [JsonIgnore]
         [IgnoreDataMember]
-        public bool IsReadOnly => ((IList<RelatedEntity>)Entities).IsReadOnly;
+        public bool IsReadOnly => ((IList<RelatedEntity>)RelatedEntities).IsReadOnly;
 
-        public RelatedEntity this[int index] { get => Entities[index]; set => Entities[index] = value; }
+        public RelatedEntity this[int index] { get => RelatedEntities[index]; set => RelatedEntities[index] = value; }
 
-        public int IndexOf(RelatedEntity item) => Entities.IndexOf(item);
+        public int IndexOf(RelatedEntity item) => RelatedEntities.IndexOf(item);
 
         public void Insert(int index, RelatedEntity item)
         {
-            Entities.Insert(index, item);
+            RelatedEntities.Insert(index, item);
         }
 
-        public void RemoveAt(int index) => Entities.RemoveAt(index);
+        public void RemoveAt(int index) => RelatedEntities.RemoveAt(index);
 
-        public void Add(RelatedEntity item) => Entities.Add(item);
+        public void Add(RelatedEntity item) => RelatedEntities.Add(item);
 
-        public void Clear() => Entities.Clear();
+        public void Clear() => RelatedEntities.Clear();
 
-        public bool Contains(RelatedEntity item) => Entities.Contains(item);
+        public bool Contains(RelatedEntity item) => RelatedEntities.Contains(item);
 
-        public void CopyTo(RelatedEntity[] array, int arrayIndex) => Entities.CopyTo(array, arrayIndex);
+        public void CopyTo(RelatedEntity[] array, int arrayIndex) => RelatedEntities.CopyTo(array, arrayIndex);
 
-        public bool Remove(RelatedEntity item) => Entities.Remove(item);
+        public bool Remove(RelatedEntity item) => RelatedEntities.Remove(item);
 
-        public IEnumerator<RelatedEntity> GetEnumerator() => Entities.GetEnumerator();
+        public IEnumerator<RelatedEntity> GetEnumerator() => RelatedEntities.GetEnumerator();
 
-        IEnumerator IEnumerable.GetEnumerator() => Entities.GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => RelatedEntities.GetEnumerator();
         #endregion
     }
 }

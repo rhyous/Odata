@@ -19,7 +19,7 @@ namespace Rhyous.Odata
                     EntityId = entity.GetType().GetProperty(details.EntityIdProperty).GetValue(entity).ToString(),
                     RelatedEntity = details.RelatedEntity,
                 };
-                collection.Entities.AddRange(relatedEntities.Where(re => re.Id == entityRelatedIdPropInfo.GetValue(entity).ToString()));
+                collection.RelatedEntities.AddRange(relatedEntities.Where(re => re.Id == entityRelatedIdPropInfo.GetValue(entity).ToString()));
                 list.Add(collection);
             }
             return list;
