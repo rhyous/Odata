@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Linq;
 
 namespace Rhyous.Odata.Expand
 {
@@ -12,32 +11,60 @@ namespace Rhyous.Odata.Expand
             if (string.IsNullOrWhiteSpace(urlParameterValue))
                 return null;
             var list = new List<ExpandPath>();
-            var level1Expansions = urlParameterValue.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(s => s.Trim());
-            foreach (var expansion in level1Expansions)
+
+            int i = 0;
+            while (i < urlParameterValue.Length)
             {
-                var subLevelExpansions = expansion.Split('/').Select(s => s.Trim()).ToList();
-                ExpandPath expandPath = new ExpandPath();
-                list.Add(expandPath);
-                while (subLevelExpansions.Any())
-                {
-                    if (expandPath == null)
-                        expandPath = new ExpandPath();
-                    var item = subLevelExpansions.First();
-                    var parenIndex = item.IndexOf("(");
-                    if (parenIndex >= 0)
-                    {
-                        expandPath.Entity = item.Substring(0, parenIndex);
-                        expandPath.Parenthesis = item.Substring(parenIndex + 1, item.Length - parenIndex - 2).Trim();
-                    }
-                    else
-                    {
-                        expandPath.Entity = item;
-                    }
-                    subLevelExpansions.Remove(item);
-                    expandPath = expandPath.SubExpandPath;
-                }
+                list.Add(Parse(urlParameterValue, ref i));
             }
             return list;
+        }
+
+        internal ExpandPath Parse(string s, ref int i)
+        {
+            var expandPath = new ExpandPath();
+            char c;
+            var openParenthesisCount = 0;
+            while (i < s.Length)
+            {
+                c = s[i++];
+                if (c != ',' && c != '(' && c != ')' && c != '/')
+                {
+                    expandPath.Entity += c;
+                    continue;
+                }
+                if (c == '(')
+                {
+                    openParenthesisCount++;
+                    while (openParenthesisCount > 0 && i < s.Length)
+                    {
+                        c = s[i++];
+                        if (c == '(')
+                        {
+                            openParenthesisCount++;
+                        }
+                        if (c == ')')
+                        {
+                            openParenthesisCount--;
+                            if (openParenthesisCount == 0)
+                                continue;
+                        }
+                        expandPath.Parenthesis += c;
+                    }
+                    if (openParenthesisCount > 0)
+                        throw new ArgumentException($"The $expand URL parameter has a syntax error at character index {i}. Close paranthesis missing.");
+                }
+                if (c == ',')
+                {
+                    return expandPath;
+                }
+                if (c == '/')
+                {
+                    expandPath.SubExpandPath = Parse(s, ref i);
+                    return expandPath;
+                }
+            }
+            return expandPath;
         }
 
         public List<ExpandPath> Parse(NameValueCollection parameters)

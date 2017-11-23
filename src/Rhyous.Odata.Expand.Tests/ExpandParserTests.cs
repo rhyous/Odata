@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 
@@ -108,6 +109,68 @@ namespace Rhyous.Odata.Expand.Tests
 
             // Assert
             CollectionAssert.AreEqual(expected, actual, new ExpandPathComparer());
+        }
+
+        [TestMethod]
+        public void ParseCommaInParanthesisTest()
+        {
+            // Arrange
+            var paramValue = "Product($expand=ProductType,ProductGroupMembership,ProductFeatureMap)";
+            var expected = new List<ExpandPath>
+            {
+                new ExpandPath
+                {
+                    Entity = "Product",
+                    Parenthesis = "$expand=ProductType,ProductGroupMembership,ProductFeatureMap"
+                }
+            };
+
+            // Act
+            var actual = new ExpandParser().Parse(paramValue);
+
+            // Assert
+            CollectionAssert.AreEqual(expected, actual, new ExpandPathComparer());
+        }
+
+        [TestMethod]
+        public void ParseCommaInParanthesisDoubleNestedParanthesisTest()
+        {
+            // Arrange
+            var paramValue = "Product($expand=ProductType,ProductGroupMembership($expand=ProductGroup),ProductFeatureMap)";
+            var expected = new List<ExpandPath>
+            {
+                new ExpandPath
+                {
+                    Entity = "Product",
+                    Parenthesis = "$expand=ProductType,ProductGroupMembership($expand=ProductGroup),ProductFeatureMap"
+                }
+            };
+
+            // Act
+            var actual = new ExpandParser().Parse(paramValue);
+
+            // Assert
+            CollectionAssert.AreEqual(expected, actual, new ExpandPathComparer());
+        }
+
+        [TestMethod]
+        public void ParseCommaInParanthesisMissingCloseParanthesisTest()
+        {
+            // Arrange
+            var paramValue = "Product($expand=ProductType,ProductGroupMembership($expand=ProductGroup,ProductFeatureMap)";
+            var expected = new List<ExpandPath>
+            {
+                new ExpandPath
+                {
+                    Entity = "Product",
+                    Parenthesis = "$expand=ProductType,ProductGroupMembership,ProductFeatureMap"
+                }
+            };
+            var parser = new ExpandParser();
+
+            // Act
+            // Assert
+            Assert.ThrowsException<ArgumentException>(() => { parser.Parse(paramValue); });
         }
     }
 }
