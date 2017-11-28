@@ -68,6 +68,7 @@
     <Compile Include="Serialization\ContractResolverTests.cs" />
     <Compile Include="TestHelpers\OrderedContractResolver.cs" />
     <Compile Include="TestModels\Addendum.cs" />
+    <Compile Include="TestModels\Smile.cs" />
     <Compile Include="TestModels\Token.cs" />
     <Compile Include="TestModels\UserGroupMembership.cs" />
     <Compile Include="TestModels\UserGroup.cs" />

@@ -93,6 +93,16 @@ namespace Rhyous.Odata.Tests
         }
 
         [TestMethod]
+        public void ShouldSerializePropertyRenamedWithAttributeTest()
+        {
+            // Arrange
+            var obj = new Smile { Id = 2, SmileType = "Big grin" };
+
+            // Act & Assert
+            Assert.IsTrue(ExcludeEmptyEnumerablesContractResolver.ShouldSerialize(obj, new JsonProperty { PropertyName = "Type", UnderlyingName = "SmileType" }));
+        }
+
+        [TestMethod]
         public void ShouldSerializePopulatedRelatedEntityCollection()
         {
             // Arrange
