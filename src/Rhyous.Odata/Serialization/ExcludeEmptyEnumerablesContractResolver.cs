@@ -46,7 +46,7 @@ namespace Rhyous.Odata
             if (o == null)
                 return false;
             if (!Cache.TryGetValue(prop, out PropertyInfo propInfo))
-                Cache[prop] = propInfo = o.GetType().GetProperty(prop.PropertyName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                Cache[prop] = propInfo = o.GetType().GetProperty(prop.UnderlyingName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
             var value = propInfo.GetValue(o);
             bool b = ShouldSerialize(value);
             return b;
