@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="AttributeInterfaces\IRelatedEntity.cs" />
     <Compile Include="Attributes\RelatedEntityAttribute.cs" />
+    <Compile Include="Attributes\RelatedEntityExclusionsAttribute.cs" />
     <Compile Include="Attributes\RelatedEntityForeignAttribute.cs" />
     <Compile Include="Interfaces\IRelatedEntityCollater.cs" />
     <Compile Include="Sorters\RelatedEntityManyToManySorter.cs" />
