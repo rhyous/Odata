@@ -55,7 +55,6 @@ namespace Rhyous.Odata.Tests
             // Act
             var actual = builder.Expression.ToString();
 
-
             // Assert
             Assert.AreEqual(expected, actual);
         }

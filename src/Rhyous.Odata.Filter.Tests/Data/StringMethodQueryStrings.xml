@@ -32,4 +32,20 @@
     <x:ExpectedExpression>e => e.Name.StartsWith("jare")</x:ExpectedExpression>
     <x:Message>Expression should result in this expression: {0}.</x:Message>
   </x:Row>
+  <!--Integer as if it were a string-->
+  <x:Row>
+    <x:Query>StartsWith(Id,'10')</x:Query>
+    <x:ExpectedExpression>e => e.Id.ToString().StartsWith("10")</x:ExpectedExpression>
+    <x:Message>Expression should result in this expression: {0}.</x:Message>
+  </x:Row>
+  <x:Row>
+    <x:Query>EndsWith(Id,'00')</x:Query>
+    <x:ExpectedExpression>e => e.Id.ToString().EndsWith("00")</x:ExpectedExpression>
+    <x:Message>Expression should result in this expression: {0}.</x:Message>
+  </x:Row>
+  <x:Row>
+    <x:Query>Contains(Id,'10')</x:Query>
+    <x:ExpectedExpression>e => e.Id.ToString().Contains("10")</x:ExpectedExpression>
+    <x:Message>Expression should result in this expression: {0}.</x:Message>
+  </x:Row>
 </Rows>
