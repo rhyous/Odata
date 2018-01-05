@@ -17,7 +17,7 @@ namespace Rhyous.Odata.Expand.Tests
             var evaluator = new AttributeEvaluator();
 
             // Act
-            var actual = evaluator.GetAttributesToExpand(typeof(User),entitiesToExpand).ToList();
+            var actual = evaluator.GetAttributesToExpand<RelatedEntityAttribute>(typeof(User), entitiesToExpand).ToList();
 
             // Assert
             Assert.AreEqual(0, actual.Count);
@@ -32,7 +32,7 @@ namespace Rhyous.Odata.Expand.Tests
             var expected = new RelatedEntityAttribute("User") { Property = "UserId", AutoExpand = true };
 
             // Act
-            var actual = evaluator.GetAttributesToExpand(typeof(Token), entitiesToExpand).ToList();
+            var actual = evaluator.GetAttributesToExpand<RelatedEntityAttribute>(typeof(Token), entitiesToExpand).ToList();
 
             // Assert
             Assert.AreEqual(1, actual.Count);
@@ -51,7 +51,7 @@ namespace Rhyous.Odata.Expand.Tests
             var expected = new RelatedEntityAttribute("UserType") { Property = "UserTypeId" };
 
             // Act
-            var actual = evaluator.GetAttributesToExpand(typeof(User), entitiesToExpand).ToList();
+            var actual = evaluator.GetAttributesToExpand<RelatedEntityAttribute>(typeof(User), entitiesToExpand).ToList();
 
             // Assert
             Assert.AreEqual(1, actual.Count);

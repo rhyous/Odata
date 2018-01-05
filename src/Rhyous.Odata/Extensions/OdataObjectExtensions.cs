@@ -11,6 +11,7 @@ namespace Rhyous.Odata
             re.Id = o.Id.ToString();
             re.IdProperty = o.IdProperty;
             re.Object = o.Object;
+            re.Parent = re.Parent;
             re.PropertyUris = o.PropertyUris;
             re.RelatedEntityCollection = o.RelatedEntityCollection;
             re.Uri = o.Uri;
@@ -23,6 +24,7 @@ namespace Rhyous.Odata
             re.Id = o.Id.ToString();
             re.IdProperty = o.IdProperty;
             re.Object = o.Object;
+            re.Parent = re.Parent;
             re.PropertyUris = o.PropertyUris;
             re.RelatedEntityCollection = o.RelatedEntityCollection;
             re.Uri = o.Uri;
@@ -36,6 +38,7 @@ namespace Rhyous.Odata
             re.Id = obj.Id.ToString();
             re.IdProperty = obj.IdProperty;
             re.Object = rawObj;
+            re.Parent = re.Parent;
             re.PropertyUris = obj.PropertyUris;
             re.RelatedEntityCollection = obj.RelatedEntityCollection;
             re.Uri = obj.Uri;

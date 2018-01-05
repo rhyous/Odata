@@ -1,18 +1,17 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using Rhyous.Collections;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
 
 namespace Rhyous.Odata
-{ 
+{
     /// <summary>
     /// This object is used to return any entity and provide data about that entity.
     /// </summary>
     /// <typeparam name="TEntity">The entity type.</typeparam>
     [DataContract]
-    public class OdataObject<TEntity, TId> : IOdataChild, IOdataParent
+    public class OdataObject<TEntity, TId>
     {
         /// <summary>
         /// The entity's web service uri.
@@ -61,11 +60,15 @@ namespace Rhyous.Odata
         /// Any related entity for the entity.
         /// </summary>
         [DataMember(Order = 4)]
-        public virtual List<RelatedEntityCollection> RelatedEntityCollection
+        public virtual ParentedList<RelatedEntityCollection> RelatedEntityCollection
         {
-            get { return _RelatedEntityCollection ?? (_RelatedEntityCollection = new List<RelatedEntityCollection>()); }
+            get { return _RelatedEntityCollection ?? (_RelatedEntityCollection = new ParentedList<RelatedEntityCollection>(this)); }
             set { _RelatedEntityCollection = value; }
-        } private List<RelatedEntityCollection> _RelatedEntityCollection;
+        } private ParentedList<RelatedEntityCollection> _RelatedEntityCollection;
+
+        [JsonIgnore]
+        [IgnoreDataMember]
+        public object Parent { get; set; }
 
         /// <summary>
         /// A list of uris that can manage each entity property individually.
@@ -80,15 +83,6 @@ namespace Rhyous.Odata
             var idProp = value.GetType().GetProperty(IdProperty);
             if (idProp != null)
                 Id = (TId)idProp.GetValue(value);
-        }
-
-        [JsonIgnore]
-        [IgnoreDataMember]
-        public IOdataParent Parent { get; set; }
-        List<IOdataChild> IOdataParent.Children
-        {
-            get { return RelatedEntityCollection.ToList<IOdataChild>(); }
-            set { RelatedEntityCollection = value.Select(i => i as RelatedEntityCollection).ToList(); }
         }
 
         #region Implicit Operator

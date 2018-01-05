@@ -33,6 +33,9 @@
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Rhyous.Collections, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\Packages\Rhyous.Collections.1.0.5\lib\net461\Rhyous.Collections.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
@@ -45,18 +48,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AttributeInterfaces\IRelatedEntity.cs" />
+    <Compile Include="Attributes\RelatedEntityMappingAttribute.cs" />
     <Compile Include="Attributes\RelatedEntityAttribute.cs" />
     <Compile Include="Attributes\RelatedEntityExclusionsAttribute.cs" />
     <Compile Include="Attributes\RelatedEntityForeignAttribute.cs" />
     <Compile Include="Interfaces\IRelatedEntityCollater.cs" />
-    <Compile Include="Sorters\RelatedEntityManyToManySorter.cs" />
     <Compile Include="Sorters\RelatedEntityManyToOneSorter.cs" />
     <Compile Include="Sorters\RelatedEntityOneToManySorter.cs" />
     <Compile Include="Dictionaries\SortMethodDictionary.cs" />
     <Compile Include="Extensions\JRawExtensions.cs" />
     <Compile Include="Extensions\OdataObjectExtensions.cs" />
-    <Compile Include="Interfaces\IOdataChild.cs" />
-    <Compile Include="Interfaces\IOdataParent.cs" />
     <Compile Include="Interfaces\IRelatedEntitySorter.cs" />
     <Compile Include="Sorters\RelatedEntitySorter.cs" />
     <Compile Include="Extensions\OdataExtensions.cs" />
@@ -67,7 +68,6 @@
     <Compile Include="Models\OdataUri.cs" />
     <Compile Include="Models\RelatedEntityManyToMany.cs" />
     <Compile Include="Models\RelatedEntity.cs" />
-    <Compile Include="Models\RelatedEntityCollectionCollection.cs" />
     <Compile Include="Models\RelatedEntityOneToMany.cs" />
     <Compile Include="Models\RelatedEntity.Json.cs" />
     <Compile Include="Models\RelatedEntityCollection.cs" />

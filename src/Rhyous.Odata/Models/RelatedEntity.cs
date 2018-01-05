@@ -13,6 +13,7 @@ namespace Rhyous.Odata
                 Id = re.Id.ToString(),
                 IdProperty = re.IdProperty,
                 Object = new JRaw(JsonConvert.SerializeObject(re.Object)),
+                Parent = re.Parent,
                 PropertyUris = re.PropertyUris,
                 RelatedEntityCollection = re.RelatedEntityCollection,
                 Uri = re.Uri

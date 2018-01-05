@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Rhyous.Collections;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace Rhyous.Odata
     /// <typeparam name="TEntity">The entity type.</typeparam>
     [JsonObject]
     [DataContract]
-    public class OdataObjectCollection : IList<OdataObject>, IOdataParent
+    public class OdataObjectCollection : IList<OdataObject>
     {
         /// <summary>
         /// The name of the Entity type returned
@@ -26,11 +27,11 @@ namespace Rhyous.Odata
         /// </summary>
         [DataMember]
         [JsonProperty]
-        internal List<OdataObject> Entities
+        internal ParentedList<OdataObject> Entities
         {
-            get { return _Entities ?? (_Entities = new List<OdataObject>()); }
+            get { return _Entities ?? (_Entities = new ParentedList<OdataObject>(this)); }
             set { _Entities = value; }
-        } private List<OdataObject> _Entities;
+        } private ParentedList<OdataObject> _Entities;
 
         /// <summary>
         /// A list of RelatedEntityCollections. This provides a place for common entities to be included,
@@ -39,18 +40,12 @@ namespace Rhyous.Odata
         /// </summary>
         [DataMember]
         [JsonProperty]
-        public virtual List<RelatedEntityCollection> RelatedEntityCollection
+        public virtual ParentedList<RelatedEntityCollection> RelatedEntityCollection
         {
-            get { return _RelatedEntities ?? (_RelatedEntities = new List<RelatedEntityCollection>()); }
+            get { return _RelatedEntities ?? (_RelatedEntities = new ParentedList<RelatedEntityCollection>(this)); }
             set { _RelatedEntities = value; }
-        } private List<RelatedEntityCollection> _RelatedEntities;
-
-        List<IOdataChild> IOdataParent.Children
-        {
-            get { return RelatedEntityCollection.ToList<IOdataChild>(); }
-            set { RelatedEntityCollection = value.Select(i => i as RelatedEntityCollection).ToList(); }
-        }
-
+        } private ParentedList<RelatedEntityCollection> _RelatedEntities;
+        
         #region Implicit Operator
         /// <summary>
         /// This will convert an ODataObjectCollection to a RelatedEntityCollection, but it won't know
@@ -61,7 +56,7 @@ namespace Rhyous.Odata
         {
             var rec = new RelatedEntityCollection()
             {                
-                RelatedEntity = c.Entity                
+                RelatedEntity = c.Entity,
             };
             rec.RelatedEntities.AddRange(c.Entities.Select(e => (RelatedEntity)e));
             return rec;

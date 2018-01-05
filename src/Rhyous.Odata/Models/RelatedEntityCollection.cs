@@ -1,14 +1,14 @@
 ﻿using Newtonsoft.Json;
+using Rhyous.Collections;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
 
 namespace Rhyous.Odata
 {
     [JsonObject]
     [DataContract]
-    public class RelatedEntityCollection : IList<RelatedEntity>, IOdataChild, IOdataParent
+    public class RelatedEntityCollection : IList<RelatedEntity>
     {
         /// <summary>
         /// The current entity name, not the related entity name.
@@ -33,24 +33,16 @@ namespace Rhyous.Odata
 
         [DataMember(Order = 2)]
         [JsonProperty(Order = 2)]
-        internal List<RelatedEntity> RelatedEntities
+        internal ParentedList<RelatedEntity> RelatedEntities
         {
-            get { return _RelatedEntities ?? (_RelatedEntities = new List<RelatedEntity>()); }
+            get { return _RelatedEntities ?? (_RelatedEntities = new ParentedList<RelatedEntity>(this)); }
             set { _RelatedEntities = value; }
-        } private List<RelatedEntity> _RelatedEntities;
+        } private ParentedList<RelatedEntity> _RelatedEntities;
 
         [JsonIgnore]
         [IgnoreDataMember]
-        public IOdataParent Parent { get; set; }
-
-        [JsonIgnore]
-        [IgnoreDataMember]
-        public List<IOdataChild> Children
-        {
-            get { return RelatedEntities.ToList<IOdataChild>(); }
-            set { }
-        }
-
+        public object Parent { get; set; }
+        
         #region IList implementation
         public int Count => RelatedEntities.Count;
 

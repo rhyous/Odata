@@ -12,26 +12,17 @@ namespace Rhyous.Odata.Expand
     public class AttributeEvaluator
     {
         /// <summary>
-        /// Looks for RelatedEntity attributes to expand. These are directly related entities.
+        /// Looks for RelatedEntity attributes to expand.
         /// </summary>
-        /// <param name="t">The type that might have a RelatedEntityAttribute applied to a property.</param>
-        /// <param name="entitiesToExpand">The related entity names to expand.</param>
-        /// <returns>A RelatedEntityAttribute list of related entities to expand.</returns>
-        public IEnumerable<RelatedEntityAttribute> GetAttributesToExpand(Type t, IEnumerable<string> entitiesToExpand = null)
-        {
-            var attribs = t.GetProperties().Select(p => p.GetCustomAttribute<RelatedEntityAttribute>(true));
-            return GetAttributesToExpand(entitiesToExpand, attribs);
-        }
-
-        /// <summary>
-        /// Looks for RelatedEntity attributes to expand. These are related entities that are related through a property on the foreign entity.
-        /// </summary>
-        /// <param name="t">The type that might have a RelatedEntityForeignAttribute applied to the class.</param>
+        /// <param name="entityType">The type that might have an Attribute of type IRelatedEntity applied to the class.</param>
         /// <param name="entitiesToExpand"></param>
-        /// <returns>A RelatedEntityForeignAttribute list of related entities to expand.</returns>
-        public IEnumerable<RelatedEntityForeignAttribute> GetForeignAttributesToExpand(Type t, IEnumerable<string> entitiesToExpand = null)
+        /// <returns>A list of Attributes of type IRelatedEntity to expand.</returns>
+        public IEnumerable<TAttribute> GetAttributesToExpand<TAttribute>(Type entityType, IEnumerable<string> entitiesToExpand = null)
+            where TAttribute : Attribute, IRelatedEntity
         {
-            var attribs = t.GetCustomAttributes<RelatedEntityForeignAttribute>();
+            var classAttribs = entityType.GetCustomAttributes<TAttribute>();
+            var propAttribs = entityType.GetProperties().Select(p => p.GetCustomAttribute<TAttribute>(true));
+            var attribs = classAttribs.Concat(propAttribs);
             return GetAttributesToExpand(entitiesToExpand, attribs);
         }
 
@@ -42,12 +33,12 @@ namespace Rhyous.Odata.Expand
         /// <param name="entitiesToExpand"></param>
         /// <param name="attribs">The attributes.</param>
         /// <returns>A list of T which is a list of an attribute that implements IRelatedEntity.</returns>
-        public IEnumerable<T> GetAttributesToExpand<T>(IEnumerable<string> entitiesToExpand, IEnumerable<T> attribs)
-            where T : IRelatedEntity
+        public IEnumerable<TAttribute> GetAttributesToExpand<TAttribute>(IEnumerable<string> entitiesToExpand, IEnumerable<TAttribute> attribs)
+            where TAttribute : Attribute, IRelatedEntity
         {
             var safeAttribs = attribs.Where(a => a != null);
             if (entitiesToExpand == null || !entitiesToExpand.Any())
-                return safeAttribs.Where(a => a != null && a.AutoExpand);
+                return safeAttribs.Where(a =>a.AutoExpand);
             else
                 return safeAttribs.Where(a => entitiesToExpand.Contains(a.RelatedEntity) || entitiesToExpand.Contains(ExpandConstants.WildCard));
         }

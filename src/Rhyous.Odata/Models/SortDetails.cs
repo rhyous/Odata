@@ -52,10 +52,5 @@
         /// The name of the Id property in the related entity. This should be just Id. So Id is the default.
         /// </summary>
         public string RelatedEntityIdProperty { get; set; } = "Id";
-
-        /// <summary>
-        /// Used if the RelatedEntity.Type is ManyToMany.
-        /// </summary>
-        public string MappingEntity { get; set; }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Rhyous.Odata
 {
@@ -12,15 +11,9 @@ namespace Rhyous.Odata
             Add(RelatedEntity.Type.OneToOneForeign, OneToManySorter.Sort); // No enforcement yet of only one
             Add(RelatedEntity.Type.OneToMany, OneToManySorter.Sort);
             Add(RelatedEntity.Type.ManyToOne, ManyToOneSorter.Sort);
-            Add(RelatedEntity.Type.ManyToMany, ManyToManySorter.Sort);
+            Add(RelatedEntity.Type.ManyToMany, OneToManySorter.Sort);      // No difference in code for ManyToMany;
         }
-
-        public IRelatedEntitySorter<T> ManyToManySorter
-        {
-            get { return _ManyToManySorter ?? (_ManyToManySorter = new RelatedEntityManyToManySorter<T>()); }
-            set { _ManyToManySorter = value; }
-        } private IRelatedEntitySorter<T> _ManyToManySorter;
-
+        
         public IRelatedEntitySorter<T> OneToManySorter
         {
             get { return _OneToManySorter ?? (_OneToManySorter = new RelatedEntityOneToManySorter<T>()); }

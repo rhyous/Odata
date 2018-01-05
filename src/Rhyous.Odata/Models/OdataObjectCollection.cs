@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Rhyous.Collections;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace Rhyous.Odata
     /// <typeparam name="TEntity">The entity type.</typeparam>
     [JsonObject]
     [DataContract]
-    public class OdataObjectCollection<TEntity, TId> : IList<OdataObject<TEntity, TId>>, IOdataParent
+    public class OdataObjectCollection<TEntity, TId> : IList<OdataObject<TEntity, TId>>
     {
         /// <summary>
         /// The name of the Entity type returned
@@ -39,18 +40,12 @@ namespace Rhyous.Odata
         /// </summary>
         [DataMember]
         [JsonProperty]
-        public virtual List<RelatedEntityCollection> RelatedEntityCollection
+        public virtual ParentedList<RelatedEntityCollection> RelatedEntityCollection
         {
-            get { return _RelatedEntityCollection ?? (_RelatedEntityCollection = new List<RelatedEntityCollection>()); }
+            get { return _RelatedEntityCollection ?? (_RelatedEntityCollection = new ParentedList<RelatedEntityCollection>()); }
             set { _RelatedEntityCollection = value; }
-        } private List<RelatedEntityCollection> _RelatedEntityCollection;
-
-        List<IOdataChild> IOdataParent.Children
-        {
-            get { return RelatedEntityCollection.ToList<IOdataChild>(); }
-            set { RelatedEntityCollection = value.Select(i => i as RelatedEntityCollection).ToList(); }
-        }
-
+        } private ParentedList<RelatedEntityCollection> _RelatedEntityCollection;
+        
         #region Implicit Operator
         /// <summary>
         /// This will convert an ODataObjectCollection to a RelatedEntityCollection, but it won't know

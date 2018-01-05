@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Rhyous.Odata.Expand</id>
-    <version>1.0.5</version>
+    <version>1.0.6</version>
     <title>Rhyous.Odata.Expand</title>
     <authors>Jared Barneck (Rhyous)</authors>
     <owners>Jared Barneck (Rhyous)</owners>
@@ -17,7 +17,7 @@
     <copyright>Copyright Jared Barneck (Rhyous) 2017</copyright>
     <dependencies>
       <group targetFramework="net461">
-        <dependency id="Rhyous.Odata" version="1.0.3" />
+        <dependency id="Rhyous.Odata" version="1.0.9" />
       </group>
     </dependencies>
     <tags>odata $expand</tags>
