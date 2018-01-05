@@ -3,6 +3,10 @@ using System.Linq;
 
 namespace Rhyous.Odata
 {
+    /// <summary>
+    /// The current entity has the Id of the foreign entity.
+    /// </summary>
+    /// <typeparam name="T">The type of the Entity.</typeparam>
     public class RelatedEntityManyToOneSorter<T> : IRelatedEntitySorter<T>
     {
         public List<RelatedEntityCollection> Sort(IEnumerable<T> entities, IEnumerable<RelatedEntity> relatedEntities, SortDetails details)
