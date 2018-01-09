@@ -18,6 +18,10 @@ namespace Rhyous.Odata
         [JsonProperty]
         public virtual string Entity { get; protected internal set; }
 
+        [DataMember]
+        [JsonProperty]
+        public virtual int Count { get; internal set; }
+
         /// <summary>
         /// This provides a place to put a total count when $top is called.
         /// If $top=100 is called, Count will be 100, but for paging, we need
@@ -26,7 +30,12 @@ namespace Rhyous.Odata
         /// </summary>
         [DataMember]
         [JsonProperty]
-        public virtual int TotalCount { get; set; }
+        public virtual int TotalCount
+        {
+            get
+            { return _TotalCount < Count ? Count : _TotalCount; }
+            set { _TotalCount = value; }
+        } private int _TotalCount;
 
         /// <summary>
         /// A list of RelatedEntityCollections. This provides a place for common entities to be included,

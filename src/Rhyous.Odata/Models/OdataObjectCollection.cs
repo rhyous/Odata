@@ -85,7 +85,7 @@ namespace Rhyous.Odata
 
         [DataMember]
         [JsonProperty]
-        public int Count { get { return Entities.Count; } internal set { } }
+        public override int Count { get { return Entities.Count; } internal set { } }
         
         [JsonIgnore]
         [IgnoreDataMember]

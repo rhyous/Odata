@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Business\RelatedEntitySorterTests.cs" />
+    <Compile Include="Models\OdataObjectCollectionBaseTests.cs" />
     <Compile Include="Serialization\ParentOnDeserializationTests.cs" />
     <Compile Include="Sorters\RelatedEntityManyToManySorterTests.cs" />
     <Compile Include="Sorters\RelatedEntityOneToManySorterTests.cs" />
