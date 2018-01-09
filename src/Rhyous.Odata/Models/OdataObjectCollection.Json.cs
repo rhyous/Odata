@@ -13,15 +13,8 @@ namespace Rhyous.Odata
     /// <typeparam name="TEntity">The entity type.</typeparam>
     [JsonObject]
     [DataContract]
-    public class OdataObjectCollection : IList<OdataObject>
+    public class OdataObjectCollection : OdataObjectCollectionBase, IList<OdataObject>
     {
-        /// <summary>
-        /// The name of the Entity type returned
-        /// </summary>
-        [DataMember]
-        [JsonProperty]
-        public string Entity { get; set; }
-
         /// <summary>
         /// A list of Entities
         /// </summary>
@@ -32,19 +25,6 @@ namespace Rhyous.Odata
             get { return _Entities ?? (_Entities = new ParentedList<OdataObject>(this)); }
             set { _Entities = value; }
         } private ParentedList<OdataObject> _Entities;
-
-        /// <summary>
-        /// A list of RelatedEntityCollections. This provides a place for common entities to be included,
-        /// so they don't have to be repeated. This will result in much smaller json/xml serialization.
-        /// Imagine a list of users that each are a member of a UserGroup. 
-        /// </summary>
-        [DataMember]
-        [JsonProperty]
-        public virtual ParentedList<RelatedEntityCollection> RelatedEntityCollection
-        {
-            get { return _RelatedEntities ?? (_RelatedEntities = new ParentedList<RelatedEntityCollection>(this)); }
-            set { _RelatedEntities = value; }
-        } private ParentedList<RelatedEntityCollection> _RelatedEntities;
         
         #region Implicit Operator
         /// <summary>

@@ -13,38 +13,20 @@ namespace Rhyous.Odata
     /// <typeparam name="TEntity">The entity type.</typeparam>
     [JsonObject]
     [DataContract]
-    public class OdataObjectCollection<TEntity, TId> : IList<OdataObject<TEntity, TId>>
+    public class OdataObjectCollection<TEntity, TId> : OdataObjectCollectionBase, IList<OdataObject<TEntity, TId>>
     {
-        /// <summary>
-        /// The name of the Entity type returned
-        /// </summary>
-        [DataMember]
-        [JsonProperty]
-        public string Entity { get { return typeof(TEntity).Name; } internal set { } }
+        public OdataObjectCollection() : base(typeof(TEntity).Name) { }
 
         /// <summary>
         /// A list of Entities
         /// </summary>
         [DataMember]
         [JsonProperty]
-        internal List<OdataObject<TEntity, TId>> Entities
+        internal ParentedList<OdataObject<TEntity, TId>> Entities
         {
-            get { return _Entities ?? (_Entities = new List<OdataObject<TEntity, TId>>()); }
+            get { return _Entities ?? (_Entities = new ParentedList<OdataObject<TEntity, TId>>()); }
             set { _Entities = value; }
-        } private List<OdataObject<TEntity, TId>> _Entities;
-
-        /// <summary>
-        /// A list of RelatedEntityCollections. This provides a place for common entities to be included,
-        /// so they don't have to be repeated. This will result in much smaller json/xml serialization.
-        /// Imagine a list of users that each are a member of a UserGroup. 
-        /// </summary>
-        [DataMember]
-        [JsonProperty]
-        public virtual ParentedList<RelatedEntityCollection> RelatedEntityCollection
-        {
-            get { return _RelatedEntityCollection ?? (_RelatedEntityCollection = new ParentedList<RelatedEntityCollection>()); }
-            set { _RelatedEntityCollection = value; }
-        } private ParentedList<RelatedEntityCollection> _RelatedEntityCollection;
+        } private ParentedList<OdataObject<TEntity, TId>> _Entities;
         
         #region Implicit Operator
         /// <summary>
@@ -104,7 +86,7 @@ namespace Rhyous.Odata
         [DataMember]
         [JsonProperty]
         public int Count { get { return Entities.Count; } internal set { } }
-
+        
         [JsonIgnore]
         [IgnoreDataMember]
         public bool IsReadOnly => false;

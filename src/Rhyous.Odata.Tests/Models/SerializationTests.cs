@@ -54,7 +54,7 @@ namespace Rhyous.Odata.Tests.Models
             var odataObject = user.AsOdata<User, int>();
             var expected = "{\"Id\":1,\"Object\":{\"Id\":1,\"Name\":\"User1\",\"UserTypeId\":0},\"Uri\":null}";
             var settings = new JsonSerializerSettings() { ContractResolver = new OrderedContractResolver() };
-             
+            
             // Act
             var json = JsonConvert.SerializeObject(odataObject, settings);
 
@@ -89,8 +89,7 @@ namespace Rhyous.Odata.Tests.Models
             var odataObject3 = user3.AsOdata<User, int>();
             var collection = new OdataObjectCollection<User, int>();
             collection.AddRange(new[] { odataObject1, odataObject2, odataObject3 });
-            var expected = "{\"Count\":3,\"Entities\":[{\"Uri\":null,\"Id\":1,\"Object\":{\"Id\":1,\"Name\":\"User1\",\"UserTypeId\":0},\"RelatedEntityCollection\":[],\"PropertyUris\":[]},{\"Uri\":null,\"Id\":2,\"Object\":{\"Id\":2,\"Name\":\"User2\",\"UserTypeId\":0},\"RelatedEntityCollection\":[],\"PropertyUris\":[]},{\"Uri\":null,\"Id\":3,\"Object\":{\"Id\":3,\"Name\":\"User3\",\"UserTypeId\":0},\"RelatedEntityCollection\":[],\"PropertyUris\":[]}],\"Entity\":\"User\",\"RelatedEntityCollection\":[]}";
-
+            var expected = "{\"Entity\":\"User\",\"RelatedEntityCollection\":[],\"TotalCount\":0,\"Count\":3,\"Entities\":[{\"Uri\":null,\"Id\":1,\"Object\":{\"Id\":1,\"Name\":\"User1\",\"UserTypeId\":0},\"RelatedEntityCollection\":[],\"PropertyUris\":[]},{\"Uri\":null,\"Id\":2,\"Object\":{\"Id\":2,\"Name\":\"User2\",\"UserTypeId\":0},\"RelatedEntityCollection\":[],\"PropertyUris\":[]},{\"Uri\":null,\"Id\":3,\"Object\":{\"Id\":3,\"Name\":\"User3\",\"UserTypeId\":0},\"RelatedEntityCollection\":[],\"PropertyUris\":[]}]}";
             var serializer = new DataContractJsonSerializer(typeof(OdataObjectCollection<User, int>), new[] { typeof(OdataObject<User, int>) });
 
             // Act
@@ -138,7 +137,7 @@ namespace Rhyous.Odata.Tests.Models
             var odataObject1 = user1.AsOdata<User, int>();
             var odataObject2 = user2.AsOdata<User, int>();
             var odataObject3 = user3.AsOdata<User, int>();
-            var expected = "{\"Count\":3,\"Entities\":[{\"Id\":1,\"Object\":{\"Id\":1,\"Name\":\"User1\",\"UserTypeId\":0},\"Uri\":null},{\"Id\":2,\"Object\":{\"Id\":2,\"Name\":\"User2\",\"UserTypeId\":0},\"Uri\":null},{\"Id\":3,\"Object\":{\"Id\":3,\"Name\":\"User3\",\"UserTypeId\":0},\"Uri\":null}],\"Entity\":\"User\"}";
+            var expected = "{\"Count\":3,\"Entities\":[{\"Id\":1,\"Object\":{\"Id\":1,\"Name\":\"User1\",\"UserTypeId\":0},\"Uri\":null},{\"Id\":2,\"Object\":{\"Id\":2,\"Name\":\"User2\",\"UserTypeId\":0},\"Uri\":null},{\"Id\":3,\"Object\":{\"Id\":3,\"Name\":\"User3\",\"UserTypeId\":0},\"Uri\":null}],\"Entity\":\"User\",\"TotalCount\":0}";
             var collection = new OdataObjectCollection<User, int>();
             collection.AddRange(new[] { odataObject1, odataObject2, odataObject3 });            
             var settings = new JsonSerializerSettings() { ContractResolver = new OrderedContractResolver() };
@@ -154,7 +153,7 @@ namespace Rhyous.Odata.Tests.Models
         public void TestDeserialization()
         {
             // Arrange
-            var json = "{\"Count\":1,\"Entities\":[{\"Id\":1,\"Object\":{\"Id\":1,\"UserGroupId\":1,\"UserId\":1},\"RelatedEntityCollection\":[{\"Count\":1,\"RelatedEntity\":\"UserGroup\",\"RelatedEntities\":[{\"Id\":\"1\",\"Object\":{\"Id\":1,\"Name\":\"System Users\",\"CreateDate\":\"2017-08-22T16:47:28.283\",\"CreatedBy\":1,\"Description\":null,\"LastUpdated\":null,\"LastUpdatedBy\":null},\"Uri\":\"http://localhost:3896/UserGroupService.svc/UserGroups/Ids(1)\"}]}],\"Uri\":\"http://localhost:3896/UserGroupMembershipService.svc/UserGroupMemberships/UserId/Values(1)\"}],\"Entity\":\"UserGroupMembership\"}";
+            var json = "{\"Count\":1,\"Entities\":[{\"Id\":1,\"Object\":{\"Id\":1,\"UserGroupId\":1,\"UserId\":1},\"RelatedEntityCollection\":[{\"Count\":1,\"RelatedEntity\":\"UserGroup\",\"RelatedEntities\":[{\"Id\":\"1\",\"Object\":{\"Id\":1,\"Name\":\"System Users\",\"CreateDate\":\"2017-08-22T16:47:28.283\",\"CreatedBy\":1,\"Description\":null,\"LastUpdated\":null,\"LastUpdatedBy\":null},\"Uri\":\"http://localhost:3896/UserGroupService.svc/UserGroups/Ids(1)\"}]}],\"Uri\":\"http://localhost:3896/UserGroupMembershipService.svc/UserGroupMemberships/UserId/Values(1)\"}],\"Entity\":\"UserGroupMembership\",\"TotalCount\":0}";
 
             // Act
             var collection = JsonConvert.DeserializeObject<OdataObjectCollection>(json);

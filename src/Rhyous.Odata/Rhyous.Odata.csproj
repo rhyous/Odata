@@ -53,6 +53,7 @@
     <Compile Include="Attributes\RelatedEntityExclusionsAttribute.cs" />
     <Compile Include="Attributes\RelatedEntityForeignAttribute.cs" />
     <Compile Include="Interfaces\IRelatedEntityCollater.cs" />
+    <Compile Include="Models\OdataObjectCollectionBase.cs" />
     <Compile Include="Sorters\RelatedEntityManyToOneSorter.cs" />
     <Compile Include="Sorters\RelatedEntityOneToManySorter.cs" />
     <Compile Include="Dictionaries\SortMethodDictionary.cs" />
