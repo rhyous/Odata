@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace Rhyous.Odata.Tests
 {
@@ -52,6 +54,53 @@ namespace Rhyous.Odata.Tests
 
             // Assert
             Assert.AreEqual(expected, actual.Uri.ToString());
+        }
+
+        [TestMethod]
+        public void ToOdataObjectTest()
+        {
+            // Arrange
+            var re = new RelatedEntity { Id = "7"};
+            var smile = new Smile { Id = 7, SmileType = "Wide" };
+            var json = JsonConvert.SerializeObject(smile);
+            re.Object = new JRaw(json);
+
+            // Act
+            var actualObj = re.ToOdataObject<Smile, int>();
+
+            // Assert
+            Assert.AreEqual(7, actualObj.Id);
+            Assert.AreEqual(7, actualObj.Object.Id);
+            Assert.AreEqual("Wide", actualObj.Object.SmileType);
+        }
+
+        [TestMethod]
+        public void GetRelatedEntityTest()
+        {
+            // Arrange
+            var odataUser = new OdataObject<User, int>();            
+            var re1 = new RelatedEntity { Id = "7" };
+            var smile1 = new Smile { Id = 7, SmileType = "Wide" };
+            var json1 = JsonConvert.SerializeObject(smile1);
+            re1.Object = new JRaw(json1);
+
+            var re2 = new RelatedEntity { Id = "8" };
+            var smile2 = new Smile { Id = 8, SmileType = "Flat" };
+            var json2 = JsonConvert.SerializeObject(smile2);
+            re2.Object = new JRaw(json2);
+            var rec = new RelatedEntityCollection { re1, re2 };
+            rec.RelatedEntity = "Smile";
+            odataUser.RelatedEntityCollection.Add(rec);
+
+            // Act
+            var odataSmileCollection = odataUser.GetRelatedEntityCollection<Smile, int>();
+
+            // Assert
+            Assert.AreEqual(2, odataSmileCollection.Count);
+            Assert.AreEqual(7, odataSmileCollection[0].Id);
+            Assert.AreEqual("Wide", odataSmileCollection[0].Object.SmileType);
+            Assert.AreEqual(8, odataSmileCollection[1].Id);
+            Assert.AreEqual("Flat", odataSmileCollection[1].Object.SmileType);
         }
     }
 }

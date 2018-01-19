@@ -11,7 +11,7 @@ namespace Rhyous.Odata
     /// This object is used to return any entity and provide data about that entity.
     /// </summary>
     [DataContract]
-    public class OdataObject
+    public class OdataObject : IRelatedEntityCollection
     {
         /// <summary>
         /// The entity's web service uri.

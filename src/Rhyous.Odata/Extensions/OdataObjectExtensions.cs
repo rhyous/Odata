@@ -1,5 +1,8 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Linq;
+using Rhyous.StringLibrary;
+using System;
 
 namespace Rhyous.Odata
 {
@@ -43,6 +46,36 @@ namespace Rhyous.Odata
             re.RelatedEntityCollection = obj.RelatedEntityCollection;
             re.Uri = obj.Uri;
             return re;
+        }
+
+        public static OdataObject<TEntity, TId> ToOdataObject<TEntity, TId>(this OdataObject<JRaw, string> obj)
+            where TId : IComparable<TId>, IComparable, IEquatable<TId>
+        {
+            var retObj = new OdataObject<TEntity, TId>();
+            retObj.Id = obj.Id.To<TId>();
+            retObj.IdProperty = obj.IdProperty;
+            retObj.Object = JsonConvert.DeserializeObject<TEntity>(obj.Object.ToString());            
+            retObj.PropertyUris = obj.PropertyUris;
+            retObj.RelatedEntityCollection = obj.RelatedEntityCollection;
+            retObj.Uri = obj.Uri;
+            return retObj;
+        }
+
+        public static OdataObjectCollection<TRelatedEntity, TRelatedEntityId> GetRelatedEntityCollection<TRelatedEntity, TRelatedEntityId>(this IRelatedEntityCollection odataObj)
+            where TRelatedEntityId : IComparable<TRelatedEntityId>, IComparable, IEquatable<TRelatedEntityId>
+        {
+            var relatedEntity = typeof(TRelatedEntity).Name;
+            var relatedEntityCollection = odataObj.RelatedEntityCollection.FirstOrDefault(re => re.RelatedEntity == relatedEntity);
+            if (relatedEntityCollection == null)
+                return null;
+            var collection = new OdataObjectCollection<TRelatedEntity, TRelatedEntityId>();
+            foreach (var item in relatedEntityCollection)
+            {
+                var obj = JsonConvert.DeserializeObject<TRelatedEntity>(item.Object.ToString());
+                var odataItem = item.ToOdataObject<TRelatedEntity, TRelatedEntityId>();
+                collection.Add(odataItem);
+            }
+            return collection;
         }
     }
 }

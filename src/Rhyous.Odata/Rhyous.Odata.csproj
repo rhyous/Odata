@@ -36,6 +36,9 @@
     <Reference Include="Rhyous.Collections, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\Packages\Rhyous.Collections.1.0.5\lib\net461\Rhyous.Collections.dll</HintPath>
     </Reference>
+    <Reference Include="Rhyous.StringLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\Packages\Rhyous.StringLibrary.1.1.0\lib\net461\Rhyous.StringLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
@@ -53,6 +56,7 @@
     <Compile Include="Attributes\RelatedEntityExclusionsAttribute.cs" />
     <Compile Include="Attributes\RelatedEntityForeignAttribute.cs" />
     <Compile Include="Interfaces\IRelatedEntityCollater.cs" />
+    <Compile Include="Interfaces\IRelatedEntityCollection.cs" />
     <Compile Include="Models\OdataObjectCollectionBase.cs" />
     <Compile Include="Sorters\RelatedEntityManyToOneSorter.cs" />
     <Compile Include="Sorters\RelatedEntityOneToManySorter.cs" />

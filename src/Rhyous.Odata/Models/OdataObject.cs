@@ -11,7 +11,7 @@ namespace Rhyous.Odata
     /// </summary>
     /// <typeparam name="TEntity">The entity type.</typeparam>
     [DataContract]
-    public class OdataObject<TEntity, TId>
+    public class OdataObject<TEntity, TId> : IRelatedEntityCollection
     {
         /// <summary>
         /// The entity's web service uri.
