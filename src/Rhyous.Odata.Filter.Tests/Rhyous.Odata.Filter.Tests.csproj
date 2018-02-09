@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="Builder\FilterExpressionBuilderTests.cs" />
     <Compile Include="Extensions\FilterExtensionTests.cs" />
+    <Compile Include="Extensions\NameValueCollectionExtensionsTests.cs" />
     <Compile Include="Handlers\QuoteHandlerTests.cs" />
     <Compile Include="Parsers\FilterExpressionParserTests.cs" />
     <Compile Include="TestModels\Entity1.cs" />
