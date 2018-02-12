@@ -61,6 +61,10 @@
       <Project>{b271f848-e84c-428b-8b1b-45e47b41ede3}</Project>
       <Name>Rhyous.Odata.Expand</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Rhyous.Odata.Tests.Models\Rhyous.Odata.Tests.Models.csproj">
+      <Project>{fe9de865-8c24-4694-a93a-4c76d34e7735}</Project>
+      <Name>Rhyous.Odata.Tests.Models</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Rhyous.Odata.Tests\Rhyous.Odata.Tests.csproj">
       <Project>{4524163c-99ce-4bc5-af26-ab91875a3ca9}</Project>
       <Name>Rhyous.Odata.Tests</Name>

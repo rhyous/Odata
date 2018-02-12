@@ -1,31 +1,33 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Rhyous.Odata.Tests
 {
     [TestClass]
-    public partial class OdataObjectTests
+    public class OdataObjectJsonTests
     {
+        public class Entity1 { public int Id { get; set; }}
 
         [TestMethod]
         public void SettingObjectSetsIdTest()
         {
             // Arrange
-            var odataObj = new OdataObject<Entity1, int>();
-            var entity1 = new Entity1 { Id = 10 };
+            var odataObj = new OdataObject();
+            var entity1 = new JRaw(JsonConvert.SerializeObject(new Entity1 { Id = 10 }));
 
             // Act
             odataObj.Object = entity1;
 
             // Assert
-            Assert.AreEqual(10, odataObj.Id);
+            Assert.AreEqual("10", odataObj.Id);
         }
 
         [TestMethod]
         public void SettingObjectNullTest()
         {
             // Arrange
-            var odataObj = new OdataObject<Entity1, int>();
+            var odataObj = new OdataObject();
 
             // Act
             odataObj.Object = null;
@@ -38,37 +40,21 @@ namespace Rhyous.Odata.Tests
         public void SettingObjectNullPreviousValueNotNullTest()
         {
             // Arrange
-            var odataObj = new OdataObject<Entity1, int> { Object = new Entity1 { Id = 10 } };
+            var odataObj = new OdataObject { Object = new JRaw(JsonConvert.SerializeObject(new Entity1 { Id = 10 })) };
 
             // Act
             odataObj.Object = null;
 
             // Assert
             Assert.IsNull(odataObj.Object);
-            Assert.AreEqual(10, odataObj.Id, "Changing object to null doesn't alter the id.");
+            Assert.AreEqual("10", odataObj.Id, "Changing object to null doesn't alter the id.");
         }
 
         [TestMethod]
         public void ImplicitCastDefaultObjectTest()
         {
             // Arrange
-            var odataObj = new OdataObject<Entity1, int>();
-
-            // Act
-            RelatedEntity re = odataObj;
-
-            // Assert
-            foreach (var prop in odataObj.GetType().GetProperties())
-            {
-                Assert.AreEqual(re.GetType().GetProperty(prop.Name).GetValue(re)?.ToString(), prop.GetValue(odataObj)?.ToString());
-            }
-        }
-
-        [TestMethod]
-        public void ImplicitCastJRawStringObjectTest()
-        {
-            // Arrange
-            var odataObj = new OdataObject<JRaw, string>();
+            var odataObj = new OdataObject();
 
             // Act
             RelatedEntity re = odataObj;
@@ -84,9 +70,9 @@ namespace Rhyous.Odata.Tests
         public void ImplicitCastObjectPopulatedTest()
         {
             // Arrange
-            var odataObj = new OdataObject<Entity1, int>();
+            var odataObj = new OdataObject();
             var entity1 = new Entity1 { Id = 10 };
-            odataObj.Object = entity1;
+            odataObj.Object = new JRaw(JsonConvert.SerializeObject(entity1));
 
             // Act
             RelatedEntity re = odataObj;

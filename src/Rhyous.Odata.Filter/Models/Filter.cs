@@ -66,20 +66,24 @@ namespace Rhyous.Odata
         #endregion
 
         #region implicit casts
-        // User-defined conversion from Digit to double
-        public static implicit operator string(Filter<TEntity> item)
+        public static implicit operator string(Filter<TEntity> filter)
         {
-            return item.ToString();
+            if (filter == null || !filter.IsComplete)
+                return null;
+            return filter.ToString();
         }
-
-        // User-defined conversion from Digit to double
+        
         public static implicit operator Filter<TEntity>(string str)
         {
+            if (string.IsNullOrWhiteSpace(str))
+                return null;
             return new Filter<TEntity> { NonFilter = str };
         }
 
         public static implicit operator Expression<Func<TEntity, bool>>(Filter<TEntity> filter)
         {
+            if (filter == null || !filter.IsComplete)
+                return null;
             var possiblePropName = filter.Left.ToString();
             ParameterExpression parameter = Expression.Parameter(typeof(TEntity), "e");
             Expression left = filter.Left.IsSimpleString ? Expression.Property(parameter, possiblePropName) as Expression : filter.Left;
@@ -113,10 +117,9 @@ namespace Rhyous.Odata
                 method = Expression.Call(left, methodInfo, right);
             }
             return Expression.Lambda<Func<TEntity, bool>>(filter.Not ? Expression.Not(method) : method, parameter);
-        }
-        internal static BindingFlags MethodFlags = BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance;
+        } internal static BindingFlags MethodFlags = BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance;
 
-        private static Expression<Func<TEntity, bool>> GetCombinedExpression(Expression left, Expression right, Conjunction conj)
+        internal static Expression<Func<TEntity, bool>> GetCombinedExpression(Expression left, Expression right, Conjunction conj)
         {
             var starter = PredicateBuilder.New<TEntity>();
             starter.Start(left as Expression<Func<TEntity, bool>>);

@@ -5,7 +5,7 @@ using Newtonsoft.Json.Linq;
 namespace Rhyous.Odata.Tests
 {
     [TestClass]
-    public class RelatedEntityTests
+    public class RelatedEntityJsonTests
     {
         [TestMethod]
         public void SettingObjectSetsIdTest()
@@ -47,61 +47,6 @@ namespace Rhyous.Odata.Tests
 
             // Assert
             Assert.AreEqual("3", relatedEntity.Id);
-        }
-
-        [TestMethod]
-        public void ImplicitOperatorNullTest()
-        {
-            // Arrange
-            RelatedEntity<User,int> re1 = null;
-
-            // Act
-            RelatedEntity re2 = re1;
-
-            // Assert
-            Assert.IsNull(re2);
-        }
-
-        [TestMethod]
-        public void ImplicitOperatorDefaultTest()
-        {
-            // Arrange
-            var re1 = new RelatedEntity<User, int>();
-
-            // Act
-            RelatedEntity re2 = re1;
-
-            // Assert
-            Assert.IsNotNull(re2);
-            Assert.AreEqual("0", re2.Id);
-        }
-
-        [TestMethod]
-        public void ImplicitOperatorStringIdTest()
-        {
-            // Arrange
-            var re1 = new RelatedEntity<Entity2, string>();
-
-            // Act
-            RelatedEntity re2 = re1;
-
-            // Assert
-            Assert.IsNotNull(re2);
-            Assert.IsNull(re2.Id);
-        }
-
-        [TestMethod]
-        public void ImplicitOperatorNewJRawStringTest()
-        {
-            // Arrange
-            var re1 = new RelatedEntity<JRaw, string>();
-
-            // Act
-            RelatedEntity re2 = re1;
-
-            // Assert
-            Assert.IsNotNull(re2);
-            Assert.IsNull(re2.Id);
         }
     }
 }

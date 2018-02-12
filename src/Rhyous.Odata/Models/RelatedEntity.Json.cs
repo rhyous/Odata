@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System;
 using System.Runtime.Serialization;
 
 namespace Rhyous.Odata
@@ -9,6 +10,8 @@ namespace Rhyous.Odata
         internal protected override void SetId(JRaw value)
         {
             if (value == null || string.IsNullOrWhiteSpace(value.ToString()))
+                return;
+            if (value == null || string.IsNullOrWhiteSpace(value.ToString()) || value.ToString().Equals("null", StringComparison.OrdinalIgnoreCase))
                 return;
             var jObj = JObject.Parse(value.ToString());
             Id = jObj.GetIdDynamic("IdProperty") ?? Id;

@@ -1,4 +1,5 @@
 ﻿using System;
+using Rhyous.Odata.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Rhyous.Odata.Tests.Extensions

@@ -87,7 +87,7 @@ namespace Rhyous.Odata
         #region Implicit Operator
         public static implicit operator RelatedEntity(OdataObject o)
         {
-            return o.AsRelatedEntity();
+            return o?.AsRelatedEntity();
         }
         #endregion
     }

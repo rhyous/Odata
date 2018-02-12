@@ -11,7 +11,7 @@ namespace Rhyous.Odata
         public static RelatedEntity AsRelatedEntity(this OdataObject o, RelatedEntity re = null)
         {
             re = re ?? new RelatedEntity();
-            re.Id = o.Id.ToString();
+            re.Id = o.Id?.ToString();
             re.IdProperty = o.IdProperty;
             re.Object = o.Object;
             re.Parent = re.Parent;
@@ -24,7 +24,7 @@ namespace Rhyous.Odata
         public static RelatedEntity AsRelatedEntity(this OdataObject<JRaw, string> o, RelatedEntity re = null)
         {
             re = re ?? new RelatedEntity();
-            re.Id = o.Id.ToString();
+            re.Id = o.Id?.ToString();
             re.IdProperty = o.IdProperty;
             re.Object = o.Object;
             re.Parent = re.Parent;
@@ -38,7 +38,7 @@ namespace Rhyous.Odata
         {
             JRaw rawObj = obj.Object == null ? null : new JRaw(JsonConvert.SerializeObject(obj.Object));
             re = re ?? new RelatedEntity();
-            re.Id = obj.Id.ToString();
+            re.Id = obj.Id?.ToString();
             re.IdProperty = obj.IdProperty;
             re.Object = rawObj;
             re.Parent = re.Parent;

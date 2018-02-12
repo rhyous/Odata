@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2006
+VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rhyous.Odata.Filter", "Rhyous.Odata.Filter\Rhyous.Odata.Filter.csproj", "{723DD23C-8D87-49BD-B456-80BAE0C78D69}"
 EndProject
@@ -18,6 +18,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rhyous.Odata.Expand", "Rhyous.Odata.Expand\Rhyous.Odata.Expand.csproj", "{B271F848-E84C-428B-8B1B-45E47B41EDE3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rhyous.Odata.Expand.Tests", "Rhyous.Odata.Expand.Tests\Rhyous.Odata.Expand.Tests.csproj", "{F51F8BCD-D0C3-4EEC-9F82-88EDEB044474}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rhyous.Odata.Tests.Models", "Rhyous.Odata.Tests.Models\Rhyous.Odata.Tests.Models.csproj", "{FE9DE865-8C24-4694-A93A-4C76D34E7735}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +59,10 @@ Global
 		{F51F8BCD-D0C3-4EEC-9F82-88EDEB044474}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F51F8BCD-D0C3-4EEC-9F82-88EDEB044474}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F51F8BCD-D0C3-4EEC-9F82-88EDEB044474}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE9DE865-8C24-4694-A93A-4C76D34E7735}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE9DE865-8C24-4694-A93A-4C76D34E7735}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE9DE865-8C24-4694-A93A-4C76D34E7735}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE9DE865-8C24-4694-A93A-4C76D34E7735}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

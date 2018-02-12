@@ -57,7 +57,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Business\RelatedEntitySorterTests.cs" />
+    <Compile Include="Models\RelatedEntity.Json.Tests.cs" />
     <Compile Include="Models\OdataObjectCollectionBaseTests.cs" />
+    <Compile Include="Models\OdataObject.Json.Tests.cs" />
+    <Compile Include="Models\OdataObjectCollection.Json.Tests.cs" />
+    <Compile Include="Models\OdataObjectCollectionTests.cs" />
     <Compile Include="Serialization\ParentOnDeserializationTests.cs" />
     <Compile Include="Sorters\RelatedEntityManyToManySorterTests.cs" />
     <Compile Include="Sorters\RelatedEntityOneToManySorterTests.cs" />
@@ -72,18 +76,15 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serialization\ContractResolverTests.cs" />
     <Compile Include="TestHelpers\OrderedContractResolver.cs" />
-    <Compile Include="TestModels\Addendum.cs" />
-    <Compile Include="TestModels\Smile.cs" />
-    <Compile Include="TestModels\Token.cs" />
-    <Compile Include="TestModels\UserGroupMembership.cs" />
-    <Compile Include="TestModels\UserGroup.cs" />
-    <Compile Include="TestModels\UserType.cs" />
-    <Compile Include="TestModels\User.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Rhyous.Odata.Tests.Models\Rhyous.Odata.Tests.Models.csproj">
+      <Project>{fe9de865-8c24-4694-a93a-4c76d34e7735}</Project>
+      <Name>Rhyous.Odata.Tests.Models</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Rhyous.Odata\Rhyous.Odata.csproj">
       <Project>{ac113e7b-4bd4-4daf-8620-df934fee493a}</Project>
       <Name>Rhyous.Odata</Name>

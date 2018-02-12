@@ -88,6 +88,8 @@ namespace Rhyous.Odata
         #region Implicit Operator
         public static implicit operator RelatedEntity(OdataObject<TEntity, TId> o)
         {
+            if (o == null)
+                return null;
             return o.AsRelatedEntity();
         }
         #endregion

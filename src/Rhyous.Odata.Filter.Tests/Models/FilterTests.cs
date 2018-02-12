@@ -1,4 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Linq.Expressions;
 
 namespace Rhyous.Odata.Tests
 {
@@ -112,5 +114,129 @@ namespace Rhyous.Odata.Tests
         {
             public A Parent { get ; set; }
         }
+
+        #region Imlicit operator cast Filter to string tests
+        [TestMethod]
+        public void ImplicitOperatorFilterToStringNullTest()
+        {
+            // Arrange
+            Filter<User> f = null;
+
+            // Act
+            string s = f;
+
+            // Assert
+            Assert.IsNull(s);
+        }
+
+        [TestMethod]
+        public void ImplicitOperatorFilterToStringDefaultTest()
+        {
+            // Arrange
+            Filter<User> f = new Filter<User>();
+
+            // Act
+            string s = f;
+
+            // Assert
+            Assert.IsNull(s);
+        }
+        #endregion
+
+        #region Imlicit operator cast string to filter tests
+        [TestMethod]
+        public void ImplicitOperatorStringToFilterNullTest()
+        {
+            // Arrange
+            string s = null;
+
+            // Act
+            Filter<User> f = s;
+
+            // Assert
+            Assert.IsNull(f);
+        }
+
+        [TestMethod]
+        public void ImplicitOperatorStringToFilterEmptyTest()
+        {
+            // Arrange
+            string s = "";
+
+            // Act
+            Filter<User> f = s;
+
+            // Assert
+            Assert.IsNull(f);
+        }
+
+        [TestMethod]
+        public void ImplicitOperatorStringToFilterWhitespaceTest()
+        {
+            // Arrange
+            string s = "   ";
+
+            // Act
+            Filter<User> f = s;
+
+            // Assert
+            Assert.IsNull(f);
+        }
+
+        [TestMethod]
+        public void ImplicitOperatorStringToFilterGarbageTest()
+        {
+            // Arrange
+            string s = "asdfsaldkjflsjd;lj;asd032498r304a;sldkcn";
+
+            // Act
+            Filter<User> f = s;
+
+            // Assert
+            Assert.AreEqual(s, f.ToString());
+        }
+
+        [TestMethod]
+        public void ImplicitOperatorStringToFilterValidTest()
+        {
+            // Arrange
+            string s = "Id eq 1";
+
+            // Act
+            Filter<User> f = s;
+
+            // Assert
+            Assert.AreEqual(s, f.ToString());
+            Assert.IsTrue(f.IsSimpleString);
+        }
+        #endregion
+
+        #region Imlicit operator cast Filter to Expression<Func<T, bool>> tests
+        [TestMethod]
+        public void ImplicitOperatorFilterToExpressionFuncTBoolNullTest()
+        {
+            // Arrange
+            Filter<User> f = null;
+
+            // Act
+            Expression<Func<User,bool>> s = f;
+
+            // Assert
+            Assert.IsNull(s);
+        }
+
+        [TestMethod]
+        public void ImplicitOperatorFilterToExpressionFuncTBoolDefaultTest()
+        {
+            // Arrange
+            Filter<User> f = new Filter<User>();
+
+            // Act
+            Expression<Func<User, bool>> s = f;
+
+            // Assert
+            Assert.IsNull(s);
+        }
+        #endregion
     }
 }

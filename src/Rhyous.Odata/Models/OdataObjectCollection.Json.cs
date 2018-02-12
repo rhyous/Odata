@@ -34,6 +34,8 @@ namespace Rhyous.Odata
         /// <param name="c"></param>
         public static implicit operator RelatedEntityCollection(OdataObjectCollection c)
         {
+            if (c == null)
+                return null;
             var rec = new RelatedEntityCollection()
             {                
                 RelatedEntity = c.Entity,

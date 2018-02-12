@@ -54,7 +54,6 @@
     <Compile Include="Extensions\NameValueCollectionExtensionsTests.cs" />
     <Compile Include="Handlers\QuoteHandlerTests.cs" />
     <Compile Include="Parsers\FilterExpressionParserTests.cs" />
-    <Compile Include="TestModels\Entity1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\FilterTests.cs" />
     <Compile Include="Handlers\DelimiterHandlerTests.cs" />
@@ -77,6 +76,10 @@
     <ProjectReference Include="..\Rhyous.Odata.Filter\Rhyous.Odata.Filter.csproj">
       <Project>{723dd23c-8d87-49bd-b456-80bae0c78d69}</Project>
       <Name>Rhyous.Odata.Filter</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Rhyous.Odata.Tests.Models\Rhyous.Odata.Tests.Models.csproj">
+      <Project>{fe9de865-8c24-4694-a93a-4c76d34e7735}</Project>
+      <Name>Rhyous.Odata.Tests.Models</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
