@@ -28,6 +28,7 @@ namespace Rhyous.Odata
         /// <summary>
         /// This entity the attribute is applied to.
         /// </summary>
+        /// <remarks>[CallerMemberName] doesn't work at the class level, so this must be specified.</remarks>
         public string Entity { get; set; }
 
         /// <summary>

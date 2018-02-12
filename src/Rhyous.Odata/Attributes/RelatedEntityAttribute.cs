@@ -41,9 +41,10 @@ namespace Rhyous.Odata
 
         /// <inheritdoc />
         public bool GetAll { get; set; }
-        
+
         /// <summary>
         /// The name of the Property this attribute decorates.
+        /// [CallerMemberName] should take care of setting this.
         /// </summary>
         public string Property { get; set; }
     }
