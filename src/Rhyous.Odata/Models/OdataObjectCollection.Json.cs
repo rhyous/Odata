@@ -29,7 +29,7 @@ namespace Rhyous.Odata
         #region Implicit Operator
         /// <summary>
         /// This will convert an ODataObjectCollection to a RelatedEntityCollection, but it won't know
-        /// which Entity or EntityId it is related to and so these properties shoudl be set.
+        /// which Entity or EntityId it is related to and so these properties should be set.
         /// </summary>
         /// <param name="c"></param>
         public static implicit operator RelatedEntityCollection(OdataObjectCollection c)
