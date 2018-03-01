@@ -2,6 +2,8 @@
 {
     public class SortDetails
     {
+        public const string DefaultIdProperty = "Id";
+
         public SortDetails() { }
 
         public SortDetails(string entity, string relatedEntity, RelatedEntity.Type relatedEntityType)
@@ -24,7 +26,7 @@
         /// <summary>
         /// The name of the current entity's Id property. This should be just Id. So Id is the default.
         /// </summary>
-        public string EntityIdProperty { get; set; } = "Id";
+        public string EntityIdProperty { get; set; } = DefaultIdProperty;
 
         /// <summary>
         /// For OneToOne, this is the name of the property in the current entity that has the Id of the related entity.
@@ -44,13 +46,15 @@
             {
                 _RelatedEntity = value;
                 if (string.IsNullOrWhiteSpace(EntityToRelatedEntityProperty))
-                    EntityToRelatedEntityProperty = value + "Id";
+                    EntityToRelatedEntityProperty = value + DefaultIdProperty;
             }
         } private string _RelatedEntity;
 
         /// <summary>
         /// The name of the Id property in the related entity. This should be just Id. So Id is the default.
+        /// However, if this isn't the Id, but is an AlternateId or even a non-Id field, then that should
+        /// still work.
         /// </summary>
-        public string RelatedEntityIdProperty { get; set; } = "Id";
+        public string RelatedEntityIdProperty { get; set; } = DefaultIdProperty;
     }
 }
