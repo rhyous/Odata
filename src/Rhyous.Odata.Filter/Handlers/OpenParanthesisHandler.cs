@@ -16,11 +16,7 @@ namespace Rhyous.Odata
         {
             if (state.AppendIfInQuoteGroup())
                 return;
-            if (state.Builder.Length == 0)
-            {
-                throw new NotImplementedException("Grouping expressions is not yet implemented.");
-            }
-            state.SetMethodIfEmpty();
+            state.OpenParenthesis(state.Builder.Length == 0 ? ParenthesisType.Group : ParenthesisType.Method);
         }
     }
 }

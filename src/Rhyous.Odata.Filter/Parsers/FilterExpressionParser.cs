@@ -12,8 +12,8 @@ namespace Rhyous.Odata
             for (state.CharIndex = 0; state.CharIndex < state.FilterString.Length; state.CharIndex++)
             {
                 ActionDictionary.GetValueOrDefault(state.Char).Invoke(state);
-            }
-            state.Apply(); // Final apply required to get the last value.
+            }            
+            state.LastApply(); // Final apply required to get the last value.
             ExpressionStarter<TEntity> starter = PredicateBuilder.New<TEntity>();
             var rootFilter = state.CurrentFilter;
             while (rootFilter.Parent != null)

@@ -50,4 +50,14 @@
     <x:ExpectedExpression>e => ((e.Name == "Jared Barneck") OrElse (e.Name.Contains("Jared") AndAlso (e.Id == 1)))</x:ExpectedExpression>
     <x:Message>Expression should result in this expression: {0}. This is to test AND has precendence. The expression is correctly built according to precedence, but inpput logic, due to the lack of paranethesis, is probably wrong.</x:Message>
   </x:Row>
+  <x:Row>
+    <x:Query>Id eq 1 and Name eq Jared or Id eq 2 and Name eq Elih</x:Query>
+    <x:ExpectedExpression>e => (((e.Id == 1) AndAlso (e.Name == "Jared")) OrElse ((e.Id == 2) AndAlso (e.Name == "Elih")))</x:ExpectedExpression>
+    <x:Message>Expression should result in this expression: {0}.</x:Message>
+  </x:Row>
+  <x:Row>
+    <x:Query>Id eq 1 or Name eq Jared and Id eq 2 or Name eq Elih</x:Query>
+    <x:ExpectedExpression>e => (((e.Id == 1) OrElse ((e.Name == "Jared") AndAlso (e.Id == 2))) OrElse (e.Name == "Elih"))</x:ExpectedExpression>
+    <x:Message>Expression should result in this expression: {0}.</x:Message>
+  </x:Row>
 </Rows>

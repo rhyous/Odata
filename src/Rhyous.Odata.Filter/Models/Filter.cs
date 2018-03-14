@@ -9,10 +9,23 @@ namespace Rhyous.Odata
 {
     public class Filter<TEntity> : IParent<Filter<TEntity>>
     {
+        private static int InstanceId;
+        private static int MyInstanceId;
+        public Filter() { MyInstanceId = ++InstanceId; }
+
         #region Properties
         private string NonFilter { get; set; }
 
-        public Filter<TEntity> Parent { get; set; }
+        public Filter<TEntity> Parent
+        {
+            get { return _Parent; }
+            set
+            {
+                if (value == this)
+                    throw new Exception("Parent cannot be the same as the child.");
+                _Parent = value;
+            }
+        } private Filter<TEntity> _Parent;
 
         public Filter<TEntity> Left
         {
@@ -31,7 +44,7 @@ namespace Rhyous.Odata
             get { return _Method; }
             set { SafeSet(value, ref _Method); }
         } private string _Method;
-        
+
         internal void SafeSet<T>(T value, ref T _backingField, T parent = default(T))
         {
             if (Equals(value, _backingField))
@@ -72,7 +85,7 @@ namespace Rhyous.Odata
                 return null;
             return filter.ToString();
         }
-        
+
         public static implicit operator Filter<TEntity>(string str)
         {
             if (string.IsNullOrWhiteSpace(str))
@@ -97,7 +110,7 @@ namespace Rhyous.Odata
                 Conjunction conj;
                 if (!isNumeric && Enum.TryParse(filter.Method, true, out conj))
                 {
-                    return GetCombinedExpression(left, right, conj);                
+                    return GetCombinedExpression(left, right, conj);
                 }
                 method = func.Invoke(left, right);
             }

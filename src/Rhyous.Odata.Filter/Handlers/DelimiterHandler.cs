@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Rhyous.StringLibrary;
+using System;
 
 namespace Rhyous.Odata
 {

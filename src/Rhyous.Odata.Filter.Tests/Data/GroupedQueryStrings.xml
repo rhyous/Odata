@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Rows xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:x="urn:Row">
+  <!-- Schema -->
+  <xsd:schema targetNamespace="urn:Row" attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema" >
+    <xsd:element name="Row">
+      <xsd:complexType>
+        <xsd:sequence>
+          <xsd:element type="xsd:string" name="Query"/>
+          <xsd:element type="xsd:string" name="ExpectedExpression"/>
+          <xsd:element type="xsd:string" name="Message"/>
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <!--End Schema-->
+
+  <!-- Group -->
+  <x:Row>
+    <x:Query>(Id eq 1 and Name eq Jared) or (Id eq 2 and Name eq Elih)</x:Query>
+    <x:ExpectedExpression>e => (((e.Id == 1) AndAlso (e.Name == "Jared")) OrElse ((e.Id == 2) AndAlso (e.Name == "Elih")))</x:ExpectedExpression>
+    <x:Message>Expression should result in this expression: {0}.</x:Message>
+  </x:Row>
+  <x:Row>
+    <x:Query>(Id eq 1 and Name eq Jared and Cost eq 10) or (Id eq 2 and Name eq Elih)</x:Query>
+    <x:ExpectedExpression>e => (((e.Id == 1) AndAlso ((e.Name == "Jared") AndAlso (e.Cost == 10))) OrElse ((e.Id == 2) AndAlso (e.Name == "Elih")))</x:ExpectedExpression>
+    <x:Message>Expression should result in this expression: {0}.</x:Message>
+  </x:Row>
+  <x:Row>
+    <x:Query>(Id eq 1 and Name eq Jared)</x:Query>
+    <x:ExpectedExpression>e => ((e.Id == 1) AndAlso (e.Name == "Jared"))</x:ExpectedExpression>
+    <x:Message>Expression should result in this expression: {0}.</x:Message>
+  </x:Row>
+  <x:Row>
+    <x:Query>(Id eq 1)</x:Query>
+    <x:ExpectedExpression>e => (e.Id == 1)</x:ExpectedExpression>
+    <x:Message>Expression should result in this expression: {0}.</x:Message>
+  </x:Row>
+</Rows>

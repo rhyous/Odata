@@ -37,7 +37,7 @@
       <HintPath>..\Packages\Rhyous.Collections.1.0.7\lib\net461\Rhyous.Collections.dll</HintPath>
     </Reference>
     <Reference Include="Rhyous.StringLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Rhyous.StringLibrary.1.1.0\lib\net461\Rhyous.StringLibrary.dll</HintPath>
+      <HintPath>..\packages\Rhyous.StringLibrary.1.1.2\lib\net461\Rhyous.StringLibrary.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -55,7 +55,6 @@
     <Compile Include="Extensions\DictionaryExtensions.cs" />
     <Compile Include="Extensions\FilterExtensions.cs" />
     <Compile Include="Extensions\NameValueCollectionExtensions.cs" />
-    <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\ValueAccessorExtensions.cs" />
     <Compile Include="Handlers\DelimiterHandler.cs" />
     <Compile Include="Handlers\CloseParanthesisHandler.cs" />
@@ -69,6 +68,7 @@
     <Compile Include="Models\Filter.cs" />
     <Compile Include="Models\Group.cs" />
     <Compile Include="Models\Operator.cs" />
+    <Compile Include="Models\ParenthesisType.cs" />
     <Compile Include="Models\ParserState.cs" />
     <Compile Include="Builder\FilterExpressionBuilder.cs" />
     <Compile Include="Parsers\FilterExpressionParser.cs" />

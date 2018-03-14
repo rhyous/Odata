@@ -238,5 +238,96 @@ namespace Rhyous.Odata.Tests
             Assert.IsNull(s);
         }
         #endregion
+
+        #region Group tests
+
+
+        [TestMethod]
+        public void UngroupedFilterTest()
+        {
+            // Arrange
+            var expected = "e => ((e.Id == 1) AndAlso (e.Name == \"Jared\"))";
+            Filter<User> f = new Filter<User>
+            {
+                Left = new Filter<User>
+                {
+                    Left = "Id",
+                    Method = "eq",
+                    Right = "1"
+                },
+                Method = "and",
+                Right = new Filter<User>
+                {
+                    Left = "Name",
+                    Method = "eq",
+                    Right = "Jared"
+                },
+            };
+
+            // Act
+            Expression<Func<User, bool>> s = f;
+            var actual = s.ToString();
+
+            // Assert
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void GroupedFilterTest()
+        {
+            // Arrange
+            var expected = "e => (((e.Id == 1) AndAlso (e.Name == \"Jared\")) OrElse ((e.Id == 2) AndAlso (e.Name == \"Elih\")))";
+            Filter<User> f1 = new Filter<User>
+            {
+                Left = new Filter<User>
+                {
+                    Left = "Id",
+                    Method = "eq",
+                    Right = "1"
+                },
+                Method = "and",
+                Right = new Filter<User>
+                {
+                    Left = "Name",
+                    Method = "eq",
+                    Right = "Jared"
+                },
+            };
+            Filter<User> f2 = new Filter<User>
+            {
+                Left = new Filter<User>
+                {
+                    Left = "Id",
+                    Method = "eq",
+                    Right = "2"
+                },
+                Method = "and",
+                Right = new Filter<User>
+                {
+                    Left = "Name",
+                    Method = "eq",
+                    Right = "Elih"
+                },
+            };
+            var groupedFilter = new Filter<User> { Left = f1, Method = "or", Right = f2 };
+
+            // Act
+            Expression<Func<User, bool>> s = groupedFilter;
+            var actual = s.ToString();
+
+            // Assert
+            Assert.AreEqual(expected, actual);
+        }
+        #endregion
+
+        [TestMethod]
+        public void ParentCannotBeSameAsChildTest()
+        {
+            // Arrange
+            Filter<User> f1 = new Filter<User>();
+
+            // Act & Assert
+            Assert.ThrowsException<Exception>(() => { f1.Parent = f1; });
+        }
     }
 }
