@@ -18,7 +18,7 @@ namespace Rhyous.Odata
             if (state.Builder.Length == 0) // Handle extra spaces
                 return;
             var str = state.Builder.ToString();
-            if (str.ToEnum<Operator>(false) != null)
+            if (str.ToEnum<Operator>(true, false) != null)
             {
                 state.SetMethodIfEmpty();
                 return;
@@ -33,7 +33,7 @@ namespace Rhyous.Odata
 
         internal static bool HandleConjunction(ParserState<TEntity> state, string str)
         {
-            Conjunction? conj = str.ToEnum<Conjunction>(false);
+            Conjunction? conj = str.ToEnum<Conjunction>(true, false);
             if (conj != null)
             {
                 var container = state.CurrentFilter.Contain(conj.Value);

@@ -9,5 +9,8 @@ namespace Rhyous.Odata.Tests
         public double Cost { get; set; }
         public Guid Guid { get; set; }
         public DateTime Date { get; set; }
+        public string Entity { get; set; }
+        public string Property { get; set; }
+        public string Value { get; set; }
     }
 }
