@@ -18,7 +18,7 @@ namespace Rhyous.Odata.Expand
         /// <param name="entitiesToExpand"></param>
         /// <returns>A list of Attributes of type IRelatedEntity to expand.</returns>
         public IEnumerable<TAttribute> GetAttributesToExpand<TAttribute>(Type entityType, IEnumerable<string> entitiesToExpand = null)
-            where TAttribute : Attribute, IRelatedEntity
+            where TAttribute : Attribute, IRelatedEntityAttribute
         {
             var classAttribs = entityType.GetCustomAttributes<TAttribute>();
             var propAttribs = entityType.GetProperties().Select(p => p.GetCustomAttribute<TAttribute>(true));
@@ -34,13 +34,15 @@ namespace Rhyous.Odata.Expand
         /// <param name="attribs">The attributes.</param>
         /// <returns>A list of T which is a list of an attribute that implements IRelatedEntity.</returns>
         public IEnumerable<TAttribute> GetAttributesToExpand<TAttribute>(IEnumerable<string> entitiesToExpand, IEnumerable<TAttribute> attribs)
-            where TAttribute : Attribute, IRelatedEntity
+            where TAttribute : Attribute, IRelatedEntityAttribute
         {
             var safeAttribs = attribs.Where(a => a != null);
             if (entitiesToExpand == null || !entitiesToExpand.Any())
                 return safeAttribs.Where(a =>a.AutoExpand);
             else
-                return safeAttribs.Where(a => entitiesToExpand.Contains(a.RelatedEntity) || entitiesToExpand.Contains(ExpandConstants.WildCard));
+                return safeAttribs.Where(a => (entitiesToExpand.Contains(a.RelatedEntity) && string.IsNullOrWhiteSpace(a.RelatedEntityAlias)) 
+                                           || entitiesToExpand.Contains(a.RelatedEntityAlias)
+                                           || entitiesToExpand.Contains(ExpandConstants.WildCard));
         }
     }
 }

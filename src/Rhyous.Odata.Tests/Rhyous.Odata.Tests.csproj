@@ -52,11 +52,14 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Business\RelatedEntitySorterTests.cs" />
+    <Compile Include="Extensions\JObjectExtensionsTests.cs" />
+    <Compile Include="Extensions\JRawExtensionsTests.cs" />
     <Compile Include="Models\RelatedEntity.Json.Tests.cs" />
     <Compile Include="Models\OdataObjectCollectionBaseTests.cs" />
     <Compile Include="Models\OdataObject.Json.Tests.cs" />
@@ -89,6 +92,11 @@
       <Project>{ac113e7b-4bd4-4daf-8620-df934fee493a}</Project>
       <Name>Rhyous.Odata</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Data\JsonNullEmptyWhitespace.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

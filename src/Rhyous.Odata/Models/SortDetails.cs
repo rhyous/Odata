@@ -2,8 +2,6 @@
 {
     public class SortDetails
     {
-        public const string DefaultIdProperty = "Id";
-
         public SortDetails() { }
 
         public SortDetails(string entity, string relatedEntity, RelatedEntity.Type relatedEntityType)
@@ -26,11 +24,18 @@
         /// <summary>
         /// The name of the current entity's Id property. This should be just Id. So Id is the default.
         /// </summary>
-        public string EntityIdProperty { get; set; } = DefaultIdProperty;
+        public string EntityIdProperty { get; set; } = Constants.DefaultIdProperty;
 
         /// <summary>
-        /// For OneToOne, this is the name of the property in the current entity that has the Id of the related entity.
-        /// For ManyToOne or OneToOneForeign, this is the name of the property in the related entity that has the Id of the current entity.
+        /// This name of the property in the current entity that the foreign entity uses to map to.
+        /// Set this only if the foreign key does not reference the EntityIdProperty.
+        /// If not set, EntityIdProperty should be used.
+        /// </summary>
+        public string EntityProperty { get; set; } = Constants.DefaultIdProperty;
+
+        /// <summary>
+        /// For RelatedEntity (ManyToOne or OneToOne), this is the name of the property in the current entity that has the Id of the related entity.
+        /// For RelatedEntityForeign (OneToMany or OneToOneForeign), this is the name of the property in the related entity that has the Id of the current entity.
         /// For ManyToMany, this is the name of the property in the mapping entity that has the Id of the current entity.
         /// </summary>
         public string EntityToRelatedEntityProperty { get; set; }
@@ -46,7 +51,7 @@
             {
                 _RelatedEntity = value;
                 if (string.IsNullOrWhiteSpace(EntityToRelatedEntityProperty))
-                    EntityToRelatedEntityProperty = value + DefaultIdProperty;
+                    EntityToRelatedEntityProperty = value + Constants.DefaultIdProperty;
             }
         } private string _RelatedEntity;
 
@@ -55,6 +60,6 @@
         /// However, if this isn't the Id, but is an AlternateId or even a non-Id field, then that should
         /// still work.
         /// </summary>
-        public string RelatedEntityIdProperty { get; set; } = DefaultIdProperty;
+        public string RelatedEntityIdProperty { get; set; } = Constants.DefaultIdProperty;
     }
 }

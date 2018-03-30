@@ -50,18 +50,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AttributeInterfaces\IRelatedEntity.cs" />
+    <Compile Include="AttributeInterfaces\IRelatedEntityAttribute.cs" />
+    <Compile Include="Attributes\RelatedEntityBaseAttribute.cs" />
     <Compile Include="Attributes\RelatedEntityMappingAttribute.cs" />
     <Compile Include="Attributes\RelatedEntityAttribute.cs" />
     <Compile Include="Attributes\RelatedEntityExclusionsAttribute.cs" />
     <Compile Include="Attributes\RelatedEntityForeignAttribute.cs" />
+    <Compile Include="Extensions\JObjectExtensions.cs" />
+    <Compile Include="Extensions\JRawExtensions.cs" />
+    <Compile Include="Extensions\SortDetailsExtensions.cs" />
     <Compile Include="Interfaces\IRelatedEntityCollater.cs" />
     <Compile Include="Interfaces\IRelatedEntityCollection.cs" />
+    <Compile Include="Models\Constants.cs" />
     <Compile Include="Models\OdataObjectCollectionBase.cs" />
     <Compile Include="Sorters\RelatedEntityManyToOneSorter.cs" />
     <Compile Include="Sorters\RelatedEntityOneToManySorter.cs" />
     <Compile Include="Dictionaries\SortMethodDictionary.cs" />
-    <Compile Include="Extensions\JRawExtensions.cs" />
     <Compile Include="Extensions\OdataObjectExtensions.cs" />
     <Compile Include="Interfaces\IRelatedEntitySorter.cs" />
     <Compile Include="Sorters\RelatedEntitySorter.cs" />
@@ -82,6 +86,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="README.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

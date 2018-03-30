@@ -1,11 +1,29 @@
 ﻿namespace Rhyous.Odata
 {
-    public interface IRelatedEntity
+    /// <summary>
+    /// An interface for the minimal related entity attributes.
+    /// </summary>
+    public interface IRelatedEntityAttribute
     {
+        /// <summary>
+        /// The name of the current entity.
+        /// </summary>
+        string Entity { get; set; }
+        
+        /// <summary>
+        /// An alias for the current entity. This is useful when an entity is related to the same Entity in two ways.
+        /// </summary>
+        string EntityAlias { get; set; }
+
         /// <summary>
         /// The name of the related entity.
         /// </summary>
         string RelatedEntity { get; set; }
+        
+        /// <summary>
+        /// An alias for the related entity. This is useful when an entity is related to the same Entity in two ways.
+        /// </summary>
+        string RelatedEntityAlias { get; set; }
 
         /// <summary>
         /// If this is true, a related entity will autoexpand. If false, it will only expand if the $expand Url parameters
@@ -16,7 +34,7 @@
 
         /// <summary>
         /// This is used for mapping entities with small numbers. It is faster to get all once. Also, this is only used when 
-        /// returning a OdataObjectCollection. When this value is true, related entities will be included in the collection
+        /// returning a OdataObjectCollection. When this value is true, related entities should be included in the collection
         /// of related entities in the OdataObjectCollection, and will not be nested. This results in much smaller json
         /// serialization. 
         /// </summary>

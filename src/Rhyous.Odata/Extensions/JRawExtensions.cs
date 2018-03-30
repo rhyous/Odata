@@ -5,22 +5,22 @@ namespace Rhyous.Odata
 {
     public static class JRawExtensions
     {
-        public static string GetIdDynamic(this JObject jObj, string propertySpecifyingIdProperty = "IdProperty")
+        public static string GetValueAsString(this JRaw jRaw, string property)
         {
-            if (jObj == null)
-                return null;
-            var idProp = jObj.GetValue(propertySpecifyingIdProperty)?.ToString();
-            return GetId(jObj, idProp);
+            return jRaw.GetValue(property)?.ToString();
         }
 
-        public static string GetId(this JObject jObj, string idProp = "Id")
+        public static JToken GetValue(this JRaw jRaw, string property)
         {
-            if (string.IsNullOrWhiteSpace(idProp))
-                idProp = "Id";
-            var id = jObj.GetValue(idProp)?.ToString();
-            if (string.IsNullOrWhiteSpace(id))
-                return null;
-            return id;
+            if (jRaw == null)
+                throw new ArgumentNullException("jRaw", string.Format(Constants.ObjectNullException, "jRaw"));
+            var json = jRaw.ToString();
+            if (string.IsNullOrWhiteSpace(json))
+                throw new ArgumentNullException("jRaw", string.Format(Constants.StringNullException, "jRaw"));
+            if (string.IsNullOrWhiteSpace(property))
+                throw new ArgumentNullException("property", string.Format(Constants.StringNullException, "property"));
+            var jObj = JObject.Parse(json);
+            return jObj.GetValue(property);
         }
     }
 }

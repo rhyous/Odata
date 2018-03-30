@@ -15,36 +15,28 @@ namespace Rhyous.Odata
             if (entities == null || !entities.Any() || relatedEntities == null || !relatedEntities.Any())
                 return null;
             var list = new List<RelatedEntityCollection>();
+            var propInfoId = entities.First().GetType().GetProperty(details.EntityIdProperty);
             var entityRelatedIdPropInfo = entities.First()?.GetType().GetProperty(details.EntityToRelatedEntityProperty);
             foreach (var entity in entities)
             {
-                var collection = new RelatedEntityCollection
+                var id = propInfoId.GetValue(entity).ToString();
+                var collection = details.ToRelatedEntityCollection(id);
+                if (details.RelatedEntityIdProperty == Constants.DefaultIdProperty)
                 {
-                    Entity = details.EntityName,
-                    EntityId = entity.GetType().GetProperty(details.EntityIdProperty).GetValue(entity).ToString(),
-                    RelatedEntity = details.RelatedEntity,
-                };
-                if (details.RelatedEntityIdProperty != SortDetails.DefaultIdProperty)
-                {
-                    foreach (var re in relatedEntities)
-                    {
-                        string json = re?.Object?.ToString();
-                        if (string.IsNullOrWhiteSpace(json))
-                            continue;
-                        var jobject = JObject.Parse(re.Object.ToString());
-                        // Look directly
-                        var value = jobject.SelectToken($"{details.RelatedEntityIdProperty}")?.ToString(); 
-                        if (string.IsNullOrWhiteSpace(value)) // look as if Object is json of a RelatedEntity                            
-                            value = jobject.SelectToken($"Object.{details.RelatedEntityIdProperty}")?.ToString(); 
-                        if (string.IsNullOrWhiteSpace(value))
-                            continue;                        
-                        if (entityRelatedIdPropInfo.GetValue(entity).ToString() == value)
-                            collection.RelatedEntities.Add(re);
-                    }
+                    var relatedEntityId = entityRelatedIdPropInfo.GetValue(entity).ToString();
+                    collection.RelatedEntities.AddRange(relatedEntities.Where(re => re.Id == relatedEntityId));
+                    list.Add(collection);
+                    continue;
                 }
-                else
+                foreach (var re in relatedEntities)
                 {
-                    collection.RelatedEntities.AddRange(relatedEntities.Where(re => re.Id == entityRelatedIdPropInfo.GetValue(entity).ToString()));
+                    var value = re?.Object?.GetValue(details.RelatedEntityIdProperty)?.ToString();
+                    if (string.IsNullOrWhiteSpace(value))
+                        value = re?.Object?.GetValue("Object")?[details.RelatedEntityIdProperty]?.ToString();
+                    if (string.IsNullOrWhiteSpace(value))
+                        continue;
+                    if (entityRelatedIdPropInfo.GetValue(entity).ToString() == value)
+                        collection.RelatedEntities.Add(re);
                 }
                 list.Add(collection);
             }

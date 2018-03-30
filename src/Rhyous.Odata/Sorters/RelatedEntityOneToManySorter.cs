@@ -15,20 +15,22 @@ namespace Rhyous.Odata
             if (entities == null || !entities.Any() || relatedEntities == null || !relatedEntities.Any())
                 return null;
             var list = new List<RelatedEntityCollection>();
+            var type = entities.First()?.GetType();
+            var propInfoId = type.GetProperty(details.EntityIdProperty);
+            var propInfoEntityProperty = propInfoId;
+            if (!string.IsNullOrWhiteSpace(details.EntityProperty) && details.EntityProperty != details.EntityIdProperty)
+                propInfoEntityProperty = type.GetProperty(details.EntityProperty);
             foreach (var entity in entities)
             {
-                var id = entity.GetType().GetProperty(details.EntityIdProperty).GetValue(entity).ToString();
-                var collection = new RelatedEntityCollection
-                {
-                    Entity = details.EntityName,
-                    EntityId = id,
-                    RelatedEntity = details.RelatedEntity,
-                };
+                var id = propInfoId.GetValue(entity).ToString();
+                var entityPropertyValue = id;
+                if (!string.IsNullOrWhiteSpace(details.EntityProperty) && details.EntityProperty != details.EntityIdProperty)
+                    entityPropertyValue = propInfoEntityProperty.GetValue(entity).ToString();
+                var collection = details.ToRelatedEntityCollection(id);
                 foreach (var re in relatedEntities)
                 {
-                    var jsonObj = JObject.Parse(re.Object.ToString());
-                    var value = jsonObj[details.EntityToRelatedEntityProperty].ToString();
-                    if (value == id.ToString())
+                    var value = re?.Object?.GetValue(details.EntityToRelatedEntityProperty)?.ToString();
+                    if (value == entityPropertyValue.ToString())
                         collection.RelatedEntities.Add(re);
                 }
                 list.Add(collection);

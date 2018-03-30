@@ -8,7 +8,7 @@ namespace Rhyous.Odata
     /// An attribute that specifies the related entity for a foreign key property.
     /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
-    public class RelatedEntityAttribute : Attribute, IRelatedEntity
+    public class RelatedEntityAttribute : RelatedEntityBaseAttribute
     {
         public const string DefaultForeignKey = "Id";
 
@@ -20,10 +20,7 @@ namespace Rhyous.Odata
             AutoExpand = autoExpand;
             Property = property;
         }
-
-        /// <inheritdoc />
-        public string RelatedEntity { get; set; }
-
+        
         /// <summary>
         /// The name of the property identifier on the related entity.
         /// This key property is usually "Id", but could be an AlternateKey property.
@@ -36,12 +33,6 @@ namespace Rhyous.Odata
         /// </summary>
         public Type ForeignKeyType { get; set; }
         
-        /// <inheritdoc />
-        public bool AutoExpand { get; set; }
-
-        /// <inheritdoc />
-        public bool GetAll { get; set; }
-
         /// <summary>
         /// The name of the Property this attribute decorates.
         /// [CallerMemberName] should take care of setting this.

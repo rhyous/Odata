@@ -42,11 +42,11 @@ namespace Rhyous.Odata
             get { return _RelatedIdProperty; }
             set
             {
+                if (string.IsNullOrWhiteSpace(value))
+                    throw new ArgumentNullException("RelatedIdProperty", string.Format(Constants.StringNullException, "RelatedIdProperty"));
                 if (_RelatedIdProperty == value)
                     return;
                 _RelatedIdProperty = value;
-                if (string.IsNullOrWhiteSpace(_RelatedIdProperty))
-                    throw new ArgumentException("RelatedIdProperty cannot be null, empty, or whitespace.", "RelatedIdProperty");
                 SetRelatedId(Object);
             }
         } private string _RelatedIdProperty;
@@ -60,7 +60,7 @@ namespace Rhyous.Odata
             if (value == null || string.IsNullOrWhiteSpace(value.ToString()))
                 return;
             var jObj = JObject.Parse(value.ToString());
-            RelatedId = jObj.GetId(RelatedIdProperty) ?? RelatedId;
+            RelatedId = jObj.GetValue(RelatedIdProperty)?.ToString() ?? RelatedId;
         }
     }
 }

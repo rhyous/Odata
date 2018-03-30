@@ -8,7 +8,7 @@ namespace Rhyous.Odata
     /// </summary>
     /// <remarks>The RelatedEntity must be configured on the mapping entity.</remarks>
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-    public class RelatedEntityMappingAttribute : Attribute, IRelatedEntity
+    public class RelatedEntityMappingAttribute : RelatedEntityBaseAttribute
     {
         public const string DefaultKey = "Id";
         public const string DefaultForeignKeyProperty = "{0}Id";
@@ -26,12 +26,7 @@ namespace Rhyous.Odata
             EntityKeyPropertyType = entityKeyPropertyType ?? typeof(int);
             GetAll = getAll;
         }
-
-        /// <summary>
-        /// This entity the attribute is applied to.
-        /// </summary>
-        public string Entity { get; set; }
-
+        
         /// <summary>
         /// This entity id of the current entity. This is usually Id.
         /// </summary>
@@ -41,12 +36,7 @@ namespace Rhyous.Odata
         /// This type of the entity id of the current entity.
         /// </summary>
         public Type EntityKeyPropertyType { get; set; }
-
-        /// <summary>
-        /// The name of the related entity.
-        /// </summary>
-        public string RelatedEntity { get; set; }
-
+        
         /// <summary>
         /// This mapping entity that links the Entity to the RelatedEntity.
         /// </summary>
@@ -69,10 +59,10 @@ namespace Rhyous.Odata
         /// </summary>
         public Type ForeignIdPropertyType { get; set; }
 
-        /// <inheritdoc />
-        public bool AutoExpand { get; set; }
 
-        /// <inheritdoc />
-        public bool GetAll { get; set; }
+        /// <summary>
+        /// An alias for the Mapping Related Entity. This is useful when an entity is related to the same Entity in two ways.
+        /// </summary>
+        public string MappingEntityAlias { get; set; }
     }
 }
