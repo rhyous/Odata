@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Rhyous.Odata</id>
-    <version>1.0.15</version>
+    <version>1.0.16</version>
     <title>Rhyous.Odata</title>
     <authors>Jared Barneck (Rhyous)</authors>
     <owners>Jared Barneck (Rhyous)</owners>
@@ -21,7 +21,7 @@
     </frameworkAssemblies>
     <dependencies>
       <group targetFramework="net461">
-        <dependency id="Newtonsoft.Json" version="10.0.3" />
+        <dependency id="Newtonsoft.Json" version="11.0.2" />
         <dependency id="Rhyous.Collections" version="1.0.8" />
         <dependency id="Rhyous.StringLibrary" version="1.1.2" />
       </group>
