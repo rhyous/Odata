@@ -52,6 +52,7 @@
     <Compile Include="Builder\FilterExpressionBuilderTests.cs" />
     <Compile Include="Extensions\FilterExtensionTests.cs" />
     <Compile Include="Extensions\NameValueCollectionExtensionsTests.cs" />
+    <Compile Include="Models\TestClass.cs" />
     <Compile Include="Handlers\QuoteHandlerTests.cs" />
     <Compile Include="Parsers\FilterExpressionParserTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -70,6 +71,7 @@
     </Content>
     <Content Include="Data\StringMethodQueryStrings.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Data\NaiveQueryStrings.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

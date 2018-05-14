@@ -6,12 +6,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Rhyous.Odata.Tests.Extensions
 {
+
     [TestClass]
     public class NameValueCollectionExtensionsTests
     {
-
-        public class TestClass { public int Id { get; set; } }
-
         [TestMethod]
         public void GetFilterExpressionNullTest()
         {

@@ -14,7 +14,42 @@
     </xsd:element>
   </xsd:schema>
   <!--End Schema-->
-  <!-- String Contains -->
+  <!-- String Contains with No Quote-->
+  <x:Row>
+    <x:Query>contains(Name,are)</x:Query>
+    <x:ExpectedExpression>e => e.Name.Contains("are")</x:ExpectedExpression>
+    <x:Message>Expression should result in this expression: {0}.</x:Message>
+  </x:Row>
+  <!-- String EndsWith -->
+  <x:Row>
+    <x:Query>endswith(Name,ared)</x:Query>
+    <x:ExpectedExpression>e => e.Name.EndsWith("ared")</x:ExpectedExpression>
+    <x:Message>Expression should result in this expression: {0}.</x:Message>
+  </x:Row>
+  <!-- String StartsWith -->
+  <x:Row>
+    <x:Query>startswith(Name,jare)</x:Query>
+    <x:ExpectedExpression>e => e.Name.StartsWith("jare")</x:ExpectedExpression>
+    <x:Message>Expression should result in this expression: {0}.</x:Message>
+  </x:Row>
+  <!--Integer as if it were a string-->
+  <x:Row>
+    <x:Query>StartsWith(Id,10)</x:Query>
+    <x:ExpectedExpression>e => e.Id.ToString().StartsWith("10")</x:ExpectedExpression>
+    <x:Message>Expression should result in this expression: {0}.</x:Message>
+  </x:Row>
+  <x:Row>
+    <x:Query>EndsWith(Id,00)</x:Query>
+    <x:ExpectedExpression>e => e.Id.ToString().EndsWith("00")</x:ExpectedExpression>
+    <x:Message>Expression should result in this expression: {0}.</x:Message>
+  </x:Row>
+  <x:Row>
+    <x:Query>Contains(Id,10)</x:Query>
+    <x:ExpectedExpression>e => e.Id.ToString().Contains("10")</x:ExpectedExpression>
+    <x:Message>Expression should result in this expression: {0}.</x:Message>
+  </x:Row>
+  
+  <!-- String Contains with Single Quote-->
   <x:Row>
     <x:Query>contains(Name,'are')</x:Query>
     <x:ExpectedExpression>e => e.Name.Contains("are")</x:ExpectedExpression>
@@ -46,6 +81,64 @@
   <x:Row>
     <x:Query>Contains(Id,'10')</x:Query>
     <x:ExpectedExpression>e => e.Id.ToString().Contains("10")</x:ExpectedExpression>
+    <x:Message>Expression should result in this expression: {0}.</x:Message>
+  </x:Row>
+
+  <!-- String not quoted contains two single quotes-->
+  <x:Row>
+    <x:Query>contains(Name,'')</x:Query>
+    <x:ExpectedExpression>e => e.Name.Contains("'")</x:ExpectedExpression>
+    <x:Message>Expression should result in this expression: {0}.</x:Message>
+  </x:Row>
+  <!-- String EndsWith two single quotes -->
+  <x:Row>
+    <x:Query>endswith(Name,'')</x:Query>
+    <x:ExpectedExpression>e => e.Name.EndsWith("'")</x:ExpectedExpression>
+    <x:Message>Expression should result in this expression: {0}.</x:Message>
+  </x:Row>
+  <!-- String StartsWith two single quotes -->
+  <x:Row>
+    <x:Query>startswith(Name,'')</x:Query>
+    <x:ExpectedExpression>e => e.Name.StartsWith("'")</x:ExpectedExpression>
+    <x:Message>Expression should result in this expression: {0}.</x:Message>
+  </x:Row>
+
+  <!-- String quoted with double quotes contains two single quotes-->
+  <x:Row>
+    <x:Query>contains(Name,"''")</x:Query>
+    <x:ExpectedExpression>e => e.Name.Contains("'")</x:ExpectedExpression>
+    <x:Message>Expression should result in this expression: {0}.</x:Message>
+  </x:Row>
+  <!-- String EndsWith two single quotes -->
+  <x:Row>
+    <x:Query>endswith(Name,"''")</x:Query>
+    <x:ExpectedExpression>e => e.Name.EndsWith("'")</x:ExpectedExpression>
+    <x:Message>Expression should result in this expression: {0}.</x:Message>
+  </x:Row>
+  <!-- String StartsWith two single quotes -->
+  <x:Row>
+    <x:Query>startswith(Name,"''")</x:Query>
+    <x:ExpectedExpression>e => e.Name.StartsWith("'")</x:ExpectedExpression>
+    <x:Message>Expression should result in this expression: {0}.</x:Message>
+  </x:Row>
+
+
+  <!-- String quoted with single quotes contains two single quotes-->
+  <x:Row>
+    <x:Query>contains(Name,'''')</x:Query>
+    <x:ExpectedExpression>e => e.Name.Contains("''")</x:ExpectedExpression>
+    <x:Message>Expression should result in this expression: {0}.</x:Message>
+  </x:Row>
+  <!-- String EndsWith two single quotes -->
+  <x:Row>
+    <x:Query>endswith(Name,'''')</x:Query>
+    <x:ExpectedExpression>e => e.Name.EndsWith("''")</x:ExpectedExpression>
+    <x:Message>Expression should result in this expression: {0}. In essense, </x:Message>
+  </x:Row>
+  <!-- String StartsWith two single quotes -->
+  <x:Row>
+    <x:Query>startswith(Name,'''')</x:Query>
+    <x:ExpectedExpression>e => e.Name.StartsWith("''")</x:ExpectedExpression>
     <x:Message>Expression should result in this expression: {0}.</x:Message>
   </x:Row>
 </Rows>

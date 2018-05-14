@@ -8,12 +8,13 @@ namespace Rhyous.Odata
 
         internal void HandlerMethod(ParserState<TEntity> state)
         {
-            if (state.QuoteGroup.IsOpen)
-            {
-                ((state.QuoteGroup.WrapChar == state.Char) ? state.QuoteGroup.Close : (Action)state.Append).Invoke();
-                return;
-            }
-            state.QuoteGroup.Open(state.Char);
+            if (state.Char == state.PreviousChar && state.LastAppendedCharIndex < state.CharIndex - 1)
+                state.Append();
+
+            if (state.QuoteGroup.IsOpen && state.QuoteGroup.WrapChar == state.Char)
+                state.QuoteGroup.Close(state.Char);
+            else
+                state.QuoteGroup.Open(state.Char);
         }
     }
 }

@@ -21,7 +21,23 @@ namespace Rhyous.Odata.Tests
             var actual = builder.Expression.ToString();
 
             // Assert
-            Assert.AreEqual(expected, actual);
+            Assert.AreEqual(expected, actual, message);
+        }
+
+        [TestMethod]
+        public void ComplexFilterParserTests_TmpTest()
+        {
+            // Arrange
+            var filterstring = "Name eq \"Runnin''\"";
+            var expected = "e => (e.Name == \"Runnin'\")";
+            var message = "";
+            var builder = new FilterExpressionBuilder<Entity1>(filterstring, new FilterExpressionParser<Entity1>());
+
+            // Act
+            var actual = builder.Expression.ToString();
+
+            // Assert
+            Assert.AreEqual(expected, actual, message);
         }
 
         [TestMethod]
@@ -35,11 +51,10 @@ namespace Rhyous.Odata.Tests
             var builder = new FilterExpressionBuilder<Entity1>(filterstring, new FilterExpressionParser<Entity1>());
 
             // Act
-            var actual = builder.Expression.ToString();
-            
+            var actual = builder.Expression.ToString();            
 
             // Assert
-            Assert.AreEqual(expected, actual);
+            Assert.AreEqual(expected, actual, message);
         }
 
         [TestMethod]
@@ -56,7 +71,7 @@ namespace Rhyous.Odata.Tests
             var actual = builder.Expression.ToString();
             
             // Assert
-            Assert.AreEqual(expected, actual);
+            Assert.AreEqual(expected, actual, message);
         }
 
         [TestMethod]
@@ -73,7 +88,7 @@ namespace Rhyous.Odata.Tests
             var actual = builder.Expression.ToString();
 
             // Assert
-            Assert.AreEqual(expected, actual);
+            Assert.AreEqual(expected, actual, message);
         }
     }
 }

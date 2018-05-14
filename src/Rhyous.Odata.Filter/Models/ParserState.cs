@@ -12,25 +12,53 @@ namespace Rhyous.Odata
         public String FilterString;
         public int CharIndex = 0;
         public char Char { get { return FilterString[CharIndex]; } }
+        public char? NextChar
+        {
+            get
+            {
+                var nextCharIndex = CharIndex + 1;
+                if (nextCharIndex >= 0 && nextCharIndex < FilterString.Length)
+                    return FilterString[nextCharIndex];
+                return null;
+            }
+        }
+
+        public char? PreviousChar
+        {
+            get
+            {
+                var prevCharIndex = CharIndex - 1;
+                if (prevCharIndex >= 0 && prevCharIndex < FilterString.Length)
+                    return FilterString[prevCharIndex];
+                return null;
+            }
+        }
+        internal char LastAppendedChar { get; set; }
+        internal int LastAppendedCharIndex { get; set; } = -1;
 
         public Filter<TEntity> CurrentFilter = new Filter<TEntity>();
         public StringBuilder Builder { get; set; } = new StringBuilder();
         public Group QuoteGroup { get; set; } = new Group();
 
-        public void Append() { Builder.Append(Char); }
+        public void Append()
+        {
+            Builder.Append(Char);
+            LastAppendedChar = Char;
+            LastAppendedCharIndex = CharIndex;
+        }
 
         internal void LastApply()
         {
             if (LastApplyComplete)
                 return;
-            LastApplyComplete = true;
             Apply();
+            LastApplyComplete = true;
         } private bool LastApplyComplete = false;
 
         internal Stack<ParenthesisType> OpenParentheses = new Stack<ParenthesisType>();
         internal bool IsLastChar=> CharIndex == FilterString.Length - 1;
         internal bool ParenthesisIsOpen => OpenParentheses.Any();
-
+        
         public bool AppendIfInQuoteGroup()
         {
             if (QuoteGroup.IsOpen && QuoteGroup.WrapChar != Char)

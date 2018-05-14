@@ -1,4 +1,5 @@
 ﻿using LinqKit;
+using Rhyous.StringLibrary;
 using System;
 using System.Linq.Expressions;
 
@@ -8,7 +9,10 @@ namespace Rhyous.Odata
     {
         public Expression<Func<TEntity, bool>> Parse(string filterExpression)
         {
-            var state = new ParserState<TEntity>(filterExpression.Trim());
+            var trimmedfilterExpression = filterExpression.Trim();
+            if (trimmedfilterExpression.Length > 2)
+                trimmedfilterExpression = trimmedfilterExpression.Unquote(1).Trim();
+            var state = new ParserState<TEntity>(trimmedfilterExpression);
             for (state.CharIndex = 0; state.CharIndex < state.FilterString.Length; state.CharIndex++)
             {
                 ActionDictionary.GetValueOrDefault(state.Char).Invoke(state);
