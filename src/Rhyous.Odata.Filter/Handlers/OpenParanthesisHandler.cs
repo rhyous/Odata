@@ -16,7 +16,10 @@ namespace Rhyous.Odata
         {
             if (state.AppendIfInQuoteGroup())
                 return;
-            state.OpenParenthesis(state.Builder.Length == 0 ? ParenthesisType.Group : ParenthesisType.Method);
+            var parenthesisType = state.Builder.Length == 0 ? ParenthesisType.Group : ParenthesisType.Method;
+            if (parenthesisType == ParenthesisType.Method)
+                state.SetMethodIfEmpty();
+            state.ParenthesisGroup.Open(state.Char);
         }
     }
 }

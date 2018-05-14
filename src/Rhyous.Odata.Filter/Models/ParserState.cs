@@ -39,6 +39,7 @@ namespace Rhyous.Odata
         public Filter<TEntity> CurrentFilter = new Filter<TEntity>();
         public StringBuilder Builder { get; set; } = new StringBuilder();
         public Group QuoteGroup { get; set; } = new Group();
+        public Group ParenthesisGroup { get; set; } = new Group('(',')');
 
         public void Append()
         {
@@ -49,15 +50,18 @@ namespace Rhyous.Odata
 
         internal void LastApply()
         {
-            if (LastApplyComplete)
-                return;
-            Apply();
-            LastApplyComplete = true;
+            if (!LastApplyComplete)
+            {
+                Apply();
+                LastApplyComplete = true;
+            }
+            if (QuoteGroup.IsOpen)
+                throw new InvalidFilterSyntaxException(CharIndex, FilterString, "An open quote was not closed");
+            if (ParenthesisGroup.IsOpen)
+                throw new InvalidFilterSyntaxException(CharIndex, FilterString, "An open parenthesis was not closed");
         } private bool LastApplyComplete = false;
 
-        internal Stack<ParenthesisType> OpenParentheses = new Stack<ParenthesisType>();
         internal bool IsLastChar=> CharIndex == FilterString.Length - 1;
-        internal bool ParenthesisIsOpen => OpenParentheses.Any();
         
         public bool AppendIfInQuoteGroup()
         {
@@ -107,25 +111,7 @@ namespace Rhyous.Odata
             }
             return false;
         }
-
-        internal void OpenParenthesis(ParenthesisType type)
-        {
-            if (type == ParenthesisType.Method)
-            {
-                SetMethodIfEmpty();
-            }
-            OpenParentheses.Push(type);
-        }
-
-        internal void CloseParenthesis()
-        {
-            ParenthesisType type;
-            if (ParenthesisIsOpen)
-                type = OpenParentheses.Pop();
-            else
-                throw new InvalidFilterSyntaxException(CharIndex, FilterString);
-        }
-
+        
         internal void CloseMethodGroup()
         {
             throw new NotImplementedException();

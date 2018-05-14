@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace Rhyous.Odata.Tests
 {
@@ -89,6 +90,41 @@ namespace Rhyous.Odata.Tests
 
             // Assert
             Assert.AreEqual(expected, actual, message);
+        }
+
+        [TestMethod]
+        public void UnclosedGroupThrowsException()
+        {
+            // Arrange
+            var filterstring = "Name eq O'Brien";
+            var builder = new FilterExpressionBuilder<Entity1>(filterstring, new FilterExpressionParser<Entity1>());
+
+            // Act && Assert
+            Assert.ThrowsException<InvalidFilterSyntaxException>(() => builder.Expression);
+        }
+
+
+        [TestMethod]
+        public void UnclosedParanethesisThrowsException()
+        {
+            // Arrange
+            var filterstring = "(Id eq 1";
+            var builder = new FilterExpressionBuilder<Entity1>(filterstring, new FilterExpressionParser<Entity1>());
+
+            // Act && Assert
+            Assert.ThrowsException<InvalidFilterSyntaxException>(() => builder.Expression);
+        }
+
+
+        [TestMethod]
+        public void CloseParanethesisWithoutOpenParanethesisThrowsException()
+        {
+            // Arrange
+            var filterstring = "Id eq 1)";
+            var builder = new FilterExpressionBuilder<Entity1>(filterstring, new FilterExpressionParser<Entity1>());
+
+            // Act && Assert
+            Assert.ThrowsException<InvalidGroupingException>(() => builder.Expression);
         }
     }
 }

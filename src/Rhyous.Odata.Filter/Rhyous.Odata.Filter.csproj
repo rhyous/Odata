@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="Dictionaries\ExpressionMethodDictionary.cs" />
     <Compile Include="Dictionaries\FilterExpressionParserActionDictionary.cs" />
+    <Compile Include="Exceptions\InvalidGroupingException.cs" />
     <Compile Include="Exceptions\InvalidFilterSyntaxException.cs" />
     <Compile Include="Extensions\DictionaryExtensions.cs" />
     <Compile Include="Extensions\FilterExtensions.cs" />

@@ -16,7 +16,7 @@ namespace Rhyous.Odata
         {
             if (state.AppendIfInQuoteGroup())
                 return;
-            state.CloseParenthesis();
+            state.ParenthesisGroup.Close(state.Char);
         }        
     }
 }
