@@ -67,6 +67,9 @@
     <Compile Include="Interfaces\IParent.cs" />
     <Compile Include="Models\Conjunction.cs" />
     <Compile Include="Models\Filter.cs" />
+    <Compile Include="Models\Filter.Partial.cs">
+      <DependentUpon>Filter.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Group.cs" />
     <Compile Include="Models\Operator.cs" />
     <Compile Include="Models\ParenthesisType.cs" />
