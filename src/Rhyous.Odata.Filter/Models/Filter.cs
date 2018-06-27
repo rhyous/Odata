@@ -119,7 +119,7 @@ namespace Rhyous.Odata
                 var methodInfo = propType.GetMethod(filter.Method, MethodFlags, null, new[] { propType }, null);
                 if (methodInfo == null)
                 {
-                    if (propType.IsPrimitive)
+                    if (propType.IsPrimitive || propType == typeof(Guid))
                     {
                         var toStringMethod = propType.GetMethod("ToString", MethodFlags, null, new Type[] { }, null);
                         methodInfo = typeof(string).GetMethod(filter.Method, MethodFlags, null, new[] { typeof(string) }, null);
