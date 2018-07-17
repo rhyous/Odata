@@ -51,6 +51,7 @@
     <Compile Include="CsdlExtensionTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestModels\Person.cs" />
+    <Compile Include="TestModels\SuiteMembership.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
