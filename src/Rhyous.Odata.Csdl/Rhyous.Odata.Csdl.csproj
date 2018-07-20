@@ -44,6 +44,7 @@
     <Compile Include="Extensions\CsdlExtensions.cs" />
     <Compile Include="Models\CsdlEntity.cs" />
     <Compile Include="Dictionaries\CsdlFormatDictionary.cs" />
+    <Compile Include="Models\CsdlEnumProperty.cs" />
     <Compile Include="Models\CsdlProperty.cs" />
     <Compile Include="Dictionaries\CsdlTypeDictionary.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

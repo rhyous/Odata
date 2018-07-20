@@ -6,6 +6,8 @@ namespace Rhyous.Odata.Csdl
     /// <summary>
     /// Dictionary to map system types to json formats for csdl.
     /// </summary>
+    /// <remarks>Needs to be rewritten accordin to this spec: http://docs.oasis-open.org/odata/odata-csdl-json/v4.01/odata-csdl-json-v4.01.html 
+    /// </remarks>
     public class CsdlFormatDictionary : Dictionary<string, string>
     {
         private static readonly Lazy<CsdlFormatDictionary> Lazy = new Lazy<CsdlFormatDictionary>(() => new CsdlFormatDictionary());
@@ -35,6 +37,7 @@ namespace Rhyous.Odata.Csdl
             Add("System.UInt16", "uint16");
             Add("System.String", "");
             Add("System.DateTime", "date");
+            Add("System.Enum", "enum");
         }
         
     }

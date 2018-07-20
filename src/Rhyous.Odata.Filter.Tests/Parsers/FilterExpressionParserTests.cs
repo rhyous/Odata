@@ -53,7 +53,7 @@ namespace Rhyous.Odata.Tests.Parsers
 
             // Act
             var actual = parser.Parse(filterstring);
-            
+
             // Assert
             Assert.AreEqual(expected, actual.ToString(), message);
         }
@@ -90,6 +90,33 @@ namespace Rhyous.Odata.Tests.Parsers
 
             // Assert
             Assert.AreEqual(expected, actual.ToString(), message);
+        }
+
+        [TestMethod]
+        public void FilterExpressionParser_Enum_eq_FilterParserTests()
+        {
+            // Arrange
+            var filterstring = "Type eq 1";
+            var expected = "e => (e.Type == Cool)";
+            var message = "";
+            var parser = new FilterExpressionParser<EntityWithEnum>();
+
+            // Act
+            var actual = parser.Parse(filterstring);
+
+            // Assert
+            Assert.AreEqual(expected, actual.ToString(), message);
+        }
+
+        [TestMethod]
+        public void FilterExpressionParser_Enum_Contains_FilterParserTests()
+        {
+            // Arrange
+            var filterstring = "Contains(Type, 1)";
+            var parser = new FilterExpressionParser<EntityWithEnum>();
+
+            // Act & Assert
+            Assert.ThrowsException<InvalidTypeMethodException>(() => { parser.Parse(filterstring); }); ;
         }
     }
 }

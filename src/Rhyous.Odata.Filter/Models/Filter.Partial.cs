@@ -50,19 +50,19 @@ namespace Rhyous.Odata
                 }
                 method = func.Invoke(left, right);
             }
+            else if (propType.IsPrimitive || propType == typeof(Guid))
+            {
+                var toStringMethod = propType.GetMethod("ToString", MethodFlags, null, new Type[] { }, null);
+                var methodInfo = typeof(string).GetMethod(filter.Method, MethodFlags, null, new[] { typeof(string) }, null);
+                left = Expression.Call(left, toStringMethod);
+                right = (propType != null && filter.Right.IsSimpleString) ? Expression.Constant(filter.Right.ToString()) as Expression : filter.Right;
+                method = Expression.Call(left, methodInfo, right);
+            }
             else
             {
                 var methodInfo = propType.GetMethod(filter.Method, MethodFlags, null, new[] { propType }, null);
                 if (methodInfo == null)
-                {
-                    if (propType.IsPrimitive || propType == typeof(Guid))
-                    {
-                        var toStringMethod = propType.GetMethod("ToString", MethodFlags, null, new Type[] { }, null);
-                        methodInfo = typeof(string).GetMethod(filter.Method, MethodFlags, null, new[] { typeof(string) }, null);
-                        left = Expression.Call(left, toStringMethod);
-                        right = (propType != null && filter.Right.IsSimpleString) ? Expression.Constant(filter.Right.ToString()) as Expression : filter.Right;
-                    }
-                }
+                    throw new InvalidTypeMethodException(propType, filter.Method);
                 method = Expression.Call(left, methodInfo, right);
             }
             return Expression.Lambda<Func<TEntity, bool>>(filter.Not ? Expression.Not(method) : method, parameter);

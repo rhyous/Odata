@@ -65,7 +65,7 @@ namespace Rhyous.Odata.Csdl.Tests
             
             Assert.AreEqual("QuantityType", csdl.Properties[4].Name);
             Assert.AreEqual(1, csdl.Properties[4].CsdlType.Count);
-            Assert.AreEqual("int32", csdl.Properties[4].CsdlFormat);
+            Assert.AreEqual("enum", csdl.Properties[4].CsdlFormat);
         }
     }
 }

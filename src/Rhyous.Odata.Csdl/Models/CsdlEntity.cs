@@ -7,6 +7,8 @@ namespace Rhyous.Odata.Csdl
     /// This object contains schema information for an entity to be returned as csdl.
     /// </summary>
     /// <typeparam name="TEntity">The entity type.</typeparam>
+    /// <remarks>Needs to be rewritten accordin to this spec: http://docs.oasis-open.org/odata/odata-csdl-json/v4.01/odata-csdl-json-v4.01.html 
+    /// </remarks>
     public class CsdlEntity<TEntity>
     {
         /// <summary>

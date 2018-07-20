@@ -37,7 +37,7 @@
       <HintPath>..\Packages\Rhyous.Collections.1.0.8\lib\net461\Rhyous.Collections.dll</HintPath>
     </Reference>
     <Reference Include="Rhyous.StringLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\Packages\Rhyous.StringLibrary.1.1.5\lib\net461\Rhyous.StringLibrary.dll</HintPath>
+      <HintPath>..\Packages\Rhyous.StringLibrary.1.1.6\lib\net461\Rhyous.StringLibrary.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="Dictionaries\ExpressionMethodDictionary.cs" />
     <Compile Include="Dictionaries\FilterExpressionParserActionDictionary.cs" />
+    <Compile Include="Exceptions\InvalidTypeMethodException.cs" />
     <Compile Include="Exceptions\InvalidGroupingException.cs" />
     <Compile Include="Exceptions\InvalidFilterSyntaxException.cs" />
     <Compile Include="Extensions\DictionaryExtensions.cs" />
