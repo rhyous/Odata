@@ -52,6 +52,7 @@
     <Compile Include="Builder\FilterExpressionBuilderTests.cs" />
     <Compile Include="Extensions\FilterExtensionTests.cs" />
     <Compile Include="Extensions\NameValueCollectionExtensionsTests.cs" />
+    <Compile Include="Models\AlternateId.cs" />
     <Compile Include="Models\GroupTests.cs" />
     <Compile Include="Models\TestClass.cs" />
     <Compile Include="Handlers\QuoteHandlerTests.cs" />

@@ -92,6 +92,23 @@ namespace Rhyous.Odata.Tests.Parsers
             Assert.AreEqual(expected, actual.ToString(), message);
         }
 
+
+        [TestMethod]
+        public void FilterExpressionParser_TwoAnds_FilterParserTests()
+        {
+            // Arrange
+            var filterstring = "Entity eq Organization and EntityId eq 265932 and Property eq ABC";
+            var expected = "e => ((e.Entity == \"Organization\") AndAlso ((e.EntityId == \"265932\") AndAlso (e.Property == \"ABC\")))";
+            var message = "";
+            var parser = new FilterExpressionParser<AlternateId>();
+
+            // Act
+            var actual = parser.Parse(filterstring);
+
+            // Assert
+            Assert.AreEqual(expected, actual.ToString(), message);
+        }
+
         [TestMethod]
         public void FilterExpressionParser_Enum_eq_FilterParserTests()
         {
