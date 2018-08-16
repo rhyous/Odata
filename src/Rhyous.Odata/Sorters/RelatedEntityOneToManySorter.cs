@@ -1,4 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
+using Rhyous.StringLibrary;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -14,29 +17,29 @@ namespace Rhyous.Odata
         {
             if (entities == null || !entities.Any() || relatedEntities == null || !relatedEntities.Any())
                 return null;
-            var list = new List<RelatedEntityCollection>();
             var type = entities.First()?.GetType();
             var propInfoId = type.GetProperty(details.EntityIdProperty);
             var propInfoEntityProperty = propInfoId;
             if (!string.IsNullOrWhiteSpace(details.EntityProperty) && details.EntityProperty != details.EntityIdProperty)
                 propInfoEntityProperty = type.GetProperty(details.EntityProperty);
+            Type dictType = typeof(Dictionary<,>).MakeGenericType(propInfoId.PropertyType, typeof(RelatedEntityCollection));
+            IDictionary dict = Activator.CreateInstance(dictType) as IDictionary;
             foreach (var entity in entities)
             {
-                var id = propInfoId.GetValue(entity).ToString();
+                var id = propInfoId.GetValue(entity);
                 var entityPropertyValue = id;
                 if (!string.IsNullOrWhiteSpace(details.EntityProperty) && details.EntityProperty != details.EntityIdProperty)
                     entityPropertyValue = propInfoEntityProperty.GetValue(entity).ToString();
-                var collection = details.ToRelatedEntityCollection(id);
-                foreach (var re in relatedEntities)
-                {
-                    var value = re?.Object?.GetValue(details.EntityToRelatedEntityProperty)?.ToString();
-                    if (value == entityPropertyValue.ToString())
-                        collection.RelatedEntities.Add(re);
-                }
-                list.Add(collection);
+                var collection = details.ToRelatedEntityCollection(id.ToString());
+                dict.Add(entityPropertyValue, collection);
             }
-            return list;
+            foreach (var re in relatedEntities)
+            {
+                var value = re?.Object?.GetValue(details.EntityToRelatedEntityProperty);
+                var id = value.ToString().ToType(propInfoId.PropertyType);
+                (dict[id] as RelatedEntityCollection).RelatedEntities.Add(re);
+            }
+            return new List<RelatedEntityCollection>(dict.Values as ICollection<RelatedEntityCollection>);
         }
-
     }
 }
