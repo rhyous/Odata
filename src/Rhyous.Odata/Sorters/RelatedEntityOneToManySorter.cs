@@ -17,29 +17,55 @@ namespace Rhyous.Odata
         {
             if (entities == null || !entities.Any() || relatedEntities == null || !relatedEntities.Any())
                 return null;
+            var list = new List<RelatedEntityCollection>();
             var type = entities.First()?.GetType();
             var propInfoId = type.GetProperty(details.EntityIdProperty);
-            var propInfoEntityProperty = propInfoId;
-            if (!string.IsNullOrWhiteSpace(details.EntityProperty) && details.EntityProperty != details.EntityIdProperty)
-                propInfoEntityProperty = type.GetProperty(details.EntityProperty);
+            var entityPropertyPropInfo = type.GetProperty(details.EntityProperty);
+            
+            Type dictIdType = typeof(Dictionary<,>).MakeGenericType(propInfoId.PropertyType, typeof(RelatedEntityCollection));
+            Type dictPropType = typeof(Dictionary<,>).MakeGenericType(entityPropertyPropInfo.PropertyType, dictIdType);
             Type dictType = typeof(Dictionary<,>).MakeGenericType(propInfoId.PropertyType, typeof(RelatedEntityCollection));
-            IDictionary dict = Activator.CreateInstance(dictType) as IDictionary;
+            IDictionary dict = Activator.CreateInstance(dictPropType) as IDictionary;
+            var tryGetValueMethod = dictPropType.GetMethod("TryGetValue");
+            var tryGetValueMethod2 = dictIdType.GetMethod("TryGetValue");
             foreach (var entity in entities)
             {
                 var id = propInfoId.GetValue(entity);
-                var entityPropertyValue = id;
-                if (!string.IsNullOrWhiteSpace(details.EntityProperty) && details.EntityProperty != details.EntityIdProperty)
-                    entityPropertyValue = propInfoEntityProperty.GetValue(entity).ToString();
-                var collection = details.ToRelatedEntityCollection(id.ToString());
-                dict.Add(entityPropertyValue, collection);
+                var entityPropertyValue = entityPropertyPropInfo.GetValue(entity);
+                RelatedEntityCollection collection = null;
+                IDictionary idDict = null;
+                object[] dictPropParameters = new object[] { entityPropertyValue, null };
+                if ((bool)tryGetValueMethod.Invoke(dict, dictPropParameters))
+                {
+                    object[] dictIdParams = new object[] { id, null };
+                    if (!(bool)tryGetValueMethod2.Invoke((dictPropParameters[1] as IDictionary), dictIdParams))
+                    {
+                        collection = details.ToRelatedEntityCollection(id.ToString());
+                        (dictPropParameters[1] as IDictionary).Add(id, collection);
+                        list.Add(collection);
+                    }
+                    continue;
+                }
+                idDict = Activator.CreateInstance(dictIdType) as IDictionary;
+                collection = details.ToRelatedEntityCollection(id.ToString());
+                idDict.Add(id, collection);
+                list.Add(collection);
+                dict.Add(entityPropertyValue, idDict);
             }
             foreach (var re in relatedEntities)
             {
-                var value = re?.Object?.GetValue(details.EntityToRelatedEntityProperty);
-                var id = value.ToString().ToType(propInfoId.PropertyType);
-                (dict[id] as RelatedEntityCollection).RelatedEntities.Add(re);
+                var value = re?.Object?.GetValue(details.EntityToRelatedEntityProperty)?.ToString();
+                var typedValue = value.ToType(entityPropertyPropInfo.PropertyType);                
+                if (dict[typedValue] is IDictionary idDict)
+                {
+                    foreach (var v in idDict.Values)
+                    {
+                        if (v is RelatedEntityCollection rec)
+                            rec.RelatedEntities.Add(re);
+                    }
+                }
             }
-            return new List<RelatedEntityCollection>(dict.Values as ICollection<RelatedEntityCollection>);
+            return list;
         }
     }
 }
