@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace Rhyous.Odata.Csdl
@@ -6,25 +7,32 @@ namespace Rhyous.Odata.Csdl
     /// <summary>
     /// This object contains schema information for an entity to be returned as csdl.
     /// </summary>
-    /// <typeparam name="TEntity">The entity type.</typeparam>
     /// <remarks>Needs to be rewritten accordin to this spec: http://docs.oasis-open.org/odata/odata-csdl-json/v4.01/odata-csdl-json-v4.01.html 
     /// </remarks>
-    public class CsdlEntity<TEntity>
+
+    [DataContract()]
+    public class CsdlEntity
     {
         /// <summary>
-        /// JSON Schema object of type object.
+        /// JSON Schema Kind. Should always be EntityType.
         /// </summary>
-        [DataMember(Name = "type")]
-        public string Type { get; set; } = "object";
+        [DataMember(Name = "$Kind")]
+        public string Kind { get; set; } = "EntityType";
+
+        /// <summary>
+        /// Specifies whether this entity outputs data, such as a stream or image.
+        /// </summary>
+        [DataMember(Name = "$HasStream", EmitDefaultValue = false)]
+        public bool HasStream { get; set; }
 
         /// <summary>
         /// Additional JSON Schema object keyword.
         /// </summary>
-        [DataMember(Name = "mediaEntity")]
-        public bool MediaEntity { get; set; }
+        [DataMember(Name = "$OpenType", EmitDefaultValue = false)]
+        public bool OpenType { get; set; }
 
         /// <summary>
-        /// Additional JSON Schema object keyword.
+        /// The key properties of this entity.
         /// </summary>
         public List<string> Keys
         {
@@ -33,12 +41,13 @@ namespace Rhyous.Odata.Csdl
         } private List<string> _Keys;
 
         /// <summary>
-        /// Schema info of allowed values of properties.
+        /// The properties of this entity.
         /// </summary>
-        public List<CsdlProperty> Properties
+        [JsonExtensionData]
+        public Dictionary<string, object> Properties
         {
-            get { return _Properties ?? (_Properties = new List<CsdlProperty>()); }
+            get { return _Properties ?? (_Properties = new Dictionary<string, object>()); }
             set { _Properties = value; }
-        } private List<CsdlProperty> _Properties;
+        } private Dictionary<string, object> _Properties;
     }
 }

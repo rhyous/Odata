@@ -48,7 +48,7 @@
       <HintPath>..\Packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Rhyous.Collections, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\Packages\Rhyous.Collections.1.0.8\lib\net461\Rhyous.Collections.dll</HintPath>
+      <HintPath>..\packages\Rhyous.Collections.1.0.9\lib\net461\Rhyous.Collections.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

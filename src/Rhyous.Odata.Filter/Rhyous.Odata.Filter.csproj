@@ -34,7 +34,7 @@
       <HintPath>..\Packages\LinqKit.Core.1.1.15\lib\net45\LinqKit.Core.dll</HintPath>
     </Reference>
     <Reference Include="Rhyous.Collections, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\Packages\Rhyous.Collections.1.0.8\lib\net461\Rhyous.Collections.dll</HintPath>
+      <HintPath>..\packages\Rhyous.Collections.1.0.9\lib\net461\Rhyous.Collections.dll</HintPath>
     </Reference>
     <Reference Include="Rhyous.StringLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\Packages\Rhyous.StringLibrary.1.1.6\lib\net461\Rhyous.StringLibrary.dll</HintPath>

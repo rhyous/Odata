@@ -11,28 +11,24 @@ namespace Rhyous.Odata.Csdl.Tests
         {
             // Arrange
             // Act
-            var csdl = typeof(Person).ToCsdl<Person>();
+            var csdl = typeof(Person).ToCsdl();
 
             // Assert
             Assert.AreEqual(1, csdl.Keys.Count);
             Assert.AreEqual("Id", csdl.Keys[0]);
             Assert.AreEqual(typeof(Person).GetProperties().Length, csdl.Properties.Count);
+            
+            Assert.IsTrue(csdl.Properties.TryGetValue("Id", out object _));
+            Assert.AreEqual("Edm.Int32", (csdl.Properties["Id"] as CsdlProperty).Type);
 
-            Assert.AreEqual("Id", csdl.Properties[0].Name);
-            Assert.AreEqual(1, csdl.Properties[0].CsdlType.Count);
-            Assert.AreEqual("int32", csdl.Properties[0].CsdlFormat);
-
-            Assert.AreEqual("FirstName", csdl.Properties[1].Name);
-            Assert.AreEqual(1, csdl.Properties[1].CsdlType.Count);
-            Assert.AreEqual("", csdl.Properties[1].CsdlFormat);
-
-            Assert.AreEqual("LastName", csdl.Properties[2].Name);
-            Assert.AreEqual(1, csdl.Properties[2].CsdlType.Count);
-            Assert.AreEqual("", csdl.Properties[2].CsdlFormat);
-
-            Assert.AreEqual("DateOfBirth", csdl.Properties[3].Name);
-            Assert.AreEqual(1, csdl.Properties[3].CsdlType.Count);
-            Assert.AreEqual("date", csdl.Properties[3].CsdlFormat);
+            Assert.IsTrue(csdl.Properties.TryGetValue("FirstName", out object _));            
+            Assert.AreEqual("Edm.String", (csdl.Properties["FirstName"] as CsdlProperty).Type);
+            
+            Assert.IsTrue(csdl.Properties.TryGetValue("LastName", out object _));
+            Assert.AreEqual("Edm.String", (csdl.Properties["LastName"] as CsdlProperty).Type);
+            
+            Assert.IsTrue(csdl.Properties.TryGetValue("DateOfBirth", out object _));
+            Assert.AreEqual("Edm.Date", (csdl.Properties["DateOfBirth"] as CsdlProperty).Type);
         }
 
         [TestMethod]
@@ -40,32 +36,34 @@ namespace Rhyous.Odata.Csdl.Tests
         {
             // Arrange
             // Act
-            var csdl = typeof(SuiteMembership).ToCsdl<SuiteMembership>();
+            var csdl = typeof(SuiteMembership).ToCsdl();
 
             // Assert
             Assert.AreEqual(typeof(SuiteMembership).GetProperties().Length, csdl.Properties.Count);
 
             Assert.AreEqual(1, csdl.Keys.Count);
             Assert.AreEqual("Id", csdl.Keys[0]);
-            Assert.AreEqual("Id", csdl.Properties[0].Name);
-            Assert.AreEqual(1, csdl.Properties[0].CsdlType.Count);
-            Assert.AreEqual("int32", csdl.Properties[0].CsdlFormat);
-
-            Assert.AreEqual("SuiteId", csdl.Properties[1].Name);
-            Assert.AreEqual(1, csdl.Properties[1].CsdlType.Count);
-            Assert.AreEqual("int32", csdl.Properties[1].CsdlFormat);
-
-            Assert.AreEqual("ProductId", csdl.Properties[2].Name);
-            Assert.AreEqual(1, csdl.Properties[2].CsdlType.Count);
-            Assert.AreEqual("int32", csdl.Properties[2].CsdlFormat);
             
-            Assert.AreEqual("Quantity", csdl.Properties[3].Name);
-            Assert.AreEqual(1, csdl.Properties[3].CsdlType.Count);
-            Assert.AreEqual("double", csdl.Properties[3].CsdlFormat);
+            Assert.IsTrue(csdl.Properties.TryGetValue("Id", out object _));
+            Assert.AreEqual("Edm.Int32", (csdl.Properties["Id"] as CsdlProperty).Type);
             
-            Assert.AreEqual("QuantityType", csdl.Properties[4].Name);
-            Assert.AreEqual(1, csdl.Properties[4].CsdlType.Count);
-            Assert.AreEqual("enum", csdl.Properties[4].CsdlFormat);
+            Assert.IsTrue(csdl.Properties.TryGetValue("SuiteId", out object _));
+            Assert.AreEqual("Edm.Int32", (csdl.Properties["SuiteId"] as CsdlProperty).Type);
+            
+            Assert.IsTrue(csdl.Properties.TryGetValue("ProductId", out object _));
+            Assert.AreEqual("Edm.Int32", (csdl.Properties["ProductId"] as CsdlProperty).Type);
+
+            Assert.IsTrue(csdl.Properties.TryGetValue("Quantity", out object _));
+            Assert.AreEqual("Edm.Double", (csdl.Properties["Quantity"] as CsdlProperty).Type);
+
+            Assert.IsTrue(csdl.Properties.TryGetValue("QuantityType", out object _));
+            Assert.AreEqual("Edm.Int32", (csdl.Properties["QuantityType"] as CsdlEnumProperty).UnderlyingType);
+
+            foreach (var e in Enum.GetValues(typeof(QuantityType)))
+            {
+                Assert.AreEqual(e, (csdl.Properties["QuantityType"] as CsdlEnumProperty).EnumOptions[e.ToString()]);
+            }
+
         }
     }
 }
