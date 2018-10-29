@@ -38,5 +38,11 @@ namespace Rhyous.Odata
         /// [CallerMemberName] should take care of setting this.
         /// </summary>
         public string Property { get; set; }
+
+        /// <summary>
+        /// If this is true, the property that references the related entity can be null.
+        /// is passed to the web service.
+        /// </summary>
+        public bool Nullable { get; set; }
     }
 }

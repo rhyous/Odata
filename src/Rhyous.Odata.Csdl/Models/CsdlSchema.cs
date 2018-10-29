@@ -1,10 +1,16 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace Rhyous.Odata.Csdl
 {
-    public class CsdlService
+    [DataContract]
+    public class CsdlSchema
     {
+
+        [DataMember(Name = "$Alias")]
+        public string Alias { get; set; } = "self";
+
         [JsonExtensionData]
         public Dictionary<string, object> Entities
         {

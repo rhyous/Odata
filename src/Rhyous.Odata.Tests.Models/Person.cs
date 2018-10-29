@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Rhyous.Odata.Csdl.Tests
+namespace Rhyous.Odata.Tests
 {
     public class Person
     {

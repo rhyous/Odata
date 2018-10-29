@@ -48,7 +48,7 @@ namespace Rhyous.Odata
         public Type EntityKeyPropertyType { get; set; }
 
         /// <summary>
-        /// The property in the RelatedEntity that references this entity.
+        /// The property in the RelatedEntity that references this entity's Id or AlternateKey property.
         /// </summary>
         public string ForeignKeyProperty { get; set; }
 

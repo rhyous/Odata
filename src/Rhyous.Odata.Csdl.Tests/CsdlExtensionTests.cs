@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Linq;
+using System.Reflection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Rhyous.Odata.Tests;
 
 namespace Rhyous.Odata.Csdl.Tests
 {
@@ -16,7 +19,12 @@ namespace Rhyous.Odata.Csdl.Tests
             // Assert
             Assert.AreEqual(1, csdl.Keys.Count);
             Assert.AreEqual("Id", csdl.Keys[0]);
-            Assert.AreEqual(typeof(Person).GetProperties().Length, csdl.Properties.Count);
+
+            var expectedPropertyCount = typeof(Person).GetProperties().Length;
+            expectedPropertyCount += typeof(Person).GetProperties().Where(p => p.GetCustomAttribute<RelatedEntityAttribute>() != null).Count();
+            expectedPropertyCount += typeof(Person).GetCustomAttributes<RelatedEntityForeignAttribute>().Count();
+            expectedPropertyCount += typeof(Person).GetCustomAttributes<RelatedEntityMappingAttribute>().Count();
+            Assert.AreEqual(expectedPropertyCount, csdl.Properties.Count);
             
             Assert.IsTrue(csdl.Properties.TryGetValue("Id", out object _));
             Assert.AreEqual("Edm.Int32", (csdl.Properties["Id"] as CsdlProperty).Type);
@@ -39,7 +47,11 @@ namespace Rhyous.Odata.Csdl.Tests
             var csdl = typeof(SuiteMembership).ToCsdl();
 
             // Assert
-            Assert.AreEqual(typeof(SuiteMembership).GetProperties().Length, csdl.Properties.Count);
+            var expectedPropertyCount = typeof(SuiteMembership).GetProperties().Length;
+            expectedPropertyCount += typeof(SuiteMembership).GetProperties().Where(p => p.GetCustomAttribute<RelatedEntityAttribute>() != null).Count();
+            expectedPropertyCount += typeof(SuiteMembership).GetCustomAttributes<RelatedEntityForeignAttribute>().Count();
+            expectedPropertyCount += typeof(SuiteMembership).GetCustomAttributes<RelatedEntityMappingAttribute>().Count();
+            Assert.AreEqual(expectedPropertyCount, csdl.Properties.Count);
 
             Assert.AreEqual(1, csdl.Keys.Count);
             Assert.AreEqual("Id", csdl.Keys[0]);

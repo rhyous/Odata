@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Rhyous.Odata.Csdl.Tests
+﻿namespace Rhyous.Odata.Tests
 {
     public enum QuantityType
     {
@@ -19,6 +13,7 @@ namespace Rhyous.Odata.Csdl.Tests
 
         public int SuiteId { get; set; }
 
+        [RelatedEntity("Product")]
         public int ProductId { get; set; }
 
         public double Quantity { get; set; }

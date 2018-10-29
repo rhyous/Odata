@@ -48,16 +48,25 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\CsdlExtensions.cs" />
+    <Compile Include="Extensions\DictionaryExtensions.cs" />
     <Compile Include="Models\CsdlEntity.cs" />
-    <Compile Include="Models\CsdlEnumType.cs" />
+    <Compile Include="Models\CsdlEnumProperty.cs" />
+    <Compile Include="Models\CsdlNavigationProperty.cs" />
     <Compile Include="Models\CsdlProperty.cs" />
     <Compile Include="Dictionaries\CsdlTypeDictionary.cs" />
     <Compile Include="Models\CsdlDocument.cs" />
-    <Compile Include="Models\CsdlService.cs" />
+    <Compile Include="Models\CsdlSchema.cs" />
+    <Compile Include="Models\OnDelete.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Rhyous.Odata\Rhyous.Odata.csproj">
+      <Project>{ac113e7b-4bd4-4daf-8620-df934fee493a}</Project>
+      <Name>Rhyous.Odata</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

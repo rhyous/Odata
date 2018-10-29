@@ -54,8 +54,6 @@
     <Compile Include="CsdlExtensionTests.cs" />
     <Compile Include="Models\CsdlRootService.Serialization.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestModels\Person.cs" />
-    <Compile Include="TestModels\SuiteMembership.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -64,6 +62,14 @@
     <ProjectReference Include="..\Rhyous.Odata.Csdl\Rhyous.Odata.Csdl.csproj">
       <Project>{3ef7ecf7-58c7-483a-a22e-54baf06f5af2}</Project>
       <Name>Rhyous.Odata.Csdl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Rhyous.Odata.Tests.Models\Rhyous.Odata.Tests.Models.csproj">
+      <Project>{fe9de865-8c24-4694-a93a-4c76d34e7735}</Project>
+      <Name>Rhyous.Odata.Tests.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Rhyous.Odata\Rhyous.Odata.csproj">
+      <Project>{ac113e7b-4bd4-4daf-8620-df934fee493a}</Project>
+      <Name>Rhyous.Odata</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

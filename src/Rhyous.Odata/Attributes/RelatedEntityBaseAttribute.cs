@@ -5,16 +5,16 @@ namespace Rhyous.Odata
     public abstract class RelatedEntityBaseAttribute : Attribute, IRelatedEntityAttribute
     {
         /// <inheritdoc />
-        public string Entity { get; set; }
+        public virtual string Entity { get; set; }
         /// <inheritdoc />
-        public string EntityAlias { get; set; }
+        public virtual string EntityAlias { get; set; }
         /// <inheritdoc />
-        public string RelatedEntity { get; set; }
+        public virtual string RelatedEntity { get; set; }
         /// <inheritdoc />
-        public string RelatedEntityAlias { get; set; }
+        public virtual string RelatedEntityAlias { get; set; }
         /// <inheritdoc />
-        public bool GetAll { get; set; }
+        public virtual bool GetAll { get; set; }
         /// <inheritdoc />
-        public bool AutoExpand { get; set; }
+        public virtual bool AutoExpand { get; set; }
     }
 }

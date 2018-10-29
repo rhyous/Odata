@@ -10,7 +10,7 @@ namespace Rhyous.Odata.Csdl
     /// <remarks>Needs to be rewritten accordin to this spec: http://docs.oasis-open.org/odata/odata-csdl-json/v4.01/odata-csdl-json-v4.01.html 
     /// </remarks>
 
-    [DataContract()]
+    [DataContract]
     public class CsdlEntity
     {
         /// <summary>
