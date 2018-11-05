@@ -38,7 +38,7 @@ namespace Rhyous.Odata.Csdl
             var prop = new CsdlProperty
             {
                 Type = CsdlTypeDictionary.Instance[propertyType.FullName],
-                IsCollection = propInfo.PropertyType.IsEnumerable() || propInfo.PropertyType.IsCollection()
+                IsCollection = propInfo.PropertyType != typeof(string) && (propInfo.PropertyType.IsEnumerable() || propInfo.PropertyType.IsCollection())
             };
             prop.CustomData.AddFromAttributes(propInfo, PropertyDataAttributeDictionary.Instance);
             return prop;

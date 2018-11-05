@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Runtime.Serialization;
 
 namespace Rhyous.Odata.Csdl
@@ -38,6 +39,7 @@ namespace Rhyous.Odata.Csdl
         /// JSON Schema types.
         /// </summary>
         /// <remarks>http://docs.oasis-open.org/odata/odata-csdl-json/v4.01/cs01/odata-csdl-json-v4.01-cs01.html#sec_Type</remarks>
+        [DefaultValue("Edm.String")]
         [DataMember(Name = "$Type", Order=1)]
         public virtual string Type { get; set; }
 

@@ -9,14 +9,14 @@ namespace Rhyous.Odata.Csdl.Tests.Models
     public class UnitTest1
     {
         [TestMethod]
-        public void CsdlRootService_Serialization_User_Test()
+        public void CsdlDocument_Serialization_User_Test()
         {
             // Arrange
             var service = new CsdlSchema();
             service.Entities.Add("User", typeof(User).ToCsdl());
             var doc = new CsdlDocument { Version = "4.01", EntityContainer = "EAF" };
             doc.Schemas.Add("EAF", service);
-            var expectedJson = "{\"$Version\":\"4.01\",\"$EntityContainer\":\"EAF\",\"EAF\":{\"$Alias\":\"self\",\"User\":{\"$Kind\":\"EntityType\",\"Id\":{\"$Type\":\"Edm.Int32\"},\"Name\":{\"$Collection\":true,\"$Type\":\"Edm.String\"},\"UserTypeId\":{\"$Type\":\"Edm.Int32\"},\"UserType\":{\"Type\":\"self.UserType\",\"Kind\":\"NavigationProperty\",\"IsCollection\":false,\"IsNullable\":false,\"Partner\":null,\"ContainsTarget\":false,\"ReferentialConstraint\":{\"UserTypeId\":\"Id\"},\"OnDelete\":\"None\"},\"UserRole\":{\"Type\":\"self.UserRole\",\"Kind\":\"NavigationProperty\",\"IsCollection\":true,\"IsNullable\":true,\"Partner\":null,\"ContainsTarget\":false,\"ReferentialConstraint\":null,\"OnDelete\":\"None\"},\"UserGroup\":{\"Type\":\"self.UserGroup\",\"Kind\":\"NavigationProperty\",\"IsCollection\":true,\"IsNullable\":true,\"Partner\":null,\"ContainsTarget\":false,\"ReferentialConstraint\":null,\"OnDelete\":\"None\"}}}}";
+            var expectedJson = "{\"$Version\":\"4.01\",\"$EntityContainer\":\"EAF\",\"EAF\":{\"$Alias\":\"self\",\"User\":{\"$Kind\":\"EntityType\",\"Id\":{\"$Type\":\"Edm.Int32\"},\"Name\":{\"$Type\":\"Edm.String\"},\"UserTypeId\":{\"$Type\":\"Edm.Int32\"},\"UserType\":{\"Type\":\"self.UserType\",\"Kind\":\"NavigationProperty\",\"IsCollection\":false,\"IsNullable\":false,\"Partner\":null,\"ContainsTarget\":false,\"ReferentialConstraint\":{\"UserTypeId\":\"Id\"},\"OnDelete\":\"None\"},\"UserRole\":{\"Type\":\"self.UserRole\",\"Kind\":\"NavigationProperty\",\"IsCollection\":true,\"IsNullable\":true,\"Partner\":null,\"ContainsTarget\":false,\"ReferentialConstraint\":null,\"OnDelete\":\"None\"},\"UserGroup\":{\"Type\":\"self.UserGroup\",\"Kind\":\"NavigationProperty\",\"IsCollection\":true,\"IsNullable\":true,\"Partner\":null,\"ContainsTarget\":false,\"ReferentialConstraint\":null,\"OnDelete\":\"None\"}}}}";
 
             // Act
             var json = JsonConvert.SerializeObject(doc);
@@ -26,7 +26,7 @@ namespace Rhyous.Odata.Csdl.Tests.Models
         }
 
         [TestMethod]
-        public void CsdlRootService_Serialization_SuiteMembership_Test()
+        public void CsdlDocument_Serialization_SuiteMembership_Test()
         {
             // Arrange
             var service = new CsdlSchema();
@@ -43,7 +43,7 @@ namespace Rhyous.Odata.Csdl.Tests.Models
         }
 
         [TestMethod]
-        public void CsdlRootService_Serialization_String_Test()
+        public void CsdlDocument_Serialization_String_Test()
         {
             // Arrange
             var service = new CsdlSchema();
