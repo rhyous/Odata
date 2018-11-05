@@ -1,8 +1,10 @@
 ﻿using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 
 namespace Rhyous.Odata.Tests
 {
+    [DisplayColumn("SmileType")]
     [DataContract]
     public class Smile
     {

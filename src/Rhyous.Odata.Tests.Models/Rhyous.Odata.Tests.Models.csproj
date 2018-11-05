@@ -34,6 +34,7 @@
       <HintPath>..\Packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
@@ -45,9 +46,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Addendum.cs" />
+    <Compile Include="Country.cs" />
     <Compile Include="Entity1.cs" />
     <Compile Include="Entity2.cs" />
     <Compile Include="EntityWithEnum.cs" />
+    <Compile Include="EntityWithRelatedEntityAlias.cs" />
     <Compile Include="IUser.cs" />
     <Compile Include="Person.cs" />
     <Compile Include="Product.cs" />
@@ -62,6 +65,10 @@
     <Compile Include="UserType.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Rhyous.Odata.Csdl\Rhyous.Odata.Csdl.csproj">
+      <Project>{3EF7ECF7-58C7-483A-A22E-54BAF06F5AF2}</Project>
+      <Name>Rhyous.Odata.Csdl</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Rhyous.Odata\Rhyous.Odata.csproj">
       <Project>{ac113e7b-4bd4-4daf-8620-df934fee493a}</Project>
       <Name>Rhyous.Odata</Name>

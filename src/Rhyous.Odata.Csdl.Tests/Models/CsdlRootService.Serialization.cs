@@ -15,7 +15,7 @@ namespace Rhyous.Odata.Csdl.Tests.Models
             var service = new CsdlSchema();
             service.Entities.Add("User", typeof(User).ToCsdl());
             var doc = new CsdlDocument { Version = "4.01", EntityContainer = "EAF" };
-            doc.Services.Add("EAF", service);
+            doc.Schemas.Add("EAF", service);
             var expectedJson = "{\"$Version\":\"4.01\",\"$EntityContainer\":\"EAF\",\"EAF\":{\"$Alias\":\"self\",\"User\":{\"$Kind\":\"EntityType\",\"Id\":{\"$Type\":\"Edm.Int32\"},\"Name\":{\"$Collection\":true,\"$Type\":\"Edm.String\"},\"UserTypeId\":{\"$Type\":\"Edm.Int32\"},\"UserType\":{\"Type\":\"self.UserType\",\"Kind\":\"NavigationProperty\",\"IsCollection\":false,\"IsNullable\":false,\"Partner\":null,\"ContainsTarget\":false,\"ReferentialConstraint\":{\"UserTypeId\":\"Id\"},\"OnDelete\":\"None\"},\"UserRole\":{\"Type\":\"self.UserRole\",\"Kind\":\"NavigationProperty\",\"IsCollection\":true,\"IsNullable\":true,\"Partner\":null,\"ContainsTarget\":false,\"ReferentialConstraint\":null,\"OnDelete\":\"None\"},\"UserGroup\":{\"Type\":\"self.UserGroup\",\"Kind\":\"NavigationProperty\",\"IsCollection\":true,\"IsNullable\":true,\"Partner\":null,\"ContainsTarget\":false,\"ReferentialConstraint\":null,\"OnDelete\":\"None\"}}}}";
 
             // Act
@@ -32,7 +32,7 @@ namespace Rhyous.Odata.Csdl.Tests.Models
             var service = new CsdlSchema();
             service.Entities.Add("SuiteMembership", typeof(SuiteMembership).ToCsdl());
             var doc = new CsdlDocument { Version = "4.01", EntityContainer = "EAF" };
-            doc.Services.Add("EAF", service);
+            doc.Schemas.Add("EAF", service);
             var expectedJson = "{\"$Version\":\"4.01\",\"$EntityContainer\":\"EAF\",\"EAF\":{\"$Alias\":\"self\",\"SuiteMembership\":{\"$Kind\":\"EntityType\",\"Id\":{\"$Type\":\"Edm.Int32\"},\"ProductId\":{\"$Type\":\"Edm.Int32\"},\"Product\":{\"Type\":\"self.Product\",\"Kind\":\"NavigationProperty\",\"IsCollection\":false,\"IsNullable\":false,\"Partner\":null,\"ContainsTarget\":false,\"ReferentialConstraint\":{\"ProductId\":\"Id\"},\"OnDelete\":\"None\"},\"Quantity\":{\"$Type\":\"Edm.Double\"},\"QuantityType\":{\"$Kind\":\"EnumType\",\"$UnderlyingType\":\"Edm.Int32\",\"Inherited\":1,\"Fixed\":2,\"Percentage\":3},\"SuiteId\":{\"$Type\":\"Edm.Int32\"}}}}";
 
             // Act
@@ -49,7 +49,7 @@ namespace Rhyous.Odata.Csdl.Tests.Models
             var service = new CsdlSchema();
             service.Entities.Add("User", JToken.Parse("{ \"Custom\": \"Json\" }"));
             var doc = new CsdlDocument { Version = "1.0", EntityContainer = "EAF" };
-            doc.Services.Add("UserService", service);
+            doc.Schemas.Add("UserService", service);
             var expectedJson = "{\"$Version\":\"1.0\",\"$EntityContainer\":\"EAF\",\"UserService\":{\"$Alias\":\"self\",\"User\":{\"Custom\":\"Json\"}}}";
 
             // Act

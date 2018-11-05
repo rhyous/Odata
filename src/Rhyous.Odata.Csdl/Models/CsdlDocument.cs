@@ -14,10 +14,10 @@ namespace Rhyous.Odata.Csdl
         public string EntityContainer { get; set; }
 
         [JsonExtensionData]
-        public Dictionary<string, object> Services
+        public Dictionary<string, object> Schemas
         {
-            get { return _Services ?? (_Services = new Dictionary<string, object>()); }
-            set { _Services = value; }
-        } private Dictionary<string, object> _Services;
+            get { return _Schemas ?? (_Schemas = new Dictionary<string, object>()); }
+            set { _Schemas = value; }
+        } private Dictionary<string, object> _Schemas;
     }
 }

@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Rhyous.Odata.Csdl</id>
-    <version>1.0.3</version>
+    <version>1.0.4</version>
     <title>Rhyous.Odata.Csdl</title>
     <authors>Jared Barneck (Rhyous)</authors>
     <owners>Jared Barneck (Rhyous)</owners>
@@ -15,6 +15,10 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <licenseUrl>https://github.com/rhyous/Odata/blob/master/Fork and Contribute License.txt</licenseUrl>
     <copyright>Copyright Jared Barneck (Rhyous) 2017</copyright>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System.Runtime.Serialization" />
+      <frameworkAssembly assemblyName="System.ComponentModel.DataAnnotations" />
+    </frameworkAssemblies>
     <dependencies>
       <group targetFramework="net461">
         <dependency id="Newtonsoft.Json" version="11.0.2" />

@@ -28,11 +28,14 @@ namespace Rhyous.Odata.Csdl
         [DataMember(Name = "$IsFlags", EmitDefaultValue = false)]
         public bool IsFlags { get; set; }
 
+        /// <summary>
+        /// This is used for listing all enum options as well as custom data.
+        /// </summary>
         [JsonExtensionData]
-        public Dictionary<string, object> EnumOptions
+        public Dictionary<string, object> CustomData
         {
-            get { return _EnumOptions ?? (_EnumOptions = new Dictionary<string, object>()); }
-            set { _EnumOptions = value; }
-        } private Dictionary<string, object> _EnumOptions;
+            get { return _CustomData ?? (_CustomData = new Dictionary<string, object>()); }
+            set { _CustomData = value; }
+        } private Dictionary<string, object> _CustomData;
     }
 }

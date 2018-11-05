@@ -1,4 +1,6 @@
-﻿using System.Runtime.Serialization;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace Rhyous.Odata.Csdl
 {
@@ -50,5 +52,12 @@ namespace Rhyous.Odata.Csdl
 
         [DataMember(Name = "$DefaultValue", EmitDefaultValue = false)]
         public object DefaultValue { get; set; }
+
+        [JsonExtensionData]
+        public Dictionary<string, object> CustomData
+        {
+            get { return _CustomData ?? (_CustomData = new Dictionary<string, object>()); }
+            set { _CustomData = value; }
+        } private Dictionary<string, object> _CustomData;
     }
 }

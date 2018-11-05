@@ -1,5 +1,8 @@
-﻿namespace Rhyous.Odata.Tests
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Rhyous.Odata.Tests
 {
+    [DisplayColumn("Text")]
     public partial class Token
     {
         public string Text { get; set; }

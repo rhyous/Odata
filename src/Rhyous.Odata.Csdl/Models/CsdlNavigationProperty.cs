@@ -8,7 +8,6 @@ namespace Rhyous.Odata.Csdl
     {
         [DataMember(Name = "$Kind")]
         public string Type { get; set; }
-
         [DataMember(Name = "$Type")]
         public string Kind { get; set; } = "NavigationProperty";
         [DataMember(Name = "$Collection")]

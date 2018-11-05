@@ -37,6 +37,7 @@
       <HintPath>..\Packages\Rhyous.Collections.1.0.10\lib\net461\Rhyous.Collections.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
@@ -47,6 +48,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\ReadOnlyEntityAttribute.cs" />
+    <Compile Include="Dictionaries\PropertyDataAttributeDictionary.cs" />
+    <Compile Include="Dictionaries\PropertyAttributeDictionary.cs" />
+    <Compile Include="Dictionaries\EntityAttributeDictionary.cs" />
     <Compile Include="Extensions\CsdlExtensions.cs" />
     <Compile Include="Extensions\DictionaryExtensions.cs" />
     <Compile Include="Models\CsdlEntity.cs" />

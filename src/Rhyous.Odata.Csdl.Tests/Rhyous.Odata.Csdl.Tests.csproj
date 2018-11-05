@@ -51,8 +51,17 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CsdlExtensionTests.cs" />
+    <Compile Include="Extensions\CsdlExtensionTests.cs" />
+    <Compile Include="Dictionaries\EntityAttributeDictionaryTests.cs" />
+    <Compile Include="Dictionaries\PropertyDataAttributeDictionaryTests.cs" />
+    <Compile Include="Dictionaries\PropertyAttributeDictionaryTests.cs" />
+    <Compile Include="Extensions\DictionaryExtensionsTests.cs" />
+    <Compile Include="Models\CsdlDocumentTests.cs" />
     <Compile Include="Models\CsdlRootService.Serialization.cs" />
+    <Compile Include="Models\CsdlEntityTests.cs" />
+    <Compile Include="Models\CsdlPropertyTests.cs" />
+    <Compile Include="Models\CsdlEnumPropertyTests.cs" />
+    <Compile Include="Models\CsdlSchemaTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -72,6 +81,7 @@
       <Name>Rhyous.Odata</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
