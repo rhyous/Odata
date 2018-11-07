@@ -44,5 +44,11 @@ namespace Rhyous.Odata
         /// is passed to the web service.
         /// </summary>
         public bool Nullable { get; set; }
+
+        /// <summary>
+        /// If this is true is will enforce that the related entity exists and throw an exception if not. 
+        /// It defaults to TRUE.
+        /// </summary>
+        public bool RelatedEntityMustExist { get; set; } = true;
     }
 }
