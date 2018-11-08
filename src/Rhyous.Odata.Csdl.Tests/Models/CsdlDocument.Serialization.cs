@@ -16,10 +16,27 @@ namespace Rhyous.Odata.Csdl.Tests.Models
             service.Entities.Add("User", typeof(User).ToCsdl());
             var doc = new CsdlDocument { Version = "4.01", EntityContainer = "EAF" };
             doc.Schemas.Add("EAF", service);
-            var expectedJson = "{\"$Version\":\"4.01\",\"$EntityContainer\":\"EAF\",\"EAF\":{\"$Alias\":\"self\",\"User\":{\"$Kind\":\"EntityType\",\"Id\":{\"$Type\":\"Edm.Int32\"},\"Name\":{\"$Type\":\"Edm.String\"},\"UserTypeId\":{\"$Type\":\"Edm.Int32\"},\"UserType\":{\"Type\":\"self.UserType\",\"Kind\":\"NavigationProperty\",\"IsCollection\":false,\"IsNullable\":false,\"Partner\":null,\"ContainsTarget\":false,\"ReferentialConstraint\":{\"UserTypeId\":\"Id\"},\"OnDelete\":\"None\"},\"UserRole\":{\"Type\":\"self.UserRole\",\"Kind\":\"NavigationProperty\",\"IsCollection\":true,\"IsNullable\":true,\"Partner\":null,\"ContainsTarget\":false,\"ReferentialConstraint\":null,\"OnDelete\":\"None\"},\"UserGroup\":{\"Type\":\"self.UserGroup\",\"Kind\":\"NavigationProperty\",\"IsCollection\":true,\"IsNullable\":true,\"Partner\":null,\"ContainsTarget\":false,\"ReferentialConstraint\":null,\"OnDelete\":\"None\"}}}}";
+            var expectedJson = "{\"$Version\":\"4.01\",\"$EntityContainer\":\"EAF\",\"EAF\":{\"$Alias\":\"self\",\"User\":{\"$Kind\":\"EntityType\",\"$Key\":[\"Id\"],\"Id\":{\"$Type\":\"Edm.Int32\"},\"Name\":{\"$Type\":\"Edm.String\"},\"UserTypeId\":{\"$Type\":\"Edm.Int32\"},\"UserType\":{\"$Type\":\"self.UserType\",\"$Kind\":\"NavigationProperty\",\"$ReferentialConstraint\":{\"UserTypeId\":\"Id\"}},\"UserRole\":{\"$Type\":\"self.UserRole\",\"$Kind\":\"NavigationProperty\",\"$Nullable\":true,\"$Collection\":true},\"UserGroup\":{\"$Type\":\"self.UserGroup\",\"$Kind\":\"NavigationProperty\",\"$Nullable\":true,\"$Collection\":true}}}}";
 
             // Act
             var json = JsonConvert.SerializeObject(doc);
+
+            // Assert
+            Assert.AreEqual(expectedJson, json);
+        }
+
+        [TestMethod]
+        public void CsdlDocument_Serialization_User_ExcludeDefault_Test()
+        {
+            // Arrange
+            var service = new CsdlSchema();
+            service.Entities.Add("User", typeof(User).ToCsdl());
+            var doc = new CsdlDocument { Version = "4.01", EntityContainer = "EAF" };
+            doc.Schemas.Add("EAF", service);
+            var expectedJson = "{\"$Version\":\"4.01\",\"$EntityContainer\":\"EAF\",\"EAF\":{\"$Alias\":\"self\",\"User\":{\"$Kind\":\"EntityType\",\"$Key\":[\"Id\"],\"Id\":{\"$Type\":\"Edm.Int32\"},\"Name\":{},\"UserTypeId\":{\"$Type\":\"Edm.Int32\"},\"UserType\":{\"$Type\":\"self.UserType\",\"$Kind\":\"NavigationProperty\",\"$ReferentialConstraint\":{\"UserTypeId\":\"Id\"}},\"UserRole\":{\"$Type\":\"self.UserRole\",\"$Kind\":\"NavigationProperty\",\"$Nullable\":true,\"$Collection\":true},\"UserGroup\":{\"$Type\":\"self.UserGroup\",\"$Kind\":\"NavigationProperty\",\"$Nullable\":true,\"$Collection\":true}}}}";
+
+            // Act
+            var json = JsonConvert.SerializeObject(doc, new JsonSerializerSettings { DefaultValueHandling = DefaultValueHandling.Ignore });
 
             // Assert
             Assert.AreEqual(expectedJson, json);
@@ -33,7 +50,7 @@ namespace Rhyous.Odata.Csdl.Tests.Models
             service.Entities.Add("SuiteMembership", typeof(SuiteMembership).ToCsdl());
             var doc = new CsdlDocument { Version = "4.01", EntityContainer = "EAF" };
             doc.Schemas.Add("EAF", service);
-            var expectedJson = "{\"$Version\":\"4.01\",\"$EntityContainer\":\"EAF\",\"EAF\":{\"$Alias\":\"self\",\"SuiteMembership\":{\"$Kind\":\"EntityType\",\"Id\":{\"$Type\":\"Edm.Int32\"},\"ProductId\":{\"$Type\":\"Edm.Int32\"},\"Product\":{\"Type\":\"self.Product\",\"Kind\":\"NavigationProperty\",\"IsCollection\":false,\"IsNullable\":false,\"Partner\":null,\"ContainsTarget\":false,\"ReferentialConstraint\":{\"ProductId\":\"Id\"},\"OnDelete\":\"None\"},\"Quantity\":{\"$Type\":\"Edm.Double\"},\"QuantityType\":{\"$Kind\":\"EnumType\",\"$UnderlyingType\":\"Edm.Int32\",\"Inherited\":1,\"Fixed\":2,\"Percentage\":3},\"SuiteId\":{\"$Type\":\"Edm.Int32\"}}}}";
+            var expectedJson = "{\"$Version\":\"4.01\",\"$EntityContainer\":\"EAF\",\"EAF\":{\"$Alias\":\"self\",\"SuiteMembership\":{\"$Kind\":\"EntityType\",\"$Key\":[\"Id\"],\"Id\":{\"$Type\":\"Edm.Int32\"},\"ProductId\":{\"$Type\":\"Edm.Int32\"},\"Product\":{\"$Type\":\"self.Product\",\"$Kind\":\"NavigationProperty\",\"$ReferentialConstraint\":{\"ProductId\":\"Id\"}},\"Quantity\":{\"$Type\":\"Edm.Double\"},\"QuantityType\":{\"$Kind\":\"EnumType\",\"$UnderlyingType\":\"Edm.Int32\",\"Inherited\":1,\"Fixed\":2,\"Percentage\":3},\"SuiteId\":{\"$Type\":\"Edm.Int32\"}}}}";
 
             // Act
             var json = JsonConvert.SerializeObject(doc);

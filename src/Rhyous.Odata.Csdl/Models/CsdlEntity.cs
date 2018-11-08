@@ -21,7 +21,7 @@ namespace Rhyous.Odata.Csdl
 
         /// <summary>
         /// Specifies whether this entity outputs data, such as a stream or image.
-        /// </summary>
+        /// </summary>        
         [DataMember(Name = "$HasStream", EmitDefaultValue = false)]
         public bool HasStream { get; set; }
 
@@ -34,6 +34,7 @@ namespace Rhyous.Odata.Csdl
         /// <summary>
         /// The key properties of this entity.
         /// </summary>
+        [DataMember(Name = "$Key", EmitDefaultValue = false)]
         public List<string> Keys
         {
             get { return _Keys ?? (_Keys = new List<string>()); }

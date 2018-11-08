@@ -8,7 +8,7 @@ namespace Rhyous.Odata.Csdl
     /// <summary>
     /// Represents the schema of an entity property.
     /// </summary>
-    [DataContract(Name = "Property")]
+    [DataContract]
     public class CsdlProperty
     {
         /// <summary>
@@ -40,7 +40,7 @@ namespace Rhyous.Odata.Csdl
         /// </summary>
         /// <remarks>http://docs.oasis-open.org/odata/odata-csdl-json/v4.01/cs01/odata-csdl-json-v4.01-cs01.html#sec_Type</remarks>
         [DefaultValue("Edm.String")]
-        [DataMember(Name = "$Type", Order=1)]
+        [DataMember(Name = "$Type")]
         public virtual string Type { get; set; }
 
         [DataMember(Name = "$Precision", EmitDefaultValue = false)]

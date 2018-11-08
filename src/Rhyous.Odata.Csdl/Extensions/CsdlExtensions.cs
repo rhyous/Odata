@@ -70,7 +70,7 @@ namespace Rhyous.Odata.Csdl
             var navProp = new CsdlNavigationProperty
             {
                 Type = $"{schemaOrAlias}.{relatedEntity}",
-                IsNullable = relatedEntityAttribute.Nullable,
+                Nullable = relatedEntityAttribute.Nullable,
                 IsCollection = false, // RelatedEntityAttribute on a property is never a collection.
                 ReferentialConstraint = new Dictionary<string, string> { { relatedEntityAttribute.Property, relatedEntityAttribute.ForeignKeyProperty } }
             };
@@ -87,7 +87,7 @@ namespace Rhyous.Odata.Csdl
             {
                 Type = $"{schemaOrAlias}.{relatedEntity}",
                 IsCollection = true, // RelatedEntityForeignAttribute is always a collection.
-                IsNullable = true    // Collections can always be empty
+                Nullable = true    // Collections can always be empty
             };
             return navProp;
         }
@@ -102,7 +102,7 @@ namespace Rhyous.Odata.Csdl
             {
                 Type = $"{schemaOrAlias}.{relatedEntity}",
                 IsCollection = true, // RelatedEntityForeignAttribute is always a collection.
-                IsNullable = true    // Collections can always be empty
+                Nullable = true    // Collections can always be empty
             };
             return navProp;
         }

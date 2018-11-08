@@ -7,7 +7,7 @@ namespace Rhyous.Odata.Csdl
     /// <summary>
     /// Represents the schema of an entity property.
     /// </summary>
-    [DataContract(Name = "Property")]
+    [DataContract]
     public class CsdlEnumProperty
     {
         /// <summary>
