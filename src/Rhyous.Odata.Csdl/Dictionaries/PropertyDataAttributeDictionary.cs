@@ -20,6 +20,7 @@ namespace Rhyous.Odata.Csdl
         internal PropertyDataAttributeDictionary()
         {
             Add(typeof(EditableAttribute), GetReadOnlyProperty);
+            Add(typeof(RelatedEntityAttribute), GetRelatedEntityProperties);
             // Future: 
             // Add(typeof(MinLengthAttribute), GetMaxLengthProperty);
             // Add(typeof(MaxLengthAttribute), GetMaxLengthProperty);
@@ -36,6 +37,17 @@ namespace Rhyous.Odata.Csdl
             if (editableAttribute == null)
                 return null;
             return new[] { new KeyValuePair<string, object>("@UI.ReadOnly", !editableAttribute.AllowEdit) };
+        }
+
+        internal IEnumerable<KeyValuePair<string, object>> GetRelatedEntityProperties(MemberInfo mi)
+        {
+            if (mi == null)
+                return null;
+            var relatedEntityAttribute = mi.GetCustomAttribute<RelatedEntityAttribute>();
+            if (relatedEntityAttribute == null)
+                return null;
+            var relatedEntityName = string.IsNullOrWhiteSpace(relatedEntityAttribute.RelatedEntityAlias) ? relatedEntityAttribute.RelatedEntity : relatedEntityAttribute.RelatedEntityAlias;
+            return new[] { new KeyValuePair<string, object>("$NavigationKey", relatedEntityName) };
         }
     }
 }
