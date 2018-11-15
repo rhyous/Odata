@@ -3,6 +3,7 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -24,7 +25,7 @@ namespace Rhyous.Odata
             return properties;
         }
         
-        internal static void IgnoreEmptyLists(IList<JsonProperty> orderedProperties)
+        internal void IgnoreEmptyLists(IList<JsonProperty> orderedProperties)
         {
             var skipTypes = new[] { typeof(string), typeof(JRaw) };
             foreach (var prop in orderedProperties)
@@ -39,20 +40,30 @@ namespace Rhyous.Odata
             }
         }
 
-        internal static Dictionary<JsonProperty, PropertyInfo> Cache = new Dictionary<JsonProperty, PropertyInfo>();
+        internal ConcurrentDictionary<JsonProperty, PropertyInfo> Cache = new ConcurrentDictionary<JsonProperty, PropertyInfo>();
 
-        internal static bool ShouldSerialize(object o, JsonProperty prop)
+        internal bool ShouldSerialize(object o, JsonProperty prop)
         {
-            if (o == null)
-                return false;
-            if (!Cache.TryGetValue(prop, out PropertyInfo propInfo))
-                Cache[prop] = propInfo = o.GetType().GetProperty(prop.UnderlyingName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-            var value = propInfo.GetValue(o);
-            bool b = ShouldSerialize(value);
-            return b;
+            try
+            {
+                if (o == null)
+                    return false;
+                if (!Cache.TryGetValue(prop, out PropertyInfo propInfo))
+                {
+                    propInfo = o.GetType().GetProperty(prop.UnderlyingName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                    Cache[prop] = propInfo;
+                }
+                var value = propInfo.GetValue(o);
+                bool b = ShouldSerialize(value);
+                return b;
+            }
+            catch (Exception)
+            {
+                return true;
+            }
         }
 
-        internal static bool ShouldSerialize(object value)
+        internal bool ShouldSerialize(object value)
         {
             if (value == null)
                 return false;

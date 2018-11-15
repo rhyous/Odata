@@ -17,7 +17,7 @@ namespace Rhyous.Odata.Tests
             List<int> list = null;
 
             // Act & Assert
-            Assert.IsFalse(ExcludeEmptyEnumerablesContractResolver.ShouldSerialize(list));
+            Assert.IsFalse(ExcludeEmptyEnumerablesContractResolver.Instance.ShouldSerialize(list));
         }
 
         [TestMethod]
@@ -27,7 +27,7 @@ namespace Rhyous.Odata.Tests
             var list = new List<int>();
 
             // Act & Assert
-            Assert.IsFalse(ExcludeEmptyEnumerablesContractResolver.ShouldSerialize(list));
+            Assert.IsFalse(ExcludeEmptyEnumerablesContractResolver.Instance.ShouldSerialize(list));
         }
 
         [TestMethod]
@@ -37,7 +37,7 @@ namespace Rhyous.Odata.Tests
             var list = new Collection<int>();
 
             // Act & Assert
-            Assert.IsFalse(ExcludeEmptyEnumerablesContractResolver.ShouldSerialize(list));
+            Assert.IsFalse(ExcludeEmptyEnumerablesContractResolver.Instance.ShouldSerialize(list));
         }
         
         [TestMethod]
@@ -48,7 +48,7 @@ namespace Rhyous.Odata.Tests
             var enumerable = list.Where(i => i == 4);
 
             // Act & Assert
-            Assert.IsFalse(ExcludeEmptyEnumerablesContractResolver.ShouldSerialize(enumerable));
+            Assert.IsFalse(ExcludeEmptyEnumerablesContractResolver.Instance.ShouldSerialize(enumerable));
         }
 
         [TestMethod]
@@ -58,7 +58,7 @@ namespace Rhyous.Odata.Tests
             var list = new List<int> { 1, 2};
 
             // Act & Assert
-            Assert.IsTrue(ExcludeEmptyEnumerablesContractResolver.ShouldSerialize(list));
+            Assert.IsTrue(ExcludeEmptyEnumerablesContractResolver.Instance.ShouldSerialize(list));
         }
 
         [TestMethod]
@@ -68,7 +68,7 @@ namespace Rhyous.Odata.Tests
             var list = new Collection<int> { 1, 2} ;
 
             // Act & Assert
-            Assert.IsTrue(ExcludeEmptyEnumerablesContractResolver.ShouldSerialize(list));
+            Assert.IsTrue(ExcludeEmptyEnumerablesContractResolver.Instance.ShouldSerialize(list));
         }
 
         [TestMethod]
@@ -79,7 +79,7 @@ namespace Rhyous.Odata.Tests
             var enumerable = list.Where(i => i < 4);
 
             // Act & Assert
-            Assert.IsTrue(ExcludeEmptyEnumerablesContractResolver.ShouldSerialize(enumerable));
+            Assert.IsTrue(ExcludeEmptyEnumerablesContractResolver.Instance.ShouldSerialize(enumerable));
         }
 
         [TestMethod]
@@ -89,7 +89,7 @@ namespace Rhyous.Odata.Tests
             var odata = new OdataObject<Addendum, long>() { Object = new Addendum { Id = 10, Property = "A", Value = "B" } };
 
             // Act & Assert
-            Assert.IsFalse(ExcludeEmptyEnumerablesContractResolver.ShouldSerialize(odata, new JsonProperty { PropertyName = "RelatedEntityCollection", UnderlyingName = "RelatedEntityCollection" }));
+            Assert.IsFalse(ExcludeEmptyEnumerablesContractResolver.Instance.ShouldSerialize(odata, new JsonProperty { PropertyName = "RelatedEntityCollection", UnderlyingName = "RelatedEntityCollection" }));
         }
 
         [TestMethod]
@@ -99,7 +99,7 @@ namespace Rhyous.Odata.Tests
             var obj = new Smile { Id = 2, SmileType = "Big grin" };
 
             // Act & Assert
-            Assert.IsTrue(ExcludeEmptyEnumerablesContractResolver.ShouldSerialize(obj, new JsonProperty { PropertyName = "Type", UnderlyingName = "SmileType" }));
+            Assert.IsTrue(ExcludeEmptyEnumerablesContractResolver.Instance.ShouldSerialize(obj, new JsonProperty { PropertyName = "Type", UnderlyingName = "SmileType" }));
         }
 
         [TestMethod]
@@ -119,7 +119,7 @@ namespace Rhyous.Odata.Tests
             odata.RelatedEntityCollection.Add(relatedEntityCollection);
 
             // Act & Assert
-            Assert.IsTrue(ExcludeEmptyEnumerablesContractResolver.ShouldSerialize(odata, new JsonProperty { PropertyName = "RelatedEntityCollection", UnderlyingName = "RelatedEntityCollection" }));
+            Assert.IsTrue(ExcludeEmptyEnumerablesContractResolver.Instance.ShouldSerialize(odata, new JsonProperty { PropertyName = "RelatedEntityCollection", UnderlyingName = "RelatedEntityCollection" }));
         }
     }
 }
