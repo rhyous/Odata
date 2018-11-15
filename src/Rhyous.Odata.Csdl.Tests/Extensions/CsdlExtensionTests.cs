@@ -146,8 +146,7 @@ namespace Rhyous.Odata.Csdl.Tests
             var csdl = type.ToCsdl();
 
             // Assert
-            Assert.AreEqual("Type eq 1", (csdl.Properties["TypeId"] as CsdlProperty).CustomData["@Odata.Filter"]);
+            Assert.AreEqual("Type eq 1", (csdl.Properties["Type"] as CsdlNavigationProperty).CustomData["@Odata.Filter"]);
         }
-
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.Serialization;
 
@@ -52,5 +53,12 @@ namespace Rhyous.Odata.Csdl
         [DataMember(Name = "$OnDelete", EmitDefaultValue = false)] 
         [JsonConverter(typeof(StringEnumConverter))]
         public OnDelete OnDelete { get; set; }
+
+        [JsonExtensionData]
+        public Dictionary<string, object> CustomData
+        {
+            get { return _CustomData ?? (_CustomData = new Dictionary<string, object>()); }
+            set { _CustomData = value; }
+        } private Dictionary<string, object> _CustomData;
     }
 }

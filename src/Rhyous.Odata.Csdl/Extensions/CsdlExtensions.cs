@@ -84,6 +84,8 @@ namespace Rhyous.Odata.Csdl
                 IsCollection = false, // RelatedEntityAttribute on a property is never a collection.
                 ReferentialConstraint = new Dictionary<string, string> { { relatedEntityAttribute.Property, relatedEntityAttribute.ForeignKeyProperty } }
             };
+            if (!string.IsNullOrWhiteSpace(relatedEntityAttribute.Filter))
+                navProp.CustomData.Add("@Odata.Filter", relatedEntityAttribute.Filter);
             return navProp;
         }
 

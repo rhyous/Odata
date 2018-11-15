@@ -47,10 +47,7 @@ namespace Rhyous.Odata.Csdl
             if (relatedEntityAttribute == null)
                 return null;
             var relatedEntityName = string.IsNullOrWhiteSpace(relatedEntityAttribute.RelatedEntityAlias) ? relatedEntityAttribute.RelatedEntity : relatedEntityAttribute.RelatedEntityAlias;
-            var result =  new List<KeyValuePair<string, object>> { new KeyValuePair<string, object>("$NavigationKey", relatedEntityName) };
-            if (!string.IsNullOrWhiteSpace(relatedEntityAttribute.Filter))
-                result.Add(new KeyValuePair<string, object>("@Odata.Filter", relatedEntityAttribute.Filter));
-            return result;
+            return new [] { new KeyValuePair<string, object>("$NavigationKey", relatedEntityName) };
         }
     }
 }
