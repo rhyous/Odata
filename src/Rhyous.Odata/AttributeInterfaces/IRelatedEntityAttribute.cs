@@ -44,5 +44,12 @@
         /// So instead, return all UserTypes once. Obviously if the forign table is large, don't use this. Large, of course, is
         /// subjective. It is up to the developer to determine if this setting adds value.</example>
         bool GetAll { get; set; }
+        /// <summary>
+        /// The ability to enforce a filter on a related entity. For example, imagine you want a related entity for an entity with
+        /// a TypeId property and you only want to relate to TypeId 1. You can put the following Odata filter here:
+        ///     TypeId eq 1
+        /// Do not include the "$Filter=" prefix. It is the callers responsiblity to enforce use this.
+        /// </summary>
+        string Filter { get; set; }
     }
 }

@@ -16,5 +16,8 @@ namespace Rhyous.Odata
         public virtual bool GetAll { get; set; }
         /// <inheritdoc />
         public virtual bool AutoExpand { get; set; }
+        /// <inheritdoc />
+        public virtual string Filter { get; set; }
+
     }
 }
