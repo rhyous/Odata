@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="Addendum.cs" />
     <Compile Include="Country.cs" />
+    <Compile Include="EntityWithFilter.cs" />
     <Compile Include="EntityWithNullables.cs" />
     <Compile Include="Entity1.cs" />
     <Compile Include="Entity2.cs" />

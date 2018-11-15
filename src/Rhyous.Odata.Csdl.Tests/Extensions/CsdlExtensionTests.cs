@@ -116,7 +116,7 @@ namespace Rhyous.Odata.Csdl.Tests
 
             // Assert
             Assert.IsNull(csdl);
-        }
+        } class Fake { Fake TestProp { get; set; } }
 
         [TestMethod]
         public void CsdlExtensions_ToCsdl_EntityWithNullables_Tests()
@@ -136,6 +136,18 @@ namespace Rhyous.Odata.Csdl.Tests
             Assert.IsTrue((csdl.Properties["LastUpdatedByUserId"] as CsdlProperty).Nullable, "LastUpdatedByUserId");
         }
 
-        class Fake { Fake TestProp { get; set; } }
+        [TestMethod]
+        public void CsdlExtensions_ToCsdl_EntityWithFilter_Tests()
+        {
+            // Arrange
+            Type type = typeof(EntityWithFilter);
+
+            // Act
+            var csdl = type.ToCsdl();
+
+            // Assert
+            Assert.AreEqual("Type eq 1", (csdl.Properties["TypeId"] as CsdlProperty).CustomData["@Odata.Filter"]);
+        }
+
     }
 }

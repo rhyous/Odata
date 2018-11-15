@@ -20,7 +20,7 @@ namespace Rhyous.Odata.Csdl
         internal PropertyDataAttributeDictionary()
         {
             Add(typeof(EditableAttribute), GetReadOnlyProperty);
-            Add(typeof(RelatedEntityAttribute), GetRelatedEntityProperties);
+            Add(typeof(RelatedEntityAttribute), GetRelatedEntityPropertyData);
             // Future: 
             // Add(typeof(MinLengthAttribute), GetMaxLengthProperty);
             // Add(typeof(MaxLengthAttribute), GetMaxLengthProperty);
@@ -39,7 +39,7 @@ namespace Rhyous.Odata.Csdl
             return new[] { new KeyValuePair<string, object>("@UI.ReadOnly", !editableAttribute.AllowEdit) };
         }
 
-        internal IEnumerable<KeyValuePair<string, object>> GetRelatedEntityProperties(MemberInfo mi)
+        internal IEnumerable<KeyValuePair<string, object>> GetRelatedEntityPropertyData(MemberInfo mi)
         {
             if (mi == null)
                 return null;
@@ -47,7 +47,10 @@ namespace Rhyous.Odata.Csdl
             if (relatedEntityAttribute == null)
                 return null;
             var relatedEntityName = string.IsNullOrWhiteSpace(relatedEntityAttribute.RelatedEntityAlias) ? relatedEntityAttribute.RelatedEntity : relatedEntityAttribute.RelatedEntityAlias;
-            return new[] { new KeyValuePair<string, object>("$NavigationKey", relatedEntityName) };
+            var result =  new List<KeyValuePair<string, object>> { new KeyValuePair<string, object>("$NavigationKey", relatedEntityName) };
+            if (!string.IsNullOrWhiteSpace(relatedEntityAttribute.Filter))
+                result.Add(new KeyValuePair<string, object>("@Odata.Filter", relatedEntityAttribute.Filter));
+            return result;
         }
     }
 }
