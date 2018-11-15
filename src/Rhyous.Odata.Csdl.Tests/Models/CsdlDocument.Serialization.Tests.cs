@@ -6,7 +6,7 @@ using Rhyous.Odata.Tests;
 namespace Rhyous.Odata.Csdl.Tests.Models
 {
     [TestClass]
-    public class UnitTest1
+    public class CsdlDocumentSerializationTests
     {
         [TestMethod]
         public void CsdlDocument_Serialization_User_Test()

@@ -1,4 +1,6 @@
-﻿namespace Rhyous.Odata.Tests
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Rhyous.Odata.Tests
 {
 
     [RelatedEntityMapping("UserRole", "UserRoleMembership", "User")]
@@ -6,6 +8,7 @@
     public class User : IUser
     {
         public int Id { get; set; }
+        [Required]
         public string Name { get; set; }
         [RelatedEntity("UserType")]
         public int UserTypeId { get; set; }

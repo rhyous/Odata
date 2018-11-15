@@ -57,7 +57,7 @@
     <Compile Include="Dictionaries\PropertyAttributeDictionaryTests.cs" />
     <Compile Include="Extensions\DictionaryExtensionsTests.cs" />
     <Compile Include="Models\CsdlDocumentTests.cs" />
-    <Compile Include="Models\CsdlDocument.Serialization.cs" />
+    <Compile Include="Models\CsdlDocument.Serialization.Tests.cs" />
     <Compile Include="Models\CsdlEntityTests.cs" />
     <Compile Include="Models\CsdlPropertyTests.cs" />
     <Compile Include="Models\CsdlEnumPropertyTests.cs" />

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 using Rhyous.Collections;
@@ -31,14 +32,16 @@ namespace Rhyous.Odata.Csdl
         {
             if (propInfo == null)
                 return null;
-            var isNullable = !propInfo.PropertyType.IsValueType;
-            var propertyType = propInfo.PropertyType.IsGenericType ? propInfo.PropertyType.GetGenericArguments()[0] : propInfo.PropertyType;
-            if (!CsdlTypeDictionary.Instance.ContainsKey(propertyType.FullName))
+            var propertyType = propInfo.PropertyType;
+            Type nullableType = propertyType.IsGenericType && propertyType.GetGenericTypeDefinition() == typeof(Nullable<>) ? propertyType.GetGenericArguments()[0] : null;
+            var propName = nullableType == null ? propertyType.FullName : nullableType.FullName;
+            if (!CsdlTypeDictionary.Instance.TryGetValue(propName, out string csdlType))
                 return null;
             var prop = new CsdlProperty
             {
-                Type = CsdlTypeDictionary.Instance[propertyType.FullName],
-                IsCollection = propInfo.PropertyType != typeof(string) && (propInfo.PropertyType.IsEnumerable() || propInfo.PropertyType.IsCollection())
+                Type = csdlType,
+                IsCollection = propertyType != typeof(string) && (propertyType.IsEnumerable() || propertyType.IsCollection()),
+                Nullable = propertyType.IsNullable(propInfo)
             };
             prop.CustomData.AddFromAttributes(propInfo, PropertyDataAttributeDictionary.Instance);
             return prop;
@@ -48,7 +51,6 @@ namespace Rhyous.Odata.Csdl
         {
             if (propInfo == null)
                 return null;
-            var isNullable = !propInfo.PropertyType.IsValueType;
             var propertyType = propInfo.PropertyType.IsGenericType ? propInfo.PropertyType.GetGenericArguments()[0] : propInfo.PropertyType;
             if (!propertyType.IsEnum)
                 return null;
@@ -60,6 +62,15 @@ namespace Rhyous.Odata.Csdl
             };
             prop.CustomData.AddFromAttributes(propInfo, PropertyDataAttributeDictionary.Instance);
             return prop;
+        }
+
+        public static bool IsNullable(this Type type, PropertyInfo pi)
+        {
+            if (type == typeof(string))
+                return pi?.GetCustomAttribute<RequiredAttribute>() == null;
+            if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
+                return true;
+            return !type.IsValueType;
         }
 
         public static CsdlNavigationProperty ToNavigationProperty(this RelatedEntityAttribute relatedEntityAttribute, string schemaOrAlias = "self")

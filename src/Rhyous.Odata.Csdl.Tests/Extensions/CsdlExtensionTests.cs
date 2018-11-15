@@ -118,6 +118,24 @@ namespace Rhyous.Odata.Csdl.Tests
             Assert.IsNull(csdl);
         }
 
+        [TestMethod]
+        public void CsdlExtensions_ToCsdl_EntityWithNullables_Tests()
+        {
+            // Arrange
+            Type type = typeof(EntityWithNullables);
+
+            // Act
+            var csdl = type.ToCsdl();
+
+            // Assert
+            Assert.IsFalse((csdl.Properties["Name"] as CsdlProperty).Nullable, "Name");
+            Assert.IsTrue((csdl.Properties["Description"] as CsdlProperty).Nullable, "Description");
+            Assert.IsFalse((csdl.Properties["CreateDate"] as CsdlProperty).Nullable, "CreateDate");
+            Assert.IsFalse((csdl.Properties["CreatedByUserId"] as CsdlProperty).Nullable, "CreatedByUserId");
+            Assert.IsTrue((csdl.Properties["LastUpdated"] as CsdlProperty).Nullable, "LastUpdated");
+            Assert.IsTrue((csdl.Properties["LastUpdatedByUserId"] as CsdlProperty).Nullable, "LastUpdatedByUserId");
+        }
+
         class Fake { Fake TestProp { get; set; } }
     }
 }

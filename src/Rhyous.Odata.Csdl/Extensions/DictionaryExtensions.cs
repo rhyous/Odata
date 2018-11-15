@@ -54,15 +54,15 @@ namespace Rhyous.Odata.Csdl
                 dictionary.AddIfNewAndNotNull(propInfo.Name, propInfo.ToCsdl());
         }
         
-        internal static void AddCustomProperties(this IDictionary<string, object> dictionary, Type entityType, params Func<Type, IEnumerable<KeyValuePair<string, object>>>[] customPropertyBuilders)
+        internal static void AddCustomProperties<T>(this IDictionary<string, object> dictionary, T inT, params Func<T, IEnumerable<KeyValuePair<string, object>>>[] customPropertyBuilders)
         {
-            if (entityType == null || dictionary == null || customPropertyBuilders == null || !customPropertyBuilders.Any())
+            if (inT == null || dictionary == null || customPropertyBuilders == null || !customPropertyBuilders.Any())
                 return;
             foreach (var builder in customPropertyBuilders)
             {
                 if (builder == null)
                     continue;
-                var list = builder.Invoke(entityType);
+                var list = builder.Invoke(inT);
                 foreach (var kvp in list)
                 {
                     dictionary.AddIfNewAndNotNull(kvp.Key, kvp.Value);
