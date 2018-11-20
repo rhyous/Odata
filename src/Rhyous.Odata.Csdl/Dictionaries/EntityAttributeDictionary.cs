@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Rhyous.StringLibrary.Pluralization;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
@@ -55,7 +56,8 @@ namespace Rhyous.Odata.Csdl
             foreach (var relatedEntityAttribute in mi.GetCustomAttributes<RelatedEntityForeignAttribute>(true))
             {
                 var relatedEntityName = string.IsNullOrWhiteSpace(relatedEntityAttribute.RelatedEntityAlias) ? relatedEntityAttribute.RelatedEntity : relatedEntityAttribute.RelatedEntityAlias;
-                yield return new KeyValuePair<string, object>(relatedEntityName, relatedEntityAttribute.ToNavigationProperty());
+                var pluralizedRelatedEntityName = relatedEntityName.Pluralize();
+                yield return new KeyValuePair<string, object>(pluralizedRelatedEntityName, relatedEntityAttribute.ToNavigationProperty());
             }
         }
 
@@ -66,7 +68,8 @@ namespace Rhyous.Odata.Csdl
             foreach (var relatedEntityAttribute in mi.GetCustomAttributes<RelatedEntityMappingAttribute>(true))
             {
                 var relatedEntityName = string.IsNullOrWhiteSpace(relatedEntityAttribute.RelatedEntityAlias) ? relatedEntityAttribute.RelatedEntity : relatedEntityAttribute.RelatedEntityAlias;
-                yield return new KeyValuePair<string, object>(relatedEntityName, relatedEntityAttribute.ToNavigationProperty());
+                var pluralizedRelatedEntityName = relatedEntityName.Pluralize();
+                yield return new KeyValuePair<string, object>(pluralizedRelatedEntityName, relatedEntityAttribute.ToNavigationProperty());
             }
         }
     }
