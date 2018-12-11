@@ -9,16 +9,24 @@ namespace Rhyous.Odata.Csdl
     {
         public static void AddIfNewAndNotNull(this IDictionary<string, object> dictionary, string key, object value)
         {
-            if (string.IsNullOrWhiteSpace(key) || value == null || dictionary.TryGetValue(key, out _))
+            if (dictionary == null || string.IsNullOrWhiteSpace(key) || value == null || dictionary.TryGetValue(key, out _))
                 return;
             dictionary.Add(key, value);
         }
 
-        public static void AddIfNewAndNotNull(this IDictionary<string, object> dictionary, string key, Func<object> func)
+        public static void AddIfNewAndNotNull(this IDictionary<string, object> dictionary, string key, Func<object> valueProvider)
         {
-            if (string.IsNullOrWhiteSpace(key) || func == null || dictionary.TryGetValue(key, out _))
+            if (dictionary == null || string.IsNullOrWhiteSpace(key) || valueProvider == null || dictionary.TryGetValue(key, out _))
                 return;
-            dictionary.AddIfNewAndNotNull(key, func.Invoke());
+            dictionary.AddIfNewAndNotNull(key, valueProvider.Invoke());
+        }
+
+        public static void AddRangeIfNewAndNotNull(this IDictionary<string, object> dictionary, params KeyValuePair<string, object>[] keyValuePairs)
+        {
+            if (dictionary == null || keyValuePairs == null)
+                return;
+            foreach (var kvp in keyValuePairs)
+                dictionary.Add(kvp.Key, kvp.Value);
         }
 
         /// <summary>
@@ -26,7 +34,7 @@ namespace Rhyous.Odata.Csdl
         /// </summary>
         internal static void AddFromAttributes(this IDictionary<string, object> propertyDictionary, MemberInfo mi, IDictionary<Type, Func<MemberInfo, IEnumerable<KeyValuePair<string, object>>>> attributeActionDictionary)
         {
-            if (propertyDictionary == null || mi == null || attributeActionDictionary == null)
+            if (propertyDictionary == null || propertyDictionary == null || mi == null || attributeActionDictionary == null)
                 return;
             var attribs = mi.GetCustomAttributes(true);
             if (attribs == null)
@@ -46,7 +54,7 @@ namespace Rhyous.Odata.Csdl
         
         internal static void AddFromPropertyInfo(this IDictionary<string, object> dictionary, PropertyInfo propInfo)
         {
-            if (propInfo == null)
+            if (dictionary == null || propInfo == null)
                 return;
             if (propInfo.PropertyType.IsEnum)
                 dictionary.AddIfNewAndNotNull(propInfo.Name, propInfo.ToCsdlEnum());

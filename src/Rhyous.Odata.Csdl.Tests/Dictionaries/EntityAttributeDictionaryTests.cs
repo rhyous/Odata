@@ -111,7 +111,7 @@ namespace Rhyous.Odata.Csdl.Tests.Dictionaries
             var actual = EntityAttributeDictionary.Instance.GetRelatedEntityForeignProperties(typeof(Product));
 
             // Assert
-            Assert.AreEqual("Sku", actual.First().Key);
+            Assert.AreEqual("Skus", actual.First().Key);
             Assert.AreEqual(typeof(CsdlNavigationProperty), actual.First().Value.GetType());
         }
 
@@ -123,7 +123,7 @@ namespace Rhyous.Odata.Csdl.Tests.Dictionaries
             var actual = EntityAttributeDictionary.Instance.GetRelatedEntityForeignProperties(typeof(EntityWithRelatedEntityAlias));
 
             // Assert
-            Assert.AreEqual("E1", actual.First().Key);
+            Assert.AreEqual("E1s", actual.First().Key);
             Assert.AreEqual(typeof(CsdlNavigationProperty), actual.First().Value.GetType());
         }
         #endregion
@@ -161,9 +161,9 @@ namespace Rhyous.Odata.Csdl.Tests.Dictionaries
 
             // Assert
             Assert.AreEqual(2, actual.Count);
-            Assert.AreEqual("UserRole", actual[0].Key);
+            Assert.AreEqual("UserRoles", actual[0].Key);
             Assert.AreEqual(typeof(CsdlNavigationProperty), actual[0].Value.GetType());
-            Assert.AreEqual("UserGroup", actual[1].Key);
+            Assert.AreEqual("UserGroups", actual[1].Key);
             Assert.AreEqual(typeof(CsdlNavigationProperty), actual[1].Value.GetType());
         }
 
@@ -175,7 +175,7 @@ namespace Rhyous.Odata.Csdl.Tests.Dictionaries
             var actual = EntityAttributeDictionary.Instance.GetRelatedEntityMappingProperties(typeof(EntityWithRelatedEntityAlias));
 
             // Assert
-            Assert.AreEqual("E2", actual.First().Key);
+            Assert.AreEqual("E2s", actual.First().Key);
             Assert.AreEqual(typeof(CsdlNavigationProperty), actual.First().Value.GetType());
         }
         #endregion

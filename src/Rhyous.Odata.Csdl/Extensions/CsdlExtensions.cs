@@ -1,15 +1,16 @@
-﻿using System;
+﻿using Rhyous.Collections;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
-using Rhyous.Collections;
 
 namespace Rhyous.Odata.Csdl
 {
     public static class CsdlExtensions
     {
+        internal const string DefaultSchemaOrAlias = "self";
+
         public static CsdlEntity ToCsdl(this Type entityType, params Func<Type, IEnumerable<KeyValuePair<string, object>>>[] customPropertyBuilders)
         {
             if (entityType == null)
@@ -73,7 +74,7 @@ namespace Rhyous.Odata.Csdl
             return !type.IsValueType;
         }
 
-        public static CsdlNavigationProperty ToNavigationProperty(this RelatedEntityAttribute relatedEntityAttribute, string schemaOrAlias = "self")
+        public static CsdlNavigationProperty ToNavigationProperty(this RelatedEntityAttribute relatedEntityAttribute, string schemaOrAlias = DefaultSchemaOrAlias, params KeyValuePair<string,object>[] additionalCustomProperties)
         {
             if (relatedEntityAttribute == null)
                 return null;
@@ -86,10 +87,11 @@ namespace Rhyous.Odata.Csdl
             };
             if (!string.IsNullOrWhiteSpace(relatedEntityAttribute.Filter))
                 navProp.CustomData.Add("@Odata.Filter", relatedEntityAttribute.Filter);
+            navProp.CustomData.AddRangeIfNewAndNotNull(additionalCustomProperties);
             return navProp;
         }
 
-        public static CsdlNavigationProperty ToNavigationProperty(this RelatedEntityForeignAttribute relatedEntityAttribute, string schemaOrAlias = "self")
+        public static CsdlNavigationProperty ToNavigationProperty(this RelatedEntityForeignAttribute relatedEntityAttribute, string schemaOrAlias = DefaultSchemaOrAlias, params KeyValuePair<string, object>[] additionalCustomProperties)
         {
             if (relatedEntityAttribute == null)
                 return null;
@@ -99,21 +101,23 @@ namespace Rhyous.Odata.Csdl
                 IsCollection = true, // RelatedEntityForeignAttribute is always a collection.
                 Nullable = true    // Collections can always be empty
             };
+            navProp.CustomData.Add("@EAF.RelatedEntity.Type", "Foreign");
+            navProp.CustomData.AddRangeIfNewAndNotNull(additionalCustomProperties);
             return navProp;
         }
 
-        public static CsdlNavigationProperty ToNavigationProperty(this RelatedEntityMappingAttribute relatedEntityAttribute, string schemaOrAlias = "self")
+        public static CsdlNavigationProperty ToNavigationProperty(this RelatedEntityMappingAttribute relatedEntityAttribute, string schemaOrAlias = DefaultSchemaOrAlias, params KeyValuePair<string, object>[] additionalCustomProperties)
         {
             if (relatedEntityAttribute == null)
                 return null;
-            var relatedEntity = string.IsNullOrWhiteSpace(relatedEntityAttribute.RelatedEntityAlias) ? relatedEntityAttribute.RelatedEntity : relatedEntityAttribute.RelatedEntityAlias;
-            var currentEntity = string.IsNullOrWhiteSpace(relatedEntityAttribute.EntityAlias) ? relatedEntityAttribute.Entity : relatedEntityAttribute.EntityAlias;
             var navProp = new CsdlNavigationProperty
             {
-                Type = $"{schemaOrAlias}.{relatedEntity}",
+                Type = $"{schemaOrAlias}.{relatedEntityAttribute.RelatedEntity}",
                 IsCollection = true, // RelatedEntityForeignAttribute is always a collection.
                 Nullable = true    // Collections can always be empty
             };
+            navProp.CustomData.Add("@EAF.RelatedEntity.Type", "Mapping");
+            navProp.CustomData.AddRangeIfNewAndNotNull(additionalCustomProperties);
             return navProp;
         }
     }
