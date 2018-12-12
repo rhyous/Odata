@@ -7,7 +7,6 @@ namespace Rhyous.Odata.Csdl.Tests.Dictionaries
     [TestClass]
     public class PropertyAttributeDictionaryTests
     {
-
         #region GetRelatedEntityProperties
 
         [TestMethod]
