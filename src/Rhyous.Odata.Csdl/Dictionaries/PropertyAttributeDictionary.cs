@@ -32,7 +32,9 @@ namespace Rhyous.Odata.Csdl
             if (relatedEntityAttribute == null)
                 return null;
             var relatedEntityName = string.IsNullOrWhiteSpace(relatedEntityAttribute.RelatedEntityAlias) ? relatedEntityAttribute.RelatedEntity : relatedEntityAttribute.RelatedEntityAlias;
-            return new[] { new KeyValuePair<string, object>(relatedEntityName, relatedEntityAttribute.ToNavigationProperty()) };
+            var relatedEntityMetadata = new KeyValuePair<string, object>("@EAF.RelatedEntity.Type", "Local");
+            var navProp = relatedEntityAttribute.ToNavigationProperty(CsdlExtensions.DefaultSchemaOrAlias, relatedEntityMetadata);
+            return new[] { new KeyValuePair<string, object>(relatedEntityName, navProp) };
         }
     }
 }
