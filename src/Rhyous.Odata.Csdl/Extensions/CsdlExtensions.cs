@@ -117,6 +117,8 @@ namespace Rhyous.Odata.Csdl
                 Nullable = true    // Collections can always be empty
             };
             navProp.CustomData.Add("@EAF.RelatedEntity.Type", "Mapping");
+            var mappingEntityType = $"{schemaOrAlias}.{relatedEntityAttribute.MappingEntity}";
+            navProp.CustomData.Add("@EAF.RelatedEntity.MappingEntityType", mappingEntityType);
             navProp.CustomData.AddRangeIfNewAndNotNull(additionalCustomProperties);
             return navProp;
         }
