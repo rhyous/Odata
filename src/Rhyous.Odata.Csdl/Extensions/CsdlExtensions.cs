@@ -9,7 +9,7 @@ namespace Rhyous.Odata.Csdl
 {
     public static class CsdlExtensions
     {
-        internal const string DefaultSchemaOrAlias = "self";
+        public const string DefaultSchemaOrAlias = "self";
 
         public static CsdlEntity ToCsdl(this Type entityType, params Func<Type, IEnumerable<KeyValuePair<string, object>>>[] customPropertyBuilders)
         {
@@ -116,6 +116,8 @@ namespace Rhyous.Odata.Csdl
                 IsCollection = true, // RelatedEntityForeignAttribute is always a collection.
                 Nullable = true    // Collections can always be empty
             };
+            if (!string.IsNullOrWhiteSpace(relatedEntityAttribute.RelatedEntityAlias) && relatedEntityAttribute.RelatedEntity != relatedEntityAttribute.RelatedEntityAlias)
+                navProp.Alias = $"{schemaOrAlias}.{relatedEntityAttribute.RelatedEntityAlias}";
             navProp.CustomData.Add("@EAF.RelatedEntity.Type", "Mapping");
             var mappingEntityType = $"{schemaOrAlias}.{relatedEntityAttribute.MappingEntity}";
             navProp.CustomData.Add("@EAF.RelatedEntity.MappingEntityType", mappingEntityType);
