@@ -21,7 +21,7 @@ namespace Rhyous.Odata.Expand
             where TAttribute : Attribute, IRelatedEntityAttribute
         {
             var classAttribs = entityType.GetCustomAttributes<TAttribute>();
-            var propAttribs = entityType.GetProperties().Select(p => p.GetCustomAttribute<TAttribute>(true));
+            var propAttribs = entityType.GetProperties().SelectMany(p => p.GetCustomAttributes<TAttribute>(true));
             var attribs = classAttribs.Concat(propAttribs);
             return GetAttributesToExpand(entitiesToExpand, attribs);
         }

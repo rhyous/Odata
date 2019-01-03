@@ -7,7 +7,7 @@ namespace Rhyous.Odata
     /// <summary>
     /// An attribute that specifies the related entity for a foreign key property.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Property)]
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
     public class RelatedEntityAttribute : RelatedEntityBaseAttribute
     {
         public const string DefaultForeignKey = "Id";
