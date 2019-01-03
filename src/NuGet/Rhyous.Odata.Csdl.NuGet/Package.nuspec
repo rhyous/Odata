@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Rhyous.Odata.Csdl</id>
-    <version>1.0.10</version>
+    <version>1.0.11</version>
     <title>Rhyous.Odata.Csdl</title>
     <authors>Jared Barneck (Rhyous)</authors>
     <owners>Jared Barneck (Rhyous)</owners>
@@ -24,7 +24,7 @@
         <dependency id="Newtonsoft.Json" version="11.0.2" />
         <dependency id="Rhyous.Collections" version="1.0.10" />
         <dependency id="Rhyous.Odata" version="1.0.21" />
-        <dependency id="Rhyous.StringLibrary" version="1.1.8" />
+        <dependency id="Rhyous.StringLibrary" version="1.1.9" />
       </group>
     </dependencies>
     <tags></tags>
