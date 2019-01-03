@@ -18,6 +18,12 @@ namespace Rhyous.Odata.Csdl
         public virtual string Type { get; set; }
 
         /// <summary>
+        /// JSON Schema alis types.
+        /// </summary>
+        [DataMember(Name = "$Alias", EmitDefaultValue = false)]
+        public virtual string Alias { get; set; }
+
+        /// <summary>
         /// JSON Schema Kind. Should always be EntityType.
         /// </summary>
         [DataMember(Name = "$Kind")]

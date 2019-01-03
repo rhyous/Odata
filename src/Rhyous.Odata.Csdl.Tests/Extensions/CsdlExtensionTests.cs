@@ -10,6 +10,7 @@ namespace Rhyous.Odata.Csdl.Tests
     [TestClass]
     public class CsdlExtensionTests
     {
+        #region ToCsdl
         [TestMethod]
         public void CsdlExtensions_ToCsdl_TypeNull_Tests()
         {
@@ -116,7 +117,8 @@ namespace Rhyous.Odata.Csdl.Tests
 
             // Assert
             Assert.IsNull(csdl);
-        } class Fake { Fake TestProp { get; set; } }
+        }
+        class Fake { Fake TestProp { get; set; } }
 
         [TestMethod]
         public void CsdlExtensions_ToCsdl_EntityWithNullables_Tests()
@@ -148,5 +150,25 @@ namespace Rhyous.Odata.Csdl.Tests
             // Assert
             Assert.AreEqual("Type eq 1", (csdl.Properties["Type"] as CsdlNavigationProperty).CustomData["@Odata.Filter"]);
         }
+        #endregion
+
+        #region ToNavigationProperty
+
+
+        [TestMethod]
+        public void CsdlExtensions_ToCsdl_RelatedEntityMapping_WithAlias_Tests()
+        {
+            // Arrange
+            //[RelatedEntityMapping()]
+            var attribute = new RelatedEntityMappingAttribute("Product", "SuiteMembership", "Product") { EntityAlias = "Suite", MappingEntityAlias = "ProductMembership", RelatedEntityAlias = "ProductInSuite" };
+
+            // Act
+            var navProp = attribute.ToNavigationProperty();
+
+            // Assert
+            Assert.AreEqual("self.Product", navProp.Type);
+            Assert.AreEqual("self.ProductInSuite", navProp.Alias);
+        }
+        #endregion
     }
 }
