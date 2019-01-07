@@ -150,6 +150,19 @@ namespace Rhyous.Odata.Csdl.Tests
             // Assert
             Assert.AreEqual("Type eq 1", (csdl.Properties["Type"] as CsdlNavigationProperty).CustomData["@Odata.Filter"]);
         }
+
+        [TestMethod]
+        public void CsdlExtensions_ToCsdl_TwoAttributesExists_OneWithAlias_Test()
+        {
+            // Arrange
+            Type type = typeof(EntityWithDuplicateRelatedEntityOneAlias);
+
+            // Act
+            var csdl = type.ToCsdl();
+
+            // Assert
+            Assert.IsNotNull(csdl);
+        }
         #endregion
 
         #region ToNavigationProperty

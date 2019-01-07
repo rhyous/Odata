@@ -57,6 +57,7 @@
     <Compile Include="Dictionaries\EntityAttributeDictionary.cs" />
     <Compile Include="Extensions\CsdlExtensions.cs" />
     <Compile Include="Extensions\DictionaryExtensions.cs" />
+    <Compile Include="Extensions\RelatedEntityAttributeExtensions.cs" />
     <Compile Include="Models\CsdlEntity.cs" />
     <Compile Include="Models\CsdlEnumProperty.cs" />
     <Compile Include="Models\CsdlNavigationProperty.cs" />

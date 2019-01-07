@@ -52,6 +52,7 @@
     <Compile Include="Entity1.cs" />
     <Compile Include="Entity2.cs" />
     <Compile Include="EntityWithEnum.cs" />
+    <Compile Include="EntityWithDuplicateRelatedEntityOneAlias.cs" />
     <Compile Include="EntityWithRelatedEntityAlias.cs" />
     <Compile Include="IUser.cs" />
     <Compile Include="Person.cs" />

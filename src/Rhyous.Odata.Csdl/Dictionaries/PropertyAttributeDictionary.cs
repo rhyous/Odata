@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Reflection;
 
 namespace Rhyous.Odata.Csdl
@@ -26,15 +27,19 @@ namespace Rhyous.Odata.Csdl
         
         internal IEnumerable<KeyValuePair<string, object>> GetRelatedEntityProperties(MemberInfo mi)
         {
-            if (mi == null)
+            var relatedEntityAttributes = mi?.GetCustomAttributes<RelatedEntityAttribute>()?.GroupBy(a => a.Entity);
+            if (relatedEntityAttributes == null || !relatedEntityAttributes.Any())
                 return null;
-            var relatedEntityAttribute = mi.GetCustomAttribute<RelatedEntityAttribute>();
-            if (relatedEntityAttribute == null)
-                return null;
-            var relatedEntityName = string.IsNullOrWhiteSpace(relatedEntityAttribute.RelatedEntityAlias) ? relatedEntityAttribute.RelatedEntity : relatedEntityAttribute.RelatedEntityAlias;
-            var relatedEntityMetadata = new KeyValuePair<string, object>("@EAF.RelatedEntity.Type", "Local");
-            var navProp = relatedEntityAttribute.ToNavigationProperty(CsdlExtensions.DefaultSchemaOrAlias, relatedEntityMetadata);
-            return new[] { new KeyValuePair<string, object>(relatedEntityName, navProp) };
+            var navKeyList = new List<KeyValuePair<string, object>>();
+            foreach (var group in relatedEntityAttributes)
+            {
+                var mergedAttribute = group.Merge();
+                var relatedEntityName = string.IsNullOrWhiteSpace(mergedAttribute.RelatedEntityAlias) ? mergedAttribute.RelatedEntity : mergedAttribute.RelatedEntityAlias;
+                var relatedEntityMetadata = new KeyValuePair<string, object>("@EAF.RelatedEntity.Type", "Local");
+                var navProp = mergedAttribute.ToNavigationProperty(CsdlExtensions.DefaultSchemaOrAlias, relatedEntityMetadata);
+                navKeyList.Add(new KeyValuePair<string, object>(relatedEntityName, navProp));
+            }
+            return navKeyList;
         }
     }
 }

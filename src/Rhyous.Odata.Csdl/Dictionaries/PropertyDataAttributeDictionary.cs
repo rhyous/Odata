@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Reflection;
 
 namespace Rhyous.Odata.Csdl
@@ -43,12 +44,18 @@ namespace Rhyous.Odata.Csdl
         {
             if (mi == null)
                 return null;
-            var relatedEntityAttribute = mi.GetCustomAttribute<RelatedEntityAttribute>();
-            if (relatedEntityAttribute == null)
+            var relatedEntityAttributes = mi.GetCustomAttributes<RelatedEntityAttribute>().GroupBy(a=>a.Entity);
+            if (relatedEntityAttributes == null || !relatedEntityAttributes.Any())
                 return null;
-            var relatedEntityName = string.IsNullOrWhiteSpace(relatedEntityAttribute.RelatedEntityAlias) ? relatedEntityAttribute.RelatedEntity : relatedEntityAttribute.RelatedEntityAlias;
-            var navKey = new KeyValuePair<string, object>("$NavigationKey", relatedEntityName);
-            return new [] { navKey };
+            var navKeyList = new List<KeyValuePair<string, object>>();
+            foreach (var group in relatedEntityAttributes)
+            {
+                var relatedEntity = group.FirstOrDefault().RelatedEntity;
+                var relatedEntityAlias = group.FirstOrDefault(a => a.RelatedEntityAlias != null)?.RelatedEntityAlias;
+                var relatedEntityName = string.IsNullOrWhiteSpace(relatedEntityAlias) ? relatedEntity : relatedEntityAlias;
+                navKeyList.Add(new KeyValuePair<string, object>("$NavigationKey", relatedEntityName));
+            }
+            return navKeyList;
         }
     }
 }

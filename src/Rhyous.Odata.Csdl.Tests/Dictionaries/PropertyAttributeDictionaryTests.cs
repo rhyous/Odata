@@ -54,6 +54,19 @@ namespace Rhyous.Odata.Csdl.Tests.Dictionaries
             Assert.AreEqual("E3", actual.First().Key);
             Assert.AreEqual(typeof(CsdlNavigationProperty), actual.First().Value.GetType());
         }
+
+        [TestMethod]
+        public void PropertyAttributeDictionary_GetRelatedEntityProperties_TwoAttributesExists_OneWithAlias_Test()
+        {
+            // Arrange
+            // Act
+            var actual = PropertyAttributeDictionary.Instance.GetRelatedEntityProperties(typeof(EntityWithDuplicateRelatedEntityOneAlias).GetProperty("Entity3Id"));
+
+            // Assert
+            Assert.AreEqual(1, actual.Count());
+            Assert.AreEqual("E3", actual.First().Key);
+            Assert.AreEqual(typeof(CsdlNavigationProperty), actual.FirstOrDefault().Value.GetType());
+        }
         #endregion
 
     }
