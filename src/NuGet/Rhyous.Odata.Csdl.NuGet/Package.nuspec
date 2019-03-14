@@ -13,7 +13,7 @@
     <projectUrl>https://github.com/rhyous/Odata</projectUrl>
     <iconUrl>https://nuget.org/Content/Images/packageDefaultIcon-50x50.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <licenseUrl>https://github.com/rhyous/Odata/blob/master/Fork and Contribute License.txt</licenseUrl>
+    <license type="file">License.txt</license>
     <copyright>Copyright Jared Barneck (Rhyous) 2017</copyright>
     <frameworkAssemblies>
       <frameworkAssembly assemblyName="System.Runtime.Serialization" />
@@ -32,5 +32,6 @@
   <files>
     <file src="lib\" target="lib" />
     <file src="tools\" target="tools" />
+    <file src="License.txt" target="" />
   </files>
 </package>

@@ -291,3 +291,4 @@ __pycache__/
 *.dll
 *.nupkg
 *.nupkg.bak
+/src/NuGet/*.NuGet/License.txt

@@ -87,6 +87,6 @@
     <PreBuildEvent>SET Project=Rhyous.Odata
 copy /Y "$(SolutionDir)..\%25Project%25\$(OutDir)%25Project%25.dll" "$(ProjectDir)lib\net461\"
 copy /Y "$(SolutionDir)..\%25Project%25\$(OutDir)%25Project%25.pdb" "$(ProjectDir)lib\net461\"
-</PreBuildEvent>
+copy /Y "$(SolutionDir)..\..\License.txt" "$(ProjectDir)"</PreBuildEvent>
   </PropertyGroup>
 </Project>
