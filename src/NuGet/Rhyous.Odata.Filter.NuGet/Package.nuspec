@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Rhyous.Odata.Filter</id>
-    <version>1.0.14</version>
+    <version>1.0.15</version>
     <title>Rhyous.Odata.Filter</title>
     <authors>Jared Barneck (Rhyous)</authors>
     <owners>Jared Barneck (Rhyous)</owners>
@@ -19,7 +19,7 @@
       <group targetFramework="net461">
         <dependency id="LinqKit.Core" version="1.1.15" />
         <dependency id="Rhyous.Collections" version="1.0.10" />
-        <dependency id="Rhyous.StringLibrary" version="1.1.9" />
+        <dependency id="Rhyous.StringLibrary" version="1.1.10" />
       </group>
     </dependencies>
     <tags></tags>
