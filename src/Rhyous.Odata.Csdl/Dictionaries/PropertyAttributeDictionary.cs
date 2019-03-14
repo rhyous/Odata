@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace Rhyous.Odata.Csdl
     /// Creates additional properties or annotations on the entity based on a property's attributes.
     /// </summary>
     /// <remarks>Try to use attributes from System.ComponentModel.DataAnnotations before creating new ones.</remarks>
-    public class PropertyAttributeDictionary : Dictionary<Type, Func<MemberInfo, IEnumerable<KeyValuePair<string, object>>>>
+    public class PropertyAttributeDictionary : ConcurrentDictionary<Type, Func<MemberInfo, IEnumerable<KeyValuePair<string, object>>>>
     {
         #region Singleton
 
@@ -20,7 +21,7 @@ namespace Rhyous.Odata.Csdl
 
         internal PropertyAttributeDictionary()
         {
-            Add(typeof(RelatedEntityAttribute), GetRelatedEntityProperties);
+            GetOrAdd(typeof(RelatedEntityAttribute), (Type t) => { return GetRelatedEntityProperties; });
         }
 
         #endregion

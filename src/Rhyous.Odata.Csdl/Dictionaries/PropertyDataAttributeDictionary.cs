@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace Rhyous.Odata.Csdl
     /// Creates additional properties or annotations inside a property based on a property's attributes.
     /// </summary>
     /// <remarks>Try to use attributes from System.ComponentModel.DataAnnotations before creating new ones.</remarks>
-    public class PropertyDataAttributeDictionary : Dictionary<Type, Func<MemberInfo, IEnumerable<KeyValuePair<string, object>>>>
+    public class PropertyDataAttributeDictionary : ConcurrentDictionary<Type, Func<MemberInfo, IEnumerable<KeyValuePair<string, object>>>>
     {
         #region Singleton
 
@@ -20,8 +21,8 @@ namespace Rhyous.Odata.Csdl
 
         internal PropertyDataAttributeDictionary()
         {
-            Add(typeof(EditableAttribute), GetReadOnlyProperty);
-            Add(typeof(RelatedEntityAttribute), GetRelatedEntityPropertyData);
+            GetOrAdd(typeof(EditableAttribute), (Type t) => { return GetReadOnlyProperty; });
+            GetOrAdd(typeof(RelatedEntityAttribute), (Type t) => { return GetRelatedEntityPropertyData; });
             // Future: 
             // Add(typeof(MinLengthAttribute), GetMaxLengthProperty);
             // Add(typeof(MaxLengthAttribute), GetMaxLengthProperty);

@@ -1,5 +1,6 @@
 ﻿using Rhyous.StringLibrary.Pluralization;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
@@ -11,7 +12,7 @@ namespace Rhyous.Odata.Csdl
     /// </summary>
     /// <remarks>Try to use attributes from System.ComponentModel.DataAnnotations before creating new ones.</remarks>
 
-    public class EntityAttributeDictionary : Dictionary<Type, Func<MemberInfo, IEnumerable<KeyValuePair<string, object>>>>
+    public class EntityAttributeDictionary : ConcurrentDictionary<Type, Func<MemberInfo, IEnumerable<KeyValuePair<string, object>>>>
     {
         #region Singleton
 
@@ -21,10 +22,10 @@ namespace Rhyous.Odata.Csdl
 
         internal EntityAttributeDictionary()
         {
-            Add(typeof(DisplayColumnAttribute), GetDisplayProperty);
-            Add(typeof(ReadOnlyEntityAttribute), GetReadOnlyProperty);
-            Add(typeof(RelatedEntityForeignAttribute), GetRelatedEntityForeignProperties);
-            Add(typeof(RelatedEntityMappingAttribute), GetRelatedEntityMappingProperties);
+            GetOrAdd(typeof(DisplayColumnAttribute), (Type t) => { return GetDisplayProperty; });
+            GetOrAdd(typeof(ReadOnlyEntityAttribute), (Type t) => { return GetReadOnlyProperty; });
+            GetOrAdd(typeof(RelatedEntityForeignAttribute), (Type t) => { return GetRelatedEntityForeignProperties; });
+            GetOrAdd(typeof(RelatedEntityMappingAttribute), (Type t) => { return GetRelatedEntityMappingProperties; });
         }
 
         #endregion
