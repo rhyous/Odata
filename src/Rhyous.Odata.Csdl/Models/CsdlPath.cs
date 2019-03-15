@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace Rhyous.Odata.Csdl.Models
+namespace Rhyous.Odata.Csdl
 {
     [DataContract]
     public class CsdlPath
