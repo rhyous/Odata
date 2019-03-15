@@ -61,6 +61,7 @@
     <Compile Include="Models\CsdlEntity.cs" />
     <Compile Include="Models\CsdlEnumProperty.cs" />
     <Compile Include="Models\CsdlNavigationProperty.cs" />
+    <Compile Include="Models\CsdlPropertyPath.cs" />
     <Compile Include="Models\CsdlPath.cs" />
     <Compile Include="Models\CsdlProperty.cs" />
     <Compile Include="Dictionaries\CsdlTypeDictionary.cs" />
