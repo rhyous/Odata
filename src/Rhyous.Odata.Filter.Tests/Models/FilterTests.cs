@@ -239,6 +239,62 @@ namespace Rhyous.Odata.Tests
         }
         #endregion
 
+        #region GetCombinedExpression tests
+        [TestMethod]
+        public void FilterGetCombinedExpressionBothNull()
+        {
+            // Arrange
+            Filter<User> f1 = null;
+            Filter<User> f2 = null;
+
+            // Act
+            var s = Filter<User>.GetCombinedExpression(f1, f2, Conjunction.And);
+
+            // Assert
+            Assert.IsNull(s);
+        }
+
+        [TestMethod]
+        public void FilterGetCombinedExpressionRightNull()
+        {
+            // Arrange
+            var f1 = new Filter<User>
+            {
+                Left = "Id",
+                Method = "eq",
+                Right = "1"
+            };
+            var f1Expression = (Expression<Func<User, bool>>)f1;
+            Expression<Func<User, bool>> f2Expression = null;
+
+            // Act
+            var s = Filter<User>.GetCombinedExpression(f1Expression, f2Expression, Conjunction.And);
+
+            // Assert
+            Assert.AreEqual(f1Expression, s);
+        }
+
+        [TestMethod]
+        public void FilterGetCombinedExpressionLeftNull()
+        {
+            // Arrange
+            var f2 = new Filter<User>
+            {
+                Left = "Id",
+                Method = "eq",
+                Right = "1"
+            };
+            var f2Expression = (Expression<Func<User, bool>>)f2;
+            Expression<Func<User, bool>> f1Expression = null;
+
+            // Act
+            var s = Filter<User>.GetCombinedExpression(f1Expression, f2Expression, Conjunction.And);
+
+            // Assert
+            Assert.AreEqual(f2Expression, s);
+        }
+        #endregion
+
         #region Group tests
 
 

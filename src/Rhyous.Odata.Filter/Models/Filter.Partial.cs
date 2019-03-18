@@ -43,7 +43,7 @@ namespace Rhyous.Odata
             Expression method = null;
             if (ExpressionMethodDictionary.Instance.TryGetValue(filter.Method, out Func<Expression, Expression, Expression> func))
             {
-                var isNumeric = filter.Method.All(c => Char.IsDigit(c));
+                var isNumeric = filter.Method.All(c => char.IsDigit(c));
                 if (!isNumeric && Enum.TryParse(filter.Method, true, out Conjunction conj))
                 {
                     return GetCombinedExpression(left, right, conj);
@@ -66,11 +66,16 @@ namespace Rhyous.Odata
                 method = Expression.Call(left, methodInfo, right);
             }
             return Expression.Lambda<Func<TEntity, bool>>(filter.Not ? Expression.Not(method) : method, parameter);
-        }
-        internal static BindingFlags MethodFlags = BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance;
+        } internal static BindingFlags MethodFlags = BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance;
 
         internal static Expression<Func<TEntity, bool>> GetCombinedExpression(Expression left, Expression right, Conjunction conj)
         {
+            if (left == null && right == null)
+                return null;
+            if (left == null)
+                return right as Expression<Func<TEntity, bool>>;
+            if (right == null)
+                return left as Expression<Func<TEntity, bool>>;
             var starter = PredicateBuilder.New<TEntity>();
             starter.Start(left as Expression<Func<TEntity, bool>>);
             return conj == Conjunction.And ? starter.And(right as Expression<Func<TEntity, bool>>) : starter.Or(right as Expression<Func<TEntity, bool>>);

@@ -30,6 +30,7 @@ namespace Rhyous.Odata
                 }
             }
         }
+
         public List<RelatedEntityCollection> Sort(IEnumerable<T> entities, IEnumerable<RelatedEntity> relatedEntities, SortDetails details)
         {
             return SortMethodDictionary[details.RelatedEntityType](entities, relatedEntities, details);
