@@ -277,22 +277,7 @@ namespace Rhyous.Odata.Csdl.Tests
         #endregion
 
         #region AddFromPropertyInfo
-        [TestMethod]
-        public void DictionaryExtensions_AddFromPropertyInfo_Test()
-        {
-            // Arrange
-            var dictionary = new Dictionary<string, object>();
-            var propInfo = typeof(Token).GetProperty("UserId");
-
-            // Act
-            dictionary.AddFromPropertyInfo(propInfo);
-
-            // Assert
-            Assert.AreEqual(1, dictionary.Count);
-            Assert.AreEqual("UserId", dictionary.Keys.First());
-            Assert.AreEqual(typeof(CsdlProperty), dictionary.Values.First().GetType());
-
-        }
+        
 
         [TestMethod]
         public void DictionaryExtensions_AddFromPropertyInfo_NullDictionary_Test()
@@ -317,8 +302,11 @@ namespace Rhyous.Odata.Csdl.Tests
             var dictionary = new Dictionary<string, object>();
             PropertyInfo propInfo = null;
 
+            var propertyBuilder = new PropertyBuilder(new PropertyDataAttributeDictionary(), new CustomPropertyDataDictionary());
+            var entityBuilder = new EntityBuilder(propertyBuilder, new EnumPropertyBuilder(), new EntityAttributeDictionary(), new PropertyAttributeDictionary());
+
             // Act
-            dictionary.AddFromPropertyInfo(propInfo);
+            entityBuilder.AddFromPropertyInfo(dictionary, propInfo);
 
             // Assert
             Assert.AreEqual(0, dictionary.Count);

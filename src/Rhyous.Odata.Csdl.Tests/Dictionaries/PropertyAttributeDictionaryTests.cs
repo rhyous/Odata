@@ -14,7 +14,7 @@ namespace Rhyous.Odata.Csdl.Tests.Dictionaries
         {
             // Arrange
             // Act
-            var actual = PropertyAttributeDictionary.Instance.GetRelatedEntityProperties(null);
+            var actual = new PropertyAttributeDictionary().GetRelatedEntityProperties(null);
 
             // Assert
             Assert.IsNull(actual);
@@ -25,7 +25,7 @@ namespace Rhyous.Odata.Csdl.Tests.Dictionaries
         {
             // Arrange
             // Act
-            var actual = PropertyAttributeDictionary.Instance.GetRelatedEntityProperties(typeof(Person));
+            var actual = new PropertyAttributeDictionary().GetRelatedEntityProperties(typeof(Person));
 
             // Assert
             Assert.IsNull(actual);
@@ -36,7 +36,7 @@ namespace Rhyous.Odata.Csdl.Tests.Dictionaries
         {
             // Arrange
             // Act
-            var actual = PropertyAttributeDictionary.Instance.GetRelatedEntityProperties(typeof(User).GetProperty("UserTypeId"));
+            var actual = new PropertyAttributeDictionary().GetRelatedEntityProperties(typeof(User).GetProperty("UserTypeId"));
 
             // Assert
             Assert.AreEqual("UserType", actual.First().Key);
@@ -48,7 +48,7 @@ namespace Rhyous.Odata.Csdl.Tests.Dictionaries
         {
             // Arrange
             // Act
-            var actual = PropertyAttributeDictionary.Instance.GetRelatedEntityProperties(typeof(EntityWithRelatedEntityAlias).GetProperty("Entity3Id"));
+            var actual = new PropertyAttributeDictionary().GetRelatedEntityProperties(typeof(EntityWithRelatedEntityAlias).GetProperty("Entity3Id"));
 
             // Assert
             Assert.AreEqual("E3", actual.First().Key);
@@ -60,7 +60,7 @@ namespace Rhyous.Odata.Csdl.Tests.Dictionaries
         {
             // Arrange
             // Act
-            var actual = PropertyAttributeDictionary.Instance.GetRelatedEntityProperties(typeof(EntityWithDuplicateRelatedEntityOneAlias).GetProperty("Entity3Id"));
+            var actual = new PropertyAttributeDictionary().GetRelatedEntityProperties(typeof(EntityWithDuplicateRelatedEntityOneAlias).GetProperty("Entity3Id"));
 
             // Assert
             Assert.AreEqual(1, actual.Count());

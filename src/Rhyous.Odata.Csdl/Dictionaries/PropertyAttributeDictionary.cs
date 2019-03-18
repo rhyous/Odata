@@ -11,17 +11,13 @@ namespace Rhyous.Odata.Csdl
     /// Creates additional properties or annotations on the entity based on a property's attributes.
     /// </summary>
     /// <remarks>Try to use attributes from System.ComponentModel.DataAnnotations before creating new ones.</remarks>
-    public class PropertyAttributeDictionary : ConcurrentDictionary<Type, Func<MemberInfo, IEnumerable<KeyValuePair<string, object>>>>
+    public class PropertyAttributeDictionary : AttributeFuncDictionary
     {
-        #region Singleton
+        #region Constructor
 
-        private static readonly Lazy<PropertyAttributeDictionary> Lazy = new Lazy<PropertyAttributeDictionary>(() => new PropertyAttributeDictionary());
-
-        public static PropertyAttributeDictionary Instance { get { return Lazy.Value; } }
-
-        internal PropertyAttributeDictionary()
+        public PropertyAttributeDictionary()
         {
-            GetOrAdd(typeof(RelatedEntityAttribute), (Type t) => { return GetRelatedEntityProperties; });
+            Add(typeof(RelatedEntityAttribute), GetRelatedEntityProperties);
         }
 
         #endregion
@@ -36,8 +32,8 @@ namespace Rhyous.Odata.Csdl
             {
                 var mergedAttribute = group.Merge();
                 var relatedEntityName = string.IsNullOrWhiteSpace(mergedAttribute.RelatedEntityAlias) ? mergedAttribute.RelatedEntity : mergedAttribute.RelatedEntityAlias;
-                var relatedEntityMetadata = new KeyValuePair<string, object>("@EAF.RelatedEntity.Type", "Local");
-                var navProp = mergedAttribute.ToNavigationProperty(CsdlExtensions.DefaultSchemaOrAlias, relatedEntityMetadata);
+                var navProp = mergedAttribute.ToNavigationProperty(Constants.DefaultSchemaOrAlias);
+                navProp.CustomData.Add(Constants.EAFRelatedEntityType, Constants.Local);
                 navKeyList.Add(new KeyValuePair<string, object>(relatedEntityName, navProp));
             }
             return navKeyList;

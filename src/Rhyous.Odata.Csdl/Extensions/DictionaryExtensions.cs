@@ -29,12 +29,29 @@ namespace Rhyous.Odata.Csdl
                 dictionary.Add(kvp.Key, kvp.Value);
         }
 
+        internal static void AddFromCustomDictionary(this IDictionary<string, object> propDataDictionary, string entity, string property, IDictionary<string, Func<IEnumerable<KeyValuePair<string, object>>>> customPropertyDataDictionary)
+        {
+            if (propDataDictionary == null
+             || string.IsNullOrWhiteSpace(entity)
+             || string.IsNullOrWhiteSpace(property)
+             || customPropertyDataDictionary == null)
+                return;
+            if (customPropertyDataDictionary.TryGetValue($"{entity}.{property}", out Func<IEnumerable<KeyValuePair<string, object>>> action))
+            {
+                var propertyList = action.Invoke();
+                foreach (var prop in propertyList)
+                {
+                    propDataDictionary.AddIfNewAndNotNull(prop.Key, prop.Value);
+                }
+            }
+        }
+
         /// <summary>
         /// Type and PropertyInfo both inherit MemberInfo.
         /// </summary>
         internal static void AddFromAttributes(this IDictionary<string, object> propertyDictionary, MemberInfo mi, IDictionary<Type, Func<MemberInfo, IEnumerable<KeyValuePair<string, object>>>> attributeActionDictionary)
         {
-            if (propertyDictionary == null || propertyDictionary == null || mi == null || attributeActionDictionary == null)
+            if (propertyDictionary == null || mi == null || attributeActionDictionary == null || !attributeActionDictionary.Any())
                 return;
             var attribs = mi.GetCustomAttributes(true);
             if (attribs == null)
@@ -46,20 +63,13 @@ namespace Rhyous.Odata.Csdl
                     var propertyList = action.Invoke(mi);
                     foreach (var prop in propertyList)
                     {
+                        // Don't add an attribute if already added.
+                        if (propertyDictionary.TryGetValue(prop.Key, out object _))
+                            continue;
                         propertyDictionary.AddIfNewAndNotNull(prop.Key, prop.Value);
                     }
                 }
             }
-        }
-        
-        internal static void AddFromPropertyInfo(this IDictionary<string, object> dictionary, PropertyInfo propInfo)
-        {
-            if (dictionary == null || propInfo == null)
-                return;
-            if (propInfo.PropertyType.IsEnum)
-                dictionary.AddIfNewAndNotNull(propInfo.Name, propInfo.ToCsdlEnum());
-            else
-                dictionary.AddIfNewAndNotNull(propInfo.Name, propInfo.ToCsdl());
         }
         
         internal static void AddCustomProperties<T>(this IDictionary<string, object> dictionary, T inT, params Func<T, IEnumerable<KeyValuePair<string, object>>>[] customPropertyBuilders)

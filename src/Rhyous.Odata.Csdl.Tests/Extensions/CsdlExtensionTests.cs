@@ -10,7 +10,7 @@ namespace Rhyous.Odata.Csdl.Tests
     [TestClass]
     public class CsdlExtensionTests
     {
-        #region ToCsdl
+        #region ToCsdl Type
         [TestMethod]
         public void CsdlExtensions_ToCsdl_TypeNull_Tests()
         {
@@ -94,33 +94,6 @@ namespace Rhyous.Odata.Csdl.Tests
         }
 
         [TestMethod]
-        public void CsdlExtensions_ToCsdl_PropertyInfoNull_Tests()
-        {
-            // Arrange
-            PropertyInfo propInfo = null;
-
-            // Act
-            var csdl = propInfo.ToCsdl();
-
-            // Assert
-            Assert.IsNull(csdl);
-        }
-
-        [TestMethod]
-        public void CsdlExtensions_ToCsdl_PropertyInfoNotInDictionary_Tests()
-        {
-            // Arrange
-            PropertyInfo propInfo = typeof(Fake).GetProperty("TestProp");
-
-            // Act
-            var csdl = propInfo.ToCsdl();
-
-            // Assert
-            Assert.IsNull(csdl);
-        }
-        class Fake { Fake TestProp { get; set; } }
-
-        [TestMethod]
         public void CsdlExtensions_ToCsdl_EntityWithNullables_Tests()
         {
             // Arrange
@@ -163,6 +136,71 @@ namespace Rhyous.Odata.Csdl.Tests
             // Assert
             Assert.IsNotNull(csdl);
         }
+        #endregion
+
+        #region ToCsdl PropInfo
+        [TestMethod]
+        public void CsdlExtensions_ToCsdl_PropertyInfoNull_Tests()
+        {
+            // Arrange
+            PropertyInfo propInfo = null;
+
+            // Act
+            var csdl = propInfo.ToCsdl();
+
+            // Assert
+            Assert.IsNull(csdl);
+        }
+
+        [TestMethod]
+        public void CsdlExtensions_ToCsdl_Property_Name_Test()
+        {
+            // Arrange
+            PropertyInfo propInfo = typeof(Entity1).GetProperty("Name");
+
+            // Act
+            var csdl = propInfo.ToCsdl();
+
+            // Assert
+            Assert.AreEqual("Edm.String", csdl.Type);
+            Assert.AreEqual(0, csdl.CustomData.Count);
+        }
+
+        [TestMethod]
+        public void CsdlExtensions_ToCsdl_Property_Name_CustomAttribute_Test()
+        {
+            // Arrange
+            // Date has EditableAttribute set to false.
+            PropertyInfo propInfo = typeof(Entity1).GetProperty("Date");
+
+            // Act
+            var csdl = propInfo.ToCsdl();
+
+            // Assert
+            Assert.AreEqual("Edm.Date", csdl.Type);
+            Assert.AreEqual(1, csdl.CustomData.Count);
+            Assert.AreEqual("@UI.ReadOnly", csdl.CustomData.First().Key);
+            Assert.IsTrue((bool)csdl.CustomData.First().Value);
+        }
+
+        [TestMethod]
+        public void CsdlExtensions_ToCsdl_Property_Name_CustomPropertyDictionary_Test()
+        {
+            // Arrange
+            // Date has EditableAttribute set to false.
+            PropertyInfo propInfo = typeof(Entity1).GetProperty("Date");
+
+
+            // Act
+            var csdl = propInfo.ToCsdl();
+
+            // Assert
+            Assert.AreEqual("Edm.Date", csdl.Type);
+            Assert.AreEqual(1, csdl.CustomData.Count);
+            Assert.AreEqual("@UI.ReadOnly", csdl.CustomData.First().Key);
+            Assert.IsTrue((bool)csdl.CustomData.First().Value);
+        }
+
         #endregion
 
         #region ToNavigationProperty

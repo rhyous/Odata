@@ -15,7 +15,7 @@ namespace Rhyous.Odata.Csdl.Tests.Dictionaries
         {
             // Arrange
             // Act
-            var actual = PropertyDataAttributeDictionary.Instance.GetReadOnlyProperty(null);
+            var actual = new PropertyDataAttributeDictionary().GetReadOnlyProperty(null);
 
             // Assert
             Assert.IsNull(actual);
@@ -26,7 +26,7 @@ namespace Rhyous.Odata.Csdl.Tests.Dictionaries
         {
             // Arrange
             // Act
-            var actual = PropertyDataAttributeDictionary.Instance.GetReadOnlyProperty(typeof(Person));
+            var actual = new PropertyDataAttributeDictionary().GetReadOnlyProperty(typeof(Person));
 
             // Assert
             Assert.IsNull(actual);
@@ -37,7 +37,7 @@ namespace Rhyous.Odata.Csdl.Tests.Dictionaries
         {
             // Arrange
             // Act
-            var actual = PropertyDataAttributeDictionary.Instance.GetReadOnlyProperty(typeof(Entity1).GetProperty("Date"));
+            var actual = new PropertyDataAttributeDictionary().GetReadOnlyProperty(typeof(Entity1).GetProperty("Date"));
 
             // Assert
             Assert.AreEqual("@UI.ReadOnly", actual.First().Key);
@@ -51,7 +51,7 @@ namespace Rhyous.Odata.Csdl.Tests.Dictionaries
         {
             // Arrange
             // Act
-            var actual = PropertyDataAttributeDictionary.Instance.GetRelatedEntityPropertyData(typeof(EntityWithDuplicateRelatedEntityOneAlias).GetProperty("Entity3Id"));
+            var actual = new PropertyDataAttributeDictionary().GetRelatedEntityPropertyData(typeof(EntityWithDuplicateRelatedEntityOneAlias).GetProperty("Entity3Id"));
 
             // Assert
             Assert.AreEqual(1, actual.Count());

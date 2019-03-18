@@ -12,20 +12,16 @@ namespace Rhyous.Odata.Csdl
     /// </summary>
     /// <remarks>Try to use attributes from System.ComponentModel.DataAnnotations before creating new ones.</remarks>
 
-    public class EntityAttributeDictionary : ConcurrentDictionary<Type, Func<MemberInfo, IEnumerable<KeyValuePair<string, object>>>>
+    public class EntityAttributeDictionary : AttributeFuncDictionary
     {
-        #region Singleton
+        #region Constructor
 
-        private static readonly Lazy<EntityAttributeDictionary> Lazy = new Lazy<EntityAttributeDictionary>(() => new EntityAttributeDictionary());
-
-        public static EntityAttributeDictionary Instance { get { return Lazy.Value; } }
-
-        internal EntityAttributeDictionary()
+        public EntityAttributeDictionary()
         {
-            GetOrAdd(typeof(DisplayColumnAttribute), (Type t) => { return GetDisplayProperty; });
-            GetOrAdd(typeof(ReadOnlyEntityAttribute), (Type t) => { return GetReadOnlyProperty; });
-            GetOrAdd(typeof(RelatedEntityForeignAttribute), (Type t) => { return GetRelatedEntityForeignProperties; });
-            GetOrAdd(typeof(RelatedEntityMappingAttribute), (Type t) => { return GetRelatedEntityMappingProperties; });
+            Add(typeof(DisplayColumnAttribute), GetDisplayProperty);
+            Add(typeof(ReadOnlyEntityAttribute), GetReadOnlyProperty);
+            Add(typeof(RelatedEntityForeignAttribute), GetRelatedEntityForeignProperties);
+            Add(typeof(RelatedEntityMappingAttribute), GetRelatedEntityMappingProperties);
         }
 
         #endregion

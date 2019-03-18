@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -11,18 +10,18 @@ namespace Rhyous.Odata.Csdl
     /// Creates additional properties or annotations inside a property based on a property's attributes.
     /// </summary>
     /// <remarks>Try to use attributes from System.ComponentModel.DataAnnotations before creating new ones.</remarks>
-    public class PropertyDataAttributeDictionary : ConcurrentDictionary<Type, Func<MemberInfo, IEnumerable<KeyValuePair<string, object>>>>
+    public class PropertyDataAttributeDictionary : AttributeFuncDictionary
     {
-        #region Singleton
+        #region Constructor
 
         private static readonly Lazy<PropertyDataAttributeDictionary> Lazy = new Lazy<PropertyDataAttributeDictionary>(() => new PropertyDataAttributeDictionary());
 
-        public static PropertyDataAttributeDictionary Instance { get { return Lazy.Value; } }
+        public static PropertyDataAttributeDictionary Default { get { return Lazy.Value; } }
 
-        internal PropertyDataAttributeDictionary()
+        public PropertyDataAttributeDictionary()
         {
-            GetOrAdd(typeof(EditableAttribute), (Type t) => { return GetReadOnlyProperty; });
-            GetOrAdd(typeof(RelatedEntityAttribute), (Type t) => { return GetRelatedEntityPropertyData; });
+            Add(typeof(EditableAttribute), GetReadOnlyProperty);
+            Add(typeof(RelatedEntityAttribute), GetRelatedEntityPropertyData);
             // Future: 
             // Add(typeof(MinLengthAttribute), GetMaxLengthProperty);
             // Add(typeof(MaxLengthAttribute), GetMaxLengthProperty);
@@ -38,7 +37,7 @@ namespace Rhyous.Odata.Csdl
             var editableAttribute = mi.GetCustomAttribute<EditableAttribute>(true);
             if (editableAttribute == null)
                 return null;
-            return new[] { new KeyValuePair<string, object>("@UI.ReadOnly", !editableAttribute.AllowEdit) };
+            return new[] { new KeyValuePair<string, object>(Constants.UIReadOnly, !editableAttribute.AllowEdit) };
         }
 
         internal IEnumerable<KeyValuePair<string, object>> GetRelatedEntityPropertyData(MemberInfo mi)
@@ -54,7 +53,7 @@ namespace Rhyous.Odata.Csdl
                 var relatedEntity = group.FirstOrDefault().RelatedEntity;
                 var relatedEntityAlias = group.FirstOrDefault(a => a.RelatedEntityAlias != null)?.RelatedEntityAlias;
                 var relatedEntityName = string.IsNullOrWhiteSpace(relatedEntityAlias) ? relatedEntity : relatedEntityAlias;
-                navKeyList.Add(new KeyValuePair<string, object>("$NavigationKey", relatedEntityName));
+                navKeyList.Add(new KeyValuePair<string, object>(Constants.NavigationKey, relatedEntityName));
             }
             return navKeyList;
         }

@@ -9,60 +9,23 @@ namespace Rhyous.Odata.Csdl
 {
     public static class CsdlExtensions
     {
-        public const string DefaultSchemaOrAlias = "self";
-
-        public static CsdlEntity ToCsdl(this Type entityType, params Func<Type, IEnumerable<KeyValuePair<string, object>>>[] customPropertyBuilders)
+        public static CsdlEntity ToCsdl(this Type entityType)
         {
-            if (entityType == null)
-                return null;
-            var entity = new CsdlEntity { Keys = new List<string> { "Id" } };
-            if (customPropertyBuilders != null)
-            {
-                entity.Properties.AddCustomProperties(entityType, customPropertyBuilders);
-            }
-            foreach (var propInfo in entityType.GetProperties().OrderBy(p => p.Name))
-            {
-                entity.Properties.AddFromPropertyInfo(propInfo);
-                entity.Properties.AddFromAttributes(propInfo, PropertyAttributeDictionary.Instance);
-            }
-            entity.Properties.AddFromAttributes(entityType, EntityAttributeDictionary.Instance);
-            return entity;
+            var propertyBuilder = new PropertyBuilder(new PropertyDataAttributeDictionary(), new CustomPropertyDataDictionary());
+            var entityBuilder = new EntityBuilder(propertyBuilder, new EnumPropertyBuilder(), new EntityAttributeDictionary(), new PropertyAttributeDictionary());
+            return entityBuilder.Build(entityType);
         }
 
         public static CsdlProperty ToCsdl(this PropertyInfo propInfo)
         {
-            if (propInfo == null)
-                return null;
-            var propertyType = propInfo.PropertyType;
-            Type nullableType = propertyType.IsGenericType && propertyType.GetGenericTypeDefinition() == typeof(Nullable<>) ? propertyType.GetGenericArguments()[0] : null;
-            var propName = nullableType == null ? propertyType.FullName : nullableType.FullName;
-            if (!CsdlTypeDictionary.Instance.TryGetValue(propName, out string csdlType))
-                return null;
-            var prop = new CsdlProperty
-            {
-                Type = csdlType,
-                IsCollection = propertyType != typeof(string) && (propertyType.IsEnumerable() || propertyType.IsCollection()),
-                Nullable = propertyType.IsNullable(propInfo)
-            };
-            prop.CustomData.AddFromAttributes(propInfo, PropertyDataAttributeDictionary.Instance);
-            return prop;
+
+            var propertyBuilder = new PropertyBuilder(new PropertyDataAttributeDictionary(), new CustomPropertyDataDictionary()); return propertyBuilder.Build(propInfo);
         }
 
         public static CsdlEnumProperty ToCsdlEnum(this PropertyInfo propInfo)
         {
-            if (propInfo == null)
-                return null;
-            var propertyType = propInfo.PropertyType.IsGenericType ? propInfo.PropertyType.GetGenericArguments()[0] : propInfo.PropertyType;
-            if (!propertyType.IsEnum)
-                return null;
-            var prop = new CsdlEnumProperty
-            {
-                UnderlyingType = CsdlTypeDictionary.Instance[propertyType.GetEnumUnderlyingType().FullName],
-                CustomData = propertyType.ToDictionary(),
-                IsFlags = propertyType.GetCustomAttributes<FlagsAttribute>().Any()
-            };
-            prop.CustomData.AddFromAttributes(propInfo, PropertyDataAttributeDictionary.Instance);
-            return prop;
+
+            var propertyBuilder = new PropertyBuilder(new PropertyDataAttributeDictionary(), new CustomPropertyDataDictionary()); return propertyBuilder.BuildEnumProperty(propInfo);
         }
 
         public static bool IsNullable(this Type type, PropertyInfo pi)
@@ -74,55 +37,19 @@ namespace Rhyous.Odata.Csdl
             return !type.IsValueType;
         }
 
-        public static CsdlNavigationProperty ToNavigationProperty(this RelatedEntityAttribute relatedEntityAttribute, string schemaOrAlias = DefaultSchemaOrAlias, params KeyValuePair<string,object>[] additionalCustomProperties)
+        public static CsdlNavigationProperty ToNavigationProperty(this RelatedEntityAttribute relatedEntityAttribute, string schemaOrAlias = Constants.DefaultSchemaOrAlias)
         {
-            if (relatedEntityAttribute == null)
-                return null;
-            var navProp = new CsdlNavigationProperty
-            {
-                Type = $"{schemaOrAlias}.{relatedEntityAttribute.RelatedEntity}",
-                Nullable = relatedEntityAttribute.Nullable,
-                IsCollection = false, // RelatedEntityAttribute on a property is never a collection.
-                ReferentialConstraint = new Dictionary<string, string> { { relatedEntityAttribute.Property, relatedEntityAttribute.ForeignKeyProperty } }
-            };
-            if (!string.IsNullOrWhiteSpace(relatedEntityAttribute.Filter))
-                navProp.CustomData.Add("@Odata.Filter", relatedEntityAttribute.Filter);
-            navProp.CustomData.AddRangeIfNewAndNotNull(additionalCustomProperties);
-            return navProp;
+            return new RelatedEntityNavigationPropertyBuilder().Build(relatedEntityAttribute, schemaOrAlias);
         }
 
-        public static CsdlNavigationProperty ToNavigationProperty(this RelatedEntityForeignAttribute relatedEntityAttribute, string schemaOrAlias = DefaultSchemaOrAlias, params KeyValuePair<string, object>[] additionalCustomProperties)
+        public static CsdlNavigationProperty ToNavigationProperty(this RelatedEntityForeignAttribute relatedEntityAttribute, string schemaOrAlias = Constants.DefaultSchemaOrAlias)
         {
-            if (relatedEntityAttribute == null)
-                return null;
-            var navProp = new CsdlNavigationProperty
-            {
-                Type = $"{schemaOrAlias}.{relatedEntityAttribute.RelatedEntity}",
-                IsCollection = true, // RelatedEntityForeignAttribute is always a collection.
-                Nullable = true    // Collections can always be empty
-            };
-            navProp.CustomData.Add("@EAF.RelatedEntity.Type", "Foreign");
-            navProp.CustomData.AddRangeIfNewAndNotNull(additionalCustomProperties);
-            return navProp;
+            return new RelatedEntityForeignNavigationPropertyBuilder().Build(relatedEntityAttribute, schemaOrAlias);
         }
 
-        public static CsdlNavigationProperty ToNavigationProperty(this RelatedEntityMappingAttribute relatedEntityAttribute, string schemaOrAlias = DefaultSchemaOrAlias, params KeyValuePair<string, object>[] additionalCustomProperties)
+        public static CsdlNavigationProperty ToNavigationProperty(this RelatedEntityMappingAttribute relatedEntityAttribute, string schemaOrAlias = Constants.DefaultSchemaOrAlias)
         {
-            if (relatedEntityAttribute == null)
-                return null;
-            var navProp = new CsdlNavigationProperty
-            {
-                Type = $"{schemaOrAlias}.{relatedEntityAttribute.RelatedEntity}",
-                IsCollection = true, // RelatedEntityForeignAttribute is always a collection.
-                Nullable = true    // Collections can always be empty
-            };
-            if (!string.IsNullOrWhiteSpace(relatedEntityAttribute.RelatedEntityAlias) && relatedEntityAttribute.RelatedEntity != relatedEntityAttribute.RelatedEntityAlias)
-                navProp.Alias = $"{schemaOrAlias}.{relatedEntityAttribute.RelatedEntityAlias}";
-            navProp.CustomData.Add("@EAF.RelatedEntity.Type", "Mapping");
-            var mappingEntityType = $"{schemaOrAlias}.{relatedEntityAttribute.MappingEntity}";
-            navProp.CustomData.Add("@EAF.RelatedEntity.MappingEntityType", mappingEntityType);
-            navProp.CustomData.AddRangeIfNewAndNotNull(additionalCustomProperties);
-            return navProp;
+            return new RelatedEntityMappingNavigationPropertyBuilder().Build(relatedEntityAttribute, schemaOrAlias);
         }
     }
 }

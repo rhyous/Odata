@@ -52,6 +52,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\ReadOnlyEntityAttribute.cs" />
+    <Compile Include="Builders\Constants.cs" />
+    <Compile Include="Builders\EnumPropertyBuilder.cs" />
+    <Compile Include="Builders\RelatedEntityMappingNavigationPropertyBuilder.cs" />
+    <Compile Include="Builders\RelatedEntityForeignNavigationPropertyBuilder.cs" />
+    <Compile Include="Builders\PropertyBuilder.cs" />
+    <Compile Include="Builders\EntityBuilder.cs" />
+    <Compile Include="Builders\RelatedEntityNavigationPropertyBuilder.cs" />
+    <Compile Include="Dictionaries\StringFuncDictionary.cs" />
+    <Compile Include="Dictionaries\AttributeFuncDictionary.cs" />
+    <Compile Include="Interfaces\IFuncDictionary.cs" />
+    <Compile Include="Interfaces\ICsdlNavigationPropertyBuilder.cs" />
+    <Compile Include="Interfaces\ICsdlBuilder.cs" />
+    <Compile Include="Dictionaries\CustomPropertyDataDictionary.cs" />
     <Compile Include="Dictionaries\PropertyDataAttributeDictionary.cs" />
     <Compile Include="Dictionaries\PropertyAttributeDictionary.cs" />
     <Compile Include="Dictionaries\EntityAttributeDictionary.cs" />

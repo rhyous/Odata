@@ -13,7 +13,7 @@ namespace Rhyous.Odata.Csdl.Tests.Dictionaries
         {
             // Arrange
             // Act
-            var actual = EntityAttributeDictionary.Instance.GetDisplayProperty(null);
+            var actual = new EntityAttributeDictionary().GetDisplayProperty(null);
 
             // Assert
             Assert.IsNull(actual);
@@ -24,7 +24,7 @@ namespace Rhyous.Odata.Csdl.Tests.Dictionaries
         {
             // Arrange
             // Act
-            var actual = EntityAttributeDictionary.Instance.GetDisplayProperty(typeof(Person));
+            var actual = new EntityAttributeDictionary().GetDisplayProperty(typeof(Person));
 
             // Assert
             Assert.IsNull(actual);
@@ -35,7 +35,7 @@ namespace Rhyous.Odata.Csdl.Tests.Dictionaries
         {
             // Arrange
             // Act
-            var actual = EntityAttributeDictionary.Instance.GetDisplayProperty(typeof(Smile));
+            var actual = new EntityAttributeDictionary().GetDisplayProperty(typeof(Smile));
 
             // Assert
             Assert.AreEqual("@UI.DisplayProperty", actual.First().Key);
@@ -49,7 +49,7 @@ namespace Rhyous.Odata.Csdl.Tests.Dictionaries
         {
             // Arrange
             // Act
-            var actual = EntityAttributeDictionary.Instance.GetReadOnlyProperty(null);
+            var actual = new EntityAttributeDictionary().GetReadOnlyProperty(null);
 
             // Assert
             Assert.IsNull(actual);
@@ -60,7 +60,7 @@ namespace Rhyous.Odata.Csdl.Tests.Dictionaries
         {
             // Arrange
             // Act
-            var actual = EntityAttributeDictionary.Instance.GetReadOnlyProperty(typeof(Person));
+            var actual = new EntityAttributeDictionary().GetReadOnlyProperty(typeof(Person));
 
             // Assert
             Assert.IsNull(actual);
@@ -71,7 +71,7 @@ namespace Rhyous.Odata.Csdl.Tests.Dictionaries
         {
             // Arrange
             // Act
-            var actual = EntityAttributeDictionary.Instance.GetReadOnlyProperty(typeof(Country));
+            var actual = new EntityAttributeDictionary().GetReadOnlyProperty(typeof(Country));
 
             // Assert
             Assert.AreEqual("@UI.ReadOnly", actual.First().Key);
@@ -86,7 +86,7 @@ namespace Rhyous.Odata.Csdl.Tests.Dictionaries
         {
             // Arrange
             // Act
-            var actual = EntityAttributeDictionary.Instance.GetRelatedEntityForeignProperties(null);
+            var actual = new EntityAttributeDictionary().GetRelatedEntityForeignProperties(null);
 
             // Assert
             Assert.IsFalse(actual.Any());
@@ -97,7 +97,7 @@ namespace Rhyous.Odata.Csdl.Tests.Dictionaries
         {
             // Arrange
             // Act
-            var actual = EntityAttributeDictionary.Instance.GetRelatedEntityForeignProperties(typeof(Person));
+            var actual = new EntityAttributeDictionary().GetRelatedEntityForeignProperties(typeof(Person));
 
             // Assert
             Assert.IsFalse(actual.Any());
@@ -108,7 +108,7 @@ namespace Rhyous.Odata.Csdl.Tests.Dictionaries
         {
             // Arrange
             // Act
-            var actual = EntityAttributeDictionary.Instance.GetRelatedEntityForeignProperties(typeof(Product));
+            var actual = new EntityAttributeDictionary().GetRelatedEntityForeignProperties(typeof(Product));
 
             // Assert
             Assert.AreEqual("Skus", actual.First().Key);
@@ -120,7 +120,7 @@ namespace Rhyous.Odata.Csdl.Tests.Dictionaries
         {
             // Arrange
             // Act
-            var actual = EntityAttributeDictionary.Instance.GetRelatedEntityForeignProperties(typeof(EntityWithRelatedEntityAlias));
+            var actual = new EntityAttributeDictionary().GetRelatedEntityForeignProperties(typeof(EntityWithRelatedEntityAlias));
 
             // Assert
             Assert.AreEqual("E1s", actual.First().Key);
@@ -135,7 +135,7 @@ namespace Rhyous.Odata.Csdl.Tests.Dictionaries
         {
             // Arrange
             // Act
-            var actual = EntityAttributeDictionary.Instance.GetRelatedEntityMappingProperties(null);
+            var actual = new EntityAttributeDictionary().GetRelatedEntityMappingProperties(null);
 
             // Assert
             Assert.IsFalse(actual.Any());
@@ -146,7 +146,7 @@ namespace Rhyous.Odata.Csdl.Tests.Dictionaries
         {
             // Arrange
             // Act
-            var actual = EntityAttributeDictionary.Instance.GetRelatedEntityMappingProperties(typeof(Person));
+            var actual = new EntityAttributeDictionary().GetRelatedEntityMappingProperties(typeof(Person));
 
             // Assert
             Assert.IsFalse(actual.Any());
@@ -157,7 +157,7 @@ namespace Rhyous.Odata.Csdl.Tests.Dictionaries
         {
             // Arrange
             // Act
-            var actual = EntityAttributeDictionary.Instance.GetRelatedEntityMappingProperties(typeof(User)).ToList();
+            var actual = new EntityAttributeDictionary().GetRelatedEntityMappingProperties(typeof(User)).ToList();
 
             // Assert
             Assert.AreEqual(2, actual.Count);
@@ -172,7 +172,7 @@ namespace Rhyous.Odata.Csdl.Tests.Dictionaries
         {
             // Arrange
             // Act
-            var actual = EntityAttributeDictionary.Instance.GetRelatedEntityMappingProperties(typeof(EntityWithRelatedEntityAlias));
+            var actual = new EntityAttributeDictionary().GetRelatedEntityMappingProperties(typeof(EntityWithRelatedEntityAlias));
 
             // Assert
             Assert.AreEqual("E2s", actual.First().Key);

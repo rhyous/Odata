@@ -51,6 +51,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Builders\EntityBuilderTests.cs" />
     <Compile Include="Extensions\CsdlExtensionTests.cs" />
     <Compile Include="Dictionaries\EntityAttributeDictionaryTests.cs" />
     <Compile Include="Dictionaries\PropertyDataAttributeDictionaryTests.cs" />
