@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Rhyous.Collections;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -6,29 +7,7 @@ using System.Reflection;
 namespace Rhyous.Odata.Csdl
 {
     internal static class DictionaryExtensions
-    {
-        public static void AddIfNewAndNotNull(this IDictionary<string, object> dictionary, string key, object value)
-        {
-            if (dictionary == null || string.IsNullOrWhiteSpace(key) || value == null || dictionary.TryGetValue(key, out _))
-                return;
-            dictionary.Add(key, value);
-        }
-
-        public static void AddIfNewAndNotNull(this IDictionary<string, object> dictionary, string key, Func<object> valueProvider)
-        {
-            if (dictionary == null || string.IsNullOrWhiteSpace(key) || valueProvider == null || dictionary.TryGetValue(key, out _))
-                return;
-            dictionary.AddIfNewAndNotNull(key, valueProvider.Invoke());
-        }
-
-        public static void AddRangeIfNewAndNotNull(this IDictionary<string, object> dictionary, params KeyValuePair<string, object>[] keyValuePairs)
-        {
-            if (dictionary == null || keyValuePairs == null)
-                return;
-            foreach (var kvp in keyValuePairs)
-                dictionary.Add(kvp.Key, kvp.Value);
-        }
-
+    {        
         internal static void AddFromCustomDictionary(this IDictionary<string, object> propDataDictionary, string entity, string property, IDictionary<string, Func<IEnumerable<KeyValuePair<string, object>>>> customPropertyDataDictionary)
         {
             if (propDataDictionary == null

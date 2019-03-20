@@ -1,198 +1,15 @@
-﻿using System;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Rhyous.Odata.Tests;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Rhyous.Odata.Tests;
 
 namespace Rhyous.Odata.Csdl.Tests
 {
     [TestClass]
     public class DictionaryExtensionsTests
-    {
-        #region AddIfNewAndNotNull
-        [TestMethod]
-        public void DictionaryExtensions_AddIfNewAndNotNull_KeyNull_Test()
-        {
-            // Arrange
-            var dictionary = new Dictionary<string, object>();
-            string key = null;
-            string value = "some value";
-
-            // Act
-            dictionary.AddIfNewAndNotNull(key, value);
-
-            // Assert
-            Assert.AreEqual(0, dictionary.Count);
-        }
-
-        [TestMethod]
-        public void DictionaryExtensions_AddIfNewAndNotNull_KeyEmpty_Test()
-        {
-            // Arrange
-            var dictionary = new Dictionary<string, object>();
-            string key = "";
-            string value = "some value";
-
-            // Act
-            dictionary.AddIfNewAndNotNull(key, value);
-
-            // Assert
-            Assert.AreEqual(0, dictionary.Count);
-        }
-
-        public void DictionaryExtensions_AddIfNewAndNotNull_KeyWhitespace_Test()
-        {
-            // Arrange
-            var dictionary = new Dictionary<string, object>();
-            string key = "";
-            string value = "some value";
-
-            // Act
-            dictionary.AddIfNewAndNotNull(key, value);
-
-            // Assert
-            Assert.AreEqual(0, dictionary.Count);
-        }
-
-        [TestMethod]
-        public void DictionaryExtensions_AddIfNewAndNotNull_ValueNull_Test()
-        {
-            // Arrange
-            var dictionary = new Dictionary<string, object>();
-            string key = "some key";
-            string value = null;
-
-            // Act
-            dictionary.AddIfNewAndNotNull(key, value);
-
-            // Assert
-            Assert.AreEqual(0, dictionary.Count);
-        }
-
-        [TestMethod]
-        public void DictionaryExtensions_AddIfNewAndNotNull_KeyAndValueSet_Test()
-        {
-            // Arrange
-            var dictionary = new Dictionary<string, object>();
-            string key = "some key";
-            string value = "some value";
-
-            // Act
-            dictionary.AddIfNewAndNotNull(key, value);
-
-            // Assert
-            Assert.AreEqual(1, dictionary.Count);
-        }
-
-        [TestMethod]
-        public void DictionaryExtensions_AddIfNewAndNotNull_Duplicate_Test()
-        {
-            // Arrange
-            string key = "some key";
-            string value = "some value";
-            var dictionary = new Dictionary<string, object> { { key, value } };
-
-            // Act
-            dictionary.AddIfNewAndNotNull(key, value);
-
-            // Assert
-            Assert.AreEqual(1, dictionary.Count);
-        }
-        #endregion
-        
-        #region AddIfNewAndNotNull Func
-        [TestMethod]
-        public void DictionaryExtensions_AddIfNewAndNotNull_func_KeyNull_Test()
-        {
-            // Arrange
-            var dictionary = new Dictionary<string, object>();
-            string key = null;
-            Func<object> func = () => "some value";
-
-            // Act
-            dictionary.AddIfNewAndNotNull(key, func);
-
-            // Assert
-            Assert.AreEqual(0, dictionary.Count);
-        }
-
-        [TestMethod]
-        public void DictionaryExtensions_AddIfNewAndNotNull_func_KeyEmpty_Test()
-        {
-            // Arrange
-            var dictionary = new Dictionary<string, object>();
-            string key = "";
-            Func<object> func = () => "some value";
-
-            // Act
-            dictionary.AddIfNewAndNotNull(key, func);
-
-            // Assert
-            Assert.AreEqual(0, dictionary.Count);
-        }
-
-        public void DictionaryExtensions_AddIfNewAndNotNull_func_KeyWhitespace_Test()
-        {
-            // Arrange
-            var dictionary = new Dictionary<string, object>();
-            string key = "";
-            Func<object> func = () => "some value";
-
-            // Act
-            dictionary.AddIfNewAndNotNull(key, func);
-
-            // Assert
-            Assert.AreEqual(0, dictionary.Count);
-        }
-
-        [TestMethod]
-        public void DictionaryExtensions_AddIfNewAndNotNull_func_ValueNull_Test()
-        {
-            // Arrange
-            var dictionary = new Dictionary<string, object>();
-            string key = "some key";
-            Func<object> func = () => null;
-
-            // Act
-            dictionary.AddIfNewAndNotNull(key, func);
-
-            // Assert
-            Assert.AreEqual(0, dictionary.Count);
-        }
-
-        [TestMethod]
-        public void DictionaryExtensions_AddIfNewAndNotNull_func_KeyAndValueSet_Test()
-        {
-            // Arrange
-            var dictionary = new Dictionary<string, object>();
-            string key = "some key";
-            Func<object> func = () => "some value";
-
-            // Act
-            dictionary.AddIfNewAndNotNull(key, func);
-
-            // Assert
-            Assert.AreEqual(1, dictionary.Count);
-        }
-
-        [TestMethod]
-        public void DictionaryExtensions_AddIfNewAndNotNull_func_Duplicate_Test()
-        {
-            // Arrange
-            string key = "some key";
-            string value = "some value";
-            Func<object> func = () => value;
-            var dictionary = new Dictionary<string, object> { { key, value } };
-            
-            // Act
-            dictionary.AddIfNewAndNotNull(key, func);
-
-            // Assert
-            Assert.AreEqual(1, dictionary.Count);
-        }
-        #endregion
-
+    { 
         #region AddFromAttributes
         [TestMethod]
         public void DictionaryExtensions_AddFromAttributes_Valid_Test()
@@ -277,7 +94,6 @@ namespace Rhyous.Odata.Csdl.Tests
         #endregion
 
         #region AddFromPropertyInfo
-        
 
         [TestMethod]
         public void DictionaryExtensions_AddFromPropertyInfo_NullDictionary_Test()
