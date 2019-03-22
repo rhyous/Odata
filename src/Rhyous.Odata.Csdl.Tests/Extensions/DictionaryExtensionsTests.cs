@@ -227,5 +227,155 @@ namespace Rhyous.Odata.Csdl.Tests
             Assert.IsTrue(func1WasCalled);
         }
         #endregion
+
+        #region AddFromCustomDictionary
+        [TestMethod]
+        public void DictionaryExtensions_AddFromCustomDictionary_DictionaryNull_Test()
+        {
+            // Arrange
+            Dictionary<string, object> dictionary = null;
+            var entity = "Entity1";
+            var prop = "Prop1";
+            IFuncEnumerable<string, string> funcs = new FuncList<string, string>()
+            {
+                (e, p) => { return null; }
+            };
+
+            // Act
+            dictionary.AddFromCustomDictionary(entity, prop, funcs);
+
+            // Assert
+            Assert.IsNull(dictionary);
+        }
+
+        [TestMethod]
+        public void DictionaryExtensions_AddFromCustomDictionary_FuncsNull_Test()
+        {
+            // Arrange
+            var dictionary = new Dictionary<string, object>();
+            var entity = "Entity1";
+            var prop = "Prop1";
+            IFuncEnumerable<string, string> funcs = null;
+
+            // Act
+            dictionary.AddFromCustomDictionary(entity, prop, funcs);
+
+            // Assert
+            Assert.AreEqual(0, dictionary.Count);
+        }
+
+        [TestMethod]
+        public void DictionaryExtensions_AddFromCustomDictionary_FuncsEmpty_Test()
+        {
+            // Arrange
+            var dictionary = new Dictionary<string, object>();
+            var entity = "Entity1";
+            var prop = "Prop1";
+            IFuncEnumerable<string, string> funcs = new FuncList<string, string>();
+
+            // Act
+            dictionary.AddFromCustomDictionary(entity, prop, funcs);
+
+            // Assert
+            Assert.AreEqual(0, dictionary.Count);
+        }
+
+        [TestMethod]
+        public void DictionaryExtensions_AddFromCustomDictionary_PropNull_Test()
+        {
+            // Arrange
+            var dictionary = new Dictionary<string, object>();
+            var entity = "Entity1";
+            string prop = null;
+            IFuncEnumerable<string, string> funcs = new FuncList<string, string>()
+            {
+                (e, p) => { return null; }
+            };
+
+            // Act
+            dictionary.AddFromCustomDictionary(entity, prop, funcs);
+
+            // Assert
+            Assert.AreEqual(0, dictionary.Count);
+        }
+
+        [TestMethod]
+        public void DictionaryExtensions_AddFromCustomDictionary_PropEmpty_Test()
+        {
+            // Arrange
+            var dictionary = new Dictionary<string, object>();
+            var entity = "Entity1";
+            var prop = "";
+            IFuncEnumerable<string, string> funcs = new FuncList<string, string>()
+            {
+                (e, p) => { return null; }
+            };
+
+            // Act
+            dictionary.AddFromCustomDictionary(entity, prop, funcs);
+
+            // Assert
+            Assert.AreEqual(0, dictionary.Count);
+        }
+
+        [TestMethod]
+        public void DictionaryExtensions_AddFromCustomDictionary_EntityNull_Test()
+        {
+            // Arrange
+            var dictionary = new Dictionary<string, object>();
+            string entity = null;
+            var prop = "prop1";
+            IFuncEnumerable<string, string> funcs = new FuncList<string, string>()
+            {
+                (e, p) => { return null; }
+            };
+
+            // Act
+            dictionary.AddFromCustomDictionary(entity, prop, funcs);
+
+            // Assert
+            Assert.AreEqual(0, dictionary.Count);
+        }
+
+        [TestMethod]
+        public void DictionaryExtensions_AddFromCustomDictionary_EntityEmpty_Test()
+        {
+            // Arrange
+            var dictionary = new Dictionary<string, object>();
+            var entity = "";
+            var prop = "prop1";
+            IFuncEnumerable<string, string> funcs = new FuncList<string, string>()
+            {
+                (e, p) => { return null; }
+            };
+
+            // Act
+            dictionary.AddFromCustomDictionary(entity, prop, funcs);
+
+            // Assert
+            Assert.AreEqual(0, dictionary.Count);
+        }
+
+        [TestMethod]
+        public void DictionaryExtensions_AddFromCustomDictionary_Valid_Test()
+        {
+            // Arrange
+            var dictionary = new Dictionary<string, object>();
+            var entity = "Entity1";
+            var prop = "prop1";
+            IFuncEnumerable<string, string> funcs = new FuncList<string, string>()
+            {
+                (e, p) => { return new [] { new KeyValuePair<string,object>("1", "a")}; }
+            };
+
+            // Act
+            dictionary.AddFromCustomDictionary(entity, prop, funcs);
+
+            // Assert
+            Assert.AreEqual(1, dictionary.Count);
+            Assert.AreEqual("1", dictionary.Keys.First());
+            Assert.AreEqual("a", dictionary.Values.First());
+        }
+        #endregion
     }
 }

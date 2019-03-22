@@ -203,6 +203,35 @@ namespace Rhyous.Odata.Csdl.Tests
 
         #endregion
 
+        #region ToCsdlEnum PropInfo
+        [TestMethod]
+        public void CsdlExtensions_ToCsdlEnum_PropertyInfoNull_Tests()
+        {
+            // Arrange
+            PropertyInfo propInfo = null;
+
+            // Act
+            var csdl = propInfo.ToCsdlEnum();
+
+            // Assert
+            Assert.IsNull(csdl);
+        }
+
+        [TestMethod]
+        public void CsdlExtensions_ToCsdlEnum_Property_Name_Test()
+        {
+            // Arrange
+            PropertyInfo propInfo = typeof(EntityWithEnum).GetProperty("Type");
+
+            // Act
+            var csdl = propInfo.ToCsdlEnum();
+
+            // Assert
+            Assert.AreEqual(0, csdl.CustomData.Count);
+        }
+
+        #endregion
+
         #region ToNavigationProperty
 
 

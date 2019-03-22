@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
@@ -24,7 +21,8 @@ namespace Rhyous.Odata.Csdl
         
         internal IEnumerable<KeyValuePair<string, object>> GetRelatedEntityProperties(MemberInfo mi)
         {
-            var relatedEntityAttributes = mi?.GetCustomAttributes<RelatedEntityAttribute>()?.GroupBy(a => a.Entity);
+            var relatedEntityAttributes = mi?.GetCustomAttributes<RelatedEntityAttribute>() // This method is never null
+                                             .GroupBy(a => a.Entity);
             if (relatedEntityAttributes == null || !relatedEntityAttributes.Any())
                 return null;
             var navKeyList = new List<KeyValuePair<string, object>>();

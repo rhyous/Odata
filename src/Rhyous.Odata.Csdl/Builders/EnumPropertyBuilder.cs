@@ -8,14 +8,17 @@ namespace Rhyous.Odata.Csdl
 {
     public class EnumPropertyBuilder : ICsdlBuilder<PropertyInfo, CsdlEnumProperty>
     {
-        private IFuncDictionary<Type, MemberInfo> _PropertyDataAttributeDictionary;
+        private readonly IFuncDictionary<Type, MemberInfo> _PropertyDataAttributeDictionary;
         private readonly IFuncEnumerable<string, string> _CustomPropertyDataFuncs;
+        private readonly IDictionary<string, string> _CsdlTypeDictionary;
 
         public EnumPropertyBuilder(IFuncDictionary<Type, MemberInfo> propertyDataAttributeFuncDictionary,
-                                  IFuncEnumerable<string, string> customPropertyDataFuncDictionary)
+                                  IFuncEnumerable<string, string> customPropertyDataFuncDictionary,
+                                  IDictionary<string, string> csdlTypeDictionary)
         {
             _PropertyDataAttributeDictionary = propertyDataAttributeFuncDictionary;
             _CustomPropertyDataFuncs = customPropertyDataFuncDictionary;
+            _CsdlTypeDictionary = csdlTypeDictionary;
         }
 
         public CsdlEnumProperty Build(PropertyInfo propInfo)
@@ -27,7 +30,7 @@ namespace Rhyous.Odata.Csdl
                 return null;
             var prop = new CsdlEnumProperty
             {
-                UnderlyingType = CsdlTypeDictionary.Instance[propertyType.GetEnumUnderlyingType().FullName],
+                UnderlyingType = _CsdlTypeDictionary[propertyType.GetEnumUnderlyingType().FullName],
                 CustomData = propertyType.ToDictionary(),
                 IsFlags = propertyType.GetCustomAttributes<FlagsAttribute>().Any()
             };

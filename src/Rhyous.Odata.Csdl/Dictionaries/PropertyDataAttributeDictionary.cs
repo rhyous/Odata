@@ -14,10 +14,6 @@ namespace Rhyous.Odata.Csdl
     {
         #region Constructor
 
-        private static readonly Lazy<PropertyDataAttributeDictionary> Lazy = new Lazy<PropertyDataAttributeDictionary>(() => new PropertyDataAttributeDictionary());
-
-        public static PropertyDataAttributeDictionary Default { get { return Lazy.Value; } }
-
         public PropertyDataAttributeDictionary()
         {
             Add(typeof(EditableAttribute), GetReadOnlyProperty);
@@ -42,9 +38,8 @@ namespace Rhyous.Odata.Csdl
 
         internal IEnumerable<KeyValuePair<string, object>> GetRelatedEntityPropertyData(MemberInfo mi)
         {
-            if (mi == null)
-                return null;
-            var relatedEntityAttributes = mi.GetCustomAttributes<RelatedEntityAttribute>().GroupBy(a=>a.Entity);
+            var relatedEntityAttributes = mi?.GetCustomAttributes<RelatedEntityAttribute>() // this never returns null
+                                             .GroupBy(a=>a.Entity);
             if (relatedEntityAttributes == null || !relatedEntityAttributes.Any())
                 return null;
             var navKeyList = new List<KeyValuePair<string, object>>();

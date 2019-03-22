@@ -10,12 +10,15 @@ namespace Rhyous.Odata.Csdl
     {
         private readonly IFuncDictionary<Type, MemberInfo> _PropertyDataAttributeDictionary;
         private readonly IFuncEnumerable<string, string> _CustomPropertyDataFuncs;
+        private readonly IDictionary<string, string> _CsdlTypeDictionary;
 
         public PropertyBuilder(IFuncDictionary<Type, MemberInfo> propertyDataAttributeFuncDictionary,
-                               IFuncEnumerable<string, string> customPropertyDataFuncDictionary)
+                               IFuncEnumerable<string, string> customPropertyDataFuncDictionary,
+                               IDictionary<string, string> csdlTypeDictionary)
         {
             _PropertyDataAttributeDictionary = propertyDataAttributeFuncDictionary;
             _CustomPropertyDataFuncs = customPropertyDataFuncDictionary;
+            _CsdlTypeDictionary = csdlTypeDictionary;
         }
 
         public CsdlProperty Build(PropertyInfo propInfo)
@@ -25,7 +28,7 @@ namespace Rhyous.Odata.Csdl
             var propertyType = propInfo.PropertyType;
             Type nullableType = propertyType.IsGenericType && propertyType.GetGenericTypeDefinition() == typeof(Nullable<>) ? propertyType.GetGenericArguments()[0] : null;
             var propName = nullableType == null ? propertyType.FullName : nullableType.FullName;
-            if (!CsdlTypeDictionary.Instance.TryGetValue(propName, out string csdlType))
+            if (!_CsdlTypeDictionary.TryGetValue(propName, out string csdlType))
                 return null;
             var prop = new CsdlProperty
             {

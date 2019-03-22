@@ -1,4 +1,8 @@
-﻿namespace Rhyous.Odata.Csdl
+﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
+
+namespace Rhyous.Odata.Csdl
 {
     public interface ICsdlBuilderFactory
     {
@@ -8,9 +12,10 @@
         EnumPropertyBuilder EnumPropertyBuilder { get; }
 
         // Dictionaries
-        CustomPropertyDataFuncs CustomPropertyDataFuncs { get; }
-        EntityAttributeDictionary EntityAttributeDictionary { get; }
-        PropertyAttributeDictionary PropertyAttributeDictionary { get; }
-        PropertyDataAttributeDictionary PropertyDataAttributeDictionary { get; }
+        IFuncEnumerable<string, string> CustomPropertyDataFuncs { get; }
+        IFuncDictionary<Type, MemberInfo> EntityAttributeDictionary { get; }
+        IFuncDictionary<Type, MemberInfo> PropertyAttributeDictionary { get; }
+        IFuncDictionary<Type, MemberInfo> PropertyDataAttributeDictionary { get; }
+        IDictionary<string, string> CsdlTypeDictionary { get; }
     }
 }

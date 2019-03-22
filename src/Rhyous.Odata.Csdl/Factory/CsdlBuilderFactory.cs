@@ -1,4 +1,8 @@
-﻿namespace Rhyous.Odata.Csdl
+﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
+
+namespace Rhyous.Odata.Csdl
 {
     public class CsdlBuilderFactory : ICsdlBuilderFactory
     {
@@ -6,16 +10,18 @@
 
         public CsdlBuilderFactory() { }
 
-        public CsdlBuilderFactory(PropertyDataAttributeDictionary propertyDataAttributeDictionary,
-                                  CustomPropertyDataFuncs customPropertyDataFuncs,
-                                  EntityAttributeDictionary entityAttributeDictionary,
-                                  PropertyAttributeDictionary propertyAttributeDictionary
+        public CsdlBuilderFactory(IFuncDictionary<Type, MemberInfo> propertyDataAttributeDictionary,
+                                  IFuncDictionary<Type, MemberInfo> entityAttributeDictionary,
+                                  IFuncDictionary<Type, MemberInfo> propertyAttributeDictionary,
+                                  IFuncEnumerable<string, string> customPropertyDataFuncs,
+                                  IDictionary<string, string> csdlTypeDictionary
                                   )
         {
             propertyDataAttributeDictionary = PropertyDataAttributeDictionary;
-            CustomPropertyDataFuncs = customPropertyDataFuncs;
             entityAttributeDictionary = EntityAttributeDictionary;
             propertyAttributeDictionary = PropertyAttributeDictionary;
+            CustomPropertyDataFuncs = customPropertyDataFuncs;
+            CsdlTypeDictionary = csdlTypeDictionary;
         }
 
         // Builders
@@ -38,13 +44,14 @@
         } private EnumPropertyBuilder _EnumPropertyBuilder;
 
         // Dictionaries - set by default
-        public PropertyDataAttributeDictionary PropertyDataAttributeDictionary { get; } = new PropertyDataAttributeDictionary();
-        public CustomPropertyDataFuncs CustomPropertyDataFuncs { get; } = new CustomPropertyDataFuncs();
-        public EntityAttributeDictionary EntityAttributeDictionary { get; } = new EntityAttributeDictionary();
-        public PropertyAttributeDictionary PropertyAttributeDictionary { get; } = new PropertyAttributeDictionary();
+        public IFuncDictionary<Type, MemberInfo> PropertyDataAttributeDictionary { get; } = new PropertyDataAttributeDictionary();
+        public IFuncDictionary<Type, MemberInfo> EntityAttributeDictionary { get; } = new EntityAttributeDictionary();
+        public IFuncDictionary<Type, MemberInfo> PropertyAttributeDictionary { get; } = new PropertyAttributeDictionary();
+        public IFuncEnumerable<string, string> CustomPropertyDataFuncs { get; } = new CustomPropertyDataFuncs();
+        public IDictionary<string,string> CsdlTypeDictionary { get; } = new CsdlTypeDictionary();
 
         internal EntityBuilder CreateEntityBuilder() => new EntityBuilder(PropertyBuilder, EnumPropertyBuilder, EntityAttributeDictionary, PropertyAttributeDictionary);
-        internal PropertyBuilder CreatePropertyBuilder() => new PropertyBuilder(PropertyDataAttributeDictionary, CustomPropertyDataFuncs);
-        internal EnumPropertyBuilder CreateEnumPropertyBuilder() => new EnumPropertyBuilder(PropertyDataAttributeDictionary, CustomPropertyDataFuncs);
+        internal PropertyBuilder CreatePropertyBuilder() => new PropertyBuilder(PropertyDataAttributeDictionary, CustomPropertyDataFuncs, CsdlTypeDictionary);
+        internal EnumPropertyBuilder CreateEnumPropertyBuilder() => new EnumPropertyBuilder(PropertyDataAttributeDictionary, CustomPropertyDataFuncs, CsdlTypeDictionary);
     }
 }

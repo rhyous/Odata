@@ -36,13 +36,8 @@ namespace Rhyous.Odata.Csdl
             if (entityType == null)
                 return null;
             var entity = new CsdlEntity { Keys = new List<string> { Constants.Id } };
-            //if (customPropertyBuilders != null)
-            //    entity.Properties.AddCustomProperties(entityType, customPropertyBuilders);
             foreach (var propInfo in entityType.GetProperties().OrderBy(p => p.Name))
             {
-                // If the property was added via a customization, don't add it again
-                if (entity.Properties.TryGetValue(entityType.Name, out object _))
-                    continue; ;
                 AddFromPropertyInfo(entity.Properties, propInfo);
                 // Add new properties based on this Property's attributes
                 entity.Properties.AddFromAttributes(propInfo, _PropertyAttributeFuncDictionary);
@@ -54,8 +49,8 @@ namespace Rhyous.Odata.Csdl
 
         internal void AddFromPropertyInfo(IDictionary<string, object> dictionary, PropertyInfo propInfo)
         {
-            if (dictionary == null || propInfo == null)
-                return;
+            if (dictionary == null) throw new ArgumentNullException(nameof(dictionary));
+            if (propInfo == null) throw new ArgumentNullException(nameof(propInfo));
             if (propInfo.PropertyType.IsEnum)
                 dictionary.AddIfNewAndNotNull(propInfo.Name, _EnumPropertyBuilder.Build(propInfo));
             else

@@ -40,7 +40,7 @@ namespace Rhyous.Odata.Csdl
             return mergedAttribute;
         }
 
-        private static string GetForeignKey(string fkLeft, string fkRight)
+        internal static string GetForeignKey(string fkLeft, string fkRight)
         {
             if (string.IsNullOrWhiteSpace(fkLeft) && string.IsNullOrWhiteSpace(fkRight))
                 return Constants.Id;

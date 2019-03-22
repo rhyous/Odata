@@ -10,11 +10,7 @@ namespace Rhyous.Odata.Csdl
     /// </remarks>
     public class CsdlTypeDictionary : ConcurrentDictionary<string, string>
     {
-        private static readonly Lazy<CsdlTypeDictionary> Lazy = new Lazy<CsdlTypeDictionary>(() => new CsdlTypeDictionary());
-
-        public static CsdlTypeDictionary Instance => Lazy.Value;
-
-        internal CsdlTypeDictionary()
+        public CsdlTypeDictionary()
         {
             Init();
         }

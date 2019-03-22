@@ -7,7 +7,6 @@ namespace Rhyous.Odata.Csdl
     [DataContract]
     public class CsdlSchema
     {
-
         [DataMember(Name = "$Alias")]
         public string Alias { get; set; } = "self";
 

@@ -8,12 +8,13 @@ namespace Rhyous.Odata.Csdl.Tests.Extensions
     [TestClass]
     public class RelatedEntityAttributeExtensionsTests
     {
+        #region Merge
         [TestMethod]
         public void RelatedEntityAttribute_Merge_IGrouping_ExpectedBehavior()
         {
             // Arrange
-            RelatedEntityAttribute re1 = new RelatedEntityAttribute("Entity2");
-            RelatedEntityAttribute re2 = new RelatedEntityAttribute("Entity2");
+            var re1 = new RelatedEntityAttribute("Entity2");
+            var re2 = new RelatedEntityAttribute("Entity2");
             IEnumerable<RelatedEntityAttribute> relatedEntityAttribs = new[] { re1, re2};
             var group = relatedEntityAttribs.GroupBy(a => a.Entity).FirstOrDefault();
 
@@ -28,8 +29,8 @@ namespace Rhyous.Odata.Csdl.Tests.Extensions
         public void RelatedEntityAttribute_Merge_TwoAttribs_Test()
         {
             // Arrange
-            RelatedEntityAttribute re1 = new RelatedEntityAttribute("Entity2");
-            RelatedEntityAttribute re2 = new RelatedEntityAttribute("Entity2");
+            var re1 = new RelatedEntityAttribute("Entity2");
+            var re2 = new RelatedEntityAttribute("Entity2");
 
             // Act
             var result = RelatedEntityAttributeExtensions.Merge(re1, re2);
@@ -42,8 +43,8 @@ namespace Rhyous.Odata.Csdl.Tests.Extensions
         public void RelatedEntityAttribute_Merge_TwoAttribs_DifferentEntities_Test()
         {
             // Arrange
-            RelatedEntityAttribute re1 = new RelatedEntityAttribute("Entity2") { Entity = "E3" };
-            RelatedEntityAttribute re2 = new RelatedEntityAttribute("Entity2") { Entity = "E4" };
+            var re1 = new RelatedEntityAttribute("Entity2") { Entity = "E3" };
+            var re2 = new RelatedEntityAttribute("Entity2") { Entity = "E4" };
 
             // Act
             // Assert
@@ -57,8 +58,8 @@ namespace Rhyous.Odata.Csdl.Tests.Extensions
         public void RelatedEntityAttribute_Merge_TwoAttribs_DifferentEntityProperties_Test()
         {
             // Arrange
-            RelatedEntityAttribute re1 = new RelatedEntityAttribute("Entity2") { Entity = "E3", Property = "P1" };
-            RelatedEntityAttribute re2 = new RelatedEntityAttribute("Entity2") { Entity = "E3", Property = "P2" };
+            var re1 = new RelatedEntityAttribute("Entity2") { Entity = "E3", Property = "P1" };
+            var re2 = new RelatedEntityAttribute("Entity2") { Entity = "E3", Property = "P2" };
 
             // Act
             // Assert
@@ -73,7 +74,7 @@ namespace Rhyous.Odata.Csdl.Tests.Extensions
         public void RelatedEntityAttribute_Merge_TwoAttribs_LeftPopulated_Test()
         {
             // Arrange
-            RelatedEntityAttribute re1 = new RelatedEntityAttribute("Entity2")
+            var re1 = new RelatedEntityAttribute("Entity2")
             {
                 EntityAlias = "Alias1",
                 AutoExpand = true,
@@ -87,7 +88,7 @@ namespace Rhyous.Odata.Csdl.Tests.Extensions
                 RelatedEntityMustExist = false,
                 Entity = "Entity1"
             };
-            RelatedEntityAttribute re2 = new RelatedEntityAttribute("Entity2")
+            var re2 = new RelatedEntityAttribute("Entity2")
             {
                 Entity = "Entity1",
                 Property = "Entity2Name"
@@ -114,7 +115,7 @@ namespace Rhyous.Odata.Csdl.Tests.Extensions
         public void RelatedEntityAttribute_Merge_TwoAttribs_RightPopulated_Test()
         {
             // Arrange
-            RelatedEntityAttribute re1 = new RelatedEntityAttribute("Entity2")
+            var re1 = new RelatedEntityAttribute("Entity2")
             {
                 EntityAlias = "Alias1",
                 AutoExpand = true,
@@ -122,13 +123,13 @@ namespace Rhyous.Odata.Csdl.Tests.Extensions
                 ForeignKeyProperty = "Name",
                 ForeignKeyType = typeof(string),
                 Property = "Entity2Name",
-                GetAll = false,
+                GetAll = true,
                 Nullable = true,
                 RelatedEntityAlias = "E2",
                 RelatedEntityMustExist = false,
                 Entity = "Entity1"
             };
-            RelatedEntityAttribute re2 = new RelatedEntityAttribute("Entity2")
+            var re2 = new RelatedEntityAttribute("Entity2")
             {
                 Entity = "Entity1",
                 Property = "Entity2Name"
@@ -150,5 +151,79 @@ namespace Rhyous.Odata.Csdl.Tests.Extensions
             Assert.AreEqual(true, result.RelatedEntityMustExist, "RelatedEntityMustExist");
             Assert.AreEqual("Entity1", result.Entity, "Entity");
         }
+        #endregion
+
+        #region GetForeignKey
+        [TestMethod]
+        public void RelatedEntityAttribute_GetForeignKey_BothEmpty_Test()
+        {
+            // Arrange
+            string l = "";
+            string r = "";
+
+            // Act
+            var actual = RelatedEntityAttributeExtensions.GetForeignKey(l, r);
+
+            // Assert
+            Assert.AreEqual(Constants.Id, actual);
+        }
+
+
+        [TestMethod]
+        public void RelatedEntityAttribute_GetForeignKey_LeftEmtpy_Test()
+        {
+            // Arrange
+            string l = "";
+            string r = "A";
+
+            // Act
+            var actual = RelatedEntityAttributeExtensions.GetForeignKey(l, r);
+
+            // Assert
+            Assert.AreEqual("A", actual);
+        }
+
+        [TestMethod]
+        public void RelatedEntityAttribute_GetForeignKey_RightEmtpy_Test()
+        {
+            // Arrange
+            string l = "A";
+            string r = "";
+
+            // Act
+            var actual = RelatedEntityAttributeExtensions.GetForeignKey(l, r);
+
+            // Assert
+            Assert.AreEqual("A", actual);
+        }
+
+        [TestMethod]
+        public void RelatedEntityAttribute_GetForeignKey_LeftId_Test()
+        {
+            // Arrange
+            string l = "Id";
+            string r = "OtherId";
+
+            // Act
+            var actual = RelatedEntityAttributeExtensions.GetForeignKey(l, r);
+
+            // Assert
+            Assert.AreEqual("OtherId", actual);
+        }
+
+        [TestMethod]
+        public void RelatedEntityAttribute_GetForeignKey_RightId_Test()
+        {
+            // Arrange
+            string l = "OtherId";
+            string r = "Id";
+
+            // Act
+            var actual = RelatedEntityAttributeExtensions.GetForeignKey(l, r);
+
+            // Assert
+            Assert.AreEqual("OtherId", actual);
+        }
+        #endregion
     }
 }
