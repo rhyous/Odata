@@ -4,6 +4,13 @@ namespace Rhyous.Odata.Csdl
 {
     public class RelatedEntityForeignNavigationPropertyBuilder : ICsdlNavigationPropertyBuilder<RelatedEntityForeignAttribute, CsdlNavigationProperty>
     {
+        private readonly IFuncEnumerable<string, string> _CustomPropertyDataFuncs;
+
+        public RelatedEntityForeignNavigationPropertyBuilder(IFuncEnumerable<string, string> CustomPropertyDataFuncs)
+        {
+            _CustomPropertyDataFuncs = CustomPropertyDataFuncs;
+        }
+
         public CsdlNavigationProperty Build(RelatedEntityForeignAttribute relatedEntityAttribute, string schemaOrAlias = Constants.DefaultSchemaOrAlias)
         {
             if (relatedEntityAttribute == null)
@@ -14,6 +21,7 @@ namespace Rhyous.Odata.Csdl
                 IsCollection = true, // RelatedEntityForeignAttribute is always a collection.
                 Nullable = true    // Collections can always be empty
             };
+            navProp.CustomData.AddFromCustomDictionary(relatedEntityAttribute.Entity, relatedEntityAttribute.RelatedEntity, _CustomPropertyDataFuncs);
             navProp.CustomData.Add(Constants.EAFRelatedEntityType, Constants.Foreign);
             return navProp;
         }

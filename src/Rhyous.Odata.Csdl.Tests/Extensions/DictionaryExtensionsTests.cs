@@ -110,23 +110,6 @@ namespace Rhyous.Odata.Csdl.Tests
             // Assert
             Assert.IsNull(dictionary);
         }
-
-        [TestMethod]
-        public void DictionaryExtensions_AddFromPropertyInfo_NullPropertyInfo_Test()
-        {
-            // Arrange
-            var dictionary = new Dictionary<string, object>();
-            PropertyInfo propInfo = null;
-
-            var propertyBuilder = new PropertyBuilder(new PropertyDataAttributeDictionary(), new CustomPropertyDataDictionary());
-            var entityBuilder = new EntityBuilder(propertyBuilder, new EnumPropertyBuilder(), new EntityAttributeDictionary(), new PropertyAttributeDictionary());
-
-            // Act
-            entityBuilder.AddFromPropertyInfo(dictionary, propInfo);
-
-            // Assert
-            Assert.AreEqual(0, dictionary.Count);
-        }
         #endregion
 
         #region AddCustomProperties

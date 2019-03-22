@@ -4,6 +4,13 @@ namespace Rhyous.Odata.Csdl
 {
     public class RelatedEntityMappingNavigationPropertyBuilder : ICsdlNavigationPropertyBuilder<RelatedEntityMappingAttribute, CsdlNavigationProperty>
     {
+        private readonly IFuncEnumerable<string, string> _CustomPropertyDataFuncs;
+
+        public RelatedEntityMappingNavigationPropertyBuilder(IFuncEnumerable<string, string> CustomPropertyDataFuncs)
+        {
+            _CustomPropertyDataFuncs = CustomPropertyDataFuncs;
+        }
+
         public CsdlNavigationProperty Build(RelatedEntityMappingAttribute relatedEntityAttribute, string schemaOrAlias = Constants.DefaultSchemaOrAlias)
         {
             if (relatedEntityAttribute == null)

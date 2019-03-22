@@ -59,12 +59,14 @@
     <Compile Include="Builders\PropertyBuilder.cs" />
     <Compile Include="Builders\EntityBuilder.cs" />
     <Compile Include="Builders\RelatedEntityNavigationPropertyBuilder.cs" />
-    <Compile Include="Dictionaries\StringFuncDictionary.cs" />
     <Compile Include="Dictionaries\AttributeFuncDictionary.cs" />
+    <Compile Include="Factory\CsdlBuilderFactory.cs" />
+    <Compile Include="Factory\ICsdlBuilderFactory.cs" />
+    <Compile Include="Interfaces\IFuncEnumerable.cs" />
     <Compile Include="Interfaces\IFuncDictionary.cs" />
     <Compile Include="Interfaces\ICsdlNavigationPropertyBuilder.cs" />
     <Compile Include="Interfaces\ICsdlBuilder.cs" />
-    <Compile Include="Dictionaries\CustomPropertyDataDictionary.cs" />
+    <Compile Include="Dictionaries\CustomPropertyDataFuncs.cs" />
     <Compile Include="Dictionaries\PropertyDataAttributeDictionary.cs" />
     <Compile Include="Dictionaries\PropertyAttributeDictionary.cs" />
     <Compile Include="Dictionaries\EntityAttributeDictionary.cs" />

@@ -8,8 +8,14 @@ namespace Rhyous.Odata.Csdl
 {
     public class EnumPropertyBuilder : ICsdlBuilder<PropertyInfo, CsdlEnumProperty>
     {
-        public EnumPropertyBuilder(IFuncDictionary<Type, MemberInfo> propertyDataAttributeDictionary = null)
+        private IFuncDictionary<Type, MemberInfo> _PropertyDataAttributeDictionary;
+        private readonly IFuncEnumerable<string, string> _CustomPropertyDataFuncs;
+
+        public EnumPropertyBuilder(IFuncDictionary<Type, MemberInfo> propertyDataAttributeFuncDictionary,
+                                  IFuncEnumerable<string, string> customPropertyDataFuncDictionary)
         {
+            _PropertyDataAttributeDictionary = propertyDataAttributeFuncDictionary;
+            _CustomPropertyDataFuncs = customPropertyDataFuncDictionary;
         }
 
         public CsdlEnumProperty Build(PropertyInfo propInfo)
@@ -25,41 +31,9 @@ namespace Rhyous.Odata.Csdl
                 CustomData = propertyType.ToDictionary(),
                 IsFlags = propertyType.GetCustomAttributes<FlagsAttribute>().Any()
             };
-            AddFromAttributes(prop.CustomData, propInfo, PropertyDataAttributeDictionary);
+            prop.CustomData.AddFromCustomDictionary(propInfo.DeclaringType.Name, propInfo.Name, _CustomPropertyDataFuncs);
+            prop.CustomData.AddFromAttributes(propInfo, _PropertyDataAttributeDictionary);
             return prop;
         }
-
-        /// <summary>
-        /// Type and PropertyInfo both inherit MemberInfo.
-        /// </summary>
-        internal void AddFromAttributes(IDictionary<string, object> propertyDictionary, MemberInfo mi, IDictionary<Type, Func<MemberInfo, IEnumerable<KeyValuePair<string, object>>>> attributeActionDictionary)
-        {
-            if (propertyDictionary == null || mi == null || attributeActionDictionary == null || !attributeActionDictionary.Any())
-                return;
-            var attribs = mi.GetCustomAttributes(true);
-            if (attribs == null)
-                return;
-            foreach (var attrib in attribs)
-            {
-                if (attributeActionDictionary.TryGetValue(attrib.GetType(), out Func<MemberInfo, IEnumerable<KeyValuePair<string, object>>> action))
-                {
-                    var propertyList = action.Invoke(mi);
-                    foreach (var prop in propertyList)
-                    {
-                        // Don't add an attribute if already added.
-                        if (propertyDictionary.TryGetValue(prop.Key, out object _))
-                            continue;
-                        propertyDictionary.AddIfNewAndNotNull(prop.Key, prop.Value);
-                    }
-                }
-            }
-        }
-
-        internal IFuncDictionary<Type, MemberInfo> PropertyDataAttributeDictionary
-        {
-            get { return _PropertyDataAttributeDictionary ?? (_PropertyDataAttributeDictionary = new PropertyDataAttributeDictionary()); }
-            set { _PropertyDataAttributeDictionary = value; }
-        } private IFuncDictionary<Type, MemberInfo> _PropertyDataAttributeDictionary;
-
     }
 }

@@ -1,31 +1,27 @@
-﻿using Rhyous.Collections;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Reflection;
 
 namespace Rhyous.Odata.Csdl
 {
     public static class CsdlExtensions
     {
-        public static CsdlEntity ToCsdl(this Type entityType)
+        public static CsdlEntity ToCsdl(this Type entityType, EntityBuilder entityBuilder = null)
         {
-            var propertyBuilder = new PropertyBuilder(new PropertyDataAttributeDictionary(), new CustomPropertyDataDictionary());
-            var entityBuilder = new EntityBuilder(propertyBuilder, new EnumPropertyBuilder(), new EntityAttributeDictionary(), new PropertyAttributeDictionary());
+            entityBuilder = entityBuilder ?? new CsdlBuilderFactory().CreateEntityBuilder();
             return entityBuilder.Build(entityType);
         }
 
-        public static CsdlProperty ToCsdl(this PropertyInfo propInfo)
+        public static CsdlProperty ToCsdl(this PropertyInfo propInfo, PropertyBuilder propertyBuilder = null)
         {
-
-            var propertyBuilder = new PropertyBuilder(new PropertyDataAttributeDictionary(), new CustomPropertyDataDictionary()); return propertyBuilder.Build(propInfo);
+            propertyBuilder = propertyBuilder ?? new CsdlBuilderFactory().CreatePropertyBuilder();
+            return propertyBuilder.Build(propInfo);
         }
 
-        public static CsdlEnumProperty ToCsdlEnum(this PropertyInfo propInfo)
+        public static CsdlEnumProperty ToCsdlEnum(this PropertyInfo propInfo, EnumPropertyBuilder enumPropertyBuilder = null)
         {
-
-            var propertyBuilder = new PropertyBuilder(new PropertyDataAttributeDictionary(), new CustomPropertyDataDictionary()); return propertyBuilder.BuildEnumProperty(propInfo);
+            enumPropertyBuilder = enumPropertyBuilder ?? new CsdlBuilderFactory().CreateEnumPropertyBuilder();
+            return enumPropertyBuilder.Build(propInfo);
         }
 
         public static bool IsNullable(this Type type, PropertyInfo pi)
@@ -37,19 +33,22 @@ namespace Rhyous.Odata.Csdl
             return !type.IsValueType;
         }
 
-        public static CsdlNavigationProperty ToNavigationProperty(this RelatedEntityAttribute relatedEntityAttribute, string schemaOrAlias = Constants.DefaultSchemaOrAlias)
+        public static CsdlNavigationProperty ToNavigationProperty(this RelatedEntityAttribute relatedEntityAttribute, string schemaOrAlias = Constants.DefaultSchemaOrAlias, CustomPropertyDataFuncs CustomPropertyDataFuncs = null)
         {
-            return new RelatedEntityNavigationPropertyBuilder().Build(relatedEntityAttribute, schemaOrAlias);
+            CustomPropertyDataFuncs = CustomPropertyDataFuncs ?? new CustomPropertyDataFuncs(); 
+            return new RelatedEntityNavigationPropertyBuilder(CustomPropertyDataFuncs).Build(relatedEntityAttribute, schemaOrAlias);
         }
 
-        public static CsdlNavigationProperty ToNavigationProperty(this RelatedEntityForeignAttribute relatedEntityAttribute, string schemaOrAlias = Constants.DefaultSchemaOrAlias)
+        public static CsdlNavigationProperty ToNavigationProperty(this RelatedEntityForeignAttribute relatedEntityAttribute, string schemaOrAlias = Constants.DefaultSchemaOrAlias, CustomPropertyDataFuncs CustomPropertyDataFuncs = null)
         {
-            return new RelatedEntityForeignNavigationPropertyBuilder().Build(relatedEntityAttribute, schemaOrAlias);
+            CustomPropertyDataFuncs = CustomPropertyDataFuncs ?? new CustomPropertyDataFuncs();
+            return new RelatedEntityForeignNavigationPropertyBuilder(CustomPropertyDataFuncs).Build(relatedEntityAttribute, schemaOrAlias);
         }
 
-        public static CsdlNavigationProperty ToNavigationProperty(this RelatedEntityMappingAttribute relatedEntityAttribute, string schemaOrAlias = Constants.DefaultSchemaOrAlias)
+        public static CsdlNavigationProperty ToNavigationProperty(this RelatedEntityMappingAttribute relatedEntityAttribute, string schemaOrAlias = Constants.DefaultSchemaOrAlias, CustomPropertyDataFuncs CustomPropertyDataFuncs = null)
         {
-            return new RelatedEntityMappingNavigationPropertyBuilder().Build(relatedEntityAttribute, schemaOrAlias);
+            CustomPropertyDataFuncs = CustomPropertyDataFuncs ?? new CustomPropertyDataFuncs();
+            return new RelatedEntityMappingNavigationPropertyBuilder(CustomPropertyDataFuncs).Build(relatedEntityAttribute, schemaOrAlias);
         }
     }
 }

@@ -21,10 +21,7 @@
     </frameworkAssemblies>
     <dependencies>
       <group targetFramework="net461">
-        <dependency id="Newtonsoft.Json" version="11.0.2" />
-        <dependency id="Rhyous.Collections" version="1.0.11" />
         <dependency id="Rhyous.Odata" version="1.0.23" />
-        <dependency id="Rhyous.StringLibrary" version="1.1.11" />
       </group>
     </dependencies>
     <tags></tags>

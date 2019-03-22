@@ -12,9 +12,9 @@ namespace Rhyous.Odata
     {
         public const string DefaultForeignKey = "Id";
 
-        public RelatedEntityAttribute(string entity, [Optional] string foreignKeyProperty, [Optional] Type foreignKeyType, [Optional] bool autoExpand, [CallerMemberName]string property = null)
+        public RelatedEntityAttribute(string relatedEntity, [Optional] string foreignKeyProperty, [Optional] Type foreignKeyType, [Optional] bool autoExpand, [CallerMemberName]string property = null)
         {
-            RelatedEntity = entity;
+            RelatedEntity = relatedEntity;
             ForeignKeyProperty = string.IsNullOrWhiteSpace(foreignKeyProperty) ? DefaultForeignKey : foreignKeyProperty;
             foreignKeyType = foreignKeyType ?? typeof(int);
             AutoExpand = autoExpand;

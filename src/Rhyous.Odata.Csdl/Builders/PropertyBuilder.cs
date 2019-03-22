@@ -8,14 +8,14 @@ namespace Rhyous.Odata.Csdl
 {
     public class PropertyBuilder : ICsdlBuilder<PropertyInfo, CsdlProperty>
     {
-        private readonly IFuncDictionary<Type, MemberInfo> _PropertyDataAttributeFuncDictionary;
-        private readonly IFuncDictionary<string> _CustomPropertyDataDictionary;
+        private readonly IFuncDictionary<Type, MemberInfo> _PropertyDataAttributeDictionary;
+        private readonly IFuncEnumerable<string, string> _CustomPropertyDataFuncs;
 
         public PropertyBuilder(IFuncDictionary<Type, MemberInfo> propertyDataAttributeFuncDictionary,
-                               IFuncDictionary<string> customPropertyDataDictionary)
+                               IFuncEnumerable<string, string> customPropertyDataFuncDictionary)
         {
-            _PropertyDataAttributeFuncDictionary = propertyDataAttributeFuncDictionary;
-            _CustomPropertyDataDictionary = customPropertyDataDictionary;
+            _PropertyDataAttributeDictionary = propertyDataAttributeFuncDictionary;
+            _CustomPropertyDataFuncs = customPropertyDataFuncDictionary;
         }
 
         public CsdlProperty Build(PropertyInfo propInfo)
@@ -33,25 +33,8 @@ namespace Rhyous.Odata.Csdl
                 IsCollection = propertyType != typeof(string) && (propertyType.IsEnumerable() || propertyType.IsCollection()),
                 Nullable = propertyType.IsNullable(propInfo)
             };
-            prop.CustomData.AddFromCustomDictionary(propInfo.DeclaringType.Name, propInfo.Name, new CustomPropertyDataDictionary());
-            prop.CustomData.AddFromAttributes(propInfo, new PropertyDataAttributeDictionary());
-            return prop;
-        }
-
-        public CsdlEnumProperty BuildEnumProperty(PropertyInfo propInfo)
-        {
-            if (propInfo == null)
-                return null;
-            var propertyType = propInfo.PropertyType.IsGenericType ? propInfo.PropertyType.GetGenericArguments()[0] : propInfo.PropertyType;
-            if (!propertyType.IsEnum)
-                return null;
-            var prop = new CsdlEnumProperty
-            {
-                UnderlyingType = CsdlTypeDictionary.Instance[propertyType.GetEnumUnderlyingType().FullName],
-                CustomData = propertyType.ToDictionary(),
-                IsFlags = propertyType.GetCustomAttributes<FlagsAttribute>().Any()
-            };
-            prop.CustomData.AddFromAttributes(propInfo, new PropertyDataAttributeDictionary());
+            prop.CustomData.AddFromCustomDictionary(propInfo.ReflectedType.Name, propInfo.Name, _CustomPropertyDataFuncs);
+            prop.CustomData.AddFromAttributes(propInfo, _PropertyDataAttributeDictionary);
             return prop;
         }
     }

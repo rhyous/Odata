@@ -10,6 +10,8 @@ namespace Rhyous.Odata
     {
         public static RelatedEntity AsRelatedEntity(this OdataObject o, RelatedEntity re = null)
         {
+            if (o == null)
+                return null;
             re = re ?? new RelatedEntity();
             re.Id = o.Id?.ToString();
             re.IdProperty = o.IdProperty;
@@ -23,6 +25,8 @@ namespace Rhyous.Odata
 
         public static RelatedEntity AsRelatedEntity(this OdataObject<JRaw, string> o, RelatedEntity re = null)
         {
+            if (o == null)
+                return null;
             re = re ?? new RelatedEntity();
             re.Id = o.Id?.ToString();
             re.IdProperty = o.IdProperty;
@@ -36,6 +40,8 @@ namespace Rhyous.Odata
 
         public static RelatedEntity AsRelatedEntity<TEntity, TId>(this OdataObject<TEntity, TId> obj, RelatedEntity re = null)
         {
+            if (obj == null)
+                return null;
             JRaw rawObj = obj.Object == null ? null : new JRaw(JsonConvert.SerializeObject(obj.Object));
             re = re ?? new RelatedEntity();
             re.Id = obj.Id?.ToString();
@@ -51,6 +57,8 @@ namespace Rhyous.Odata
         public static OdataObject<TEntity, TId> ToOdataObject<TEntity, TId>(this OdataObject<JRaw, string> obj)
             where TId : IComparable<TId>, IComparable, IEquatable<TId>
         {
+            if (obj == null)
+                return null;
             var retObj = new OdataObject<TEntity, TId>();
             retObj.Id = obj.Id.To<TId>();
             retObj.IdProperty = obj.IdProperty;
@@ -64,6 +72,8 @@ namespace Rhyous.Odata
         public static OdataObjectCollection<TRelatedEntity, TRelatedEntityId> GetRelatedEntityCollection<TRelatedEntity, TRelatedEntityId>(this IRelatedEntityCollection odataObj)
             where TRelatedEntityId : IComparable<TRelatedEntityId>, IComparable, IEquatable<TRelatedEntityId>
         {
+            if (odataObj == null || odataObj.RelatedEntityCollection == null || !odataObj.RelatedEntityCollection.Any())
+                return null;
             var relatedEntity = typeof(TRelatedEntity).Name;
             var relatedEntityCollection = odataObj.RelatedEntityCollection.FirstOrDefault(re => re.RelatedEntity == relatedEntity);
             if (relatedEntityCollection == null)
