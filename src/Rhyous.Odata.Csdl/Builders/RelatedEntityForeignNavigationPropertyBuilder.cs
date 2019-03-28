@@ -4,9 +4,9 @@ namespace Rhyous.Odata.Csdl
 {
     public class RelatedEntityForeignNavigationPropertyBuilder : ICsdlNavigationPropertyBuilder<RelatedEntityForeignAttribute, CsdlNavigationProperty>
     {
-        private readonly IFuncEnumerable<string, string> _CustomPropertyDataFuncs;
+        private readonly IFuncList<string, string> _CustomPropertyDataFuncs;
 
-        public RelatedEntityForeignNavigationPropertyBuilder(IFuncEnumerable<string, string> CustomPropertyDataFuncs)
+        public RelatedEntityForeignNavigationPropertyBuilder(IFuncList<string, string> CustomPropertyDataFuncs)
         {
             _CustomPropertyDataFuncs = CustomPropertyDataFuncs;
         }

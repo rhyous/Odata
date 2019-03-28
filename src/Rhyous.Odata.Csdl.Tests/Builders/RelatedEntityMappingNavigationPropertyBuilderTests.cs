@@ -1,19 +1,16 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using Rhyous.Odata;
-using Rhyous.Odata.Csdl;
-using System;
 
 namespace Rhyous.Odata.Csdl.Tests.Builders
 {
-    [TestClass]
+    [TestClass]    
     public class RelatedEntityMappingNavigationPropertyBuilderTests
     {
         [TestMethod]
         public void RelatedEntityMappingNavigationPropertyBuilder_Build_NullAttribute_Test()
         {
             // Arrange
-            var mockFuncEnumerable = new Mock<IFuncEnumerable<string, string>>();
+            var mockFuncEnumerable = new Mock<IFuncList<string, string>>();
             var unitUnderTest = new RelatedEntityMappingNavigationPropertyBuilder(mockFuncEnumerable.Object);
             RelatedEntityMappingAttribute relatedEntityAttribute = null;
 
@@ -28,7 +25,7 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
         public void RelatedEntityMappingNavigationPropertyBuilder_Build_ValidAttribute_Test()
         {
             // Arrange
-            var mockFuncEnumerable = new Mock<IFuncEnumerable<string, string>>();
+            var mockFuncEnumerable = new Mock<IFuncList<string, string>>();
             var unitUnderTest = new RelatedEntityMappingNavigationPropertyBuilder(mockFuncEnumerable.Object);
             var relatedEntityAttribute = new RelatedEntityMappingAttribute("Entity2", "Entity1To2Map", "Entity1");
             // Act

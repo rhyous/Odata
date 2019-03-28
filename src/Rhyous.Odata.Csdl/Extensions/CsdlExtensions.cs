@@ -24,8 +24,9 @@ namespace Rhyous.Odata.Csdl
             return enumPropertyBuilder.Build(propInfo);
         }
 
-        public static bool IsNullable(this Type type, PropertyInfo pi)
+        public static bool IsNullable(this PropertyInfo pi)
         {
+            var type = pi.PropertyType;
             if (type == typeof(string))
                 return pi?.GetCustomAttribute<RequiredAttribute>() == null;
             if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))

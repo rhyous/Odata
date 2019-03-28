@@ -13,7 +13,7 @@ namespace Rhyous.Odata.Csdl
         public CsdlBuilderFactory(IFuncDictionary<Type, MemberInfo> propertyDataAttributeDictionary,
                                   IFuncDictionary<Type, MemberInfo> entityAttributeDictionary,
                                   IFuncDictionary<Type, MemberInfo> propertyAttributeDictionary,
-                                  IFuncEnumerable<string, string> customPropertyDataFuncs,
+                                  IFuncList<string, string> customPropertyDataFuncs,
                                   IDictionary<string, string> csdlTypeDictionary
                                   )
         {
@@ -47,7 +47,7 @@ namespace Rhyous.Odata.Csdl
         public IFuncDictionary<Type, MemberInfo> PropertyDataAttributeDictionary { get; } = new PropertyDataAttributeDictionary();
         public IFuncDictionary<Type, MemberInfo> EntityAttributeDictionary { get; } = new EntityAttributeDictionary();
         public IFuncDictionary<Type, MemberInfo> PropertyAttributeDictionary { get; } = new PropertyAttributeDictionary();
-        public IFuncEnumerable<string, string> CustomPropertyDataFuncs { get; } = new CustomPropertyDataFuncs();
+        public IFuncList<string, string> CustomPropertyDataFuncs { get; } = new CustomPropertyDataFuncs();
         public IDictionary<string,string> CsdlTypeDictionary { get; } = new CsdlTypeDictionary();
 
         internal EntityBuilder CreateEntityBuilder() => new EntityBuilder(PropertyBuilder, EnumPropertyBuilder, EntityAttributeDictionary, PropertyAttributeDictionary);

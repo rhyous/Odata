@@ -8,7 +8,7 @@ namespace Rhyous.Odata.Csdl
 {
     internal static class DictionaryExtensions
     {        
-        internal static void AddFromCustomDictionary(this IDictionary<string, object> propDataDictionary, string entity, string property, IFuncEnumerable<string,string> customPropertyDataFuncs)
+        internal static void AddFromCustomDictionary(this IDictionary<string, object> propDataDictionary, string entity, string property, IFuncList<string,string> customPropertyDataFuncs)
         {
             if (propDataDictionary == null
              || string.IsNullOrWhiteSpace(entity)

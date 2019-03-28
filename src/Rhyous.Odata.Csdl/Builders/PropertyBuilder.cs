@@ -9,11 +9,11 @@ namespace Rhyous.Odata.Csdl
     public class PropertyBuilder : ICsdlBuilder<PropertyInfo, CsdlProperty>
     {
         private readonly IFuncDictionary<Type, MemberInfo> _PropertyDataAttributeDictionary;
-        private readonly IFuncEnumerable<string, string> _CustomPropertyDataFuncs;
+        private readonly IFuncList<string, string> _CustomPropertyDataFuncs;
         private readonly IDictionary<string, string> _CsdlTypeDictionary;
 
         public PropertyBuilder(IFuncDictionary<Type, MemberInfo> propertyDataAttributeFuncDictionary,
-                               IFuncEnumerable<string, string> customPropertyDataFuncDictionary,
+                               IFuncList<string, string> customPropertyDataFuncDictionary,
                                IDictionary<string, string> csdlTypeDictionary)
         {
             _PropertyDataAttributeDictionary = propertyDataAttributeFuncDictionary;
@@ -34,7 +34,7 @@ namespace Rhyous.Odata.Csdl
             {
                 Type = csdlType,
                 IsCollection = propertyType != typeof(string) && (propertyType.IsEnumerable() || propertyType.IsCollection()),
-                Nullable = propertyType.IsNullable(propInfo)
+                Nullable = propInfo.IsNullable()
             };
             prop.CustomData.AddFromCustomDictionary(propInfo.ReflectedType.Name, propInfo.Name, _CustomPropertyDataFuncs);
             prop.CustomData.AddFromAttributes(propInfo, _PropertyDataAttributeDictionary);

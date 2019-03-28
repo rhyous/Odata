@@ -236,7 +236,7 @@ namespace Rhyous.Odata.Csdl.Tests
             Dictionary<string, object> dictionary = null;
             var entity = "Entity1";
             var prop = "Prop1";
-            IFuncEnumerable<string, string> funcs = new FuncList<string, string>()
+            IFuncList<string, string> funcs = new FuncList<string, string>()
             {
                 (e, p) => { return null; }
             };
@@ -255,7 +255,7 @@ namespace Rhyous.Odata.Csdl.Tests
             var dictionary = new Dictionary<string, object>();
             var entity = "Entity1";
             var prop = "Prop1";
-            IFuncEnumerable<string, string> funcs = null;
+            IFuncList<string, string> funcs = null;
 
             // Act
             dictionary.AddFromCustomDictionary(entity, prop, funcs);
@@ -271,7 +271,7 @@ namespace Rhyous.Odata.Csdl.Tests
             var dictionary = new Dictionary<string, object>();
             var entity = "Entity1";
             var prop = "Prop1";
-            IFuncEnumerable<string, string> funcs = new FuncList<string, string>();
+            IFuncList<string, string> funcs = new FuncList<string, string>();
 
             // Act
             dictionary.AddFromCustomDictionary(entity, prop, funcs);
@@ -287,7 +287,7 @@ namespace Rhyous.Odata.Csdl.Tests
             var dictionary = new Dictionary<string, object>();
             var entity = "Entity1";
             string prop = null;
-            IFuncEnumerable<string, string> funcs = new FuncList<string, string>()
+            IFuncList<string, string> funcs = new FuncList<string, string>()
             {
                 (e, p) => { return null; }
             };
@@ -306,7 +306,7 @@ namespace Rhyous.Odata.Csdl.Tests
             var dictionary = new Dictionary<string, object>();
             var entity = "Entity1";
             var prop = "";
-            IFuncEnumerable<string, string> funcs = new FuncList<string, string>()
+            IFuncList<string, string> funcs = new FuncList<string, string>()
             {
                 (e, p) => { return null; }
             };
@@ -325,7 +325,7 @@ namespace Rhyous.Odata.Csdl.Tests
             var dictionary = new Dictionary<string, object>();
             string entity = null;
             var prop = "prop1";
-            IFuncEnumerable<string, string> funcs = new FuncList<string, string>()
+            IFuncList<string, string> funcs = new FuncList<string, string>()
             {
                 (e, p) => { return null; }
             };
@@ -344,7 +344,7 @@ namespace Rhyous.Odata.Csdl.Tests
             var dictionary = new Dictionary<string, object>();
             var entity = "";
             var prop = "prop1";
-            IFuncEnumerable<string, string> funcs = new FuncList<string, string>()
+            IFuncList<string, string> funcs = new FuncList<string, string>()
             {
                 (e, p) => { return null; }
             };
@@ -363,7 +363,7 @@ namespace Rhyous.Odata.Csdl.Tests
             var dictionary = new Dictionary<string, object>();
             var entity = "Entity1";
             var prop = "prop1";
-            IFuncEnumerable<string, string> funcs = new FuncList<string, string>()
+            IFuncList<string, string> funcs = new FuncList<string, string>()
             {
                 (e, p) => { return new [] { new KeyValuePair<string,object>("1", "a")}; }
             };

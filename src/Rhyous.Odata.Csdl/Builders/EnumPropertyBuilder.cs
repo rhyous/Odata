@@ -9,11 +9,11 @@ namespace Rhyous.Odata.Csdl
     public class EnumPropertyBuilder : ICsdlBuilder<PropertyInfo, CsdlEnumProperty>
     {
         private readonly IFuncDictionary<Type, MemberInfo> _PropertyDataAttributeDictionary;
-        private readonly IFuncEnumerable<string, string> _CustomPropertyDataFuncs;
+        private readonly IFuncList<string, string> _CustomPropertyDataFuncs;
         private readonly IDictionary<string, string> _CsdlTypeDictionary;
 
         public EnumPropertyBuilder(IFuncDictionary<Type, MemberInfo> propertyDataAttributeFuncDictionary,
-                                  IFuncEnumerable<string, string> customPropertyDataFuncDictionary,
+                                  IFuncList<string, string> customPropertyDataFuncDictionary,
                                   IDictionary<string, string> csdlTypeDictionary)
         {
             _PropertyDataAttributeDictionary = propertyDataAttributeFuncDictionary;

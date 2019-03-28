@@ -12,7 +12,7 @@ namespace Rhyous.Odata.Csdl
         EnumPropertyBuilder EnumPropertyBuilder { get; }
 
         // Dictionaries
-        IFuncEnumerable<string, string> CustomPropertyDataFuncs { get; }
+        IFuncList<string, string> CustomPropertyDataFuncs { get; }
         IFuncDictionary<Type, MemberInfo> EntityAttributeDictionary { get; }
         IFuncDictionary<Type, MemberInfo> PropertyAttributeDictionary { get; }
         IFuncDictionary<Type, MemberInfo> PropertyDataAttributeDictionary { get; }
