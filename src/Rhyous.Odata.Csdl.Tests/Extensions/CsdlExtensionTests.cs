@@ -227,7 +227,7 @@ namespace Rhyous.Odata.Csdl.Tests
             var csdl = propInfo.ToCsdlEnum();
 
             // Assert
-            Assert.AreEqual(0, csdl.CustomData.Count);
+            Assert.AreEqual(2, csdl.CustomData.Count);
         }
 
         #endregion

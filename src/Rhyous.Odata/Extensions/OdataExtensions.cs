@@ -19,7 +19,7 @@ namespace Rhyous.Odata
 
         public static OdataObject<T, TId> AsOdata<T, TId>(this T t, Uri uri, params string[] properties)
         {
-            var leftPart = uri.GetLeftPart(UriPartial.Path);
+            var leftPart = uri?.GetLeftPart(UriPartial.Path);
             var uriKind = uri != null && uri.IsAbsoluteUri ? UriKind.Absolute : UriKind.Relative;
             return t.AsOdata<T, TId>(leftPart, false, uriKind, properties);
         }

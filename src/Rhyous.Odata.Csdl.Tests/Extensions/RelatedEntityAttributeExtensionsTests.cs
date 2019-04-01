@@ -140,15 +140,15 @@ namespace Rhyous.Odata.Csdl.Tests.Extensions
 
             // Assert
             Assert.AreEqual("Alias1", result.EntityAlias, "RelatedEntityAlias");
-            Assert.AreEqual(true, result.AutoExpand, "AutoExpand");
+            Assert.IsTrue(result.AutoExpand, "AutoExpand");
             Assert.AreEqual("TypId eq 1", result.Filter, "Filter");
             Assert.AreEqual("Name", result.ForeignKeyProperty, "ForeignKeyProperty");
             Assert.AreEqual(typeof(string), result.ForeignKeyType, "ForeignKeyType");
             Assert.AreEqual("Entity2Name", result.Property, "Property");
-            Assert.AreEqual(false, result.GetAll, "GetAll");
-            Assert.AreEqual(true, result.Nullable, "Nullable");
+            Assert.IsTrue(result.GetAll, "GetAll");
+            Assert.IsTrue(result.Nullable, "Nullable");
             Assert.AreEqual("E2", result.RelatedEntityAlias, "RelatedEntityAlias");
-            Assert.AreEqual(true, result.RelatedEntityMustExist, "RelatedEntityMustExist");
+            Assert.IsTrue(result.RelatedEntityMustExist, "RelatedEntityMustExist");
             Assert.AreEqual("Entity1", result.Entity, "Entity");
         }
         #endregion
