@@ -60,6 +60,7 @@
     <Compile Include="Builders\EntityBuilder.cs" />
     <Compile Include="Builders\RelatedEntityNavigationPropertyBuilder.cs" />
     <Compile Include="Dictionaries\AttributeFuncDictionary.cs" />
+    <Compile Include="Dictionaries\CustomPropertyFuncs.cs" />
     <Compile Include="Factory\CsdlBuilderFactory.cs" />
     <Compile Include="Factory\ICsdlBuilderFactory.cs" />
     <Compile Include="Interfaces\IFuncEnumerable.cs" />

@@ -7,10 +7,25 @@ using System.Reflection;
 namespace Rhyous.Odata.Csdl
 {
     internal static class DictionaryExtensions
-    {        
-        internal static void AddFromCustomDictionary(this IDictionary<string, object> propDataDictionary, string entity, string property, IFuncList<string,string> customPropertyDataFuncs)
+    {
+        internal static void AddFromCustomDictionary(this IDictionary<string, object> dictionary, string entity, IFuncList<string> customPropertyFuncs)
         {
-            if (propDataDictionary == null
+            if (dictionary == null
+             || string.IsNullOrWhiteSpace(entity)
+             || customPropertyFuncs == null
+             || !customPropertyFuncs.Any())
+                return;
+            foreach (var func in customPropertyFuncs)
+            {
+                var items = func(entity);
+                if (items != null && items.Any())
+                    dictionary.AddRange(items);
+            }
+        }
+
+        internal static void AddFromCustomDictionary(this IDictionary<string, object> dictionary, string entity, string property, IFuncList<string, string> customPropertyDataFuncs)
+        {
+            if (dictionary == null
              || string.IsNullOrWhiteSpace(entity)
              || string.IsNullOrWhiteSpace(property)
              || customPropertyDataFuncs == null
@@ -20,7 +35,7 @@ namespace Rhyous.Odata.Csdl
             {
                 var items = func(entity, property);
                 if (items != null && items.Any())
-                    propDataDictionary.AddRange(items);
+                    dictionary.AddRange(items);
             }
         }
 

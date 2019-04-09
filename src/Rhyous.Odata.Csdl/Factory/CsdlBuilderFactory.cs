@@ -6,13 +6,12 @@ namespace Rhyous.Odata.Csdl
 {
     public class CsdlBuilderFactory : ICsdlBuilderFactory
     {
-
-
         public CsdlBuilderFactory() { }
 
         public CsdlBuilderFactory(IFuncDictionary<Type, MemberInfo> propertyDataAttributeDictionary,
                                   IFuncDictionary<Type, MemberInfo> entityAttributeDictionary,
                                   IFuncDictionary<Type, MemberInfo> propertyAttributeDictionary,
+                                  IFuncList<string, string> customPropertyFuncs,
                                   IFuncList<string, string> customPropertyDataFuncs,
                                   IDictionary<string, string> csdlTypeDictionary
                                   )
@@ -47,10 +46,11 @@ namespace Rhyous.Odata.Csdl
         public IFuncDictionary<Type, MemberInfo> PropertyDataAttributeDictionary { get; } = new PropertyDataAttributeDictionary();
         public IFuncDictionary<Type, MemberInfo> EntityAttributeDictionary { get; } = new EntityAttributeDictionary();
         public IFuncDictionary<Type, MemberInfo> PropertyAttributeDictionary { get; } = new PropertyAttributeDictionary();
+        public IFuncList<string> CustomPropertyFuncs { get; } = new CustomPropertyFuncs();
         public IFuncList<string, string> CustomPropertyDataFuncs { get; } = new CustomPropertyDataFuncs();
         public IDictionary<string,string> CsdlTypeDictionary { get; } = new CsdlTypeDictionary();
 
-        internal EntityBuilder CreateEntityBuilder() => new EntityBuilder(PropertyBuilder, EnumPropertyBuilder, EntityAttributeDictionary, PropertyAttributeDictionary);
+        internal EntityBuilder CreateEntityBuilder() => new EntityBuilder(PropertyBuilder, EnumPropertyBuilder, EntityAttributeDictionary, PropertyAttributeDictionary, CustomPropertyFuncs);
         internal PropertyBuilder CreatePropertyBuilder() => new PropertyBuilder(PropertyDataAttributeDictionary, CustomPropertyDataFuncs, CsdlTypeDictionary);
         internal EnumPropertyBuilder CreateEnumPropertyBuilder() => new EnumPropertyBuilder(PropertyDataAttributeDictionary, CustomPropertyDataFuncs, CsdlTypeDictionary);
     }

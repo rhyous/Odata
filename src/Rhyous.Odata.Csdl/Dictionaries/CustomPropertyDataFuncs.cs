@@ -1,8 +1,8 @@
 ﻿namespace Rhyous.Odata.Csdl
 {
     /// <summary>
-    /// Creates additional properties or annotations inside a property based on a dictionary
-    /// with a key of Entity.Property.
+    /// A class to store funcs that create additional metadata, such as 
+    /// annotations, inside a property.
     /// </summary>
     public class CustomPropertyDataFuncs : FuncList<string, string>
     {
