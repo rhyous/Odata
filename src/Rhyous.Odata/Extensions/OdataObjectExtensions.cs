@@ -69,6 +69,13 @@ namespace Rhyous.Odata
             return retObj;
         }
 
+        /// <summary>
+        /// A method to easily get the related entity.
+        /// </summary>
+        /// <typeparam name="TRelatedEntity"></typeparam>
+        /// <typeparam name="TRelatedEntityId"></typeparam>
+        /// <param name="odataObj"></param>
+        /// <returns></returns>
         public static OdataObjectCollection<TRelatedEntity, TRelatedEntityId> GetRelatedEntityCollection<TRelatedEntity, TRelatedEntityId>(this IRelatedEntityCollection odataObj)
             where TRelatedEntityId : IComparable<TRelatedEntityId>, IComparable, IEquatable<TRelatedEntityId>
         {
