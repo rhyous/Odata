@@ -50,5 +50,14 @@ namespace Rhyous.Odata
         /// It defaults to TRUE.
         /// </summary>
         public bool RelatedEntityMustExist { get; set; } = true;
+
+        /// <summary>
+        /// A non-null value that must be used when a RelatedEntity doesn't exist. For example, when the RelatedEntity
+        /// is an int, you could make a nonexistant value 0. Whatever the NonExistentValue, it should be a 
+        /// value that the repository allows but never uses automatically, such as in autoincrement.
+        /// </summary>
+        /// <remarks>When using this value, Nullable should be false and RelatedEntityMustExist should be true.
+        /// Do not use this to allow NULL, but instead make this attribute nullable.</remarks>
+        public object AllowedNonExistentValue { get; set; }
     }
 }
