@@ -42,5 +42,21 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
             Assert.IsTrue(result.IsCollection);
             Assert.IsTrue(result.Nullable);
         }
+
+        [TestMethod]
+        public void RelatedEntityForeignNavigationPropertyBuilder_Build_ForeignKeyProperty_Test()
+        {
+            // Arrange
+            var funcs = new FuncList<string, string>();
+            var unitUnderTest = new RelatedEntityForeignNavigationPropertyBuilder(funcs);
+            var relatedEntityAttribute = new RelatedEntityForeignAttribute("Entity2", "Entity1", "CustomProp");
+
+            // Act
+            var result = unitUnderTest.Build(relatedEntityAttribute);
+
+            // Assert
+            Assert.IsTrue(result.CustomData.TryGetValue(Constants.EAFRelatedEntityForeignKeyProperty, out object prop));
+            Assert.AreEqual(prop, "CustomProp");
+        }
     }
 }

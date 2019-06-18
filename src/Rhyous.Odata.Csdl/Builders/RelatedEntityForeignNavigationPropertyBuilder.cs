@@ -22,7 +22,10 @@ namespace Rhyous.Odata.Csdl
                 Nullable = true    // Collections can always be empty
             };
             navProp.CustomData.AddFromCustomDictionary(relatedEntityAttribute.Entity, relatedEntityAttribute.RelatedEntity, _CustomPropertyDataFuncs);
+            navProp.CustomData.AddFromCustomDictionary(relatedEntityAttribute.Entity, relatedEntityAttribute.RelatedEntity, _CustomPropertyDataFuncs);
             navProp.CustomData.Add(Constants.EAFRelatedEntityType, Constants.Foreign);
+            if (!string.IsNullOrWhiteSpace(relatedEntityAttribute.ForeignKeyProperty) && relatedEntityAttribute.ForeignKeyProperty != relatedEntityAttribute.RelatedEntity + Constants.Id)
+                navProp.CustomData.Add(Constants.EAFRelatedEntityForeignKeyProperty, relatedEntityAttribute.ForeignKeyProperty);
             return navProp;
         }
     }

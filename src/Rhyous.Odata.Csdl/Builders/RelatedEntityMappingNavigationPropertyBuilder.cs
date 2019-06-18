@@ -26,6 +26,8 @@ namespace Rhyous.Odata.Csdl
             navProp.CustomData.Add(Constants.EAFRelatedEntityType, Constants.Mapping);
             var mappingEntityType = $"{schemaOrAlias}.{relatedEntityAttribute.MappingEntity}";
             navProp.CustomData.Add(Constants.EAFMappingEntityType, mappingEntityType);
+            if (!string.IsNullOrWhiteSpace(relatedEntityAttribute.MappingEntityAlias) && relatedEntityAttribute.MappingEntity != relatedEntityAttribute.MappingEntityAlias)
+                navProp.CustomData.Add(Constants.EAFMappingEntityAlias, relatedEntityAttribute.MappingEntityAlias);
             return navProp;
         }
     }

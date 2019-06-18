@@ -38,5 +38,20 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
             Assert.IsTrue(result.IsCollection);
             Assert.IsTrue(result.Nullable);
         }
+
+        [TestMethod]
+        public void RelatedEntityMappingNavigationPropertyBuilder_Build_MappingEntityAlias_Test()
+        {
+            // Arrange
+            var mockFuncEnumerable = new Mock<IFuncList<string, string>>();
+            var unitUnderTest = new RelatedEntityMappingNavigationPropertyBuilder(mockFuncEnumerable.Object);
+            var relatedEntityAttribute = new RelatedEntityMappingAttribute("Entity2", "Entity1To2Map", "Entity1") { MappingEntityAlias = "E1E2Map" };
+            // Act
+            var result = unitUnderTest.Build(relatedEntityAttribute);
+
+            // Assert
+            Assert.IsTrue(result.CustomData.TryGetValue(Constants.EAFMappingEntityAlias, out object mappingEntityAlias));
+            Assert.AreEqual(mappingEntityAlias, "E1E2Map");
+        }
     }
 }
