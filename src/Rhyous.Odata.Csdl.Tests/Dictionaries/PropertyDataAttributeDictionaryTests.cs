@@ -54,7 +54,7 @@ namespace Rhyous.Odata.Csdl.Tests.Dictionaries
             var actual = new PropertyDataAttributeDictionary().GetRelatedEntityPropertyData(typeof(EntityWithDuplicateRelatedEntityOneAlias).GetProperty("Entity3Id"));
 
             // Assert
-            Assert.AreEqual(1, actual.Count());
+            Assert.AreEqual(2, actual.Count());
             Assert.AreEqual("$NavigationKey", actual.First().Key);
             Assert.AreEqual("E3", actual.First().Value);
         }
