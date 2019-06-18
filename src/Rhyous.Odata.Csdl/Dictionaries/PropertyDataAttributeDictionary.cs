@@ -45,10 +45,13 @@ namespace Rhyous.Odata.Csdl
             var navKeyList = new List<KeyValuePair<string, object>>();
             foreach (var group in relatedEntityAttributes)
             {
-                var relatedEntity = group.FirstOrDefault().RelatedEntity;
-                var relatedEntityAlias = group.FirstOrDefault(a => a.RelatedEntityAlias != null)?.RelatedEntityAlias;
+                var mergedAttribute = group.Merge();
+                var relatedEntity = mergedAttribute.RelatedEntity;
+                var relatedEntityAlias = mergedAttribute.RelatedEntityAlias;
                 var relatedEntityName = string.IsNullOrWhiteSpace(relatedEntityAlias) ? relatedEntity : relatedEntityAlias;
                 navKeyList.Add(new KeyValuePair<string, object>(Constants.NavigationKey, relatedEntityName));
+                if (mergedAttribute.RelatedEntityMustExist)
+                    navKeyList.Add(new KeyValuePair<string, object>(Constants.NavigationKey, relatedEntityName));
             }
             return navKeyList;
         }
