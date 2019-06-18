@@ -36,7 +36,7 @@ namespace Rhyous.Odata.Csdl
             mergedAttribute.ForeignKeyType = re1.ForeignKeyType ?? re2.ForeignKeyType;
             mergedAttribute.Property = string.IsNullOrWhiteSpace(re1.Property) ? re2.Property : re1.Property;
             mergedAttribute.Nullable = re1.Nullable || re2.Nullable;
-            mergedAttribute.RelatedEntityMustExist = re1.RelatedEntityMustExist || re2.RelatedEntityMustExist;
+            mergedAttribute.RelatedEntityMustExist = re1.RelatedEntityMustExist && re2.RelatedEntityMustExist; // If either is false, it is optional.
             return mergedAttribute;
         }
 
