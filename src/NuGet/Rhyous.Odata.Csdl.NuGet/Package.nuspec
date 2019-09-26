@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Rhyous.Odata.Csdl</id>
-    <version>1.0.18</version>
+    <version>1.1.1</version>
     <title>Rhyous.Odata.Csdl</title>
     <authors>Jared Barneck (Rhyous)</authors>
     <owners>Jared Barneck (Rhyous)</owners>
@@ -21,7 +21,7 @@
     </frameworkAssemblies>
     <dependencies>
       <group targetFramework="net461">
-        <dependency id="Rhyous.Odata" version="1.0.23" />
+        <dependency id="Rhyous.Odata" version="1.0.24" />
       </group>
     </dependencies>
     <tags></tags>
