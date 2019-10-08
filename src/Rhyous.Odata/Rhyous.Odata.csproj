@@ -1,94 +1,22 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{AC113E7B-4BD4-4DAF-8620-DF934FEE493A}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Rhyous.Odata</RootNamespace>
-    <AssemblyName>Rhyous.Odata</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Jared Barneck (Rhyous)</Authors>
+    <Company>Rhyous Publishing LLC</Company>
+    <Version>1.1.2</Version>
+    <AssemblyVersion>1.1.0.0</AssemblyVersion>
+    <FileVersion>1.1.2.0</FileVersion>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="Rhyous.Collections, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Rhyous.Collections.1.0.13\lib\net461\Rhyous.Collections.dll</HintPath>
-    </Reference>
-    <Reference Include="Rhyous.StringLibrary, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Rhyous.StringLibrary.1.1.12\lib\net461\Rhyous.StringLibrary.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+    <PackageReference Include="Rhyous.Collections" Version="1.0.13" />
+    <PackageReference Include="Rhyous.StringLibrary" Version="1.1.12" />
   </ItemGroup>
+
   <ItemGroup>
-    <Compile Include="AttributeInterfaces\IRelatedEntityAttribute.cs" />
-    <Compile Include="Attributes\RelatedEntityBaseAttribute.cs" />
-    <Compile Include="Attributes\RelatedEntityMappingAttribute.cs" />
-    <Compile Include="Attributes\RelatedEntityAttribute.cs" />
-    <Compile Include="Attributes\RelatedEntityExclusionsAttribute.cs" />
-    <Compile Include="Attributes\RelatedEntityForeignAttribute.cs" />
-    <Compile Include="Extensions\JObjectExtensions.cs" />
-    <Compile Include="Extensions\JRawExtensions.cs" />
-    <Compile Include="Extensions\SortDetailsExtensions.cs" />
-    <Compile Include="Interfaces\IRelatedEntityCollater.cs" />
-    <Compile Include="Interfaces\IRelatedEntityCollection.cs" />
-    <Compile Include="Models\Constants.cs" />
-    <Compile Include="Models\OdataObjectCollectionBase.cs" />
-    <Compile Include="Sorters\RelatedEntityManyToOneSorter.cs" />
-    <Compile Include="Sorters\RelatedEntityOneToManySorter.cs" />
-    <Compile Include="Dictionaries\SortMethodDictionary.cs" />
-    <Compile Include="Extensions\OdataObjectExtensions.cs" />
-    <Compile Include="Interfaces\IRelatedEntitySorter.cs" />
-    <Compile Include="Sorters\RelatedEntitySorter.cs" />
-    <Compile Include="Extensions\OdataExtensions.cs" />
-    <Compile Include="Models\OdataObject.Json.cs" />
-    <Compile Include="Models\OdataObjectCollection.Json.cs" />
-    <Compile Include="Models\OdataObjectCollection.cs" />
-    <Compile Include="Models\OdataObject.cs" />
-    <Compile Include="Models\OdataUri.cs" />
-    <Compile Include="Models\RelatedEntityManyToMany.cs" />
-    <Compile Include="Models\RelatedEntity.cs" />
-    <Compile Include="Models\RelatedEntityOneToMany.cs" />
-    <Compile Include="Models\RelatedEntity.Json.cs" />
-    <Compile Include="Models\RelatedEntityCollection.cs" />
-    <Compile Include="Models\SortDetails.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Serialization\ExcludeEmptyEnumerablesContractResolver.cs" />
+    <Folder Include="Properties\" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="README.txt" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+
 </Project>

@@ -63,7 +63,7 @@
     <None Include="tools\uninstall.ps1" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="lib\net461\" />
+    <Folder Include="lib\netstandard2.0\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -87,8 +87,8 @@
   </Target>
   <PropertyGroup>
     <PreBuildEvent>SET Project=Rhyous.Odata.Filter
-copy /Y "$(SolutionDir)..\%25Project%25\$(OutDir)%25Project%25.dll" "$(ProjectDir)lib\net461\"
-copy /Y "$(SolutionDir)..\%25Project%25\$(OutDir)%25Project%25.pdb" "$(ProjectDir)lib\net461\"
+copy /Y "$(SolutionDir)..\%25Project%25\$(OutDir)%25Project%25.dll" "$(ProjectDir)lib\netstandard2.0\"
+copy /Y "$(SolutionDir)..\%25Project%25\$(OutDir)%25Project%25.pdb" "$(ProjectDir)lib\netstandard2.0\"
 copy /Y "$(SolutionDir)..\..\License.txt" "$(ProjectDir)"</PreBuildEvent>
   </PropertyGroup>
 </Project>

@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Rhyous.Odata.Csdl</id>
-    <version>1.1.1</version>
+    <version>1.1.2</version>
     <title>Rhyous.Odata.Csdl</title>
     <authors>Jared Barneck (Rhyous)</authors>
     <owners>Jared Barneck (Rhyous)</owners>
@@ -15,13 +15,10 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="file">License.txt</license>
     <copyright>Copyright Jared Barneck (Rhyous) 2017</copyright>
-    <frameworkAssemblies>
-      <frameworkAssembly assemblyName="System.Runtime.Serialization" />
-      <frameworkAssembly assemblyName="System.ComponentModel.DataAnnotations" />
-    </frameworkAssemblies>
     <dependencies>
-      <group targetFramework="net461">
-        <dependency id="Rhyous.Odata" version="1.0.24" />
+      <group targetFramework="netstandard2.0">
+        <dependency id="Rhyous.Odata" version="1.1.2" />
+        <dependency id="System.ComponentModel.Annotations" version="4.6.0" />
       </group>
     </dependencies>
     <tags></tags>
