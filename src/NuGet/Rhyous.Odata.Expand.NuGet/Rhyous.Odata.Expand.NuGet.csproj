@@ -85,8 +85,8 @@
   </Target>
   <PropertyGroup>
     <PreBuildEvent>SET Project=Rhyous.Odata.Expand
-copy /Y "$(SolutionDir)..\%25Project%25\$(OutDir)%25Project%25.dll" "$(ProjectDir)lib\netstandard2.0\"
-copy /Y "$(SolutionDir)..\%25Project%25\$(OutDir)%25Project%25.pdb" "$(ProjectDir)lib\netstandard2.0\"
+copy /Y "$(SolutionDir)..\%25Project%25\$(OutDir)%25netstandard2.0\Project%25.dll" "$(ProjectDir)lib\netstandard2.0\"
+copy /Y "$(SolutionDir)..\%25Project%25\$(OutDir)%25netstandard2.0\Project%25.pdb" "$(ProjectDir)lib\netstandard2.0\"
 copy /Y "$(SolutionDir)..\..\License.txt" "$(ProjectDir)"</PreBuildEvent>
   </PropertyGroup>
 </Project>
