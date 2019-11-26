@@ -1,8 +1,10 @@
-﻿using Rhyous.Collections;
+﻿using Newtonsoft.Json;
+using Rhyous.Collections;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Serialization;
 
 namespace Rhyous.Odata.Csdl
 {
@@ -42,6 +44,9 @@ namespace Rhyous.Odata.Csdl
             // Add the Properties based on this Entity's properties.
             foreach (var propInfo in entityType.GetProperties().OrderBy(p => p.Name))
             {
+                // If property should be excluded from Metadata, don't include it.
+                if (propInfo.GetCustomAttributes(true).Any(a => a is ExcludeFromMetadataAttribute || a is JsonIgnoreAttribute || a is IgnoreDataMemberAttribute))
+                    continue;
                 // Add a property based on this PropertyInfo.
                 AddFromPropertyInfo(entity.Properties, propInfo);
                 // Add new properties based on this Property's attributes
