@@ -59,5 +59,19 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
             Assert.AreEqual(typeof(CsdlProperty), dictionary.Values.First().GetType());
         }
 
+        [TestMethod]
+        public void EntityBuilder_Build_ExcludeFromMetadata_Test()
+        {
+            // Arrange
+            var entityBuilder = new CsdlBuilderFactory().CreateEntityBuilder();
+
+            // Act
+            var actual = entityBuilder.Build(typeof(EntityExcludeFromMetadata));
+
+            // Assert
+            Assert.AreEqual(2, actual.Properties.Count);
+            Assert.AreEqual("Id", actual.Properties.Keys.First());
+            Assert.AreEqual("Name", actual.Properties.Keys.Skip(1).First());
+        }
     }
 }

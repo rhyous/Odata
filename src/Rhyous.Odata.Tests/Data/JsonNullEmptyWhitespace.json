@@ -1,0 +1,22 @@
+﻿[
+  {
+    "Value": null,
+    "Name": "Null Value"
+    "Description": "A null string value"
+  },
+  {
+    "Value": "",
+    "Name": "Empty Value",
+    "Description": "An empty string value"
+  },
+  {
+    "Value": " ",
+    "Name": "Whitespace Value",
+    "Description": "A whitespace value with a space."
+  },
+  {
+    "Value": "	",
+    "Name": "Tab Value",
+    "Description": "A whitespace value with a tab."
+  }
+]

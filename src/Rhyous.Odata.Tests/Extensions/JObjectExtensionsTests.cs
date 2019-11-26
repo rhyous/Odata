@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
+using Rhyous.UnitTesting;
 
 namespace Rhyous.Odata.Tests.Extensions
 {
@@ -9,12 +10,12 @@ namespace Rhyous.Odata.Tests.Extensions
         public TestContext TestContext { get; set; }
 
         [TestMethod]
-        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.XML", @"Data\JsonNullEmptyWhitespace.xml", "Row", DataAccessMethod.Sequential)]
-        public void GetIdDynamic_IdProperty_Null_Empty_Whitespace_Test()
+        [JsonTestDataSource(typeof(string), @"Data\JsonNullEmptyWhitespace.json")]
+        public void GetIdDynamic_IdProperty_Null_Empty_Whitespace_Test(Row<string> row)
         {
             // Arrange
-            var value = TestContext.DataRow[0].ToString();
-            var msg = TestContext.DataRow[1].ToString();
+            var value = row.Value;
+            var msg = row.Message ?? row.Description;
             var json = $"{{ \"Id\" : 1, \"AltId\" : \"ABC1\", \"IdProperty\" : {value} }}";
             var obj = JObject.Parse(json);
 

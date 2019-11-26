@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2027
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29509.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rhyous.Odata.Filter", "..\Rhyous.Odata.Filter\Rhyous.Odata.Filter.csproj", "{723DD23C-8D87-49BD-B456-80BAE0C78D69}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rhyous.Odata.Filter", "..\Rhyous.Odata.Filter\Rhyous.Odata.Filter.csproj", "{723DD23C-8D87-49BD-B456-80BAE0C78D69}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rhyous.Odata.Filter.Tests", "..\Rhyous.Odata.Filter.Tests\Rhyous.Odata.Filter.Tests.csproj", "{4B9AEC1C-3671-440B-80F5-7C2DCDBDE160}"
 EndProject
@@ -14,7 +14,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rhyous.Odata.Filter.NuGet",
 		{723DD23C-8D87-49BD-B456-80BAE0C78D69} = {723DD23C-8D87-49BD-B456-80BAE0C78D69}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rhyous.Odata.Csdl", "..\Rhyous.Odata.Csdl\Rhyous.Odata.Csdl.csproj", "{3EF7ECF7-58C7-483A-A22E-54BAF06F5AF2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rhyous.Odata.Csdl", "..\Rhyous.Odata.Csdl\Rhyous.Odata.Csdl.csproj", "{3EF7ECF7-58C7-483A-A22E-54BAF06F5AF2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rhyous.Odata.Csdl.Tests", "..\Rhyous.Odata.Csdl.Tests\Rhyous.Odata.Csdl.Tests.csproj", "{55828995-8BD6-41B5-812F-5456922C73EE}"
 EndProject
@@ -23,9 +23,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rhyous.Odata.Csdl.NuGet", "
 		{3EF7ECF7-58C7-483A-A22E-54BAF06F5AF2} = {3EF7ECF7-58C7-483A-A22E-54BAF06F5AF2}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rhyous.Odata", "..\Rhyous.Odata\Rhyous.Odata.csproj", "{AC113E7B-4BD4-4DAF-8620-DF934FEE493A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rhyous.Odata", "..\Rhyous.Odata\Rhyous.Odata.csproj", "{AC113E7B-4BD4-4DAF-8620-DF934FEE493A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rhyous.Odata.Expand", "..\Rhyous.Odata.Expand\Rhyous.Odata.Expand.csproj", "{B271F848-E84C-428B-8B1B-45E47B41EDE3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rhyous.Odata.Expand", "..\Rhyous.Odata.Expand\Rhyous.Odata.Expand.csproj", "{B271F848-E84C-428B-8B1B-45E47B41EDE3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rhyous.Odata.Expand.Tests", "..\Rhyous.Odata.Expand.Tests\Rhyous.Odata.Expand.Tests.csproj", "{F51F8BCD-D0C3-4EEC-9F82-88EDEB044474}"
 EndProject
