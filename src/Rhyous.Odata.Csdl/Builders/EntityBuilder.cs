@@ -45,7 +45,7 @@ namespace Rhyous.Odata.Csdl
             foreach (var propInfo in entityType.GetProperties().OrderBy(p => p.Name))
             {
                 // If property should be excluded from Metadata, don't include it.
-                if (propInfo.GetCustomAttributes(true).Any(a => a is ExcludeFromMetadataAttribute || a is JsonIgnoreAttribute || a is IgnoreDataMemberAttribute))
+                if (propInfo.ExcludeFromMetadata())
                     continue;
                 // Add a property based on this PropertyInfo.
                 AddFromPropertyInfo(entity.Properties, propInfo);
