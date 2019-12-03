@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -36,8 +37,10 @@ namespace Rhyous.UnitTesting
         public IEnumerable<object[]> GetData(MethodInfo methodInfo)
         {
             var json = File.ReadAllText(_File);
-            var rows = JsonConvert.DeserializeObject(json, _Type) as List<object>;
-            return rows.Select(r => new object[] { r });
+            var obj = JsonConvert.DeserializeObject(json, _Type);
+            var rows = obj as IEnumerable;
+            foreach (var row in rows)
+                yield return new object[] { row };
         }
 
         public string GetDisplayName(MethodInfo methodInfo, object[] data)

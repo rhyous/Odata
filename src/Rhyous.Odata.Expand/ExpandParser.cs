@@ -4,6 +4,9 @@ using System.Collections.Specialized;
 
 namespace Rhyous.Odata.Expand
 {
+    /// <summary>
+    /// This just holds methods. It can be run as a singleton.
+    /// </summary>
     public class ExpandParser
     {
         public List<ExpandPath> Parse(string urlParameterValue)

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
 using Rhyous.UnitTesting;
@@ -24,7 +25,7 @@ namespace Rhyous.Odata.Tests.Extensions
         }
 
         [TestMethod]
-        [JsonTestDataSource(typeof(string), @"Data\JsonNullEmptyWhitespace.json")]
+        [JsonTestDataSource(typeof(List<Row<string>>), @"Data\JsonNullEmptyWhitespace.json")]
         public void GetValue_JRaw_Null_Test(Row<string> row)
         {
             // Arrange
@@ -36,11 +37,11 @@ namespace Rhyous.Odata.Tests.Extensions
         }
 
         [TestMethod]
-        [JsonTestDataSource(typeof(string), @"Data\JsonNullEmptyWhitespace.json")]
+        [JsonTestDataSource(typeof(List<Row<string>>), @"Data\JsonNullEmptyWhitespace.json")]
         public void GetValue_Property_NullEmptyOrWhitespace_Test(Row<string> row)
         {
             // Arrange
-            var prop = row.Value.ToString();
+            var prop = row.Value;
             var msg = row.Message ?? row.Description;
             var raw = new JRaw("{ \"Id\" : 1, \"Prop1\" : \"Abc123\" }");
 
