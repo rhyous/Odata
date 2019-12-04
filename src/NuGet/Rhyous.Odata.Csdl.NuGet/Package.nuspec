@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Rhyous.Odata.Csdl</id>
-    <version>1.1.4</version>
+    <version>1.1.5</version>
     <title>Rhyous.Odata.Csdl</title>
     <authors>Jared Barneck (Rhyous)</authors>
     <owners>Jared Barneck (Rhyous)</owners>
@@ -17,7 +17,11 @@
     <copyright>Copyright Jared Barneck (Rhyous) 2017</copyright>
     <dependencies>
       <group targetFramework="netstandard2.0">
-        <dependency id="Rhyous.Odata" version="1.1.2" />
+        <dependency id="Rhyous.Odata" version="1.1.5" />
+        <dependency id="System.ComponentModel.Annotations" version="4.6.0" />
+      </group>
+      <group targetFramework="net461">
+        <dependency id="Rhyous.Odata" version="1.1.5" />
         <dependency id="System.ComponentModel.Annotations" version="4.6.0" />
       </group>
     </dependencies>
