@@ -1,0 +1,126 @@
+﻿[
+  {
+    "Value": "contains(Name,are)",
+    "Expected": "e => e.Name.Contains(\"are\")",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Description": "String EndsWith",
+    "Value": "endswith(Name,ared)",
+    "Expected": "e => e.Name.EndsWith(\"ared\")",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Description": "String StartsWith",
+    "Value": "startswith(Name,jare)",
+    "Expected": "e => e.Name.StartsWith(\"jare\")",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Description": "Integer as if it were a string",
+    "Value": "StartsWith(Id,10)",
+    "Expected": "e => e.Id.ToString().StartsWith(\"10\")",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Value": "EndsWith(Id,00)",
+    "Expected": "e => e.Id.ToString().EndsWith(\"00\")",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Value": "Contains(Id,10)",
+    "Expected": "e => e.Id.ToString().Contains(\"10\")",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Description": "String Contains with Single Quote",
+    "Value": "contains(Name,'are')",
+    "Expected": "e => e.Name.Contains(\"are\")",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Description": "String EndsWith",
+    "Value": "endswith(Name,'ared')",
+    "Expected": "e => e.Name.EndsWith(\"ared\")",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Description": "String StartsWith",
+    "Value": "startswith(Name,'jare')",
+    "Expected": "e => e.Name.StartsWith(\"jare\")",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Description": "Integer as if it were a string",
+    "Value": "StartsWith(Id,'10')",
+    "Expected": "e => e.Id.ToString().StartsWith(\"10\")",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Value": "EndsWith(Id,'00')",
+    "Expected": "e => e.Id.ToString().EndsWith(\"00\")",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Value": "Contains(Id,'10')",
+    "Expected": "e => e.Id.ToString().Contains(\"10\")",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+
+    "Description": "String not quoted contains two single quotes",
+    "Value": "contains(Name,'')",
+    "Expected": "e => e.Name.Contains(\"'\")",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Description": "String EndsWith two single quotes",
+    "Value": "endswith(Name,'')",
+    "Expected": "e => e.Name.EndsWith(\"'\")",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Description": "String StartsWith two single quotes",
+    "Value": "startswith(Name,'')",
+    "Expected": "e => e.Name.StartsWith(\"'\")",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+
+    "Description": "String quoted with double quotes contains two single quotes",
+    "Value": "contains(Name,\"''\")",
+    "Expected": "e => e.Name.Contains(\"'\")",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Description": "String EndsWith two single quotes",
+    "Value": "endswith(Name,\"''\")",
+    "Expected": "e => e.Name.EndsWith(\"'\")",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Description": "String StartsWith two single quotes",
+    "Value": "startswith(Name,\"''\")",
+    "Expected": "e => e.Name.StartsWith(\"'\")",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+
+    "Description": "String quoted with single quotes contains two single quotes",
+    "Value": "contains(Name,'''')",
+    "Expected": "e => e.Name.Contains(\"''\")",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Description": "String EndsWith two single quotes",
+    "Value": "endswith(Name,'''')",
+    "Expected": "e => e.Name.EndsWith(\"''\")",
+    "Message": "Expression should result in this expression: {0}. In essense, "
+  },
+  {
+    "Description": "String StartsWith two single quotes",
+    "Value": "startswith(Name,'''')",
+    "Expected": "e => e.Name.StartsWith(\"''\")",
+    "Message": "Expression should result in this expression: {0}."
+  }
+]

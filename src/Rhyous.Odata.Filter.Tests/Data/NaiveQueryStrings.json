@@ -1,0 +1,203 @@
+﻿[
+  {
+    "Value": "Id eq 1",
+    "Expected": "e => (e.Id == 1)",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Value": "Id eq 2",
+    "Expected": "e => (e.Id == 2)",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Description": "Int not equals",
+    "Value": "Id ne 1",
+    "Expected": "e => (e.Id != 1)",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Value": "Id ne 20",
+    "Expected": "e => (e.Id != 20)",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Description": "Int Greater than",
+    "Value": "Id gt 1",
+    "Expected": "e => (e.Id > 1)",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Value": "Id gt 0",
+    "Expected": "e => (e.Id > 0)",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Description": "Int Greater than or equal to",
+    "Value": "Id ge 2",
+    "Expected": "e => (e.Id >= 2)",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Value": "Id ge 0",
+    "Expected": "e => (e.Id >= 0)",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Value": "Id ge 100",
+    "Expected": "e => (e.Id >= 100)",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Description": "Int less than",
+    "Value": "Id lt 100",
+    "Expected": "e => (e.Id < 100)",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Value": "Id lt 0",
+    "Expected": "e => (e.Id < 0)",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Description": "Int less than or equal to",
+    "Value": "Id le 0",
+    "Expected": "e => (e.Id <= 0)",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Value": "Id le 0",
+    "Expected": "e => (e.Id <= 0)",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Description": "String equals ",
+    "Value": "Name eq Jared",
+    "Expected": "e => (e.Name == \"Jared\")",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Description": "String not equals ",
+    "Value": "Name ne Jared",
+    "Expected": "e => (e.Name != \"Jared\")",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Description": "DateTime ",
+    "Value": "Date eq 01/01/2017",
+    "Expected": "e => (e.Date == 1/1/2017 12:00:00 AM)",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Description": "Date Greater than",
+    "Value": "Date gt 01/01/2017",
+    "Expected": "e => (e.Date > 1/1/2017 12:00:00 AM)",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Description": "Date Greater than or equal to",
+    "Value": "Date ge 01/01/2017",
+    "Expected": "e => (e.Date >= 1/1/2017 12:00:00 AM)",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Description": "Date less than",
+    "Value": "Date lt 01/01/2017",
+    "Expected": "e => (e.Date < 1/1/2017 12:00:00 AM)",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Description": "Date less than or equal to",
+    "Value": "Date le 01/01/2017",
+    "Expected": "e => (e.Date <= 1/1/2017 12:00:00 AM)",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Description": " Guid equals ",
+    "Value": "Guid eq {C1AA6176-425D-4981-BE4A-8F5C459E0FF9}",
+    "Expected": "e => (e.Guid == c1aa6176-425d-4981-be4a-8f5c459e0ff9)",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Description": " Guid not equals ",
+    "Value": "Guid ne {C1AA6176-425D-4981-BE4A-8F5C459E0FF9}",
+    "Expected": "e => (e.Guid != c1aa6176-425d-4981-be4a-8f5c459e0ff9)",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Description": "Double equals",
+    "Value": "Cost eq 1.10",
+    "Expected": "e => (e.Cost == 1.1)",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Value": "Cost eq 2.95",
+    "Expected": "e => (e.Cost == 2.95)",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Description": "Double not equals",
+    "Value": "Cost ne 1.10",
+    "Expected": "e => (e.Cost != 1.1)",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Value": "Cost ne 20.0",
+    "Expected": "e => (e.Cost != 20)",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Description": "Double Greater than",
+    "Value": "Cost gt 1.10",
+    "Expected": "e => (e.Cost > 1.1)",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Value": "Cost gt 0.0",
+    "Expected": "e => (e.Cost > 0)",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Description": "Double Greater than or equal to",
+    "Value": "Cost ge 2.15",
+    "Expected": "e => (e.Cost >= 2.15)",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Value": "Cost ge 0.0",
+    "Expected": "e => (e.Cost >= 0)",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Value": "Cost ge 100.0",
+    "Expected": "e => (e.Cost >= 100)",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Description": "Double less than",
+    "Value": "Cost lt 100.0",
+    "Expected": "e => (e.Cost < 100)",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Value": "Cost lt 0.0",
+    "Expected": "e => (e.Cost < 0)",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Description": "Double less than or equal to",
+    "Value": "Cost le 0.0",
+    "Expected": "e => (e.Cost <= 0)",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Value": "Cost le 0.0",
+    "Expected": "e => (e.Cost <= 0)",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Description": " Extra spaces ignroed ",
+    "Value": "Id   ne   1",
+    "Expected": "e => (e.Id != 1)",
+    "Message": "Expression should result in this expression: {0}."
+  }
+]

@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Rhyous.UnitTesting;
 
 namespace Rhyous.Odata.Tests.Parsers
 {
@@ -25,75 +27,71 @@ namespace Rhyous.Odata.Tests.Parsers
         }
 
         [TestMethod]
-        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.XML", @"Data\NaiveQueryStrings.xml", "Row", DataAccessMethod.Sequential)]
-        public void FilterExpressionParser_NaiveFilterParserTests()
+        [JsonTestDataSource(typeof(List<Row<string>>), @"Data\NaiveQueryStrings.json")]
+        public void FilterExpressionParser_NaiveFilterParserTests(Row<string> row)
         {
-            //// Arrange
-            //var filterstring = TestContext.DataRow["Query"].ToString();
-            //var expected = TestContext.DataRow["ExpectedExpression"].ToString();
-            //var message = TestContext.DataRow["Message"].ToString();
-            //var parser = new FilterExpressionParser<Entity1>();
+            // Arrange
+            var filterstring = row.Value;
+            var expected = row.Expected;
+            var message = row.Message;
+            var parser = new FilterExpressionParser<Entity1>();
 
-            //// Act
-            //var actual = parser.Parse(filterstring);
+            // Act
+            var actual = parser.Parse(filterstring);
 
-            //// Assert
-            //Assert.AreEqual(expected, actual.ToString(), message);
-            Assert.Fail();
+            // Assert
+            Assert.AreEqual(expected, actual.ToString(), message);
         }
 
         [TestMethod]
-        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.XML", @"Data\ComplexQueryStrings.xml", "Row", DataAccessMethod.Sequential)]
-        public void FilterExpressionParser_ComplexFilterParserTests()
+        [JsonTestDataSource(typeof(List<Row<string>>), @"Data\ComplexQueryStrings.json")]
+        public void FilterExpressionParser_ComplexFilterParserTests(Row<string> row)
         {
-            //// Arrange
-            //var filterstring = TestContext.DataRow["Query"].ToString();
-            //var expected = TestContext.DataRow["ExpectedExpression"].ToString();
-            //var message = TestContext.DataRow["Message"].ToString();
-            //var parser = new FilterExpressionParser<Entity1>();
+            // Arrange
+            var filterstring = row.Value;
+            var expected = row.Expected;
+            var message = row.Message;
+            var parser = new FilterExpressionParser<Entity1>();
 
-            //// Act
-            //var actual = parser.Parse(filterstring);
+            // Act
+            var actual = parser.Parse(filterstring);
 
-            //// Assert
-            //Assert.AreEqual(expected, actual.ToString(), message);
-            Assert.Fail();
+            // Assert
+            Assert.AreEqual(expected, actual.ToString(), message);
         }
 
         [TestMethod]
-        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.XML", @"Data\GroupedQueryStrings.xml", "Row", DataAccessMethod.Sequential)]
-        public void FilterExpressionParser_GroupedFilterParserTests()
+        [JsonTestDataSource(typeof(List<Row<string>>), @"Data\GroupedQueryStrings.json")]
+        public void FilterExpressionParser_GroupedFilterParserTests(Row<string> row)
         {
-            //// Arrange
-            //var filterstring = TestContext.DataRow["Query"].ToString();
-            //var expected = TestContext.DataRow["ExpectedExpression"].ToString();
-            //var message = TestContext.DataRow["Message"].ToString();
-            //var parser = new FilterExpressionParser<Entity1>();
+            // Arrange
+            var filterstring = row.Value;
+            var expected = row.Expected;
+            var message = row.Message;
+            var parser = new FilterExpressionParser<Entity1>();
 
-            //// Act
-            //var actual = parser.Parse(filterstring);
+            // Act
+            var actual = parser.Parse(filterstring);
 
-            //// Assert
-            //Assert.AreEqual(expected, actual.ToString(), message);
-            Assert.Fail();
+            // Assert
+            Assert.AreEqual(expected, actual.ToString(), message);
         }
 
         [TestMethod]
-        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.XML", @"Data\StringMethodQueryStrings.xml", "Row", DataAccessMethod.Sequential)]
-        public void FilterExpressionParser_StringMethodFilterParserTests()
+        [JsonTestDataSource(typeof(List<Row<string>>), @"Data\StringMethodQueryStrings.json")]
+        public void FilterExpressionParser_StringMethodFilterParserTests(Row<string> row)
         {
-            //// Arrange
-            //var filterstring = TestContext.DataRow["Query"].ToString();
-            //var expected = TestContext.DataRow["ExpectedExpression"].ToString();
-            //var message = TestContext.DataRow["Message"].ToString();
-            //var parser = new FilterExpressionParser<Entity1>();
+            // Arrange
+            var filterstring = row.Value;
+            var expected = row.Expected;
+            var message = row.Message;
+            var parser = new FilterExpressionParser<Entity1>();
 
-            //// Act
-            //var actual = parser.Parse(filterstring);
+            // Act
+            var actual = parser.Parse(filterstring);
 
-            //// Assert
-            //Assert.AreEqual(expected, actual.ToString(), message);
-            Assert.Fail();
+            // Assert
+            Assert.AreEqual(expected, actual.ToString(), message);
         }
 
 

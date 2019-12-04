@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
+    <TargetFrameworks>netcoreapp3.0;net461</TargetFrameworks>
     <Authors>Jared Barneck (Rhyous)</Authors>
     <Company>Rhyous Publishing LLC</Company>
     <Version>1.0.0</Version>
@@ -39,16 +39,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Data\ComplexQueryStrings.xml">
+    <None Update="Data\ComplexQueryStrings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Data\GroupedQueryStrings.xml">
+    <None Update="Data\GroupedQueryStrings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Data\NaiveQueryStrings.xml">
+    <None Update="Data\NaiveQueryStrings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Data\StringMethodQueryStrings.xml">
+    <None Update="Data\StringMethodQueryStrings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
