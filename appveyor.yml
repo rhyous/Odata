@@ -1,9 +1,5 @@
 version: 1.1.{build}
 image: Visual Studio 2019
-skip_commits:
-  files:
-    - README.md
-    - **/*.txt'
 dotnet_csproj:
   patch: true
   file: '**\*.csproj'
