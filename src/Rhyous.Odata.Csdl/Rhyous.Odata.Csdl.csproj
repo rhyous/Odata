@@ -7,17 +7,32 @@
     <Version>1.1.5</Version>
     <AssemblyVersion>1.1.0.0</AssemblyVersion>
     <FileVersion>1.1.5.0</FileVersion>
+    <Copyright>Copyright Jared Barneck (Rhyous) 2017</Copyright>
+    <PackageLicenseFile>License.txt</PackageLicenseFile>
+    <Description>A library to aid in providing csdl format for a given type.</Description>
+    <PackageTags>csdl</PackageTags>
+    <PackageProjectUrl>https://github.com/rhyous/Odata</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/rhyous/Odata</RepositoryUrl>
+    <RepositoryType>Git</RepositoryType>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="Rhyous.Collections" Version="1.0.13" />
-    <PackageReference Include="Rhyous.StringLibrary" Version="1.2.2" />
+    <PackageReference Include="Rhyous.StringLibrary" Version="1.2.13" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="4.7.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Rhyous.Odata\Rhyous.Odata.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\License.txt">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
