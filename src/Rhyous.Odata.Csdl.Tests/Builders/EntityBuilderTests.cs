@@ -73,5 +73,25 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
             Assert.AreEqual("Id", actual.Properties.Keys.First());
             Assert.AreEqual("Name", actual.Properties.Keys.Skip(1).First());
         }
+
+        [TestMethod]
+        public void EntityBuilder_CreateCsdl_Test()
+        {
+            // Arrange
+            Func<string, IEnumerable<KeyValuePair<string, object>>> func = (string s) =>
+            {
+                return new[] { new KeyValuePair<string, object>("a", "b") };
+            };
+            FuncList<string> funcs = new FuncList<string> { func };
+
+            var entityBuilder = new CsdlBuilderFactory(funcs).CreateEntityBuilder();
+
+
+            // Act
+            var csdl = entityBuilder.Build(typeof(User));
+
+            // Assert
+
+        }
     }
 }

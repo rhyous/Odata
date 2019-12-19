@@ -18,6 +18,7 @@ namespace Rhyous.Odata.Csdl
         {
             Add(typeof(EditableAttribute), GetReadOnlyProperty);
             Add(typeof(RelatedEntityAttribute), GetRelatedEntityPropertyData);
+            Add(typeof(RequiredAttribute), GetRequiredProperty);
             // Future: 
             // Add(typeof(MinLengthAttribute), GetMaxLengthProperty);
             // Add(typeof(MaxLengthAttribute), GetMaxLengthProperty);
@@ -54,6 +55,16 @@ namespace Rhyous.Odata.Csdl
                     navKeyList.Add(new KeyValuePair<string, object>(Constants.NavigationKey, relatedEntityName));
             }
             return navKeyList;
+        }
+
+        private IEnumerable<KeyValuePair<string, object>> GetRequiredProperty(MemberInfo mi)
+        {
+            if (mi == null)
+                return null;
+            var attribute = mi.GetCustomAttribute<RequiredAttribute>(true);
+            if (attribute == null)
+                return null;
+            return new[] { new KeyValuePair<string, object>(Constants.UIReqired, true) };
         }
     }
 }

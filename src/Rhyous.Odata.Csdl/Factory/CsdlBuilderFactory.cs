@@ -8,17 +8,23 @@ namespace Rhyous.Odata.Csdl
     {
         public CsdlBuilderFactory() { }
 
+        public CsdlBuilderFactory(IFuncList<string> customPropertyFuncs) 
+        {
+            CustomPropertyFuncs = customPropertyFuncs;
+        }
+
         public CsdlBuilderFactory(IFuncDictionary<Type, MemberInfo> propertyDataAttributeDictionary,
                                   IFuncDictionary<Type, MemberInfo> entityAttributeDictionary,
                                   IFuncDictionary<Type, MemberInfo> propertyAttributeDictionary,
-                                  IFuncList<string, string> customPropertyFuncs,
+                                  IFuncList<string> customPropertyFuncs,
                                   IFuncList<string, string> customPropertyDataFuncs,
                                   IDictionary<string, string> csdlTypeDictionary
                                   )
         {
-            propertyDataAttributeDictionary = PropertyDataAttributeDictionary;
-            entityAttributeDictionary = EntityAttributeDictionary;
-            propertyAttributeDictionary = PropertyAttributeDictionary;
+            PropertyDataAttributeDictionary = propertyDataAttributeDictionary;
+            EntityAttributeDictionary = entityAttributeDictionary;
+            PropertyAttributeDictionary = propertyAttributeDictionary;
+            CustomPropertyFuncs = customPropertyFuncs;
             CustomPropertyDataFuncs = customPropertyDataFuncs;
             CsdlTypeDictionary = csdlTypeDictionary;
         }

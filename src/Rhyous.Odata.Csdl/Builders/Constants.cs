@@ -15,5 +15,6 @@
         public const string NavigationKey = "$NavigationKey";
         public const string OdataFilter = "@Odata.Filter";
         public const string UIReadOnly = "@UI.ReadOnly";
+        public const string UIReqired = "@UI.Required";
     }
 }

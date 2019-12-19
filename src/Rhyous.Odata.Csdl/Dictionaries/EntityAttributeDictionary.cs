@@ -20,12 +20,13 @@ namespace Rhyous.Odata.Csdl
         {
             Add(typeof(DisplayColumnAttribute), GetDisplayProperty);
             Add(typeof(ReadOnlyEntityAttribute), GetReadOnlyProperty);
+            Add(typeof(RequiredAttribute), GetRequiredProperty);
             Add(typeof(RelatedEntityForeignAttribute), GetRelatedEntityForeignProperties);
             Add(typeof(RelatedEntityMappingAttribute), GetRelatedEntityMappingProperties);
         }
 
         #endregion
-        
+
         internal IEnumerable<KeyValuePair<string, object>> GetDisplayProperty(MemberInfo mi)
         {
             if (mi == null)
@@ -44,6 +45,16 @@ namespace Rhyous.Odata.Csdl
             if (editableAttribute == null)
                 return null;
             return new[] { new KeyValuePair<string, object>("@UI.ReadOnly", true) };
+        }
+
+        private IEnumerable<KeyValuePair<string, object>> GetRequiredProperty(MemberInfo mi)
+        {
+            if (mi == null)
+                return null;
+            var requiredAttribute = mi.GetCustomAttribute<RequiredAttribute>(true);
+            if (requiredAttribute == null)
+                return null;
+            return new[] { new KeyValuePair<string, object>("@UI.Required", true) };
         }
 
         internal IEnumerable<KeyValuePair<string, object>> GetRelatedEntityForeignProperties(MemberInfo mi)
