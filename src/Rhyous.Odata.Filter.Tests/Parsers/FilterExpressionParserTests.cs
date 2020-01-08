@@ -160,7 +160,7 @@ namespace Rhyous.Odata.Tests.Parsers
             // Arrange
             var filterstring = row.Value;
             var expected = row.Expected;
-            var message = row.Message;
+            var message = string.Format(row.Message, row.Expected);
             var parser = new FilterExpressionParser<TestClass>();
 
             // Act
