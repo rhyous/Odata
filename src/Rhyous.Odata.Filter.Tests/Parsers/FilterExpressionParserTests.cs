@@ -159,7 +159,8 @@ namespace Rhyous.Odata.Tests.Parsers
         {
             // Arrange
             var filterstring = row.Value;
-            var expected = row.Expected;
+            var dateTimezzz = DateTimeOffset.Now.ToString("zzz");
+            var expected = string.Format(row.Expected, dateTimezzz);
             var message = string.Format(row.Message, row.Expected);
             var parser = new FilterExpressionParser<TestClass>();
 
