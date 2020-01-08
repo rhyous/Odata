@@ -125,13 +125,15 @@ namespace Rhyous.Odata.Tests.Extensions
             var t2 = new TestClass { Id = 2, CreateDate = DateTimeOffset.Parse("1-2-2020") };
             var t3 = new TestClass { Id = 3, CreateDate = DateTimeOffset.Parse("1-4-2020") };
             var list = new List<TestClass> { t1, t2, t3 };
+            var dateTimeOffsetzzz = DateTime.Now.ToString("zzz");
+            var expected = $"e => (e.CreateDate > 1/1/2020 12:00:00 AM {dateTimeOffsetzzz})";
 
             // Act
             var expression = collection.GetFilterExpression<TestClass>();
             var result = list.AsQueryable().Where(expression).ToList();
 
             // Assert
-            Assert.AreEqual("e => (e.CreateDate > 1/1/2020 12:00:00 AM -07:00)", expression.ToString());
+            Assert.AreEqual(expected, expression.ToString());
             Assert.AreEqual(2, result.Count);
             Assert.AreEqual(t2, result[0]);
             Assert.AreEqual(t3, result[1]);

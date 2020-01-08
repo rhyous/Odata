@@ -144,7 +144,8 @@ namespace Rhyous.Odata.Tests.Parsers
             // Arrange
             var filterstring = "CreateDate eq 1/1/2019";
             var parser = new FilterExpressionParser<TestClass>();
-            var expected = "e => (e.CreateDate == 1/1/2019 12:00:00 AM -07:00)";
+            var dateTimeOffsetzzz = DateTimeOffset.Now.ToString("zzz");
+            var expected = $"e => (e.CreateDate == 1/1/2019 12:00:00 AM {dateTimeOffsetzzz})";
 
             // Act
             var actual = parser.Parse(filterstring);
