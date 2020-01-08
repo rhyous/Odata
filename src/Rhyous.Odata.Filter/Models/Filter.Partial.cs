@@ -1,4 +1,5 @@
 using LinqKit;
+using Rhyous.Collections;
 using Rhyous.StringLibrary;
 using System;
 using System.Linq;
