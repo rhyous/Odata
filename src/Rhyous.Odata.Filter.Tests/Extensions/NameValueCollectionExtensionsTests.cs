@@ -114,5 +114,27 @@ namespace Rhyous.Odata.Tests.Extensions
             Assert.AreEqual(t2, result[0]);
             Assert.AreEqual(t3, result[1]);
         }
+
+        [TestMethod]
+        public void GetFilterExpression_CreateDate_GreaterThan_Test()
+        {
+            // Arrange
+            NameValueCollection collection = new NameValueCollection();
+            collection.Add("$filter", "CreateDate gt 1-1-2020");
+            var t1 = new TestClass { Id = 1, CreateDate = DateTimeOffset.Parse("12-10-2019") };
+            var t2 = new TestClass { Id = 2, CreateDate = DateTimeOffset.Parse("1-2-2020") };
+            var t3 = new TestClass { Id = 3, CreateDate = DateTimeOffset.Parse("1-4-2020") };
+            var list = new List<TestClass> { t1, t2, t3 };
+
+            // Act
+            var expression = collection.GetFilterExpression<TestClass>();
+            var result = list.AsQueryable().Where(expression).ToList();
+
+            // Assert
+            Assert.AreEqual("e => (e.CreateDate > 1/1/2020 12:00:00 AM -07:00)", expression.ToString());
+            Assert.AreEqual(2, result.Count);
+            Assert.AreEqual(t2, result[0]);
+            Assert.AreEqual(t3, result[1]);
+        }
     }
 }
