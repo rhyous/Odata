@@ -42,7 +42,7 @@ namespace Rhyous.Odata.Tests
             Filter<Entity1> filter = new Filter<Entity1> { Left = "Id" };
 
             // Act & Assert
-           Assert.IsFalse(filter.IsComplete);;
+           Assert.IsFalse(filter.IsComplete);
         }
 
         [TestMethod]
@@ -52,7 +52,7 @@ namespace Rhyous.Odata.Tests
             Filter<Entity1> filter = new Filter<Entity1> { Left = "Id", Right = "1", Method = "10" };
 
             // Act & Assert
-            Assert.IsTrue(filter.IsComplete); ;
+            Assert.IsTrue(filter.IsComplete);
         }
 
         [TestMethod]
@@ -62,7 +62,7 @@ namespace Rhyous.Odata.Tests
             Filter<Entity1> filter = "test";
 
             // Act & Assert
-            Assert.IsTrue(filter.IsComplete); ;
+            Assert.IsTrue(filter.IsComplete);
         }
 
         [TestMethod]

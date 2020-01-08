@@ -135,7 +135,39 @@ namespace Rhyous.Odata.Tests.Parsers
             var parser = new FilterExpressionParser<EntityWithEnum>();
 
             // Act & Assert
-            Assert.ThrowsException<InvalidTypeMethodException>(() => { parser.Parse(filterstring); }); ;
+            Assert.ThrowsException<InvalidTypeMethodException>(() => { parser.Parse(filterstring); });
+        }
+
+        [TestMethod]
+        public void FilterExpressionParser_DateTime_Equals_Tests()
+        {
+            // Arrange
+            var filterstring = "CreateDate eq 1/1/2019";
+            var parser = new FilterExpressionParser<TestClass>();
+            var expected = "e => (e.CreateDate == 1/1/2019 12:00:00 AM -07:00)";
+
+            // Act
+            var actual = parser.Parse(filterstring);
+
+            // Assert
+            Assert.AreEqual(expected, actual.ToString());
+        }
+
+        [TestMethod]
+        [JsonTestDataSource(typeof(List<Row<string>>), @"Data\DateTimeQueryStrings.json")]
+        public void FilterExpressionParser_DateTimeFilterParserTests(Row<string> row)
+        {
+            // Arrange
+            var filterstring = row.Value;
+            var expected = row.Expected;
+            var message = row.Message;
+            var parser = new FilterExpressionParser<TestClass>();
+
+            // Act
+            var actual = parser.Parse(filterstring);
+
+            // Assert
+            Assert.AreEqual(expected, actual.ToString(), message);
         }
     }
 }

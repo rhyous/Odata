@@ -129,5 +129,22 @@ namespace Rhyous.Odata.Tests
             // Act && Assert
             Assert.ThrowsException<InvalidGroupingException>(() => builder.Expression);
         }
+
+        [TestMethod]
+        [JsonTestDataSource(typeof(List<Row<string>>), @"Data\DateTimeQueryStrings.json")]
+        public void DateTimeFilterParserTests(Row<string> row)
+        {
+            // Arrange
+            var filterstring = row.Value;
+            var expected = row.Expected;
+            var message = row.Message;
+            var builder = new FilterExpressionBuilder<TestClass>(filterstring, new FilterExpressionParser<TestClass>());
+
+            // Act
+            var actual = builder.Expression.ToString();
+
+            // Assert
+            Assert.AreEqual(expected, actual, message);
+        }
     }
 }
