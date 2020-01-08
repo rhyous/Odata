@@ -2,10 +2,11 @@
 {
     public enum Operator
     {
-        EQ,
-        NE,
-        GT,
-        LT,
-        LE
+        EQ, // Equals
+        NE, // Not equals
+        GT, // Greater Than
+        GE, // Greater than or equal
+        LT, // Less Than
+        LE  // Less than or Equal
     }
 }
