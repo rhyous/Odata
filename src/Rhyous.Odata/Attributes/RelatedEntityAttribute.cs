@@ -57,7 +57,8 @@ namespace Rhyous.Odata
         /// value that the repository allows but never uses automatically, such as in autoincrement.
         /// </summary>
         /// <remarks>When using this value, Nullable should be false and RelatedEntityMustExist should be true.
-        /// Do not use this to allow NULL, but instead make this attribute nullable.</remarks>
+        /// Do not use this to allow NULL, but instead make this attribute nullable and set RelatedEntityMustExist
+        /// to false.</remarks>
         public object AllowedNonExistentValue { get; set; }
     }
 }
