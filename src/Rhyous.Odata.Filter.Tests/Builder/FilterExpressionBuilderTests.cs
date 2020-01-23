@@ -28,6 +28,23 @@ namespace Rhyous.Odata.Tests
         }
 
         [TestMethod]
+        [JsonTestDataSource(typeof(List<Row<string>>), @"Data\NaiveQueryStringsSymbolOperator.json")]
+        public void NaiveFilterParser_SymbolOperator_Tests(Row<string> row)
+        {
+            // Arrange
+            var filterstring = row.Value;
+            var expected = row.Expected;
+            var message = row.Message;
+            var builder = new FilterExpressionBuilder<Entity1>(filterstring, new FilterExpressionParser<Entity1>());
+
+            // Act
+            var actual = builder.Expression.ToString();
+
+            // Assert
+            Assert.AreEqual(expected, actual, message);
+        }
+
+        [TestMethod]
         public void ComplexFilterParserTests_TmpTest()
         {
             // Arrange

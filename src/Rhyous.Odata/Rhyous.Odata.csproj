@@ -12,15 +12,16 @@
     <PackageProjectUrl>https://github.com/rhyous/Odata</PackageProjectUrl>
     <RepositoryUrl>https://github.com/rhyous/Odata</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
-    <PackageTags>odata</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageLicenseFile>License.txt</PackageLicenseFile>
+
+    <PackageTags>odata</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.*" />
     <PackageReference Include="Rhyous.Collections" Version="1.0.13" />
-    <PackageReference Include="Rhyous.StringLibrary" Version="1.2.13" />
+    <PackageReference Include="Rhyous.StringLibrary" Version="1.2.17" />
   </ItemGroup>
 
   <ItemGroup>
