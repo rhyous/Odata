@@ -152,8 +152,29 @@ namespace Rhyous.Odata.Tests
         public void DateTimeFilterParserTests(Row<string> row)
         {
             // Arrange
+            var now = DateTimeOffset.Now;
+            var dateTimezzz = now.ToString("zzz");
             var filterstring = row.Value;
-            var dateTimezzz = DateTimeOffset.Now.ToString("zzz");
+            var expected = string.Format(row.Expected, dateTimezzz);
+            var message = row.Message;
+            var builder = new FilterExpressionBuilder<TestClass1>(filterstring, new FilterExpressionParser<TestClass1>());
+
+            // Act
+            var actual = builder.Expression.ToString();
+
+            // Assert
+            Assert.AreEqual(expected, actual, message);
+        }
+
+
+        [TestMethod]
+        [JsonTestDataSource(typeof(List<Row<string>>), @"Data\DateTimeOffsetQueryStrings.json")]
+        public void DateTimeOffsetFilterParserTests(Row<string> row)
+        {
+            // Arrange
+            var now = DateTimeOffset.Now;
+            var dateTimezzz = now.ToString("zzz");
+            var filterstring = string.Format(row.Value, dateTimezzz);
             var expected = string.Format(row.Expected, dateTimezzz);
             var message = row.Message;
             var builder = new FilterExpressionBuilder<TestClass>(filterstring, new FilterExpressionParser<TestClass>());
