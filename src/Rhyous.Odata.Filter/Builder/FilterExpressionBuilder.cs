@@ -7,16 +7,15 @@ namespace Rhyous.Odata
     {
         public FilterExpressionBuilder(string filterString, IFilterExpressionParser<TEntity> parser = null)
         {
-            _FilterString = filterString;
+            FilterString = filterString;
             _Parser = parser;
         }
 
-        public string FilterString => _FilterString;
-        private string _FilterString;
+        public string FilterString { get; private set; }
 
         public IFilterExpressionParser<TEntity> Parser
         {
-            get { return _Parser ?? (_Parser = new FilterExpressionParserNaive<TEntity>()); }
+            get { return _Parser ?? (_Parser = new FilterExpressionParser<TEntity>()); }
             set { _Parser = value; }
         } private IFilterExpressionParser<TEntity> _Parser;
 

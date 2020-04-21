@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Rhyous.UnitTesting;
+using System;
+using System.Collections.Generic;
 
 namespace Rhyous.Odata.Tests.Parsers
 {
@@ -159,9 +158,9 @@ namespace Rhyous.Odata.Tests.Parsers
         public void FilterExpressionParser_DateTime_Equals_Tests()
         {
             // Arrange
-            var filterstring = "CreateDate eq 1/1/2019";
-            var parser = new FilterExpressionParser<TestClass>();
             var dateTimeOffsetzzz = DateTimeOffset.Now.ToString("zzz");
+            var filterstring = $"CreateDate eq '1/1/2019 00:00:00 {dateTimeOffsetzzz}'";
+            var parser = new FilterExpressionParser<TestClass>();
             var expected = $"e => (e.CreateDate == 1/1/2019 12:00:00 AM {dateTimeOffsetzzz})";
 
             // Act
@@ -173,11 +172,28 @@ namespace Rhyous.Odata.Tests.Parsers
 
         [TestMethod]
         [JsonTestDataSource(typeof(List<Row<string>>), @"Data\DateTimeQueryStrings.json")]
-        public void FilterExpressionParser_DateTimeFilterParserTests(Row<string> row)
+        public void FilterExpressionParser_DateTime_FilterParserTests(Row<string> row)
         {
             // Arrange
             var filterstring = row.Value;
+            var expected = row.Expected;
+            var message = string.Format(row.Message, row.Expected);
+            var parser = new FilterExpressionParser<TestClass1>();
+
+            // Act
+            var actual = parser.Parse(filterstring);
+
+            // Assert
+            Assert.AreEqual(expected, actual.ToString(), message);
+        }
+
+        [TestMethod]
+        [JsonTestDataSource(typeof(List<Row<string>>), @"Data\DateTimeOffsetQueryStrings.json")]
+        public void FilterExpressionParser_DateTimeOffset_FilterParserTests(Row<string> row)
+        {
+            // Arrange
             var dateTimezzz = DateTimeOffset.Now.ToString("zzz");
+            var filterstring = string.Format(row.Value, dateTimezzz);
             var expected = string.Format(row.Expected, dateTimezzz);
             var message = string.Format(row.Message, row.Expected);
             var parser = new FilterExpressionParser<TestClass>();

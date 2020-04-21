@@ -120,12 +120,12 @@ namespace Rhyous.Odata.Tests.Extensions
         {
             // Arrange
             NameValueCollection collection = new NameValueCollection();
-            collection.Add("$filter", "CreateDate gt 1-1-2020");
-            var t1 = new TestClass { Id = 1, CreateDate = DateTimeOffset.Parse("12-10-2019") };
-            var t2 = new TestClass { Id = 2, CreateDate = DateTimeOffset.Parse("1-2-2020") };
-            var t3 = new TestClass { Id = 3, CreateDate = DateTimeOffset.Parse("1-4-2020") };
-            var list = new List<TestClass> { t1, t2, t3 };
             var dateTimeOffsetzzz = DateTime.Now.ToString("zzz");
+            collection.Add("$filter", $"CreateDate gt '1-1-2020 00:00:00 {dateTimeOffsetzzz}'");
+            var t1 = new TestClass { Id = 1, CreateDate = DateTimeOffset.Parse($"12-10-2019 00:00:00 {dateTimeOffsetzzz}") };
+            var t2 = new TestClass { Id = 2, CreateDate = DateTimeOffset.Parse($"1-2-2020 00:00:00 {dateTimeOffsetzzz}") };
+            var t3 = new TestClass { Id = 3, CreateDate = DateTimeOffset.Parse($"1-4-2020 00:00:00 {dateTimeOffsetzzz}") };
+            var list = new List<TestClass> { t1, t2, t3 };
             var expected = $"e => (e.CreateDate > 1/1/2020 12:00:00 AM {dateTimeOffsetzzz})";
 
             // Act
@@ -144,12 +144,12 @@ namespace Rhyous.Odata.Tests.Extensions
         {
             // Arrange
             NameValueCollection collection = new NameValueCollection();
-            collection.Add("$filter", "CreateDate > 1-1-2020");
-            var t1 = new TestClass { Id = 1, CreateDate = DateTimeOffset.Parse("12-10-2019") };
-            var t2 = new TestClass { Id = 2, CreateDate = DateTimeOffset.Parse("1-2-2020") };
-            var t3 = new TestClass { Id = 3, CreateDate = DateTimeOffset.Parse("1-4-2020") };
-            var list = new List<TestClass> { t1, t2, t3 };
             var dateTimeOffsetzzz = DateTime.Now.ToString("zzz");
+            collection.Add("$filter", $"CreateDate > '1-1-2020 00:00:00 {dateTimeOffsetzzz}'");
+            var t1 = new TestClass { Id = 1, CreateDate = DateTimeOffset.Parse($"12-10-2019 00:00:00 {dateTimeOffsetzzz}") };
+            var t2 = new TestClass { Id = 2, CreateDate = DateTimeOffset.Parse($"1-2-2020 00:00:00 {dateTimeOffsetzzz}") };
+            var t3 = new TestClass { Id = 3, CreateDate = DateTimeOffset.Parse($"1-4-2020 00:00:00 {dateTimeOffsetzzz}") };
+            var list = new List<TestClass> { t1, t2, t3 };
             var expected = $"e => (e.CreateDate > 1/1/2020 12:00:00 AM {dateTimeOffsetzzz})";
 
             // Act
