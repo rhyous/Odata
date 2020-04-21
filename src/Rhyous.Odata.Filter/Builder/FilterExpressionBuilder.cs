@@ -15,7 +15,7 @@ namespace Rhyous.Odata
 
         public IFilterExpressionParser<TEntity> Parser
         {
-            get { return _Parser ?? (_Parser = new FilterExpressionParserNaive<TEntity>()); }
+            get { return _Parser ?? (_Parser = new FilterExpressionParser<TEntity>()); }
             set { _Parser = value; }
         } private IFilterExpressionParser<TEntity> _Parser;
 

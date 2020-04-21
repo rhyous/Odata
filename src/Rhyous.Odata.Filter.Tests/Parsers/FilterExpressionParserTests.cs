@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Rhyous.UnitTesting;
+using System;
+using System.Collections.Generic;
 
 namespace Rhyous.Odata.Tests.Parsers
 {
