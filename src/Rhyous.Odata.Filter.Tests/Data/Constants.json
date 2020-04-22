@@ -1,22 +1,34 @@
 [
   {
     "Value": "Jared",
-    "Expected": "Jared",
     "Message": "String should result in a constant: {0}. 1."
   },
   {
     "Value": "'Jared Barneck'",
-    "Expected": "'Jared Barneck'",
     "Message": "Quoted string should result in a constant: {0}. 1."
   },
   {
     "Value": "100",
-    "Expected": "100",
     "Message": "Integer should result in a constant: {0}. 1."
   },
   {
     "Value": "5.5",
-    "Expected": "5.5",
     "Message": "Double should result in a constant: {0}. 1."
+  },
+  {
+    "Value": "'Product A and Product B'",
+    "Message": "An an/or operator may be in a name should result in a constant: {0}. 1."
+  },
+  {
+    "Value": "'Product EQ 10'",
+    "Message": "An EQ operator may be in a name should result in a constant: {0}. 1."
+  },
+  {
+    "Value": "Product EQ 10",
+    "Message": "An EQ operator may be in a name should result in a constant: {0}. 1."
+  },
+  {
+    "Value": "'or Id eq 1'",
+    "Message": "A quoted epression should result in a constant: {0}. 1."
   }
 ]

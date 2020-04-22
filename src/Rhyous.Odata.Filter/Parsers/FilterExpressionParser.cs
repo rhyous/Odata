@@ -7,10 +7,10 @@ namespace Rhyous.Odata
 {
     public class FilterExpressionParser<TEntity> : IFilterExpressionParser<TEntity>
     {
-        public Expression<Func<TEntity, bool>> Parse(string filterExpression)
+        public Expression<Func<TEntity, bool>> Parse(string filterExpression, bool unquote = true)
         {
             var trimmedfilterExpression = filterExpression.Trim();
-            if (trimmedfilterExpression.Length > 2)
+            if (trimmedfilterExpression.Length > 2 && unquote)
                 trimmedfilterExpression = trimmedfilterExpression.Unquote(1).Trim();
             var state = new ParserState<TEntity>(trimmedfilterExpression);
             for (state.CharIndex = 0; state.CharIndex < state.FilterString.Length; state.CharIndex++)

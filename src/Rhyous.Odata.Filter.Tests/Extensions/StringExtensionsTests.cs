@@ -15,8 +15,7 @@ namespace Rhyous.Odata.Filter.Tests.Extensions
         {
             // Arrange
             var constant = row.Value;
-            var expected = row.Expected;
-            var message = row.Message;
+            var message = string.Format(row.Message, constant);
 
             // Act
             var actual = constant.EnforceConstant<TestClass>();
@@ -39,20 +38,6 @@ namespace Rhyous.Odata.Filter.Tests.Extensions
             {
                 strExpression.EnforceConstant<Entity1>();
             }, message);
-        }
-
-        [TestMethod]
-        public void StringExtensions_EnforceConstant_QuoteQueryString_Throws_Test()
-        {
-            // Arrange
-            var strExpression = "'or Id eq 1'";
-
-            // Act
-            // Assert
-            Assert.ThrowsException<InvalidOdataConstantException>(() =>
-            {
-                strExpression.EnforceConstant<Entity1>();
-            });
         }
     }
 }
