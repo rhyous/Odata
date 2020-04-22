@@ -1,4 +1,4 @@
-﻿namespace Rhyous.Odata.Filter.Parsers
+﻿namespace Rhyous.Odata.Filter
 {
     public static class StringExtensions
     {
