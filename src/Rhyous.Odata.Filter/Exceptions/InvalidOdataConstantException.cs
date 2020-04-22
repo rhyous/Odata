@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Rhyous.Odata.Filter.Parsers
+namespace Rhyous.Odata.Filter
 {
     [Serializable]
     internal class InvalidOdataConstantException : Exception
