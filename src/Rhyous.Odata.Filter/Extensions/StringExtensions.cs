@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Rhyous.StringLibrary;
+using System;
 using System.Linq.Expressions;
 
 namespace Rhyous.Odata.Filter
@@ -10,10 +11,28 @@ namespace Rhyous.Odata.Filter
             var parser = new FilterExpressionParser<T>();
             Expression<Func<T, bool>> expression = null;
             bool isExpression = true;
-            try { expression = parser.Parse(strExpression, false); }
+            try
+            {
+                expression = parser.Parse(strExpression, false);
+                if (expression.ToString() == "f => False")
+                {
+                    foreach (var innerQuote in new[] { '\'', '"'})
+                    {
+                        try 
+                        {
+                            expression = parser.Parse(strExpression.Quote(innerQuote), false);
+                            if (expression.ToString() != "f => False")
+                                break;
+                        }
+                        catch (Exception) { isExpression = false; }
+                    }
+                }
+            }
             catch (Exception) { isExpression = false; }
-            if (!isExpression || expression.ToString() == "f => False" )
+            if (!isExpression || expression.ToString() == "f => False")
+            {
                 return strExpression;
+            }
             throw new InvalidOdataConstantException(strExpression);
         }
     }

@@ -39,6 +39,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Data\OdataQueryInjectionAttempts.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Data\Constants.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

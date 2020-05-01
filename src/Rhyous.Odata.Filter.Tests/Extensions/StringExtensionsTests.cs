@@ -39,5 +39,21 @@ namespace Rhyous.Odata.Filter.Tests.Extensions
                 strExpression.EnforceConstant<Entity1>();
             }, message);
         }
+
+        [TestMethod]
+        [JsonTestDataSource(typeof(List<Row<string>>), @"Data\OdataQueryInjectionAttempts.json")]
+        public void StringExtensions_EnforceConstant_AppendingQueryToConstant_Throws_Test(Row<string> row)
+        {
+            // Arrange
+            var strExpression = row.Value;
+            var message = row.Message;
+
+            // Act
+            // Assert
+            Assert.ThrowsException<InvalidOdataConstantException>(() =>
+            {
+                strExpression.EnforceConstant<Entity1>();
+            });
+        }
     }
 }
