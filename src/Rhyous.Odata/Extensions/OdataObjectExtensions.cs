@@ -76,12 +76,12 @@ namespace Rhyous.Odata
         /// <typeparam name="TRelatedEntityId"></typeparam>
         /// <param name="odataObj"></param>
         /// <returns></returns>
-        public static OdataObjectCollection<TRelatedEntity, TRelatedEntityId> GetRelatedEntityCollection<TRelatedEntity, TRelatedEntityId>(this IRelatedEntityCollection odataObj)
+        public static OdataObjectCollection<TRelatedEntity, TRelatedEntityId> GetRelatedEntityCollection<TRelatedEntity, TRelatedEntityId>(this IRelatedEntityCollection odataObj, string entityAlias = null)
             where TRelatedEntityId : IComparable<TRelatedEntityId>, IComparable, IEquatable<TRelatedEntityId>
         {
             if (odataObj == null || odataObj.RelatedEntityCollection == null || !odataObj.RelatedEntityCollection.Any())
                 return null;
-            var relatedEntity = typeof(TRelatedEntity).Name;
+            var relatedEntity = entityAlias ?? typeof(TRelatedEntity).Name;
             var relatedEntityCollection = odataObj.RelatedEntityCollection.FirstOrDefault(re => re.RelatedEntity == relatedEntity);
             if (relatedEntityCollection == null)
                 return null;
