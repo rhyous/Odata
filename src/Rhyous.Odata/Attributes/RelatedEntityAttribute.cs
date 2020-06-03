@@ -40,13 +40,14 @@ namespace Rhyous.Odata
         public string Property { get; set; }
 
         /// <summary>
-        /// If this is true, the property that references the related entity can be null.
+        /// If this is true, the navigation property that references the related entity can be null.
         /// is passed to the web service.
         /// </summary>
         public bool Nullable { get; set; }
 
         /// <summary>
-        /// If this is true is will enforce that the related entity exists and throw an exception if not. 
+        /// If this is true, it will enforce that the related entity must exists and throw an exception if not. 
+        /// If this is false, the related entity doesn't have to exist.
         /// It defaults to TRUE.
         /// </summary>
         public bool RelatedEntityMustExist { get; set; } = true;

@@ -18,5 +18,7 @@ namespace Rhyous.Odata.Tests
         public int CreatedByUserId { get; set; }        // Should be required
         [Editable(false)]
         public int? LastUpdatedByUserId { get; set; }   // Should be nullable
+        [RelatedEntity("Entity1", Nullable = true, RelatedEntityMustExist = false)]
+        public int Entity1Id { get; set; }
     }
 }

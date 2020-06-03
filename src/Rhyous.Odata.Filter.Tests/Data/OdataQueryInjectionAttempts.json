@@ -1,0 +1,14 @@
+[
+  {
+    "Description": "Trying to inject into $filter=Username eq {username}",
+    "Value": "John.Doe or Id eq 1",
+    "Expected": "e => (e.Name == \"Jared Barneck\")",
+    "Message": "Expression should result in this expression: {0}. 1."
+  },
+  {
+    "Description": "Trying to inject into quoted $filter=Username eq '{username}'",
+    "Value": "John.Doe' or Id eq '1",
+    "Expected": "e => (e.Name == \"Jared Barneck\")",
+    "Message": "Expression should result in this expression: {0}. 1."
+  }
+]

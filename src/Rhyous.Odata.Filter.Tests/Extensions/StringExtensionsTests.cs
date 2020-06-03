@@ -15,8 +15,7 @@ namespace Rhyous.Odata.Filter.Tests.Extensions
         {
             // Arrange
             var constant = row.Value;
-            var expected = row.Expected;
-            var message = row.Message;
+            var message = string.Format(row.Message, constant);
 
             // Act
             var actual = constant.EnforceConstant<TestClass>();
@@ -42,10 +41,12 @@ namespace Rhyous.Odata.Filter.Tests.Extensions
         }
 
         [TestMethod]
-        public void StringExtensions_EnforceConstant_QuoteQueryString_Throws_Test()
+        [JsonTestDataSource(typeof(List<Row<string>>), @"Data\OdataQueryInjectionAttempts.json")]
+        public void StringExtensions_EnforceConstant_AppendingQueryToConstant_Throws_Test(Row<string> row)
         {
             // Arrange
-            var strExpression = "'or Id eq 1'";
+            var strExpression = row.Value;
+            var message = row.Message;
 
             // Act
             // Assert

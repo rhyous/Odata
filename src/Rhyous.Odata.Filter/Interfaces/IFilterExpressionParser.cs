@@ -5,6 +5,6 @@ namespace Rhyous.Odata
 {
     public interface IFilterExpressionParser<TEntity>
     {
-        Expression<Func<TEntity, bool>> Parse(string filterExpression);
+        Expression<Func<TEntity, bool>> Parse(string filterExpression, bool unquote = true);
     }
 }
