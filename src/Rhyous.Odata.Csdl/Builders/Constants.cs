@@ -14,7 +14,11 @@
         public const string Mapping = "Mapping";
         public const string NavigationKey = "$NavigationKey";
         public const string OdataFilter = "@Odata.Filter";
+        public const string UIHint = "@UI.Hint";
+        public const string UIMinLength = "@UI.MinLength";
+        public const string UIMaxLength = "@UI.MaxLength";
+        public const string UIRange = "@UI.Range";
         public const string UIReadOnly = "@UI.ReadOnly";
-        public const string UIReqired = "@UI.Required";
+        public const string UIRequired = "@UI.Required";
     }
 }
