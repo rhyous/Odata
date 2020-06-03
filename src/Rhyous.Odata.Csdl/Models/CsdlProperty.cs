@@ -33,7 +33,7 @@ namespace Rhyous.Odata.Csdl
         /// </summary>
         /// <remarks>http://docs.oasis-open.org/odata/odata-csdl-json/v4.01/cs01/odata-csdl-json-v4.01-cs01.html#sec_MaxLength</remarks>
         [DataMember(Name = "$MaxLength", EmitDefaultValue = false)]
-        public long MaxLength { get; set; }
+        public ulong MaxLength { get; set; }
 
         /// <summary>
         /// JSON Schema types.
@@ -44,7 +44,7 @@ namespace Rhyous.Odata.Csdl
         public virtual string Type { get; set; }
 
         [DataMember(Name = "$Precision", EmitDefaultValue = false)]
-        public int Precision { get; set; }
+        public uint Precision { get; set; }
 
         [DataMember(Name = "$Scale", EmitDefaultValue = false)]
         public int Scale { get; set; }

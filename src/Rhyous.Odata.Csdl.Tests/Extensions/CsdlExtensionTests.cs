@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Rhyous.Odata.Tests;
+using Rhyous.Odata.Tests.Models;
+using System;
 using System.Linq;
 using System.Reflection;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Rhyous.Odata.Tests;
 
 namespace Rhyous.Odata.Csdl.Tests
 {
@@ -248,6 +248,21 @@ namespace Rhyous.Odata.Csdl.Tests
             // Assert
             Assert.AreEqual("self.Product", navProp.Type);
             Assert.AreEqual("self.ProductInSuite", navProp.Alias);
+        }
+        #endregion
+
+        #region ExcludeFromMetadata
+        [TestMethod] 
+        public void ExcludeFromMetadata_StateUnderTest_ExpectedBehavior()
+        {
+            // Arrange
+            PropertyInfo propInfo = typeof(EntityWithCsdlPropertyAttribute).GetProperty(nameof(EntityWithCsdlPropertyAttribute.Excluded));
+
+            // Act
+            var result = propInfo.ExcludeFromMetadata();
+
+            // Assert
+            Assert.IsTrue(result);
         }
         #endregion
     }

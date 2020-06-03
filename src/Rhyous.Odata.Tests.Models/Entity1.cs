@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Rhyous.Odata.Csdl;
+using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 

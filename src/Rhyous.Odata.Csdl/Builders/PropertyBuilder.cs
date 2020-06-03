@@ -27,18 +27,34 @@ namespace Rhyous.Odata.Csdl
                 return null;
             var propertyType = propInfo.PropertyType;
             Type nullableType = propertyType.IsGenericType && propertyType.GetGenericTypeDefinition() == typeof(Nullable<>) ? propertyType.GetGenericArguments()[0] : null;
-            var propName = nullableType == null ? propertyType.FullName : nullableType.FullName;
-            if (!_CsdlTypeDictionary.TryGetValue(propName, out string csdlType))
+            var propTypeName = nullableType == null ? propertyType.FullName : nullableType.FullName;
+            var csdlAttribute = propInfo.GetCustomAttribute<CsdlPropertyAttribute>();
+            var csdlType = csdlAttribute?.CsdlType;
+            if (string.IsNullOrWhiteSpace(csdlType) && !_CsdlTypeDictionary.TryGetValue(propTypeName, out csdlType))
                 return null;
+            var isNullable = propInfo.IsNullable(csdlAttribute);
             var prop = new CsdlProperty
             {
                 Type = csdlType,
                 IsCollection = propertyType != typeof(string) && (propertyType.IsEnumerable() || propertyType.IsCollection()),
-                Nullable = propInfo.IsNullable()
+                Nullable = isNullable,
+                DefaultValue = csdlAttribute?.DefaultValue,
+                MaxLength = csdlAttribute?.MaxLength ?? 0,
+                Precision = csdlAttribute?.Precision ?? 0,
             };
             prop.CustomData.AddFromCustomDictionary(propInfo.ReflectedType.Name, propInfo.Name, _CustomPropertyDataFuncs);
             prop.CustomData.AddFromAttributes(propInfo, _PropertyDataAttributeDictionary);
+            RemoveIsRequiredIfItMatchesNullable(prop);
             return prop;
+        }
+
+        private static void RemoveIsRequiredIfItMatchesNullable(CsdlProperty prop)
+        {
+            if (prop.CustomData.TryGetValue(Constants.UIRequired, out object isRequired))
+            {
+                if ((bool)isRequired != prop.Nullable)
+                    prop.CustomData.Remove(Constants.UIRequired);
+            }
         }
     }
 }

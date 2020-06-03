@@ -19,10 +19,12 @@ namespace Rhyous.Odata.Csdl
             Add(typeof(EditableAttribute), GetReadOnlyProperty);
             Add(typeof(RelatedEntityAttribute), GetRelatedEntityPropertyData);
             Add(typeof(RequiredAttribute), GetRequiredProperty);
-            // Future: 
-            // Add(typeof(MinLengthAttribute), GetMaxLengthProperty);
-            // Add(typeof(MaxLengthAttribute), GetMaxLengthProperty);
-            // Add(typeof(RangeAttribute), GetMaxLengthProperty);
+            Add(typeof(CsdlPropertyAttribute), HandleCsdPropertyAttribute);
+            Add(typeof(MinLengthAttribute), GetMinLengthProperty);
+            Add(typeof(MaxLengthAttribute), GetMaxLengthProperty);
+            Add(typeof(StringLengthAttribute), GetStringLengthProperty);
+            Add(typeof(RangeAttribute), GetRangeProperty);
+            Add(typeof(UIHintAttribute), GetUIHintProperty);
         }
 
         #endregion
@@ -40,7 +42,7 @@ namespace Rhyous.Odata.Csdl
         internal IEnumerable<KeyValuePair<string, object>> GetRelatedEntityPropertyData(MemberInfo mi)
         {
             var relatedEntityAttributes = mi?.GetCustomAttributes<RelatedEntityAttribute>() // this never returns null
-                                             .GroupBy(a=>a.Entity);
+                                             .GroupBy(a => a.Entity);
             if (relatedEntityAttributes == null || !relatedEntityAttributes.Any())
                 return null;
             var navKeyList = new List<KeyValuePair<string, object>>();
@@ -64,7 +66,83 @@ namespace Rhyous.Odata.Csdl
             var attribute = mi.GetCustomAttribute<RequiredAttribute>(true);
             if (attribute == null)
                 return null;
-            return new[] { new KeyValuePair<string, object>(Constants.UIReqired, true) };
+            return new[] { new KeyValuePair<string, object>(Constants.UIRequired, true) };
+        }
+
+        private IEnumerable<KeyValuePair<string, object>> HandleCsdPropertyAttribute(MemberInfo mi)
+        {
+            if (mi == null)
+                return null;
+            var attribute = mi.GetCustomAttribute<CsdlPropertyAttribute>(true);
+            if (attribute == null)
+                return null;
+            var data = new List<KeyValuePair<string, object>>();
+            if (attribute.ReadOnly) // The default is false, so no reason to include this if it is the default 
+                data.Add(new KeyValuePair<string, object>(Constants.UIReadOnly, attribute.ReadOnly));
+            if (attribute.RequiredSet) // Make sure the Required property is set
+                data.Add(new KeyValuePair<string, object>(Constants.UIRequired, attribute.Required));
+            if (!string.IsNullOrWhiteSpace(attribute.UIHint))
+                data.Add(new KeyValuePair<string, object>(Constants.UIHint, attribute.UIHint));
+            if (attribute.MinLength > 0)
+                data.Add(new KeyValuePair<string, object>(Constants.UIMinLength, attribute.MinLength));
+            if (attribute.MaxLength > 0)
+                data.Add(new KeyValuePair<string, object>(Constants.UIMaxLength, attribute.MaxLength));
+            return data;
+        }
+
+        private IEnumerable<KeyValuePair<string, object>> GetMinLengthProperty(MemberInfo mi)
+        {
+            if (mi == null)
+                return null;
+            var attribute = mi.GetCustomAttribute<MinLengthAttribute>(true);
+            if (attribute == null)
+                return null;
+            return new[] { new KeyValuePair<string, object>(Constants.UIMinLength, attribute.Length) };
+        }
+
+        private IEnumerable<KeyValuePair<string, object>> GetMaxLengthProperty(MemberInfo mi)
+        {
+            if (mi == null)
+                return null;
+            var attribute = mi.GetCustomAttribute<MaxLengthAttribute>(true);
+            if (attribute == null)
+                return null;
+            return new[] { new KeyValuePair<string, object>(Constants.UIMaxLength, attribute.Length) };
+        }
+
+        private IEnumerable<KeyValuePair<string, object>> GetStringLengthProperty(MemberInfo mi)
+        {
+            if (mi == null)
+                return null;
+            var attribute = mi.GetCustomAttribute<StringLengthAttribute>(true);
+            if (attribute == null)
+                return null;
+            return new[] 
+            { 
+                new KeyValuePair<string, object>(Constants.UIMinLength, attribute.MinimumLength),
+                new KeyValuePair<string, object>(Constants.UIMaxLength, attribute.MaximumLength)
+            };
+        }
+
+        private IEnumerable<KeyValuePair<string, object>> GetRangeProperty(MemberInfo mi)
+        {
+
+            if (mi == null)
+                return null;
+            var attribute = mi.GetCustomAttribute<RangeAttribute>(true);
+            if (attribute == null)
+                return null;
+            return new[] { new KeyValuePair<string, object>(Constants.UIRange, new { attribute.Minimum, attribute.Maximum }) };
+        }
+
+        private IEnumerable<KeyValuePair<string, object>> GetUIHintProperty(MemberInfo mi)
+        {
+            if (mi == null)
+                return null;
+            var attribute = mi.GetCustomAttribute<UIHintAttribute>(true);
+            if (attribute == null)
+                return null;
+            return new[] { new KeyValuePair<string, object>(Constants.UIMaxLength, attribute.UIHint) };
         }
     }
 }
