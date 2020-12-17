@@ -125,6 +125,19 @@ namespace Rhyous.Odata.Csdl.Tests
         }
 
         [TestMethod]
+        public void CsdlExtensions_ToCsdl_EntityWithDisplayFilter_Tests()
+        {
+            // Arrange
+            Type type = typeof(EntityWithDisplayCondition);
+
+            // Act
+            var csdl = type.ToCsdl();
+
+            // Assert
+            Assert.AreEqual("Type eq 1", (csdl.Properties["Type"] as CsdlNavigationProperty).CustomData["@Odata.DisplayCondition"]);
+        }
+
+        [TestMethod]
         public void CsdlExtensions_ToCsdl_TwoAttributesExists_OneWithAlias_Test()
         {
             // Arrange

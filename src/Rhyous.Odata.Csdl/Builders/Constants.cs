@@ -13,6 +13,7 @@
         public const string Local = "Local";
         public const string Mapping = "Mapping";
         public const string NavigationKey = "$NavigationKey";
+        public const string OdataDisplayCondition = "@Odata.DisplayCondition";
         public const string OdataFilter = "@Odata.Filter";
         public const string UIHint = "@UI.Hint";
         public const string UIMinLength = "@UI.MinLength";
