@@ -31,6 +31,7 @@ namespace Rhyous.Odata.Csdl
             mergedAttribute.RelatedEntityAlias = string.IsNullOrWhiteSpace(re1.RelatedEntityAlias) ? re2.RelatedEntityAlias : re1.RelatedEntityAlias;
             mergedAttribute.GetAll = re1.GetAll || re2.GetAll;
             mergedAttribute.AutoExpand = re1.AutoExpand || re2.AutoExpand;
+            mergedAttribute.DisplayCondition = string.IsNullOrWhiteSpace(re1.DisplayCondition) ? re2.DisplayCondition : re1.DisplayCondition;
             mergedAttribute.Filter = string.IsNullOrWhiteSpace(re1.Filter) ? re2.Filter : re1.Filter;
             mergedAttribute.ForeignKeyProperty = GetForeignKey(re1.ForeignKeyProperty, re2.ForeignKeyProperty);
             mergedAttribute.ForeignKeyType = re1.ForeignKeyType ?? re2.ForeignKeyType;

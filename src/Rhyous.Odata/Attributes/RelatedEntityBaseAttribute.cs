@@ -18,6 +18,8 @@ namespace Rhyous.Odata
         public virtual bool AutoExpand { get; set; }
         /// <inheritdoc />
         public virtual string Filter { get; set; }
+        /// <inheritdoc />
+        public virtual string DisplayCondition { get; set; }
 
     }
 }

@@ -51,5 +51,14 @@
         /// Do not include the "$Filter=" prefix. It is the callers responsiblity to enforce use this.
         /// </summary>
         string Filter { get; set; }
+        /// <summary>
+        /// The ability to enforce a condition on a related entity that determines if the UI should display
+        /// the related entity. For example, imagine that an entity has a TypeId and the related entity only
+        /// exists for a certain type. You can put the following Odata filter here:
+        ///   TypeId eq 3
+        /// Do not include the "$Filter=" prefix. It is the callers responsiblity to enforce use this.
+        /// If not DisplayCondition is provided, it should display by default.
+        /// </summary>
+        string DisplayCondition { get; set; }
     }
 }
