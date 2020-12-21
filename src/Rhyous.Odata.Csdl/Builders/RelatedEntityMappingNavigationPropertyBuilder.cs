@@ -30,6 +30,11 @@ namespace Rhyous.Odata.Csdl
                 navProp.CustomData.Add(Constants.EAFMappingEntityAlias, relatedEntityAttribute.MappingEntityAlias);
             if (!string.IsNullOrWhiteSpace(relatedEntityAttribute.EntityAlias) && relatedEntityAttribute.EntityAlias != relatedEntityAttribute.Entity)
                 navProp.CustomData.Add(Constants.EAFEntityAlias, relatedEntityAttribute.EntityAlias);
+            if (!string.IsNullOrWhiteSpace(relatedEntityAttribute.Filter))
+                navProp.CustomData.Add(Constants.OdataFilter, relatedEntityAttribute.Filter);
+            if (!string.IsNullOrWhiteSpace(relatedEntityAttribute.DisplayCondition))
+                navProp.CustomData.Add(Constants.OdataDisplayCondition, relatedEntityAttribute.DisplayCondition);
+
             return navProp;
         }
     }

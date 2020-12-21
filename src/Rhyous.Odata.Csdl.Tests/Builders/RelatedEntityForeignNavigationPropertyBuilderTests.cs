@@ -49,7 +49,9 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
             // Arrange
             var funcs = new FuncList<string, string>();
             var unitUnderTest = new RelatedEntityForeignNavigationPropertyBuilder(funcs);
-            var relatedEntityAttribute = new RelatedEntityForeignAttribute("Entity2", "Entity1", "CustomProp");
+            const string filter = "A eq 1";
+            const string displayCondition = "B eq 2";
+            var relatedEntityAttribute = new RelatedEntityForeignAttribute("Entity2", "Entity1", "CustomProp") { Filter = filter, DisplayCondition = displayCondition };
 
             // Act
             var result = unitUnderTest.Build(relatedEntityAttribute);
@@ -57,6 +59,10 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
             // Assert
             Assert.IsTrue(result.CustomData.TryGetValue(Constants.EAFRelatedEntityForeignKeyProperty, out object prop));
             Assert.AreEqual(prop, "CustomProp");
+            Assert.IsTrue(result.CustomData.TryGetValue(Constants.OdataFilter, out object odataFilter));
+            Assert.AreEqual(odataFilter, filter);
+            Assert.IsTrue(result.CustomData.TryGetValue(Constants.OdataDisplayCondition, out object odataDisplayCondition));
+            Assert.AreEqual(odataDisplayCondition, displayCondition);
         }
 
         [TestMethod]

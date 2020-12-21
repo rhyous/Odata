@@ -53,7 +53,7 @@ namespace Rhyous.Odata.Csdl
             {
                 if (attributeActionDictionary.TryGetValue(attrib.GetType(), out Func<MemberInfo, IEnumerable<KeyValuePair<string, object>>> action))
                 {
-                    var propertyList = action.Invoke(mi);
+                    var propertyList = action(mi);
                     foreach (var prop in propertyList)
                     {
                         // Don't add an attribute if already added.
