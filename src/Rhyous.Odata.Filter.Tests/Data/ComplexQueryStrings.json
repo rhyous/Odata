@@ -179,5 +179,11 @@
     "Value": "\"Name eq 'Marco Polo'\"",
     "Expected": "e => (e.Name == \"Marco Polo\")",
     "Message": "Expression should result in this expression: {0}. 1. The quotes around the entire expression are removed."
+  },
+  {
+    "Description": "Entire expression quoted",
+    "Value": "\"Name eq 'A & B, Inc.'\"",
+    "Expected": "e => (e.Name == \"A & B, Inc.\")",
+    "Message": "Expression should result in this expression: {0}. 1. The quotes around the entire expression are removed."
   }
 ]

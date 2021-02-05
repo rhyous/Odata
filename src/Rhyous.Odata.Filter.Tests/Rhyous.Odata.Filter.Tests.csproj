@@ -25,17 +25,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Properties\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Rhyous.Odata\Rhyous.Odata.csproj" />
     <ProjectReference Include="..\Rhyous.Odata.Filter\Rhyous.Odata.Filter.csproj" />
     <ProjectReference Include="..\Rhyous.Odata.Tests.Models\Rhyous.Odata.Tests.Models.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Properties\" />
   </ItemGroup>
 
   <ItemGroup>
