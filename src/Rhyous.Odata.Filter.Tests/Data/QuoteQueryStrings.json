@@ -1,0 +1,32 @@
+[
+  {
+    "Name": "Search for two single quotes",
+    "Value": "\"Name eq ''''\"",
+    "Expected": "e => (e.Name == \"''\")",
+    "Message": "Expression should result in this expression: {0}. 1. This should search for 1 single quote."
+  },
+  {
+    "Name": "Search for one single quote, unquoted",
+    "Value": "\"Name eq ''\"",
+    "Expected": "e => (e.Name == \"'\")",
+    "Message": "Expression should result in this expression: {0}. 1. This should search for 1 single quote."
+  },
+  //{
+  //  "Name": "Search for one double quote, not escaped not single-quoted.",
+  //  "Value": "\"Name eq \"\"",
+  //  "Expected": "e => (e.Name == \"\"\")",
+  //  "Message": "Expression should result in this expression: {0}. 1. This should search for 1 single quote."
+  //},
+  //{
+  //  "Name": "Search for one double quote, not escaped and single-quoted.",
+  //  "Value": "\"Name eq '\"'\"",
+  //  "Expected": "e => (e.Name == \"\"\")",
+  //  "Message": "Expression should result in this expression: {0}. 1. This should search for 1 single quote."
+  //},
+  {
+    "Name": "Search for one double quote, escaped and single-quoted.",
+    "Value": "\"Name eq '\"\"'\"",
+    "Expected": "e => (e.Name == \"\"\")",
+    "Message": "Expression should result in this expression: {0}. 1. This should search for 1 single quote."
+  }
+]

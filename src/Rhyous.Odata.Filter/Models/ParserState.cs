@@ -9,7 +9,7 @@ namespace Rhyous.Odata
     {
         public ParserState(string str) { FilterString = str; }
 
-        public String FilterString;
+        public string FilterString;
         public int CharIndex = 0;
         public char Char { get { return FilterString[CharIndex]; } }
         public char? NextChar

@@ -32,7 +32,7 @@ namespace Rhyous.Odata
             _CloseChar = closeChar;
         }
 
-        public Char? WrapChar
+        public char? WrapChar
         {
             get
             {
