@@ -10,17 +10,18 @@ namespace Rhyous.Odata
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
     public class RelatedEntityAttribute : RelatedEntityBaseAttribute
     {
-        public const string DefaultForeignKey = "Id";
+        public const string DefaultForeignKey = Constants.DefaultIdProperty;
+        public static readonly Type DefaultForeignKeyType = typeof(int);
 
-        public RelatedEntityAttribute(string relatedEntity, [Optional] string foreignKeyProperty, [Optional] Type foreignKeyType, [Optional] bool autoExpand, [CallerMemberName]string property = null)
+        public RelatedEntityAttribute(string relatedEntity, [Optional] string foreignKeyProperty, [Optional] Type foreignKeyType, [Optional] bool autoExpand, [CallerMemberName] string property = null)
         {
             RelatedEntity = relatedEntity;
             ForeignKeyProperty = string.IsNullOrWhiteSpace(foreignKeyProperty) ? DefaultForeignKey : foreignKeyProperty;
-            foreignKeyType = foreignKeyType ?? typeof(int);
+            ForeignKeyType = foreignKeyType ?? DefaultForeignKeyType;
             AutoExpand = autoExpand;
             Property = property;
         }
-        
+
         /// <summary>
         /// The name of the property identifier on the related entity.
         /// This key property is usually "Id", but could be an AlternateKey property.
@@ -32,7 +33,7 @@ namespace Rhyous.Odata
         /// This type is usually the type of the key property "Id", but could be an AlternateKey property's type.
         /// </summary>
         public Type ForeignKeyType { get; set; }
-        
+
         /// <summary>
         /// The name of the Property this attribute decorates.
         /// [CallerMemberName] should take care of setting this.
@@ -59,7 +60,7 @@ namespace Rhyous.Odata
         /// </summary>
         /// <remarks>When using this value, Nullable should be false and RelatedEntityMustExist should be true.
         /// Do not use this to allow NULL, but instead make this attribute nullable and set RelatedEntityMustExist
-        /// to false.</remarks>
+        /// to false. This value will be the default value in metadata.</remarks>
         public object AllowedNonExistentValue { get; set; }
     }
 }
