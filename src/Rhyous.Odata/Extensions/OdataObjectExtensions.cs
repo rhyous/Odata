@@ -54,6 +54,35 @@ namespace Rhyous.Odata
             return re;
         }
 
+        public static OdataObject<TEntity, TId> ToOdataObject<TEntity, TId>(this OdataObject obj)
+            where TId : IComparable<TId>, IComparable, IEquatable<TId>
+        {
+            if (obj == null)
+                return null;
+            var retObj = new OdataObject<TEntity, TId>();
+            retObj.Id = obj.Id.To<TId>();
+            retObj.IdProperty = obj.IdProperty;
+            retObj.Object = JsonConvert.DeserializeObject<TEntity>(obj.Object.ToString());
+            retObj.PropertyUris = obj.PropertyUris;
+            retObj.RelatedEntityCollection = obj.RelatedEntityCollection;
+            retObj.Uri = obj.Uri;
+            return retObj;
+        }
+
+        public static OdataObject ToOdataObject(this OdataObject<JRaw, string> obj)
+        {
+            if (obj == null)
+                return null;
+            var retObj = new OdataObject();
+            retObj.Id = obj.Id;
+            retObj.IdProperty = obj.IdProperty;
+            retObj.Object = obj.Object;
+            retObj.PropertyUris = obj.PropertyUris;
+            retObj.RelatedEntityCollection = obj.RelatedEntityCollection;
+            retObj.Uri = obj.Uri;
+            return retObj;
+        }
+
         public static OdataObject<TEntity, TId> ToOdataObject<TEntity, TId>(this OdataObject<JRaw, string> obj)
             where TId : IComparable<TId>, IComparable, IEquatable<TId>
         {
