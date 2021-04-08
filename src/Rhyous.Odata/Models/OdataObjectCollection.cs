@@ -13,7 +13,8 @@ namespace Rhyous.Odata
     /// <typeparam name="TEntity">The entity type.</typeparam>
     [JsonObject]
     [DataContract]
-    public class OdataObjectCollection<TEntity, TId> : OdataObjectCollectionBase, IList<OdataObject<TEntity, TId>>
+    public class OdataObjectCollection<TEntity, TId> : OdataObjectCollectionBase,
+                                                       IList<OdataObject<TEntity, TId>>
     {
         public OdataObjectCollection() : base(typeof(TEntity).Name) { }
 

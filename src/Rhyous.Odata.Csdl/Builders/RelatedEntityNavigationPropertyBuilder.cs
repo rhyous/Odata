@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Rhyous.Collections;
+using System.Collections.Generic;
 
 namespace Rhyous.Odata.Csdl
 {
@@ -23,9 +24,13 @@ namespace Rhyous.Odata.Csdl
                 ReferentialConstraint = new Dictionary<string, string> { { relatedEntityAttribute.Property, relatedEntityAttribute.ForeignKeyProperty } }
             };
             if (!string.IsNullOrWhiteSpace(relatedEntityAttribute.Filter))
-                navProp.CustomData.Add(Constants.OdataFilter, relatedEntityAttribute.Filter);
+                navProp.CustomData.AddIfNew(Constants.OdataFilter, relatedEntityAttribute.Filter);
             if (!string.IsNullOrWhiteSpace(relatedEntityAttribute.DisplayCondition))
-                navProp.CustomData.Add(Constants.OdataDisplayCondition, relatedEntityAttribute.DisplayCondition);
+                navProp.CustomData.AddIfNew(Constants.OdataDisplayCondition, relatedEntityAttribute.DisplayCondition);
+            if (relatedEntityAttribute.Nullable)
+                navProp.CustomData.AddIfNew(Constants.DefaultValue, null);
+            if (relatedEntityAttribute.AllowedNonExistentValue != null)
+                navProp.CustomData.AddOrReplace(Constants.DefaultValue, relatedEntityAttribute.AllowedNonExistentValue);
             return navProp;
         }
     }

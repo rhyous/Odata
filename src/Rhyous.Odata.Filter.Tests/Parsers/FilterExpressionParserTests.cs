@@ -77,6 +77,23 @@ namespace Rhyous.Odata.Tests.Parsers
         }
 
         [TestMethod]
+        [JsonTestDataSource(typeof(List<Row<string>>), @"Data\QuoteQueryStrings.json")]
+        public void FilterExpressionParser_ComplexFilterParser_Quotes_Tests(Row<string> row)
+        {
+            // Arrange
+            var filterstring = row.Value;
+            var expected = row.Expected;
+            var message = row.Message;
+            var parser = new FilterExpressionParser<Entity1>();
+
+            // Act
+            var actual = parser.Parse(filterstring);
+
+            // Assert
+            Assert.AreEqual(expected, actual.ToString(), message);
+        }
+
+        [TestMethod]
         [JsonTestDataSource(typeof(List<Row<string>>), @"Data\GroupedQueryStrings.json")]
         public void FilterExpressionParser_GroupedFilterParserTests(Row<string> row)
         {

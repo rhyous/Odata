@@ -1,7 +1,9 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Rhyous.Collections;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Serialization;
 
 namespace Rhyous.Odata
@@ -42,7 +44,7 @@ namespace Rhyous.Odata
         [JsonIgnore]
         [IgnoreDataMember]
         public object Parent { get; set; }
-        
+
         #region IList implementation
         public int Count => RelatedEntities.Count;
 
@@ -74,6 +76,25 @@ namespace Rhyous.Odata
         public IEnumerator<RelatedEntity> GetEnumerator() => RelatedEntities.GetEnumerator();
 
         IEnumerator IEnumerable.GetEnumerator() => RelatedEntities.GetEnumerator();
+        #endregion
+
+        #region Implicit Operator
+        /// <summary>
+        /// This will convert an ODataObjectCollection to a RelatedEntityCollection, but it won't know
+        /// which Entity or EntityId it is related to and so these properties shoudl be set.
+        /// </summary>
+        /// <param name="c"></param>
+        public static implicit operator OdataObjectCollection(RelatedEntityCollection c)
+        {
+            if (c == null)
+                return null;
+            var rec = new OdataObjectCollection()
+            {
+                Entity = c.RelatedEntity
+            };
+            rec.Entities.AddRange(c.RelatedEntities.Select(e => (OdataObject)e));
+            return rec;
+        }
         #endregion
     }
 }

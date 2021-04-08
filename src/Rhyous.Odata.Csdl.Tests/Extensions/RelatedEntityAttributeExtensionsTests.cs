@@ -153,16 +153,16 @@ namespace Rhyous.Odata.Csdl.Tests.Extensions
         }
         #endregion
 
-        #region GetForeignKey
+        #region GetValue
         [TestMethod]
-        public void RelatedEntityAttribute_GetForeignKey_BothEmpty_Test()
+        public void RelatedEntityAttribute_GetValue_BothEmpty_Test()
         {
             // Arrange
             string l = "";
             string r = "";
 
             // Act
-            var actual = RelatedEntityAttributeExtensions.GetForeignKey(l, r);
+            var actual = RelatedEntityAttributeExtensions.GetValue(l, r, Constants.Id, string.IsNullOrWhiteSpace);
 
             // Assert
             Assert.AreEqual(Constants.Id, actual);
@@ -170,56 +170,56 @@ namespace Rhyous.Odata.Csdl.Tests.Extensions
 
 
         [TestMethod]
-        public void RelatedEntityAttribute_GetForeignKey_LeftEmtpy_Test()
+        public void RelatedEntityAttribute_GetValue_LeftEmpty_Test()
         {
             // Arrange
             string l = "";
             string r = "A";
 
             // Act
-            var actual = RelatedEntityAttributeExtensions.GetForeignKey(l, r);
+            var actual = RelatedEntityAttributeExtensions.GetValue(l, r, "x", string.IsNullOrWhiteSpace);
 
             // Assert
             Assert.AreEqual("A", actual);
         }
 
         [TestMethod]
-        public void RelatedEntityAttribute_GetForeignKey_RightEmtpy_Test()
+        public void RelatedEntityAttribute_GetValue_RightEmtpy_Test()
         {
             // Arrange
             string l = "A";
             string r = "";
 
             // Act
-            var actual = RelatedEntityAttributeExtensions.GetForeignKey(l, r);
+            var actual = RelatedEntityAttributeExtensions.GetValue(l, r, "x");
 
             // Assert
             Assert.AreEqual("A", actual);
         }
 
         [TestMethod]
-        public void RelatedEntityAttribute_GetForeignKey_LeftId_Test()
+        public void RelatedEntityAttribute_GetValue_LeftId_Test()
         {
             // Arrange
             string l = "Id";
             string r = "OtherId";
 
             // Act
-            var actual = RelatedEntityAttributeExtensions.GetForeignKey(l, r);
+            var actual = RelatedEntityAttributeExtensions.GetValue(l, r, l, string.IsNullOrWhiteSpace);
 
             // Assert
             Assert.AreEqual("OtherId", actual);
         }
 
         [TestMethod]
-        public void RelatedEntityAttribute_GetForeignKey_RightId_Test()
+        public void RelatedEntityAttribute_GetValue_RightId_Test()
         {
             // Arrange
             string l = "OtherId";
             string r = "Id";
 
             // Act
-            var actual = RelatedEntityAttributeExtensions.GetForeignKey(l, r);
+            var actual = RelatedEntityAttributeExtensions.GetValue(l, r, "x");
 
             // Assert
             Assert.AreEqual("OtherId", actual);

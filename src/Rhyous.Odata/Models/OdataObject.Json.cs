@@ -89,6 +89,16 @@ namespace Rhyous.Odata
         {
             return o?.AsRelatedEntity();
         }
+
+        public static implicit operator OdataObject(OdataObject<JRaw, string> o)
+        {
+            var odataObject = new OdataObject 
+            {
+                Id = o.Id,
+                Object = o.Object
+            };
+            return odataObject;
+        }
         #endregion
     }
 }

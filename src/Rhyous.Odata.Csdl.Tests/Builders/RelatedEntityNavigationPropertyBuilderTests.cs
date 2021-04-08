@@ -42,5 +42,29 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
             Assert.IsFalse(result.IsCollection);
             Assert.IsFalse(result.Nullable);
         }
+
+
+        [TestMethod]
+        public void RelatedEntityNavigationPropertyBuilder_Build_ValidAttribute_RelatedEntityMustExistFalse_NullableTrue_Test()
+        {
+            // Arrange
+            var funcs = new FuncList<string, string>();
+            var unitUnderTest = new RelatedEntityNavigationPropertyBuilder(funcs);
+            var relatedEntityAttribute = new RelatedEntityAttribute("Entity2")
+            {
+                RelatedEntityMustExist = false,
+                Nullable = true
+            };
+
+            // Act
+            var result = unitUnderTest.Build(relatedEntityAttribute);
+
+            // Assert
+            Assert.IsTrue(result is CsdlNavigationProperty);
+            Assert.AreEqual("self.Entity2", result.Type);
+            Assert.AreEqual("NavigationProperty", result.Kind);
+            Assert.IsFalse(result.IsCollection);
+            Assert.IsTrue(result.Nullable);
+        }
     }
 }
