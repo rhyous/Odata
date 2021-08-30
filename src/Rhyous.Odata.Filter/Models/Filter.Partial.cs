@@ -61,6 +61,11 @@ namespace Rhyous.Odata
             }
             else
             {
+                if (filter.Method.StartsWith("not", StringComparison.OrdinalIgnoreCase))
+                {
+                    filter.Not = true;
+                    filter.Method = filter.Method.Substring(3);
+                }
                 var methodInfo = propType.GetMethod(filter.Method, MethodFlags, null, new[] { propType }, null);
                 if (methodInfo == null)
                     throw new InvalidTypeMethodException(propType, filter.Method);
