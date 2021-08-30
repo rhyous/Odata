@@ -5,15 +5,32 @@
     "Message": "Expression should result in this expression: {0}."
   },
   {
+    "Value": "notcontains(Name,are)",
+    "Expected": "e => Not(e.Name.Contains(\"are\"))",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
     "Description": "String EndsWith",
     "Value": "endswith(Name,ared)",
     "Expected": "e => e.Name.EndsWith(\"ared\")",
     "Message": "Expression should result in this expression: {0}."
   },
   {
+    "Description": "String EndsWith",
+    "Value": "notendswith(Name,ared)",
+    "Expected": "e => Not(e.Name.EndsWith(\"ared\"))",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
     "Description": "String StartsWith",
     "Value": "startswith(Name,jare)",
     "Expected": "e => e.Name.StartsWith(\"jare\")",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Description": "String StartsWith",
+    "Value": "notstartswith(Name,jare)",
+    "Expected": "e => Not(e.Name.StartsWith(\"jare\"))",
     "Message": "Expression should result in this expression: {0}."
   },
   {
