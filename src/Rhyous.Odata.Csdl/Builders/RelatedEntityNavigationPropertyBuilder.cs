@@ -28,9 +28,15 @@ namespace Rhyous.Odata.Csdl
             if (!string.IsNullOrWhiteSpace(relatedEntityAttribute.DisplayCondition))
                 navProp.CustomData.AddIfNew(Constants.OdataDisplayCondition, relatedEntityAttribute.DisplayCondition);
             if (relatedEntityAttribute.Nullable)
-                navProp.CustomData.AddIfNew(Constants.DefaultValue, null);
+                navProp.CustomData.AddIfNew(Constants.Default, null);
             if (relatedEntityAttribute.AllowedNonExistentValue != null)
-                navProp.CustomData.AddOrReplace(Constants.DefaultValue, relatedEntityAttribute.AllowedNonExistentValue);
+            {
+                navProp.CustomData.AddOrReplace(Constants.Default, new CsdlNameValue
+                {
+                    Name = relatedEntityAttribute.AllowedNonExistentValueName,
+                    Value = relatedEntityAttribute.AllowedNonExistentValue
+                });
+            }
             return navProp;
         }
     }

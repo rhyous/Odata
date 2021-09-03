@@ -3,7 +3,7 @@
     public class Constants
     {
         public const string DefaultSchemaOrAlias = "self";
-        public const string DefaultValue = "$DefaultValue";
+        public const string Default = "$Default";
         public const string EAFEntityAlias = "@EAF.Entity.Alias";
         public const string EAFRelatedEntityType = "@EAF.RelatedEntity.Type";
         public const string EAFRelatedEntityForeignKeyProperty = "@EAF.RelatedEntity.ForeignKeyProperty";
