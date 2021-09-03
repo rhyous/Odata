@@ -62,5 +62,10 @@ namespace Rhyous.Odata
         /// Do not use this to allow NULL, but instead make this attribute nullable and set RelatedEntityMustExist
         /// to false. This value will be the default value in metadata.</remarks>
         public object AllowedNonExistentValue { get; set; }
+        /// <summary>
+        /// A name for an allowed non existant value. This is by default called "Default" but can be changed.
+        /// </summary>
+        /// <remarks>This allows for a name value pair, the default value, to be included in drop down lists.</remarks>
+        public string AllowedNonExistentValueName { get; set; } = "Default";
     }
 }

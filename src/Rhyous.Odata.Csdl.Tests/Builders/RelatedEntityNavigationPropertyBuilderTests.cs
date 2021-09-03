@@ -85,7 +85,35 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
             Assert.IsTrue(result is CsdlNavigationProperty);
             Assert.AreEqual("self.Entity2", result.Type);
             Assert.AreEqual("NavigationProperty", result.Kind);
-            Assert.AreEqual(0, result.CustomData[Constants.DefaultValue]);
+            var defaultValue = result.CustomData[Constants.Default] as CsdlNameValue;
+            Assert.AreEqual(relatedEntityAttribute.AllowedNonExistentValue, defaultValue.Value);
+            Assert.AreEqual(relatedEntityAttribute.AllowedNonExistentValueName, defaultValue.Name);
+            Assert.IsFalse(result.IsCollection);
+            Assert.IsFalse(result.Nullable);
+        }
+
+        [TestMethod]
+        public void RelatedEntityNavigationPropertyBuilder_Build_ValidAttribute_AllowNonExistantValue_Renamed_Test()
+        {
+            // Arrange
+            var funcs = new FuncList<string, string>();
+            var unitUnderTest = new RelatedEntityNavigationPropertyBuilder(funcs);
+            var relatedEntityAttribute = new RelatedEntityAttribute("Entity2")
+            {
+                AllowedNonExistentValue = 0,
+                AllowedNonExistentValueName = "All"
+            };
+
+            // Act
+            var result = unitUnderTest.Build(relatedEntityAttribute);
+
+            // Assert
+            Assert.IsTrue(result is CsdlNavigationProperty);
+            Assert.AreEqual("self.Entity2", result.Type);
+            Assert.AreEqual("NavigationProperty", result.Kind);
+            var defaultValue = result.CustomData[Constants.Default] as CsdlNameValue;
+            Assert.AreEqual(relatedEntityAttribute.AllowedNonExistentValue, defaultValue.Value);
+            Assert.AreEqual(relatedEntityAttribute.AllowedNonExistentValueName, defaultValue.Name);
             Assert.IsFalse(result.IsCollection);
             Assert.IsFalse(result.Nullable);
         }
