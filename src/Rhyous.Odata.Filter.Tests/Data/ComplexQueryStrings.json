@@ -18,13 +18,13 @@
     "Message": "Expression should result in this expression: {0}. 3."
   },
   {
-    "Name": "And then Or  no paranthesis",
+    "Name": "And then Or, no paranthesis",
     "Value": "Id eq 1 and Name eq 'Jared Barneck' or Name eq 'Jared Abram Barneck'",
     "Expected": "e => (((e.Id == 1) AndAlso (e.Name == \"Jared Barneck\")) OrElse (e.Name == \"Jared Abram Barneck\"))",
     "Message": "Expression should result in this expression: {0}. 4."
   },
   {
-    "Name": " Or then And no paranthesis",
+    "Name": " Or then And, no paranthesis",
     "Value": "Name eq 'Jared Barneck' or Name eq 'Jared Abram Barneck' and Id eq 1",
     "Expected": "e => ((e.Name == \"Jared Barneck\") OrElse ((e.Name == \"Jared Abram Barneck\") AndAlso (e.Id == 1)))",
     "Message": "Expression should result in this expression: {0}. This is to test AND has precendence. 5."
@@ -36,7 +36,7 @@
     "Message": "Expression should result in this expression: {0}. This is to test AND has precendence. 6."
   },
   {
-    "Name":  "And Or And",
+    "Name": "And Or And",
     "Value": "Id eq 1 and Name eq Jared or Id eq 2 and Name eq Elih",
     "Expected": "e => (((e.Id == 1) AndAlso (e.Name == \"Jared\")) OrElse ((e.Id == 2) AndAlso (e.Name == \"Elih\")))",
     "Message": "Expression should result in this expression: {0}. 7."
@@ -72,7 +72,7 @@
     "Message": "Expression should result in this expression: {0}. 4."
   },
   {
-    "Name": " Or then And no paranthesis",
+    "Name": " Or then And, O'Brien, no paranthesis",
     "Value": "Name eq 'O''Brien Barneck' or Name eq 'O''Brien Abram Barneck' and Id eq 1",
     "Expected": "e => ((e.Name == \"O'Brien Barneck\") OrElse ((e.Name == \"O'Brien Abram Barneck\") AndAlso (e.Id == 1)))",
     "Message": "Expression should result in this expression: {0}. This is to test AND has precendence. 5."
@@ -94,38 +94,44 @@
     "Message": "Expression should result in this expression: {0}. 8."
   },
   {
-    "Name": "String value has embedded quotes escaped by two quotes ",
-    "Value": "Name eq 'Jared \"\"Rhyous\"\" Barneck'",
+    "Name": "String value has embedded surround dobule quotes with inner double quotes escaped",
+    "Value": "Name eq \"Jared \"\"Rhyous\"\" Barneck\"",
     "Expected": "e => (e.Name == \"Jared \"Rhyous\" Barneck\")",
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Name": "Or",
-    "Value": "Name eq 'Jared \"\"Rhyous\"\" Barneck' or Name eq 'Jared \"\"Rhyous\"\" Abram Barneck'",
+    "Name": "String value has embedded quotes not escaped",
+    "Value": "Name eq 'Jared \"Rhyous\" Barneck'",
+    "Expected": "e => (e.Name == \"Jared \"Rhyous\" Barneck\")",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Name": "Or, 2 expressions",
+    "Value": "Name eq 'Jared \"Rhyous\" Barneck' or Name eq 'Jared \"Rhyous\" Abram Barneck'",
     "Expected": "e => ((e.Name == \"Jared \"Rhyous\" Barneck\") OrElse (e.Name == \"Jared \"Rhyous\" Abram Barneck\"))",
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Name": "And",
-    "Value": "Id eq 1 and Name eq 'Jared \"\"Rhyous\"\" Barneck'",
+    "Name": "And, 2 expressions",
+    "Value": "Id eq 1 and Name eq 'Jared \"Rhyous\" Barneck'",
     "Expected": "e => ((e.Id == 1) AndAlso (e.Name == \"Jared \"Rhyous\" Barneck\"))",
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Name": "And then Or  no paranthesis",
-    "Value": "Id eq 1 and Name eq 'Jared \"\"Rhyous\"\" Barneck' or Name eq 'Jared \"\"Rhyous\"\" Abram Barneck'",
+    "Name": "And then Or, no paranthesis, 3 expressions, Id at start",
+    "Value": "Id eq 1 and Name eq 'Jared \"Rhyous\" Barneck' or Name eq 'Jared \"Rhyous\" Abram Barneck'",
     "Expected": "e => (((e.Id == 1) AndAlso (e.Name == \"Jared \"Rhyous\" Barneck\")) OrElse (e.Name == \"Jared \"Rhyous\" Abram Barneck\"))",
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Name": " Or then And no paranthesis",
-    "Value": "Name eq 'Jared \"\"Rhyous\"\" Barneck' or Name eq 'Jared \"\"Rhyous\"\" Abram Barneck' and Id eq 1",
+    "Name": " Or then And, no paranthesis, 3 expressions, Id at end",
+    "Value": "Name eq 'Jared \"Rhyous\" Barneck' or Name eq 'Jared \"Rhyous\" Abram Barneck' and Id eq 1",
     "Expected": "e => ((e.Name == \"Jared \"Rhyous\" Barneck\") OrElse ((e.Name == \"Jared \"Rhyous\" Abram Barneck\") AndAlso (e.Id == 1)))",
     "Message": "Expression should result in this expression: {0}. This is to test AND has precendence."
   },
   {
     "Name": " Or with a string method",
-    "Value": "Name eq 'Jared \"\"Rhyous\"\" Barneck' or contains(Name, 'Jared') and Id eq 1",
+    "Value": "Name eq 'Jared \"Rhyous\" Barneck' or contains(Name, 'Jared') and Id eq 1",
     "Expected": "e => ((e.Name == \"Jared \"Rhyous\" Barneck\") OrElse (e.Name.Contains(\"Jared\") AndAlso (e.Id == 1)))",
     "Message": "Expression should result in this expression: {0}. This is to test AND has precendence. "
   },
@@ -141,7 +147,7 @@
     "Message": "Expression should result in this expression: {0}. 2."
   },
   {
-    "Value": "Name eq \"''NStuff\"",
+    "Value": "Name eq \"'NStuff\"",
     "Expected": "e => (e.Name == \"'NStuff\")",
     "Message": "Expression should result in this expression: {0}. 3."
   },
@@ -157,9 +163,14 @@
     "Message": "Expression should result in this expression: {0}. 2."
   },
   {
-    "Value": "Name eq \"Runnin''\"",
+    "Value": "Name eq \"Runnin'\"",
     "Expected": "e => (e.Name == \"Runnin'\")",
     "Message": "Expression should result in this expression: {0}. 3."
+  },
+  {
+    "Value": "((Name eq Runnin) or (Name eq Runnin'))",
+    "Expected": "e => ((e.Name == \"Runnin\") OrElse (e.Name == \"Runnin'\"))",
+    "Message": "Expression should result in this expression: {0}. 4."
   },
   {
     "Name": "String value has starting and ending quotes escaped by two quotes. Example: Company name: Runnin' ",
@@ -173,7 +184,7 @@
     "Message": "Expression should result in this expression: {0}. 2."
   },
   {
-    "Value": "Name eq \"''Runnin''\"",
+    "Value": "Name eq \"'Runnin'\"",
     "Expected": "e => (e.Name == \"'Runnin'\")",
     "Message": "Expression should result in this expression: {0}. 3."
   },

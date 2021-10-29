@@ -10,31 +10,31 @@
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Description": "String EndsWith",
+    "Name": "String EndsWith",
     "Value": "endswith(Name,ared)",
     "Expected": "e => e.Name.EndsWith(\"ared\")",
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Description": "String EndsWith",
+    "Name": "String EndsWith",
     "Value": "notendswith(Name,ared)",
     "Expected": "e => Not(e.Name.EndsWith(\"ared\"))",
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Description": "String StartsWith",
+    "Name": "String StartsWith",
     "Value": "startswith(Name,jare)",
     "Expected": "e => e.Name.StartsWith(\"jare\")",
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Description": "String StartsWith",
+    "Name": "String StartsWith",
     "Value": "notstartswith(Name,jare)",
     "Expected": "e => Not(e.Name.StartsWith(\"jare\"))",
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Description": "Integer as if it were a string",
+    "Name": "Integer as if it were a string",
     "Value": "StartsWith(Id,10)",
     "Expected": "e => e.Id.ToString().StartsWith(\"10\")",
     "Message": "Expression should result in this expression: {0}."
@@ -50,25 +50,25 @@
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Description": "String Contains with Single Quote",
+    "Name": "String Contains with Single Quote",
     "Value": "contains(Name,'are')",
     "Expected": "e => e.Name.Contains(\"are\")",
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Description": "String EndsWith",
+    "Name": "String EndsWith",
     "Value": "endswith(Name,'ared')",
     "Expected": "e => e.Name.EndsWith(\"ared\")",
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Description": "String StartsWith",
+    "Name": "String StartsWith",
     "Value": "startswith(Name,'jare')",
     "Expected": "e => e.Name.StartsWith(\"jare\")",
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Description": "Integer as if it were a string",
+    "Name": "Integer as if it were a string",
     "Value": "StartsWith(Id,'10')",
     "Expected": "e => e.Id.ToString().StartsWith(\"10\")",
     "Message": "Expression should result in this expression: {0}."
@@ -85,57 +85,82 @@
   },
   {
 
-    "Description": "String not quoted contains two single quotes",
+    "Name": "String not quoted contains two single quotes",
     "Value": "contains(Name,'')",
     "Expected": "e => e.Name.Contains(\"'\")",
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Description": "String EndsWith two single quotes",
+    "Name": "String EndsWith two single quotes",
     "Value": "endswith(Name,'')",
     "Expected": "e => e.Name.EndsWith(\"'\")",
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Description": "String StartsWith two single quotes",
+    "Name": "String StartsWith two single quotes",
     "Value": "startswith(Name,'')",
     "Expected": "e => e.Name.StartsWith(\"'\")",
     "Message": "Expression should result in this expression: {0}."
   },
   {
 
-    "Description": "String quoted with double quotes contains two single quotes",
-    "Value": "contains(Name,\"''\")",
+    "Name": "String quoted with double quotes contains ome single quotes",
+    "Value": "contains(Name,\"'\")",
     "Expected": "e => e.Name.Contains(\"'\")",
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Description": "String EndsWith two single quotes",
-    "Value": "endswith(Name,\"''\")",
+
+    "Name": "String quoted with double quotes contains two single quotes",
+    "Value": "contains(Name,\"''\")",
+    "Expected": "e => e.Name.Contains(\"''\")",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Name": "String EndsWith, double quotes around one single quotes",
+    "Value": "endswith(Name,\"'\")",
     "Expected": "e => e.Name.EndsWith(\"'\")",
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Description": "String StartsWith two single quotes",
-    "Value": "startswith(Name,\"''\")",
+    "Name": "String EndsWith, double quotes around two single quotes",
+    "Value": "endswith(Name,\"''\")",
+    "Expected": "e => e.Name.EndsWith(\"''\")",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Name": "String StartsWith, one single quote",
+    "Value": "startswith(Name,')",
     "Expected": "e => e.Name.StartsWith(\"'\")",
     "Message": "Expression should result in this expression: {0}."
   },
   {
+    "Name": "String StartsWith, double quotes around one single quotes",
+    "Value": "startswith(Name,\"'\")",
+    "Expected": "e => e.Name.StartsWith(\"'\")",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Name": "String StartsWith, double quotes around two single quotes",
+    "Value": "startswith(Name,\"''\")",
+    "Expected": "e => e.Name.StartsWith(\"''\")",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
 
-    "Description": "String quoted with single quotes contains two single quotes",
+    "Name": "String quoted with single quotes contains two single quotes",
     "Value": "contains(Name,'''')",
     "Expected": "e => e.Name.Contains(\"''\")",
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Description": "String EndsWith two single quotes",
+    "Name": "String EndsWith two single quotes",
     "Value": "endswith(Name,'''')",
     "Expected": "e => e.Name.EndsWith(\"''\")",
     "Message": "Expression should result in this expression: {0}. In essense, "
   },
   {
-    "Description": "String StartsWith two single quotes",
+    "Name": "String StartsWith two single quotes",
     "Value": "startswith(Name,'''')",
     "Expected": "e => e.Name.StartsWith(\"''\")",
     "Message": "Expression should result in this expression: {0}."

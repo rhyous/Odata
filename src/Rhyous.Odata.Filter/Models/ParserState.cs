@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace Rhyous.Odata
@@ -11,14 +9,15 @@ namespace Rhyous.Odata
 
         public string FilterString;
         public int CharIndex = 0;
+        public int NextCharIndex => CharIndex + 1;
+        public int PreviousCharIndex => CharIndex -1;
         public char Char { get { return FilterString[CharIndex]; } }
         public char? NextChar
         {
             get
             {
-                var nextCharIndex = CharIndex + 1;
-                if (nextCharIndex >= 0 && nextCharIndex < FilterString.Length)
-                    return FilterString[nextCharIndex];
+                if (NextCharIndex >= 0 && NextCharIndex < FilterString.Length)
+                    return FilterString[NextCharIndex];
                 return null;
             }
         }
@@ -27,9 +26,8 @@ namespace Rhyous.Odata
         {
             get
             {
-                var prevCharIndex = CharIndex - 1;
-                if (prevCharIndex >= 0 && prevCharIndex < FilterString.Length)
-                    return FilterString[prevCharIndex];
+                if (PreviousCharIndex >= 0 && PreviousCharIndex < FilterString.Length)
+                    return FilterString[PreviousCharIndex];
                 return null;
             }
         }
@@ -61,8 +59,11 @@ namespace Rhyous.Odata
                 throw new InvalidFilterSyntaxException(CharIndex, FilterString, "An open parenthesis was not closed");
         } private bool LastApplyComplete = false;
 
-        internal bool IsLastChar=> CharIndex == FilterString.Length - 1;
-        
+        internal bool IsLastChar => CharIndex == FilterString.Length - 1;
+
+        internal bool IsPenultimateChar => CharIndex == FilterString.Length - 2;
+        internal string RemainingFilterString => FilterString.Substring(NextCharIndex);
+
         public bool AppendIfInQuoteGroup()
         {
             if (QuoteGroup.IsOpen && QuoteGroup.WrapChar != Char)

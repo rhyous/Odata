@@ -48,7 +48,7 @@ namespace Rhyous.Odata.Tests
         public void ComplexFilterParserTests_TmpTest()
         {
             // Arrange
-            var filterstring = "Name eq \"Runnin''\"";
+            var filterstring = "Name eq \"Runnin'\"";
             var expected = "e => (e.Name == \"Runnin'\")";
             var message = "";
             var builder = new FilterExpressionBuilder<Entity1>(filterstring, new FilterExpressionParser<Entity1>());
@@ -116,11 +116,14 @@ namespace Rhyous.Odata.Tests
         public void UnclosedGroupThrowsException()
         {
             // Arrange
-            var filterstring = "Name eq O'Brien";
+            var filterstring = "Name eq 'O''Brien";
             var builder = new FilterExpressionBuilder<Entity1>(filterstring, new FilterExpressionParser<Entity1>());
 
             // Act && Assert
-            Assert.ThrowsException<InvalidFilterSyntaxException>(() => builder.Expression);
+            Assert.ThrowsException<InvalidFilterSyntaxException>(() => 
+            {
+                var a = builder.Expression;
+            });
         }
 
 
