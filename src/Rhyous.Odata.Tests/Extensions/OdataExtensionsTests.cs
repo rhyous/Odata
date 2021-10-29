@@ -75,7 +75,7 @@ namespace Rhyous.Odata.Tests
         }
 
         [TestMethod]
-        public void GetRelatedEntityTest()
+        public void GetRelatedEntity_Generic_Test()
         {
             // Arrange
             var odataUser = new OdataObject<User, int>();            
@@ -101,6 +101,71 @@ namespace Rhyous.Odata.Tests
             Assert.AreEqual("Wide", odataSmileCollection[0].Object.SmileType);
             Assert.AreEqual(8, odataSmileCollection[1].Id);
             Assert.AreEqual("Flat", odataSmileCollection[1].Object.SmileType);
+        }
+
+        [TestMethod]
+        public void GetRelatedEntity_NotGeneric_Test()
+        {
+            // Arrange
+            var odataUser = new OdataObject<User, int>();
+            var re1 = new RelatedEntity { Id = "7" };
+            var smile1 = new Smile { Id = 7, SmileType = "Wide" };
+            var json1 = JsonConvert.SerializeObject(smile1);
+            re1.Object = new JRaw(json1);
+
+            var re2 = new RelatedEntity { Id = "8" };
+            var smile2 = new Smile { Id = 8, SmileType = "Flat" };
+            var json2 = JsonConvert.SerializeObject(smile2);
+            re2.Object = new JRaw(json2);
+            var rec = new RelatedEntityCollection { re1, re2 };
+            rec.RelatedEntity = "Smile";
+            odataUser.RelatedEntityCollection.Add(rec);
+
+            // Act
+            var odataSmileCollection = odataUser.GetRelatedEntityCollection(nameof(Smile));
+
+            // Assert
+            Assert.AreEqual(2, odataSmileCollection.Count);
+            Assert.AreEqual("7", odataSmileCollection[0].Id);
+            var jObj0 = JObject.Parse(odataSmileCollection[0].Object.ToString());
+            Assert.AreEqual("Wide", jObj0["Type"]);
+            Assert.AreEqual("8", odataSmileCollection[1].Id);
+            var jObj1 = JObject.Parse(odataSmileCollection[1].Object.ToString());
+            Assert.AreEqual("Flat", jObj1["Type"]);
+        }
+
+        [TestMethod]
+        public void GetRelatedEntity_NotGeneric_NoRelatedEntities_Test()
+        {
+            // Arrange
+            var odataUser = new OdataObject<User, int>();
+
+            // Act
+            var odataSmileCollection = odataUser.GetRelatedEntityCollection(nameof(Smile));
+
+            // Assert
+            Assert.IsNull(odataSmileCollection);
+        }
+
+        [TestMethod]
+        public void GetRelatedEntity_NotGeneric_RelatedEntitiesDifferentEntity_Test()
+        {
+            // Arrange
+            var odataUser = new OdataObject<User, int>();
+            var re1 = new RelatedEntity { Id = "7" };
+            var person1 = new Person { Id = 7, FirstName = "Jared" };
+            var json1 = JsonConvert.SerializeObject(person1);
+            re1.Object = new JRaw(json1);
+
+            var rec = new RelatedEntityCollection { re1 };
+            rec.RelatedEntity = "Person";
+            odataUser.RelatedEntityCollection.Add(rec);
+
+            // Act
+            var odataPersonCollection = odataUser.GetRelatedEntityCollection(nameof(Smile));
+
+            // Assert
+            Assert.IsNull(odataPersonCollection);
         }
     }
 }

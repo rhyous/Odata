@@ -123,5 +123,13 @@ namespace Rhyous.Odata
             }
             return collection;
         }
+
+        public static OdataObjectCollection GetRelatedEntityCollection(this IRelatedEntityCollection odataObj, string relatedEntityNameOrAlias = null)
+        {
+            if (odataObj == null || odataObj.RelatedEntityCollection == null || !odataObj.RelatedEntityCollection.Any())
+                return null;
+            // Uses implicit operator to convert to OdataObjectCollection
+            return odataObj.RelatedEntityCollection.FirstOrDefault(re => re.RelatedEntity == relatedEntityNameOrAlias);
+        }
     }
 }

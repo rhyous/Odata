@@ -18,8 +18,8 @@ namespace Rhyous.Odata.Tests.Models
             var group = new Group();
 
             // Assert
-            Assert.IsNull(group._OpenChar);
-            Assert.IsNull(group._CloseChar);
+            Assert.IsNull(group.OpenChar);
+            Assert.IsNull(group.CloseChar);
         }
 
         [TestMethod]
@@ -30,8 +30,8 @@ namespace Rhyous.Odata.Tests.Models
             var group = new Group('"');
 
             // Assert
-            Assert.AreEqual('"', group._OpenChar);
-            Assert.AreEqual('"', group._CloseChar);
+            Assert.AreEqual('"', group.OpenChar);
+            Assert.AreEqual('"', group.CloseChar);
         }
 
         [TestMethod]
@@ -42,8 +42,8 @@ namespace Rhyous.Odata.Tests.Models
             var group = new Group('(', ')');
 
             // Assert
-            Assert.AreEqual('(', group._OpenChar);
-            Assert.AreEqual(')', group._CloseChar);
+            Assert.AreEqual('(', group.OpenChar);
+            Assert.AreEqual(')', group.CloseChar);
         }
 
         [TestMethod]

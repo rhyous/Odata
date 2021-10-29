@@ -5,8 +5,9 @@ namespace Rhyous.Odata
 {
     public class Group
     {
-        protected internal char? _OpenChar;
-        protected internal char? _CloseChar;
+        protected internal char? OpenChar;
+        protected internal char? CloseChar;
+
         /// <summary>
         /// Empty constructor. Does not set the open and close characters. 
         /// Instead, it is assumed the close character is the same as the open character.
@@ -28,8 +29,8 @@ namespace Rhyous.Odata
         /// <param name="closeChar">The character used for closing a group.</param>
         public Group(char openChar, char closeChar)
         {
-            _OpenChar = openChar;
-            _CloseChar = closeChar;
+            OpenChar = openChar;
+            CloseChar = closeChar;
         }
 
         public char? WrapChar
@@ -52,8 +53,8 @@ namespace Rhyous.Odata
 
         public virtual void Open(char openChar)
         {
-            if (_OpenChar != null && openChar != _OpenChar)
-                throw new InvalidGroupingException($"The close character was this: '{openChar}', but '{_CloseChar}' was expected.");
+            if (OpenChar != null && openChar != OpenChar)
+                throw new InvalidGroupingException($"The close character was this: '{openChar}', but '{CloseChar}' was expected.");
             Stack.Push(openChar);
         }
 
@@ -61,15 +62,15 @@ namespace Rhyous.Odata
         {
             if (!IsOpen)
                 throw new InvalidGroupingException($"The close character was provided: '{closeChar}', but no group was open.");
-            if (_CloseChar == null)
+            if (CloseChar == null)
             {
                 if (closeChar != WrapChar)
-                    throw new InvalidGroupingException($"The close character was this: '{closeChar}', but '{_CloseChar}' was expected.");
+                    throw new InvalidGroupingException($"The close character was this: '{closeChar}', but '{CloseChar}' was expected.");
                 Stack.Pop();
                 return;
             }                
-            if (closeChar != _CloseChar)
-                throw new InvalidGroupingException($"The close character was this: '{closeChar}', but '{_CloseChar}' was expected.");
+            if (closeChar != CloseChar)
+                throw new InvalidGroupingException($"The close character was this: '{closeChar}', but '{CloseChar}' was expected.");
 
             Stack.Pop();
         }
