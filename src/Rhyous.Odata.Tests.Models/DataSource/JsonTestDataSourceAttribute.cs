@@ -14,12 +14,14 @@ namespace Rhyous.UnitTesting
         string Name { get; set; }
     }
 
-    public class Row<T> : IName
+    public class Row<T> : Row<T, T> { }
+
+    public class Row<TValue, TExpected> : IName
     {
         public string Name { get; set; }
         public string Description { get; set; }
-        public T Value { get; set; }
-        public T Expected { get; set; }
+        public TValue Value { get; set; }
+        public TExpected Expected { get; set; }
         public string Message { get; set; }
     }
 

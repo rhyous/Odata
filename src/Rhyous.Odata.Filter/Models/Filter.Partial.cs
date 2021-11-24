@@ -2,6 +2,8 @@ using LinqKit;
 using Rhyous.Collections;
 using Rhyous.StringLibrary;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -15,6 +17,27 @@ namespace Rhyous.Odata
         {
             return string.IsNullOrWhiteSpace(NonFilter) ? $"{Left} {Method} {Right}" : NonFilter;
         }
+        #endregion
+
+        #region IEnumerable
+        public IEnumerator<Filter<TEntity>> GetEnumerator()
+        {
+            yield return this;
+            if (Left != null && !Left.IsSimpleString)
+            {
+                foreach (var filter in Left)
+                    yield return filter;
+            }
+            if (Right != null && !Right.IsSimpleString)
+            {
+                foreach (var filter in Right)
+                {
+                    yield return filter;
+                }
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
         #endregion
 
         #region implicit casts

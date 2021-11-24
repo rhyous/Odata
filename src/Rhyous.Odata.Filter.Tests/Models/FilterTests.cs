@@ -1,5 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Rhyous.UnitTesting;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace Rhyous.Odata.Tests
@@ -7,6 +10,7 @@ namespace Rhyous.Odata.Tests
     [TestClass]
     public class FilterTests
     {
+        #region Filter Tests
         [TestMethod]
         public void FilterLengthTest()
         {
@@ -53,6 +57,28 @@ namespace Rhyous.Odata.Tests
 
             // Act & Assert
             Assert.IsTrue(filter.IsComplete);
+        }
+
+        [TestMethod]
+        public void Filter_HasSubFilters_False_Test()
+        {
+            // Arrange
+            Filter<Entity1> filter = new Filter<Entity1> { Left = "Id", Method = "eq", Right = "1" };
+
+            // Act & Assert
+            Assert.IsFalse(filter.HasSubFilters);
+        }
+
+        [TestMethod]
+        public void Filter_HasSubFilters_True_Test()
+        {
+            // Arrange
+            Filter<Entity1> filterLeft = new Filter<Entity1> { Left = "Id", Method = "eq", Right = "1" };
+            Filter<Entity1> filterRight = new Filter<Entity1> { Left = "Id", Method = "eq", Right = "2" };
+            Filter<Entity1> filter = new Filter<Entity1> { Left = filterLeft, Method = "OR", Right = filterRight };
+
+            // Act & Assert
+            Assert.IsTrue(filter.HasSubFilters);
         }
 
         [TestMethod]
@@ -114,6 +140,7 @@ namespace Rhyous.Odata.Tests
         {
             public A Parent { get ; set; }
         }
+        #endregion
 
         #region Imlicit operator cast Filter to string tests
         [TestMethod]
@@ -376,6 +403,7 @@ namespace Rhyous.Odata.Tests
         }
         #endregion
 
+        #region Parent tests
         [TestMethod]
         public void ParentCannotBeSameAsChildTest()
         {
@@ -385,5 +413,26 @@ namespace Rhyous.Odata.Tests
             // Act & Assert
             Assert.ThrowsException<Exception>(() => { f1.Parent = f1; });
         }
+        #endregion
+
+        #region IEnumerable tests
+
+        [TestMethod]
+        [JsonTestDataSource(typeof(List<Row<string, int>>), @"Data\IEnumerableQueryStrings.json")]
+        public void Filter_IEnumerable_Count(Row<string, int> row)
+        {
+            // Arrange
+            var filterstring = row.Value;
+            var expected = row.Expected;
+            var message = row.Message;
+            var filter = new FilterExpressionParser<Entity1>().ParseForFilter(filterstring, true);
+
+            // Act
+            var count = filter.Count();
+
+            // Assert
+            Assert.AreEqual(expected, count, message);
+        }
+        #endregion
     }
 }

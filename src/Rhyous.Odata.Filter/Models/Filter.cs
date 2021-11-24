@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Rhyous.Odata
 {
-    public partial class Filter<TEntity> : IParent<Filter<TEntity>>
+    public partial class Filter<TEntity> : IParent<Filter<TEntity>>, IEnumerable<Filter<TEntity>>
     {
         private static int InstanceId;
         private static int MyInstanceId;        
@@ -62,6 +63,7 @@ namespace Rhyous.Odata
         public bool IsLeftComplete { get { return (Left?.Length ?? 0) > 0; } }
         public bool IsMethodComplete { get { return (Method?.Length ?? 0) > 0; } }
         public bool IsRightComplete { get { return (Right?.Length ?? 0) > 0; } }
+        public bool HasSubFilters { get { return !Right.IsSimpleString || !Left.IsSimpleString; } }
 
         public int Length { get { return ToString().Length; } }
 

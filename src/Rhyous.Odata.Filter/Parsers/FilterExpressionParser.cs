@@ -1,13 +1,15 @@
 ﻿using LinqKit;
 using Rhyous.StringLibrary;
 using System;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace Rhyous.Odata
 {
     public class FilterExpressionParser<TEntity> : IFilterExpressionParser<TEntity>
     {
-        public Expression<Func<TEntity, bool>> Parse(string filterExpression, bool unquote = true)
+
+        public Filter<TEntity> ParseForFilter(string filterExpression, bool unquote = true)
         {
             var trimmedfilterExpression = filterExpression.Trim();
             if (trimmedfilterExpression.Length > 2 && unquote)
@@ -16,12 +18,18 @@ namespace Rhyous.Odata
             for (state.CharIndex = 0; state.CharIndex < state.FilterString.Length; state.CharIndex++)
             {
                 ActionDictionary.GetValueOrDefault(state.Char).Invoke(state);
-            }            
+            }
             state.LastApply(); // Final apply required to get the last value.
-            ExpressionStarter<TEntity> starter = PredicateBuilder.New<TEntity>();
             var rootFilter = state.CurrentFilter;
             while (rootFilter.Parent != null)
                 rootFilter = rootFilter.Parent;
+            return rootFilter;
+        }
+
+        public Expression<Func<TEntity, bool>> Parse(string filterExpression, bool unquote = true)
+        {
+            var rootFilter = ParseForFilter(filterExpression, unquote);
+            var starter = PredicateBuilder.New<TEntity>();
             starter.Start(rootFilter);
             return starter;
         }
