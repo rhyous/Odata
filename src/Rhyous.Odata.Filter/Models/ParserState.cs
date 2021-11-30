@@ -3,16 +3,24 @@ using System.Text;
 
 namespace Rhyous.Odata
 {
+    /// <summary>
+    /// On object to hold the state of parsing a $filter expression string.
+    /// </summary>
+    /// <typeparam name="TEntity">The type of the entity to apply an expression to.</typeparam>
     public class ParserState<TEntity>
     {
+        /// <summary>
+        /// The constructor
+        /// </summary>
+        /// <param name="str">The initial filter expression as a string</param>
         public ParserState(string str) { FilterString = str; }
 
-        public string FilterString;
-        public int CharIndex = 0;
-        public int NextCharIndex => CharIndex + 1;
-        public int PreviousCharIndex => CharIndex -1;
-        public char Char { get { return FilterString[CharIndex]; } }
-        public char? NextChar
+        internal string FilterString;
+        internal int CharIndex = 0;
+        internal int NextCharIndex => CharIndex + 1;
+        internal int PreviousCharIndex => CharIndex -1;
+        internal char Char { get { return FilterString[CharIndex]; } }
+        internal char? NextChar
         {
             get
             {
@@ -22,7 +30,7 @@ namespace Rhyous.Odata
             }
         }
 
-        public char? PreviousChar
+        internal char? PreviousChar
         {
             get
             {
@@ -34,12 +42,12 @@ namespace Rhyous.Odata
         internal char LastAppendedChar { get; set; }
         internal int LastAppendedCharIndex { get; set; } = -1;
 
-        public Filter<TEntity> CurrentFilter = new Filter<TEntity>();
-        public StringBuilder Builder { get; set; } = new StringBuilder();
-        public Group QuoteGroup { get; set; } = new Group();
-        public Group ParenthesisGroup { get; set; } = new Group('(',')');
+        internal Filter<TEntity> CurrentFilter = new Filter<TEntity>();
+        internal StringBuilder Builder { get; set; } = new StringBuilder();
+        internal Group QuoteGroup { get; set; } = new Group();
+        internal Group ParenthesisGroup { get; set; } = new Group('(',')');
 
-        public void Append()
+        internal void Append()
         {
             Builder.Append(Char);
             LastAppendedChar = Char;
@@ -64,7 +72,7 @@ namespace Rhyous.Odata
         internal bool IsPenultimateChar => CharIndex == FilterString.Length - 2;
         internal string RemainingFilterString => FilterString.Substring(NextCharIndex);
 
-        public bool AppendIfInQuoteGroup()
+        internal bool AppendIfInQuoteGroup()
         {
             if (QuoteGroup.IsOpen && QuoteGroup.WrapChar != Char)
             {
@@ -73,8 +81,20 @@ namespace Rhyous.Odata
             }
             return false;
         }
-        
-        public void Apply()
+
+        internal bool MethodIsInArray() { return "IN".Equals(CurrentFilter.Method, StringComparison.OrdinalIgnoreCase); }
+
+        internal bool AppendIfMethodIsInArray()
+        {
+            if (MethodIsInArray())
+            {
+                Append();
+                return true;
+            }
+            return false;
+        }
+
+        internal void Apply()
         {
             if (SetLeftIfEmpty() || SetMethodIfEmpty() || SetRightIfEmpty())
                 return;
@@ -96,8 +116,14 @@ namespace Rhyous.Odata
         {
             if (!CurrentFilter.IsMethodComplete)
             {
-                CurrentFilter.Method = Builder.ToString();
+                 var methodStr = Builder.ToString();
                 Builder.Clear();
+                if (!string.IsNullOrWhiteSpace(methodStr) && methodStr.StartsWith("NOT", StringComparison.OrdinalIgnoreCase))
+                {
+                    CurrentFilter.Not = true;
+                    methodStr = methodStr.Substring("NOT".Length);
+                }
+                CurrentFilter.Method = methodStr;
                 return true;
             }
             return false;
@@ -106,8 +132,12 @@ namespace Rhyous.Odata
         {
             if (!CurrentFilter.IsRightComplete)
             {
-                CurrentFilter.Right = Builder.ToString();
+                var rightExpression = Builder.ToString();
                 Builder.Clear();
+                if (MethodIsInArray())
+                    CurrentFilter.Right = new ArrayFilter<TEntity, string> { Array = rightExpression.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)};
+                else
+                    CurrentFilter.Right = rightExpression;
                 return true;
             }
             return false;

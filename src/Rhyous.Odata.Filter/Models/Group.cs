@@ -1,11 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Rhyous.Odata
 {
+    /// <summary>An object for storing a grouping when parsing a $filter expression string.</summary>
     public class Group
     {
+        /// <summary>The open group character</summary>
         protected internal char? OpenChar;
+        /// <summary>The close group character</summary>
         protected internal char? CloseChar;
 
         /// <summary>
@@ -33,6 +35,7 @@ namespace Rhyous.Odata
             CloseChar = closeChar;
         }
 
+        /// <summary>The wrap character</summary>
         public char? WrapChar
         {
             get
@@ -43,14 +46,17 @@ namespace Rhyous.Odata
             }
         }
 
+        /// <summary>The character stack</summary>
         public Stack<char> Stack
         {
             get { return _Stack ?? (_Stack = new Stack<char>()); }
             set { _Stack = value; }
         } private Stack<char> _Stack;
-        
+
+        /// <summary>A boolean for whether the group is open or closed</summary>
         public bool IsOpen => WrapChar != null;
 
+        /// <summary>A method to open the group.</summary>
         public virtual void Open(char openChar)
         {
             if (OpenChar != null && openChar != OpenChar)
@@ -58,6 +64,7 @@ namespace Rhyous.Odata
             Stack.Push(openChar);
         }
 
+        /// <summary>A method to close the group.</summary>
         public virtual void Close(char closeChar)
         {
             if (!IsOpen)

@@ -78,7 +78,7 @@
     "Message": "Expression should result in this expression: {0}. This is to test AND has precendence. 5."
   },
   {
-    "Name": " Or with a string method",
+    "Name": " Or with a string method embedded single quote",
     "Value": "Name eq 'O''Brien Barneck' or contains(Name, 'O''Brien') and Id eq 1",
     "Expected": "e => ((e.Name == \"O'Brien Barneck\") OrElse (e.Name.Contains(\"O'Brien\") AndAlso (e.Id == 1)))",
     "Message": "Expression should result in this expression: {0}. This is to test AND has precendence. 6."
@@ -130,7 +130,7 @@
     "Message": "Expression should result in this expression: {0}. This is to test AND has precendence."
   },
   {
-    "Name": " Or with a string method",
+    "Name": " Or with a string method embedded double quotes",
     "Value": "Name eq 'Jared \"Rhyous\" Barneck' or contains(Name, 'Jared') and Id eq 1",
     "Expected": "e => ((e.Name == \"Jared \"Rhyous\" Barneck\") OrElse (e.Name.Contains(\"Jared\") AndAlso (e.Id == 1)))",
     "Message": "Expression should result in this expression: {0}. This is to test AND has precendence. "

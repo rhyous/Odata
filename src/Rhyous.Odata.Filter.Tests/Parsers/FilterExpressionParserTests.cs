@@ -1,7 +1,10 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using LinqKit;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Rhyous.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace Rhyous.Odata.Tests.Parsers
 {
@@ -23,6 +26,63 @@ namespace Rhyous.Odata.Tests.Parsers
 
             // Assert
             Assert.AreEqual(expected, actual.ToString());
+        }
+
+        [TestMethod]
+        public void FilterExpressionParser_SimpleParser_IN_Test()
+        {
+            // Arrange
+            var array = new[] { 1,2,};
+            var starter = PredicateBuilder.New<IUser>();
+            Expression<Func<IUser, bool>> expression = starter.Start(x => array.Contains(x.Id));
+            var expString = expression.ToString();
+            var parser = new FilterExpressionParser<IUser>();
+            var testexpression = "Id IN (1,2)";
+            string expected = "e => value(System.Int32[]).Contains(e.Id)";
+
+            // Act
+            var actual = parser.Parse(testexpression);
+            var users = new List<User>
+            {
+                new User{ Id = 1},
+                new User{ Id = 2},
+                new User{ Id = 7},
+            };
+            var usersFound = users.Where(actual.Compile())?.ToList();
+
+            // Assert
+            Assert.AreEqual(expected, actual.ToString());
+            Assert.AreEqual(2, usersFound.Count);
+            Assert.AreEqual(1, usersFound[0].Id);
+            Assert.AreEqual(2, usersFound[1].Id);
+        }
+
+        [TestMethod]
+        public void FilterExpressionParser_SimpleParser_NOTIN_Test()
+        {
+            // Arrange
+            var array = new[] { 1, 2, };
+            var starter = PredicateBuilder.New<IUser>();
+            Expression<Func<IUser, bool>> expression = starter.Start(x => array.Contains(x.Id));
+            var expString = expression.ToString();
+            var parser = new FilterExpressionParser<IUser>();
+            var testexpression = "Id NOTIN (1,2)";
+            string expected = "e => Not(value(System.Int32[]).Contains(e.Id))";
+
+            // Act
+            var actual = parser.Parse(testexpression);
+            var users = new List<User>
+            {
+                new User{ Id = 1},
+                new User{ Id = 2},
+                new User{ Id = 7},
+            };
+            var usersFound = users.Where(actual.Compile())?.ToList();
+
+            // Assert
+            Assert.AreEqual(expected, actual.ToString());
+            Assert.AreEqual(1, usersFound.Count);
+            Assert.AreEqual(7, usersFound[0].Id);
         }
 
         [TestMethod]
@@ -67,6 +127,23 @@ namespace Rhyous.Odata.Tests.Parsers
             var filterstring = row.Value;
             var expected = row.Expected;
             var message = row.Message;
+            var parser = new FilterExpressionParser<Entity1>();
+
+            // Act
+            var actual = parser.Parse(filterstring);
+
+            // Assert
+            Assert.AreEqual(expected, actual.ToString(), message);
+        }
+
+
+        [TestMethod]
+        public void FilterExpressionParser_ComplexFilterParser_Debug_Tests()
+        {
+            // Arrange
+            var filterstring = "StartsWith(Id,10)";
+            var expected = "e => e.Id.ToString().StartsWith(\"10\")";
+            var message = "Expression should result in this expression: {0}.";
             var parser = new FilterExpressionParser<Entity1>();
 
             // Act

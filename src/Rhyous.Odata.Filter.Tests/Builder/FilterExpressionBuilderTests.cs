@@ -8,6 +8,7 @@ namespace Rhyous.Odata.Tests
     [TestClass]
     public class FilterExpressionBuilderTests
     {
+#pragma warning disable CS0618 // Type or member is obsolete
         public TestContext TestContext { get; set; }
 
         [TestMethod]
@@ -188,5 +189,6 @@ namespace Rhyous.Odata.Tests
             // Assert
             Assert.AreEqual(expected, actual, message);
         }
+#pragma warning restore CS0618 // Type or member is obsolete    
     }
 }

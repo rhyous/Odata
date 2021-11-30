@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Rhyous.Collections;
 using Rhyous.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -142,6 +143,49 @@ namespace Rhyous.Odata.Tests
         }
         #endregion
 
+        #region ToString
+        [TestMethod]
+        public void Filter_ToString_NonFilter_Test()
+        {
+            // Arrange
+            var str = "Test";
+            Filter<Entity1> filter = str;
+
+            // Act
+            var actual = filter.ToString();
+
+            // Assert
+            Assert.AreEqual(str, actual);
+        }
+
+
+        [TestMethod]
+        public void Filter_ToString_Id_eq_27_Test()
+        {
+            // Arrange
+            Filter<Entity1> filter = new Filter<Entity1> { Left = "Id", Method = "eq", Right = "27"};
+
+            // Act
+            var actual = filter.ToString();
+
+            // Assert
+            Assert.AreEqual("Id eq 27", actual);
+        }
+
+        [TestMethod]
+        public void Filter_ToString_Array_Test()
+        {
+            // Arrange
+            Filter<Entity1> filter = new[] { 1, 2, 3 };
+
+            // Act
+            var actual = filter.ToString();
+
+            // Assert
+            Assert.AreEqual("(1,2,3)", actual);
+        }
+        #endregion
+
         #region Imlicit operator cast Filter to string tests
         [TestMethod]
         public void ImplicitOperatorFilterToStringNullTest()
@@ -265,63 +309,7 @@ namespace Rhyous.Odata.Tests
             Assert.IsNull(s);
         }
         #endregion
-
-        #region GetCombinedExpression tests
-        [TestMethod]
-        public void FilterGetCombinedExpressionBothNull()
-        {
-            // Arrange
-            Filter<User> f1 = null;
-            Filter<User> f2 = null;
-
-            // Act
-            var s = Filter<User>.GetCombinedExpression(f1, f2, Conjunction.And);
-
-            // Assert
-            Assert.IsNull(s);
-        }
-
-        [TestMethod]
-        public void FilterGetCombinedExpressionRightNull()
-        {
-            // Arrange
-            var f1 = new Filter<User>
-            {
-                Left = "Id",
-                Method = "eq",
-                Right = "1"
-            };
-            var f1Expression = (Expression<Func<User, bool>>)f1;
-            Expression<Func<User, bool>> f2Expression = null;
-
-            // Act
-            var s = Filter<User>.GetCombinedExpression(f1Expression, f2Expression, Conjunction.And);
-
-            // Assert
-            Assert.AreEqual(f1Expression, s);
-        }
-
-        [TestMethod]
-        public void FilterGetCombinedExpressionLeftNull()
-        {
-            // Arrange
-            var f2 = new Filter<User>
-            {
-                Left = "Id",
-                Method = "eq",
-                Right = "1"
-            };
-            var f2Expression = (Expression<Func<User, bool>>)f2;
-            Expression<Func<User, bool>> f1Expression = null;
-
-            // Act
-            var s = Filter<User>.GetCombinedExpression(f1Expression, f2Expression, Conjunction.And);
-
-            // Assert
-            Assert.AreEqual(f2Expression, s);
-        }
-        #endregion
-
+        
         #region Group tests
 
 
@@ -425,7 +413,7 @@ namespace Rhyous.Odata.Tests
             var filterstring = row.Value;
             var expected = row.Expected;
             var message = row.Message;
-            var filter = new FilterExpressionParser<Entity1>().ParseForFilter(filterstring, true);
+            var filter = new FilterExpressionParser<Entity1>().ParseAsFilter(filterstring, true);
 
             // Act
             var count = filter.Count();

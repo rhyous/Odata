@@ -1,41 +1,52 @@
-﻿using System;
+﻿using Rhyous.Collections;
+using System;
 using System.Collections.Generic;
 
 namespace Rhyous.Odata
 {
+    /// <summary>
+    /// A dictionary of actions based on characters found in the $filter expression string.
+    /// </summary>
+    /// <typeparam name="TEntity">The entity.</typeparam>
     public class FilterExpressionParserActionDictionary<TEntity> : Dictionary<char, Action<ParserState<TEntity>>>, 
                                                                    IDictionaryDefaultValueProvider<char, Action<ParserState<TEntity>>>
     {
-        public FilterExpressionParserActionDictionary()
-        {
-            Add(' ', DelimiterHandler.Action);
-            Add(',', DelimiterHandler.Action);
+        #region Singleton
 
-            var quoteHandler = new QuoteHandler<TEntity>();
-            Add('"', quoteHandler.Action);
-            Add('\'', quoteHandler.Action);
+        private static readonly Lazy<FilterExpressionParserActionDictionary<TEntity>> Lazy = new Lazy<FilterExpressionParserActionDictionary<TEntity>>(() => new FilterExpressionParserActionDictionary<TEntity>());
+
+        /// <summary>This singleton instance</summary>
+        public static FilterExpressionParserActionDictionary<TEntity> Instance { get { return Lazy.Value; } }
+
+        /// <summary>
+        /// The constructor
+        /// </summary>
+        internal FilterExpressionParserActionDictionary()
+        {
+            Add(' ', DelimiterHandler<TEntity>.Instance.Action);
+            Add(',', DelimiterHandler<TEntity>.Instance.Action);
+
+            Add('"', QuoteHandler<TEntity>.Instance.Action);
+            Add('\'', QuoteHandler<TEntity>.Instance.Action);
 
             Add('(', new OpenParanthesisHandler<TEntity>().Action);
             Add(')', new CloseParanthesisHandler<TEntity>().Action);
         }
+        #endregion
 
-        #region Character handlers
-
-        public IHandler<ParserState<TEntity>> DelimiterHandler
-        {
-            get { return _DelimiterHandler ?? (_DelimiterHandler = new DelimiterHandler<TEntity>()); }
-            set { _DelimiterHandler = value; }
-        } private IHandler<ParserState<TEntity>> _DelimiterHandler;
-
+        /// <summary>
+        /// By default, the action is to Append.
+        /// </summary>
         public Action<ParserState<TEntity>> DefaultValue => (state) => { state.Append(); };
 
+        /// <summary>
+        /// Returns the default action if one is not found.
+        /// </summary>
         public Action<ParserState<TEntity>> DefaultValueProvider(char c)
         {
             if (char.IsWhiteSpace(c))
-                return DelimiterHandler.Action;
+                return DelimiterHandler<TEntity>.Instance.Action;
             return DefaultValue;
         }
-
-        #endregion
     }
 }
