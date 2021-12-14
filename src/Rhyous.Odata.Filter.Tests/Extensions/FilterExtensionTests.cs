@@ -2,7 +2,7 @@
 using Rhyous.Odata.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Rhyous.Odata.Tests.Extensions
+namespace Rhyous.Odata.Filter.Tests.Extensions
 {
     [TestClass]
     public class FilterExtensionTests

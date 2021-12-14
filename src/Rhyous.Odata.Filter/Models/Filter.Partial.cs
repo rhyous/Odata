@@ -1,23 +1,56 @@
-using LinqKit;
 using Rhyous.Collections;
-using Rhyous.StringLibrary;
 using System;
-using System.Linq;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Reflection;
 
-namespace Rhyous.Odata
+namespace Rhyous.Odata.Filter
 {
     public partial class Filter<TEntity>
     {
         #region ToString
+        /// <summary>Overrides ToString so that it returns the expression as a string.</summary>
+        /// <returns>The expression as a string.</returns>
+        /// <example>Id eq 1</example>
         public override string ToString()
         {
-            return string.IsNullOrWhiteSpace(NonFilter) ? $"{Left} {Method} {Right}" : NonFilter;
+            if (!string.IsNullOrWhiteSpace(NonFilter))
+            {
+                return NonFilter;
+            }
+            return $"{Left} {Method} {Right}";
         }
         #endregion
 
+        #region IEnumerable
+        /// <summary>
+        /// An implementation of IEnumerable, so the Filter{TEntity} object is IEnumerable and can be used in 
+        /// a foreach loop.
+        /// </summary>
+        /// <returns>And IEnumerator{Filter{TEntity}}</returns>
+        public IEnumerator<Filter<TEntity>> GetEnumerator()
+        {
+            yield return this;
+            if (Left != null && !Left.IsSimpleString)
+            {
+                foreach (var filter in Left)
+                    yield return filter;
+            }
+            if (Right != null && !Right.IsSimpleString)
+            {
+                foreach (var filter in Right)
+                {
+                    yield return filter;
+                }
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        #endregion
+
         #region implicit casts
+        /// <summary>An implicit cast from a Filter{TEntity} to a string.</summary>
+        /// <param name="filter"></param>
         public static implicit operator string(Filter<TEntity> filter)
         {
             if (filter == null || !filter.IsComplete)
@@ -25,68 +58,78 @@ namespace Rhyous.Odata
             return filter.ToString();
         }
 
+        /// <summary>An implicit cast from a string to a Filter{TEntity}.</summary>
         public static implicit operator Filter<TEntity>(string str)
         {
             if (string.IsNullOrWhiteSpace(str))
                 return null;
-            return new Filter<TEntity> { NonFilter = str };
+            if (str.IsQuoted() || str.None(c => char.IsWhiteSpace(c)))
+                return new Filter<TEntity> { NonFilter = str };
+            return FilterExpressionParser<TEntity>.Instance.ParseAsFilterAsync(str, false).Result;
         }
 
+        /// <summary>An implicit cast from an array to a Filter{TEntity}.</summary>
+        public static implicit operator Filter<TEntity>(Array array)
+        {
+            if (array is null)
+                return null;
+            var type = typeof(ArrayFilter<,>);
+            var genericType = type.MakeGenericType(typeof(TEntity), array.GetType().GetElementType());
+            var arrayFilter = Activator.CreateInstance(genericType);
+            arrayFilter.GetPropertyInfo("Array").SetValue(arrayFilter, array);
+            return arrayFilter as Filter<TEntity>;
+        }
+
+        /// <summary>An implicit cast from a Filter{TEntity} to an Expression{Func{TEntity, bool}}.</summary>
         public static implicit operator Expression<Func<TEntity, bool>>(Filter<TEntity> filter)
         {
-            if (filter == null || !filter.IsComplete)
-                return null;
-            var possiblePropName = filter.Left.ToString();
-            ParameterExpression parameter = Expression.Parameter(typeof(TEntity), "e");
-            Expression left = filter.Left.IsSimpleString ? Expression.Property(parameter, possiblePropName) as Expression : filter.Left;
-            Type propType = typeof(TEntity).GetPropertyInfo(possiblePropName)?.PropertyType;
-            Expression right = (propType != null && filter.Right.IsSimpleString) ? Expression.Constant(filter.Right.ToString().ToType(propType)) as Expression : filter.Right;
-            Expression method = null;
-            if (ExpressionMethodDictionary.Instance.TryGetValue(filter.Method, out Func<Expression, Expression, Expression> func))
-            {
-                var isNumeric = filter.Method.All(c => char.IsDigit(c));
-                if (!isNumeric && Enum.TryParse(filter.Method, true, out Conjunction conj))
-                {
-                    return GetCombinedExpression(left, right, conj);
-                }
-                method = func.Invoke(left, right);
-            }
-            else if (propType.IsPrimitive || propType == typeof(Guid))
-            {
-                var toStringMethod = propType.GetMethod("ToString", MethodFlags, null, new Type[] { }, null);
-                var methodInfo = typeof(string).GetMethod(filter.Method, MethodFlags, null, new[] { typeof(string) }, null);
-                left = Expression.Call(left, toStringMethod);
-                right = (propType != null && filter.Right.IsSimpleString) ? Expression.Constant(filter.Right.ToString()) as Expression : filter.Right;
-                method = Expression.Call(left, methodInfo, right);
-            }
-            else
-            {
-                if (filter.Method.StartsWith("not", StringComparison.OrdinalIgnoreCase))
-                {
-                    filter.Not = true;
-                    filter.Method = filter.Method.Substring(3);
-                }
-                var methodInfo = propType.GetMethod(filter.Method, MethodFlags, null, new[] { propType }, null);
-                if (methodInfo == null)
-                    throw new InvalidTypeMethodException(propType, filter.Method);
-                method = Expression.Call(left, methodInfo, right);
-            }
-            return Expression.Lambda<Func<TEntity, bool>>(filter.Not ? Expression.Not(method) : method, parameter);
-        } internal static BindingFlags MethodFlags = BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance;
+            return FilterToExpressionConverter.Convert(filter);
+        }
 
-        internal static Expression<Func<TEntity, bool>> GetCombinedExpression(Expression left, Expression right, Conjunction conj)
+        internal static IFilterToExpressionConverter FilterToExpressionConverter
         {
-            if (left == null && right == null)
-                return null;
-            if (left == null)
-                return right as Expression<Func<TEntity, bool>>;
-            if (right == null)
-                return left as Expression<Func<TEntity, bool>>;
-            var starter = PredicateBuilder.New<TEntity>();
-            starter.Start(left as Expression<Func<TEntity, bool>>);
-            return conj == Conjunction.And ? starter.And(right as Expression<Func<TEntity, bool>>) : starter.Or(right as Expression<Func<TEntity, bool>>);
+            get { return _Converter ?? (_Converter = Filter.FilterToExpressionConverter.Instance); }
+            set { _Converter = value; }
+        } private static IFilterToExpressionConverter _Converter;
+
+        #endregion
+
+        #region Clone
+        /// <summary>
+        /// Clones the current $Filter{TEntity} into a new instance.
+        /// </summary>
+        /// <returns>A new Filter{TEntity} cloned from the original.</returns>
+        public virtual Filter<TEntity> Clone()
+        {
+            return IsSimpleString
+                   ? new Filter<TEntity> { NonFilter = NonFilter }
+                   : new Filter<TEntity>
+                   {
+                       Parent = Parent,
+                       Left = Left,
+                       Method = Method,
+                       Right = Right,
+                       Not = Not
+                   };
+        }
+
+        /// <summary>
+        /// Clones the current $Filter{TEntity} into a new instance.
+        /// </summary>
+        /// <returns>A new Filter{TEntity} cloned from the original.</returns>
+        public virtual Filter<TEntity> Clone(bool skipLeft, bool skipRight)
+        {
+            return IsSimpleString
+                   ? new Filter<TEntity> { NonFilter = NonFilter }
+                   : new Filter<TEntity>
+                   {
+                       Parent = Parent,
+                       Left = skipLeft ? null : Left,
+                       Method = Method,
+                       Right = skipRight ? null : Right,
+                       Not = Not
+                   };
         }
         #endregion
     }
 }
-

@@ -1,0 +1,20 @@
+﻿[
+  {
+    "TestName": "Id eq 1",
+    "TestValue": "Id eq 1",
+    "Expected": 1,
+    "Message": "IEnumerable should find 1"
+  },
+  {
+    "TestName": "Id eq 1 or Id eq 2",
+    "TestValue": "Id eq 1 or Id eq 2",
+    "Expected": 3,
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "TestName": "(Id eq 1) or (Id eq 2 and Name eq MyName)",
+    "TestValue": "(Id eq 1) or (Id eq 2 and Name eq MyName)",
+    "Expected": 5,
+    "Message": "Expression should result in this expression: {0}."
+  }
+]

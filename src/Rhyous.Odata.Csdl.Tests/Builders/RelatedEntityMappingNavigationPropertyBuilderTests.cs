@@ -34,7 +34,7 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
             // Assert
             Assert.IsTrue(result is CsdlNavigationProperty);
             Assert.AreEqual("self.Entity2", result.Type);
-            Assert.AreEqual("NavigationProperty", result.Kind);
+            Assert.AreEqual(CsdlConstants.NavigationProperty, result.Kind);
             Assert.IsTrue(result.IsCollection);
             Assert.IsTrue(result.Nullable);
         }
@@ -52,11 +52,11 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
             var result = unitUnderTest.Build(relatedEntityAttribute);
 
             // Assert
-            Assert.IsTrue(result.CustomData.TryGetValue(Constants.EAFMappingEntityAlias, out object mappingEntityAlias));
+            Assert.IsTrue(result.CustomData.TryGetValue(CsdlConstants.EAFMappingEntityAlias, out object mappingEntityAlias));
             Assert.AreEqual(mappingEntityAlias, "E1E2Map");
-            Assert.IsTrue(result.CustomData.TryGetValue(Constants.OdataFilter, out object odataFilter));
+            Assert.IsTrue(result.CustomData.TryGetValue(CsdlConstants.OdataFilter, out object odataFilter));
             Assert.AreEqual(odataFilter, filter);
-            Assert.IsTrue(result.CustomData.TryGetValue(Constants.OdataDisplayCondition, out object odataDisplayCondition));
+            Assert.IsTrue(result.CustomData.TryGetValue(CsdlConstants.OdataDisplayCondition, out object odataDisplayCondition));
             Assert.AreEqual(odataDisplayCondition, displayCondition);
         }
     }

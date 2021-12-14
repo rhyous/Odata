@@ -1,10 +1,28 @@
 ﻿using System;
 using System.Linq;
 
-namespace Rhyous.Odata
+namespace Rhyous.Odata.Filter
 {
-    public class QuoteHandler<TEntity> : IHandler<ParserState<TEntity>>
+    /// <summary>
+    /// A handler for parsing Quotes in a $Filter expression string.
+    /// </summary>
+    /// <typeparam name="TEntity">The type of the Entity being queried.</typeparam>
+    public class QuoteHandler<TEntity> : IFilterCharacterHandler<TEntity>
     {
+        #region Singleton
+
+        private static readonly Lazy<QuoteHandler<TEntity>> Lazy = new Lazy<QuoteHandler<TEntity>>(() => new QuoteHandler<TEntity>());
+
+        /// <summary>This singleton instance</summary>
+        public static QuoteHandler<TEntity> Instance { get { return Lazy.Value; } }
+
+        internal QuoteHandler() { }
+
+        #endregion
+
+        /// <summary>
+        /// The Action method that will handle the quote character.
+        /// </summary>
         public Action<ParserState<TEntity>> Action => HandlerMethod;
 
         internal void HandlerMethod(ParserState<TEntity> state)

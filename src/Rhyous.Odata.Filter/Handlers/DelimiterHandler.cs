@@ -1,19 +1,33 @@
 ﻿using Rhyous.StringLibrary;
 using System;
 
-namespace Rhyous.Odata
+namespace Rhyous.Odata.Filter
 {
     /// <summary>
     /// Handles the delimiter character.
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
-    class DelimiterHandler<TEntity> : IHandler<ParserState<TEntity>>
+    internal class DelimiterHandler<TEntity> : IFilterCharacterHandler<TEntity>
     {
+        #region Singleton
+
+        private static readonly Lazy<DelimiterHandler<TEntity>> Lazy = new Lazy<DelimiterHandler<TEntity>>(() => new DelimiterHandler<TEntity>());
+
+        /// <summary>This singleton instance</summary>
+        public static DelimiterHandler<TEntity> Instance { get { return Lazy.Value; } }
+
+        internal DelimiterHandler() { }
+
+        #endregion
+
+        /// <summary>
+        /// The Action method that will handle the a delimiter character, which is white space or comma.
+        /// </summary>
         public Action<ParserState<TEntity>> Action => HandlerMethod;
 
         internal void HandlerMethod(ParserState<TEntity> state)
         {
-            if (state.AppendIfInQuoteGroup())
+            if (state.AppendIfInQuoteGroup() || (state.AppendIfMethodIsInArray()))
                 return;
             if (state.Builder.Length == 0) // Handle extra spaces
                 return;

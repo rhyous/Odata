@@ -38,7 +38,7 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
             // Assert
             Assert.IsTrue(result is CsdlNavigationProperty);
             Assert.AreEqual("self.Entity2", result.Type);
-            Assert.AreEqual("NavigationProperty", result.Kind);
+            Assert.AreEqual(CsdlConstants.NavigationProperty, result.Kind);
             Assert.IsFalse(result.IsCollection);
             Assert.IsFalse(result.Nullable);
         }
@@ -62,7 +62,7 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
             // Assert
             Assert.IsTrue(result is CsdlNavigationProperty);
             Assert.AreEqual("self.Entity2", result.Type);
-            Assert.AreEqual("NavigationProperty", result.Kind);
+            Assert.AreEqual(CsdlConstants.NavigationProperty, result.Kind);
             Assert.IsFalse(result.IsCollection);
             Assert.IsTrue(result.Nullable);
         }
@@ -84,8 +84,8 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
             // Assert
             Assert.IsTrue(result is CsdlNavigationProperty);
             Assert.AreEqual("self.Entity2", result.Type);
-            Assert.AreEqual("NavigationProperty", result.Kind);
-            var defaultValue = result.CustomData[Constants.Default] as CsdlNameValue;
+            Assert.AreEqual(CsdlConstants.NavigationProperty, result.Kind);
+            var defaultValue = result.CustomData[CsdlConstants.Default] as CsdlNameValue;
             Assert.AreEqual(relatedEntityAttribute.AllowedNonExistentValue, defaultValue.Value);
             Assert.AreEqual(relatedEntityAttribute.AllowedNonExistentValueName, defaultValue.Name);
             Assert.IsFalse(result.IsCollection);
@@ -110,8 +110,8 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
             // Assert
             Assert.IsTrue(result is CsdlNavigationProperty);
             Assert.AreEqual("self.Entity2", result.Type);
-            Assert.AreEqual("NavigationProperty", result.Kind);
-            var defaultValue = result.CustomData[Constants.Default] as CsdlNameValue;
+            Assert.AreEqual(CsdlConstants.NavigationProperty, result.Kind);
+            var defaultValue = result.CustomData[CsdlConstants.Default] as CsdlNameValue;
             Assert.AreEqual(relatedEntityAttribute.AllowedNonExistentValue, defaultValue.Value);
             Assert.AreEqual(relatedEntityAttribute.AllowedNonExistentValueName, defaultValue.Name);
             Assert.IsFalse(result.IsCollection);

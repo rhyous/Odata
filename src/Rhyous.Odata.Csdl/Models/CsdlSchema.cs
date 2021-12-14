@@ -7,8 +7,8 @@ namespace Rhyous.Odata.Csdl
     [DataContract]
     public class CsdlSchema
     {
-        [DataMember(Name = "$Alias")]
-        public string Alias { get; set; } = "self";
+        [DataMember(Name = CsdlConstants.Alias)]
+        public string Alias { get; set; } = CsdlConstants.DefaultSchemaOrAlias;
 
         [JsonExtensionData]
         public Dictionary<string, object> Entities

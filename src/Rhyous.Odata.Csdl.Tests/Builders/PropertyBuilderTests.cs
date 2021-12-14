@@ -82,7 +82,7 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
 
             // Act
             var csdl = propertyBuilder.Build(propInfo);
-            var isRequired = csdl.CustomData.TryGetValue(Constants.UIRequired, out object isRequiredValue) && (bool)isRequiredValue;
+            var isRequired = csdl.CustomData.TryGetValue(CsdlConstants.UIRequired, out object isRequiredValue) && (bool)isRequiredValue;
 
             // Assert
             Assert.IsFalse(isRequired);
@@ -99,7 +99,7 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
             var csdl = propertyBuilder.Build(propInfo);
 
             // Assert
-            Assert.IsTrue(csdl.CustomData.TryGetValue(Constants.UIRequired, out object isRequiredValue));
+            Assert.IsTrue(csdl.CustomData.TryGetValue(CsdlConstants.UIRequired, out object isRequiredValue));
             Assert.IsTrue((bool)isRequiredValue);
         }
 
@@ -114,7 +114,7 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
             var csdl = propertyBuilder.Build(propInfo);
 
             // Assert
-            Assert.IsFalse(csdl.CustomData.TryGetValue(Constants.UIRequired, out _));
+            Assert.IsFalse(csdl.CustomData.TryGetValue(CsdlConstants.UIRequired, out _));
         }
 
         [TestMethod]
@@ -128,7 +128,7 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
             var csdl = propertyBuilder.Build(propInfo);
 
             // Assert
-            Assert.IsFalse(csdl.CustomData.TryGetValue(Constants.UIRequired, out _));
+            Assert.IsFalse(csdl.CustomData.TryGetValue(CsdlConstants.UIRequired, out _));
         }
 
 
@@ -158,7 +158,7 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
             var csdl = propertyBuilder.Build(propInfo);
 
             // Assert
-            Assert.IsTrue(csdl.CustomData.TryGetValue(Constants.UIMinLength, out object uiMinLength));
+            Assert.IsTrue(csdl.CustomData.TryGetValue(CsdlConstants.UIMinLength, out object uiMinLength));
             Assert.AreEqual(expected, uiMinLength);
         }
 
@@ -175,7 +175,7 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
 
             // Assert
             Assert.AreEqual(expected, csdl.MaxLength);
-            Assert.IsTrue(csdl.CustomData.TryGetValue(Constants.UIMaxLength, out object uiMaxLength));
+            Assert.IsTrue(csdl.CustomData.TryGetValue(CsdlConstants.UIMaxLength, out object uiMaxLength));
             Assert.AreEqual(expected, uiMaxLength);
         }
 

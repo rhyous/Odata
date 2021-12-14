@@ -14,11 +14,11 @@ namespace Rhyous.Odata
         {
             if (jRaw == null)
                 throw new ArgumentNullException("jRaw", string.Format(Constants.ObjectNullException, "jRaw"));
+            if (string.IsNullOrWhiteSpace(property))
+                throw new ArgumentNullException("property", string.Format(Constants.StringNullException, "property"));
             var json = jRaw.ToString();
             if (string.IsNullOrWhiteSpace(json))
                 throw new ArgumentNullException("jRaw", string.Format(Constants.StringNullException, "jRaw"));
-            if (string.IsNullOrWhiteSpace(property))
-                throw new ArgumentNullException("property", string.Format(Constants.StringNullException, "property"));
             var jObj = JObject.Parse(json);
             return jObj.GetValue(property);
         }

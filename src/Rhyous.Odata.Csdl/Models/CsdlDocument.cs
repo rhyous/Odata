@@ -7,10 +7,10 @@ namespace Rhyous.Odata.Csdl
     [DataContract()]
     public class CsdlDocument
     {
-        [DataMember(Name = "$Version")]
+        [DataMember(Name = CsdlConstants.Version)]
         public string Version { get; set; }
 
-        [DataMember(Name = "$EntityContainer")]
+        [DataMember(Name = CsdlConstants.EntityContainer)]
         public string EntityContainer { get; set; }
 
         [JsonExtensionData]

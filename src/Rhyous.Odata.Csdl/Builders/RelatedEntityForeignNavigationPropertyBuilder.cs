@@ -11,7 +11,7 @@ namespace Rhyous.Odata.Csdl
             _CustomPropertyDataFuncs = CustomPropertyDataFuncs;
         }
 
-        public CsdlNavigationProperty Build(RelatedEntityForeignAttribute relatedEntityAttribute, string schemaOrAlias = Constants.DefaultSchemaOrAlias)
+        public CsdlNavigationProperty Build(RelatedEntityForeignAttribute relatedEntityAttribute, string schemaOrAlias = CsdlConstants.DefaultSchemaOrAlias)
         {
             if (relatedEntityAttribute == null)
                 return null;
@@ -23,13 +23,13 @@ namespace Rhyous.Odata.Csdl
             };
             navProp.CustomData.AddFromCustomDictionary(relatedEntityAttribute.Entity, relatedEntityAttribute.RelatedEntity, _CustomPropertyDataFuncs);
             navProp.CustomData.AddFromCustomDictionary(relatedEntityAttribute.Entity, relatedEntityAttribute.RelatedEntity, _CustomPropertyDataFuncs);
-            navProp.CustomData.Add(Constants.EAFRelatedEntityType, Constants.Foreign);
-            if (!string.IsNullOrWhiteSpace(relatedEntityAttribute.ForeignKeyProperty) && relatedEntityAttribute.ForeignKeyProperty != relatedEntityAttribute.Entity + Constants.Id)
-                navProp.CustomData.Add(Constants.EAFRelatedEntityForeignKeyProperty, relatedEntityAttribute.ForeignKeyProperty);
+            navProp.CustomData.Add(CsdlConstants.EAFRelatedEntityType, CsdlConstants.Foreign);
+            if (!string.IsNullOrWhiteSpace(relatedEntityAttribute.ForeignKeyProperty) && relatedEntityAttribute.ForeignKeyProperty != relatedEntityAttribute.Entity + CsdlConstants.Id)
+                navProp.CustomData.Add(CsdlConstants.EAFRelatedEntityForeignKeyProperty, relatedEntityAttribute.ForeignKeyProperty);
             if (!string.IsNullOrWhiteSpace(relatedEntityAttribute.Filter))
-                navProp.CustomData.Add(Constants.OdataFilter, relatedEntityAttribute.Filter);
+                navProp.CustomData.Add(CsdlConstants.OdataFilter, relatedEntityAttribute.Filter);
             if (!string.IsNullOrWhiteSpace(relatedEntityAttribute.DisplayCondition))
-                navProp.CustomData.Add(Constants.OdataDisplayCondition, relatedEntityAttribute.DisplayCondition);
+                navProp.CustomData.Add(CsdlConstants.OdataDisplayCondition, relatedEntityAttribute.DisplayCondition);
 
             return navProp;
         }

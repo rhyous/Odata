@@ -40,7 +40,7 @@ namespace Rhyous.Odata.Csdl
         {
             if (entityType == null)
                 return null;
-            var entity = new CsdlEntity { Keys = new List<string> { Constants.Id } };
+            var entity = new CsdlEntity { Keys = new List<string> { CsdlConstants.Id } };
             // Add the Properties based on this Entity's properties.
             foreach (var propInfo in entityType.GetProperties().OrderBy(p => p.Name))
             {

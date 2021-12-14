@@ -1,202 +1,238 @@
 ﻿[
   {
-    "Value": "Id = 1",
+    "TestName": "Id = 1",
+    "TestValue": "Id = 1",
     "Expected": "e => (e.Id == 1)",
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Value": "Id = 2",
+    "TestName": "Id = 2",
+    "TestValue": "Id = 2",
     "Expected": "e => (e.Id == 2)",
     "Message": "Expression should result in this expression: {0}."
   },
   {
     "Description": "Int not equals",
-    "Value": "Id != 1",
+    "TestName": "Id != 1",
+    "TestValue": "Id != 1",
     "Expected": "e => (e.Id != 1)",
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Value": "Id != 20",
+    "TestName": "Id != 20",
+    "TestValue": "Id != 20",
     "Expected": "e => (e.Id != 20)",
     "Message": "Expression should result in this expression: {0}."
   },
   {
     "Description": "Int Greater than",
-    "Value": "Id > 1",
+    "TestName": "Id > 1",
+    "TestValue": "Id > 1",
     "Expected": "e => (e.Id > 1)",
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Value": "Id > 0",
+    "TestName": "Id > 0",
+    "TestValue": "Id > 0",
     "Expected": "e => (e.Id > 0)",
     "Message": "Expression should result in this expression: {0}."
   },
   {
     "Description": "Int Greater than or equal to",
-    "Value": "Id >= 2",
+    "TestName": "Id >= 2",
+    "TestValue": "Id >= 2",
     "Expected": "e => (e.Id >= 2)",
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Value": "Id >= 0",
+    "TestName": "Id >= 0",
+    "TestValue": "Id >= 0",
     "Expected": "e => (e.Id >= 0)",
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Value": "Id >= 100",
+    "TestName": "Id >= 100",
+    "TestValue": "Id >= 100",
     "Expected": "e => (e.Id >= 100)",
     "Message": "Expression should result in this expression: {0}."
   },
   {
     "Description": "Int less than",
-    "Value": "Id < 100",
+    "TestName": "Id < 100",
+    "TestValue": "Id < 100",
     "Expected": "e => (e.Id < 100)",
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Value": "Id < 0",
+    "TestName": "Id < 0",
+    "TestValue": "Id < 0",
     "Expected": "e => (e.Id < 0)",
     "Message": "Expression should result in this expression: {0}."
   },
   {
     "Description": "Int less than or equal to",
-    "Value": "Id <= 0",
+    "TestName": "Id <= 0",
+    "TestValue": "Id <= 0",
     "Expected": "e => (e.Id <= 0)",
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Value": "Id <= 0",
+    "TestName": "Id <= 0",
+    "TestValue": "Id <= 0",
     "Expected": "e => (e.Id <= 0)",
     "Message": "Expression should result in this expression: {0}."
   },
   {
     "Description": "String equals ",
-    "Value": "Name = Jared",
+    "TestName": "Name = Jared",
+    "TestValue": "Name = Jared",
     "Expected": "e => (e.Name == \"Jared\")",
     "Message": "Expression should result in this expression: {0}."
   },
   {
     "Description": "String not equals ",
-    "Value": "Name != Jared",
+    "TestName": "Name != Jared",
+    "TestValue": "Name != Jared",
     "Expected": "e => (e.Name != \"Jared\")",
     "Message": "Expression should result in this expression: {0}."
   },
   {
     "Description": "DateTime ",
-    "Value": "Date = 01/01/2017",
+    "TestName": "Date = 01/01/2017",
+    "TestValue": "Date = 01/01/2017",
     "Expected": "e => (e.Date == 1/1/2017 12:00:00 AM)",
     "Message": "Expression should result in this expression: {0}."
   },
   {
     "Description": "Date Greater than",
-    "Value": "Date > 01/01/2017",
+    "TestName": "Date > 01/01/2017",
+    "TestValue": "Date > 01/01/2017",
     "Expected": "e => (e.Date > 1/1/2017 12:00:00 AM)",
     "Message": "Expression should result in this expression: {0}."
   },
   {
     "Description": "Date Greater than or equal to",
-    "Value": "Date >= 01/01/2017",
+    "TestName": "Date >= 01/01/2017",
+    "TestValue": "Date >= 01/01/2017",
     "Expected": "e => (e.Date >= 1/1/2017 12:00:00 AM)",
     "Message": "Expression should result in this expression: {0}."
   },
   {
     "Description": "Date less than",
-    "Value": "Date < 01/01/2017",
+    "TestName": "Date < 01/01/2017",
+    "TestValue": "Date < 01/01/2017",
     "Expected": "e => (e.Date < 1/1/2017 12:00:00 AM)",
     "Message": "Expression should result in this expression: {0}."
   },
   {
     "Description": "Date less than or equal to",
-    "Value": "Date <= 01/01/2017",
+    "TestName": "Date <= 01/01/2017",
+    "TestValue": "Date <= 01/01/2017",
     "Expected": "e => (e.Date <= 1/1/2017 12:00:00 AM)",
     "Message": "Expression should result in this expression: {0}."
   },
   {
     "Description": " Guid equals ",
-    "Value": "Guid = {C1AA6176-425D-4981-BE4A-8F5C459E0FF9}",
+    "TestName": "Guid = {C1AA6176-425D-4981-BE4A-8F5C459E0FF9}",
+    "TestValue": "Guid = {C1AA6176-425D-4981-BE4A-8F5C459E0FF9}",
     "Expected": "e => (e.Guid == c1aa6176-425d-4981-be4a-8f5c459e0ff9)",
     "Message": "Expression should result in this expression: {0}."
   },
   {
     "Description": " Guid not equals ",
-    "Value": "Guid != {C1AA6176-425D-4981-BE4A-8F5C459E0FF9}",
+    "TestName": "Guid != {C1AA6176-425D-4981-BE4A-8F5C459E0FF9}",
+    "TestValue": "Guid != {C1AA6176-425D-4981-BE4A-8F5C459E0FF9}",
     "Expected": "e => (e.Guid != c1aa6176-425d-4981-be4a-8f5c459e0ff9)",
     "Message": "Expression should result in this expression: {0}."
   },
   {
     "Description": "Double equals",
-    "Value": "Cost = 1.10",
+    "TestName": "Cost = 1.10",
+    "TestValue": "Cost = 1.10",
     "Expected": "e => (e.Cost == 1.1)",
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Value": "Cost = 2.95",
+    "TestName": "Cost = 2.95",
+    "TestValue": "Cost = 2.95",
     "Expected": "e => (e.Cost == 2.95)",
     "Message": "Expression should result in this expression: {0}."
   },
   {
     "Description": "Double not equals",
-    "Value": "Cost != 1.10",
+    "TestName": "Cost != 1.10",
+    "TestValue": "Cost != 1.10",
     "Expected": "e => (e.Cost != 1.1)",
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Value": "Cost != 20.0",
+    "TestName": "Cost != 20.0",
+    "TestValue": "Cost != 20.0",
     "Expected": "e => (e.Cost != 20)",
     "Message": "Expression should result in this expression: {0}."
   },
   {
     "Description": "Double Greater than",
-    "Value": "Cost > 1.10",
+    "TestName": "Cost > 1.10",
+    "TestValue": "Cost > 1.10",
     "Expected": "e => (e.Cost > 1.1)",
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Value": "Cost > 0.0",
+    "TestName": "Cost > 0.0",
+    "TestValue": "Cost > 0.0",
     "Expected": "e => (e.Cost > 0)",
     "Message": "Expression should result in this expression: {0}."
   },
   {
     "Description": "Double Greater than or equal to",
-    "Value": "Cost >= 2.15",
+    "TestName": "Cost >= 2.15",
+    "TestValue": "Cost >= 2.15",
     "Expected": "e => (e.Cost >= 2.15)",
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Value": "Cost >= 0.0",
+    "TestName": "Cost >= 0.0",
+    "TestValue": "Cost >= 0.0",
     "Expected": "e => (e.Cost >= 0)",
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Value": "Cost >= 100.0",
+    "TestName": "Cost >= 100.0",
+    "TestValue": "Cost >= 100.0",
     "Expected": "e => (e.Cost >= 100)",
     "Message": "Expression should result in this expression: {0}."
   },
   {
     "Description": "Double less than",
-    "Value": "Cost < 100.0",
+    "TestName": "Cost < 100.0",
+    "TestValue": "Cost < 100.0",
     "Expected": "e => (e.Cost < 100)",
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Value": "Cost < 0.0",
+    "TestName": "Cost < 0.0",
+    "TestValue": "Cost < 0.0",
     "Expected": "e => (e.Cost < 0)",
     "Message": "Expression should result in this expression: {0}."
   },
   {
     "Description": "Double less than or equal to",
-    "Value": "Cost <= 0.0",
+    "TestName": "Cost <= 0.0",
+    "TestValue": "Cost <= 0.0",
     "Expected": "e => (e.Cost <= 0)",
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Value": "Cost <= 0.0",
+    "TestName": "Cost <= 0.0",
+    "TestValue": "Cost <= 0.0",
     "Expected": "e => (e.Cost <= 0)",
     "Message": "Expression should result in this expression: {0}."
   },
   {
     "Description": " Extra spaces ignroed ",
-    "Value": "Id   !=   1",
+    "TestName": "Id   !=   1",
+    "TestValue": "Id   !=   1",
     "Expected": "e => (e.Id != 1)",
     "Message": "Expression should result in this expression: {0}."
   }

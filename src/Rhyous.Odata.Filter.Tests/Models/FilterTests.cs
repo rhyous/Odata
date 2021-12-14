@@ -1,12 +1,19 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Rhyous.Collections;
+using Rhyous.Odata.Tests;
+using Rhyous.UnitTesting;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
-namespace Rhyous.Odata.Tests
+namespace Rhyous.Odata.Filter.Tests
 {
     [TestClass]
     public class FilterTests
     {
+        #region Filter Tests
         [TestMethod]
         public void FilterLengthTest()
         {
@@ -53,6 +60,28 @@ namespace Rhyous.Odata.Tests
 
             // Act & Assert
             Assert.IsTrue(filter.IsComplete);
+        }
+
+        [TestMethod]
+        public void Filter_HasSubFilters_False_Test()
+        {
+            // Arrange
+            Filter<Entity1> filter = new Filter<Entity1> { Left = "Id", Method = "eq", Right = "1" };
+
+            // Act & Assert
+            Assert.IsFalse(filter.HasSubFilters);
+        }
+
+        [TestMethod]
+        public void Filter_HasSubFilters_True_Test()
+        {
+            // Arrange
+            Filter<Entity1> filterLeft = new Filter<Entity1> { Left = "Id", Method = "eq", Right = "1" };
+            Filter<Entity1> filterRight = new Filter<Entity1> { Left = "Id", Method = "eq", Right = "2" };
+            Filter<Entity1> filter = new Filter<Entity1> { Left = filterLeft, Method = "OR", Right = filterRight };
+
+            // Act & Assert
+            Assert.IsTrue(filter.HasSubFilters);
         }
 
         [TestMethod]
@@ -114,6 +143,50 @@ namespace Rhyous.Odata.Tests
         {
             public A Parent { get ; set; }
         }
+        #endregion
+
+        #region ToString
+        [TestMethod]
+        public void Filter_ToString_NonFilter_Test()
+        {
+            // Arrange
+            var str = "Test";
+            Filter<Entity1> filter = str;
+
+            // Act
+            var actual = filter.ToString();
+
+            // Assert
+            Assert.AreEqual(str, actual);
+        }
+
+
+        [TestMethod]
+        public void Filter_ToString_Id_eq_27_Test()
+        {
+            // Arrange
+            Filter<Entity1> filter = new Filter<Entity1> { Left = "Id", Method = "eq", Right = "27"};
+
+            // Act
+            var actual = filter.ToString();
+
+            // Assert
+            Assert.AreEqual("Id eq 27", actual);
+        }
+
+        [TestMethod]
+        public void Filter_ToString_Array_Test()
+        {
+            // Arrange
+            Filter<Entity1> filter = new[] { 1, 2, 3 };
+
+            // Act
+            var actual = filter.ToString();
+
+            // Assert
+            Assert.AreEqual("(1,2,3)", actual);
+        }
+        #endregion
 
         #region Imlicit operator cast Filter to string tests
         [TestMethod]
@@ -207,7 +280,44 @@ namespace Rhyous.Odata.Tests
 
             // Assert
             Assert.AreEqual(s, f.ToString());
+            Assert.IsFalse(f.IsSimpleString);
+            Assert.IsTrue(f.Left.IsSimpleString);
+            Assert.AreEqual("eq", f.Method);
+            Assert.IsTrue(f.Right.IsSimpleString);
+        }
+
+        [TestMethod]
+        public void ImplicitOperatorStringToFilter_Wrapped_ValidTest()
+        {
+            // Arrange
+            string s = "'Id eq 1'"; // What if there was a database of filters and we wanted to find a filter in it?
+
+            // Act
+            Filter<User> f = s;
+
+            // Assert
+            Assert.AreEqual(s, f.ToString());
             Assert.IsTrue(f.IsSimpleString);
+            Assert.IsNull(f.Left);
+            Assert.IsNull(f.Method);
+            Assert.IsNull(f.Right);
+        }
+
+        [TestMethod]
+        public void ImplicitOperatorStringToFilter_EachPartQuoted_SoItLooksWrappedButIsNot_ValidTest()
+        {
+            // Arrange
+            string s = "'Id' eq '1'"; // What if there was a database of filters and we wanted to find a filter in it?
+            var expected = "Id eq 1";
+            // Act
+            Filter<User> f = s;
+
+            // Assert
+            Assert.AreEqual(expected, f.ToString());
+            Assert.IsFalse(f.IsSimpleString);
+            Assert.IsTrue(f.Left.IsSimpleString);
+            Assert.AreEqual("eq", f.Method);
+            Assert.IsTrue(f.Right.IsSimpleString);
         }
         #endregion
 
@@ -238,63 +348,7 @@ namespace Rhyous.Odata.Tests
             Assert.IsNull(s);
         }
         #endregion
-
-        #region GetCombinedExpression tests
-        [TestMethod]
-        public void FilterGetCombinedExpressionBothNull()
-        {
-            // Arrange
-            Filter<User> f1 = null;
-            Filter<User> f2 = null;
-
-            // Act
-            var s = Filter<User>.GetCombinedExpression(f1, f2, Conjunction.And);
-
-            // Assert
-            Assert.IsNull(s);
-        }
-
-        [TestMethod]
-        public void FilterGetCombinedExpressionRightNull()
-        {
-            // Arrange
-            var f1 = new Filter<User>
-            {
-                Left = "Id",
-                Method = "eq",
-                Right = "1"
-            };
-            var f1Expression = (Expression<Func<User, bool>>)f1;
-            Expression<Func<User, bool>> f2Expression = null;
-
-            // Act
-            var s = Filter<User>.GetCombinedExpression(f1Expression, f2Expression, Conjunction.And);
-
-            // Assert
-            Assert.AreEqual(f1Expression, s);
-        }
-
-        [TestMethod]
-        public void FilterGetCombinedExpressionLeftNull()
-        {
-            // Arrange
-            var f2 = new Filter<User>
-            {
-                Left = "Id",
-                Method = "eq",
-                Right = "1"
-            };
-            var f2Expression = (Expression<Func<User, bool>>)f2;
-            Expression<Func<User, bool>> f1Expression = null;
-
-            // Act
-            var s = Filter<User>.GetCombinedExpression(f1Expression, f2Expression, Conjunction.And);
-
-            // Assert
-            Assert.AreEqual(f2Expression, s);
-        }
-        #endregion
-
+        
         #region Group tests
 
 
@@ -376,6 +430,7 @@ namespace Rhyous.Odata.Tests
         }
         #endregion
 
+        #region Parent tests
         [TestMethod]
         public void ParentCannotBeSameAsChildTest()
         {
@@ -385,5 +440,27 @@ namespace Rhyous.Odata.Tests
             // Act & Assert
             Assert.ThrowsException<Exception>(() => { f1.Parent = f1; });
         }
+        #endregion
+
+        #region IEnumerable tests
+
+        [TestMethod]
+        [JsonTestDataSource(typeof(List<TestDataRow<string, int>>), @"Data\IEnumerableQueryStrings.json")]
+        public async Task Filter_IEnumerable_Count(TestDataRow<string, int> row)
+        {
+            // Arrange
+            var filterstring = row.TestValue;
+            var expected = row.Expected;
+            var message = row.Message;
+            var parser = new FilterExpressionParser<Entity1>(FilterExpressionParserActionDictionary<Entity1>.Instance);
+            var filter = await parser.ParseAsFilterAsync(filterstring, true);
+
+            // Act
+            var count = filter.Count();
+
+            // Assert
+            Assert.AreEqual(expected, count, message);
+        }
+        #endregion
     }
 }
