@@ -1,172 +1,172 @@
 ﻿[
   {
-    "Name":  "String Contains(are)",
-    "Value": "contains(Name,are)",
+    "TestName":  "String Contains(are)",
+    "TestValue": "contains(Name,are)",
     "Expected": "e => e.Name.Contains(\"are\")",
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Name": "String NotContains(are)",
-    "Value": "notcontains(Name,are)",
+    "TestName": "String NotContains(are)",
+    "TestValue": "notcontains(Name,are)",
     "Expected": "e => Not(e.Name.Contains(\"are\"))",
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Name": "String EndsWith(ared)",
-    "Value": "endswith(Name,ared)",
+    "TestName": "String EndsWith(ared)",
+    "TestValue": "endswith(Name,ared)",
     "Expected": "e => e.Name.EndsWith(\"ared\")",
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Name": "String NotEndsWith(ared)",
-    "Value": "notendswith(Name,ared)",
+    "TestName": "String NotEndsWith(ared)",
+    "TestValue": "notendswith(Name,ared)",
     "Expected": "e => Not(e.Name.EndsWith(\"ared\"))",
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Name": "String StartsWith(jare)",
-    "Value": "startswith(Name,jare)",
+    "TestName": "String StartsWith(jare)",
+    "TestValue": "startswith(Name,jare)",
     "Expected": "e => e.Name.StartsWith(\"jare\")",
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Name": "String NotStartsWith(jare)",
-    "Value": "notstartswith(Name,jare)",
+    "TestName": "String NotStartsWith(jare)",
+    "TestValue": "notstartswith(Name,jare)",
     "Expected": "e => Not(e.Name.StartsWith(\"jare\"))",
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Name": "String StartsWith(10) - Integer as if it were a string",
-    "Value": "StartsWith(Id,10)",
+    "TestName": "String StartsWith(10) - Integer as if it were a string",
+    "TestValue": "StartsWith(Id,10)",
     "Expected": "e => e.Id.ToString().StartsWith(\"10\")",
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Name": "String EndsWith(00) - Integer as if it were a string",
-    "Value": "EndsWith(Id,00)",
+    "TestName": "String EndsWith(00) - Integer as if it were a string",
+    "TestValue": "EndsWith(Id,00)",
     "Expected": "e => e.Id.ToString().EndsWith(\"00\")",
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Name": "String Contains(10) - Integer as if it were a string",
-    "Value": "Contains(Id,10)",
+    "TestName": "String Contains(10) - Integer as if it were a string",
+    "TestValue": "Contains(Id,10)",
     "Expected": "e => e.Id.ToString().Contains(\"10\")",
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Name": "String Contains('are') with Single Quote",
-    "Value": "contains(Name,'are')",
+    "TestName": "String Contains('are') with Single Quote",
+    "TestValue": "contains(Name,'are')",
     "Expected": "e => e.Name.Contains(\"are\")",
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Name": "String EndsWith('ared')",
-    "Value": "endswith(Name,'ared')",
+    "TestName": "String EndsWith('ared')",
+    "TestValue": "endswith(Name,'ared')",
     "Expected": "e => e.Name.EndsWith(\"ared\")",
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Name": "String StartsWith('jare')",
-    "Value": "startswith(Name,'jare')",
+    "TestName": "String StartsWith('jare')",
+    "TestValue": "startswith(Name,'jare')",
     "Expected": "e => e.Name.StartsWith(\"jare\")",
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Name": "String StartsWith('10') - Integer as if it were a string",
-    "Value": "StartsWith(Id,'10')",
+    "TestName": "String StartsWith('10') - Integer as if it were a string",
+    "TestValue": "StartsWith(Id,'10')",
     "Expected": "e => e.Id.ToString().StartsWith(\"10\")",
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Name": "String EndsWith('00') - Integer as if it were a string",
-    "Value": "EndsWith(Id,'00')",
+    "TestName": "String EndsWith('00') - Integer as if it were a string",
+    "TestValue": "EndsWith(Id,'00')",
     "Expected": "e => e.Id.ToString().EndsWith(\"00\")",
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Name": "String Contains('10') - Integer as if it were a string",
-    "Value": "Contains(Id,'10')",
+    "TestName": "String Contains('10') - Integer as if it were a string",
+    "TestValue": "Contains(Id,'10')",
     "Expected": "e => e.Id.ToString().Contains(\"10\")",
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Name": "String Contains('') not quoted contains two single quotes",
-    "Value": "contains(Name,'')",
+    "TestName": "String Contains('') not quoted contains two single quotes",
+    "TestValue": "contains(Name,'')",
     "Expected": "e => e.Name.Contains(\"'\")",
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Name": "String EndsWith('') two single quotes",
-    "Value": "endswith(Name,'')",
+    "TestName": "String EndsWith('') two single quotes",
+    "TestValue": "endswith(Name,'')",
     "Expected": "e => e.Name.EndsWith(\"'\")",
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Name": "String StartsWith('') two single quotes",
-    "Value": "startswith(Name,'')",
+    "TestName": "String StartsWith('') two single quotes",
+    "TestValue": "startswith(Name,'')",
     "Expected": "e => e.Name.StartsWith(\"'\")",
     "Message": "Expression should result in this expression: {0}."
   },
   {
 
-    "Name": "String contains(\"'\") quoted with double quotes contains ome single quotes",
-    "Value": "contains(Name,\"'\")",
+    "TestName": "String contains(\"'\") quoted with double quotes contains ome single quotes",
+    "TestValue": "contains(Name,\"'\")",
     "Expected": "e => e.Name.Contains(\"'\")",
     "Message": "Expression should result in this expression: {0}."
   },
   {
 
-    "Name": "String contains(\"''\") quoted with double quotes contains two single quotes",
-    "Value": "contains(Name,\"''\")",
+    "TestName": "String contains(\"''\") quoted with double quotes contains two single quotes",
+    "TestValue": "contains(Name,\"''\")",
     "Expected": "e => e.Name.Contains(\"''\")",
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Name": "String EndsWith(\"'\"), double quotes around one single quotes",
-    "Value": "endswith(Name,\"'\")",
+    "TestName": "String EndsWith(\"'\"), double quotes around one single quotes",
+    "TestValue": "endswith(Name,\"'\")",
     "Expected": "e => e.Name.EndsWith(\"'\")",
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Name": "String EndsWith(\"''\"), double quotes around two single quotes",
-    "Value": "endswith(Name,\"''\")",
+    "TestName": "String EndsWith(\"''\"), double quotes around two single quotes",
+    "TestValue": "endswith(Name,\"''\")",
     "Expected": "e => e.Name.EndsWith(\"''\")",
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Name": "String StartsWith('), one single quote",
-    "Value": "startswith(Name,')",
+    "TestName": "String StartsWith('), one single quote",
+    "TestValue": "startswith(Name,')",
     "Expected": "e => e.Name.StartsWith(\"'\")",
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Name": "String StartsWith(\"'\"), double quotes around one single quotes",
-    "Value": "startswith(Name,\"'\")",
+    "TestName": "String StartsWith(\"'\"), double quotes around one single quotes",
+    "TestValue": "startswith(Name,\"'\")",
     "Expected": "e => e.Name.StartsWith(\"'\")",
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Name": "String StartsWith(\"''\"), double quotes around two single quotes",
-    "Value": "startswith(Name,\"''\")",
+    "TestName": "String StartsWith(\"''\"), double quotes around two single quotes",
+    "TestValue": "startswith(Name,\"''\")",
     "Expected": "e => e.Name.StartsWith(\"''\")",
     "Message": "Expression should result in this expression: {0}."
   },
   {
 
-    "Name": "String Contains('''') quoted with single quotes contains two single quotes",
-    "Value": "contains(Name,'''')",
+    "TestName": "String Contains('''') quoted with single quotes contains two single quotes",
+    "TestValue": "contains(Name,'''')",
     "Expected": "e => e.Name.Contains(\"''\")",
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Name": "String EndsWith('''') two single quotes",
-    "Value": "endswith(Name,'''')",
+    "TestName": "String EndsWith('''') two single quotes",
+    "TestValue": "endswith(Name,'''')",
     "Expected": "e => e.Name.EndsWith(\"''\")",
     "Message": "Expression should result in this expression: {0}. In essense, "
   },
   {
-    "Name": "String StartsWith('''') two single quotes",
-    "Value": "startswith(Name,'''')",
+    "TestName": "String StartsWith('''') two single quotes",
+    "TestValue": "startswith(Name,'''')",
     "Expected": "e => e.Name.StartsWith(\"''\")",
     "Message": "Expression should result in this expression: {0}."
   }

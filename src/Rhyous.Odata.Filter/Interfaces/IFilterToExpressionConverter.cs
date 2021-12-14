@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
 
-namespace Rhyous.Odata
+namespace Rhyous.Odata.Filter
 {
     /// <summary>
     /// An interface for defining the signature for converting a Filter{TEntity} to an Expression{Func{TEntity, bool}}

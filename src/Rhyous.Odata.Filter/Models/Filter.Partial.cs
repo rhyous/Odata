@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
-namespace Rhyous.Odata
+namespace Rhyous.Odata.Filter
 {
     public partial class Filter<TEntity>
     {
@@ -15,7 +15,9 @@ namespace Rhyous.Odata
         public override string ToString()
         {
             if (!string.IsNullOrWhiteSpace(NonFilter))
+            {
                 return NonFilter;
+            }
             return $"{Left} {Method} {Right}";
         }
         #endregion
@@ -61,7 +63,9 @@ namespace Rhyous.Odata
         {
             if (string.IsNullOrWhiteSpace(str))
                 return null;
-            return new Filter<TEntity> { NonFilter = str };
+            if (str.IsQuoted() || str.None(c => char.IsWhiteSpace(c)))
+                return new Filter<TEntity> { NonFilter = str };
+            return FilterExpressionParser<TEntity>.Instance.ParseAsFilterAsync(str, false).Result;
         }
 
         /// <summary>An implicit cast from an array to a Filter{TEntity}.</summary>
@@ -79,15 +83,53 @@ namespace Rhyous.Odata
         /// <summary>An implicit cast from a Filter{TEntity} to an Expression{Func{TEntity, bool}}.</summary>
         public static implicit operator Expression<Func<TEntity, bool>>(Filter<TEntity> filter)
         {
-            return Converter.Convert(filter);
+            return FilterToExpressionConverter.Convert(filter);
         }
 
-        internal static IFilterToExpressionConverter Converter
+        internal static IFilterToExpressionConverter FilterToExpressionConverter
         {
-            get { return _Converter ?? (_Converter = FilterToExpressionConverter.Instance); }
+            get { return _Converter ?? (_Converter = Filter.FilterToExpressionConverter.Instance); }
             set { _Converter = value; }
         } private static IFilterToExpressionConverter _Converter;
 
+        #endregion
+
+        #region Clone
+        /// <summary>
+        /// Clones the current $Filter{TEntity} into a new instance.
+        /// </summary>
+        /// <returns>A new Filter{TEntity} cloned from the original.</returns>
+        public virtual Filter<TEntity> Clone()
+        {
+            return IsSimpleString
+                   ? new Filter<TEntity> { NonFilter = NonFilter }
+                   : new Filter<TEntity>
+                   {
+                       Parent = Parent,
+                       Left = Left,
+                       Method = Method,
+                       Right = Right,
+                       Not = Not
+                   };
+        }
+
+        /// <summary>
+        /// Clones the current $Filter{TEntity} into a new instance.
+        /// </summary>
+        /// <returns>A new Filter{TEntity} cloned from the original.</returns>
+        public virtual Filter<TEntity> Clone(bool skipLeft, bool skipRight)
+        {
+            return IsSimpleString
+                   ? new Filter<TEntity> { NonFilter = NonFilter }
+                   : new Filter<TEntity>
+                   {
+                       Parent = Parent,
+                       Left = skipLeft ? null : Left,
+                       Method = Method,
+                       Right = skipRight ? null : Right,
+                       Not = Not
+                   };
+        }
         #endregion
     }
 }

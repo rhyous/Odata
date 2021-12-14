@@ -2,14 +2,12 @@
 using System;
 using System.Collections.Generic;
 
-namespace Rhyous.Odata
+namespace Rhyous.Odata.Filter
 {
-    /// <summary>
-    /// A dictionary of actions based on characters found in the $filter expression string.
-    /// </summary>
+    /// <summary>A dictionary of actions based on characters found in the $filter expression string.</summary>
     /// <typeparam name="TEntity">The entity.</typeparam>
-    public class FilterExpressionParserActionDictionary<TEntity> : Dictionary<char, Action<ParserState<TEntity>>>, 
-                                                                   IDictionaryDefaultValueProvider<char, Action<ParserState<TEntity>>>
+    public class FilterExpressionParserActionDictionary<TEntity> : Dictionary<char, Action<ParserState<TEntity>>>,
+                                                                   IFilterExpressionParserActionDictionary<TEntity>
     {
         #region Singleton
 
@@ -18,10 +16,8 @@ namespace Rhyous.Odata
         /// <summary>This singleton instance</summary>
         public static FilterExpressionParserActionDictionary<TEntity> Instance { get { return Lazy.Value; } }
 
-        /// <summary>
-        /// The constructor
-        /// </summary>
-        internal FilterExpressionParserActionDictionary()
+        /// <summary>The constructor.</summary>
+        public FilterExpressionParserActionDictionary()
         {
             Add(' ', DelimiterHandler<TEntity>.Instance.Action);
             Add(',', DelimiterHandler<TEntity>.Instance.Action);

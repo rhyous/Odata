@@ -1,4 +1,6 @@
-﻿namespace Rhyous.Odata
+﻿using System;
+
+namespace Rhyous.Odata.Filter
 {
     /// <summary>
     /// This overloads Filter{TEntity} only it is specific to when the data is an array.
@@ -35,6 +37,25 @@
             if (array is null)
                 return null;
             return new ArrayFilter<TEntity, TArrayItem> { Array = array };
+        }
+
+        /// <summary>
+        /// Clones the current $Filter{TEntity} into a new instance.
+        /// </summary>
+        /// <returns>A new Filter{TEntity} cloned from the original.</returns>
+        public override Filter<TEntity> Clone()
+        {
+            return Clone(false);
+        }
+
+        /// <summary>
+        /// Clones the current $Filter{TEntity} into a new instance.
+        /// </summary>
+        /// <param name="cloneArray">Whether to clone the Array object. It is a shallow array clone.</param>
+        /// <returns>A new Filter{TEntity} cloned from the original.</returns>
+        public ArrayFilter<TEntity, TArrayItem> Clone(bool cloneArray)
+        {
+            return new ArrayFilter<TEntity, TArrayItem> { Array = cloneArray ? Array.Clone() as TArrayItem[] : Array };
         }
     }
 }

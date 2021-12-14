@@ -1,9 +1,8 @@
 ﻿using Rhyous.StringLibrary;
 using System;
 using System.Linq.Expressions;
-using System.Reflection;
 
-namespace Rhyous.Odata
+namespace Rhyous.Odata.Filter
 {
     internal class CommonOperatorsExpressionBuilder
     {
@@ -23,7 +22,9 @@ namespace Rhyous.Odata
             var possiblePropName = filter.Left.ToString();
             var property = Expression.Property(lambdaParameter, possiblePropName);
             Expression left = filter.Left.IsSimpleString ? Expression.Property(lambdaParameter, possiblePropName) as Expression : filter.Left;
-            Expression right = filter.Right.IsSimpleString ? Expression.Constant(filter.Right.ToString().ToType(property.Type)) as Expression : filter.Right; ;
+            if (property.Type != typeof(string) && filter.Right.IsSimpleString)
+                filter.Right.NonFilter.Unquote();
+            Expression right = filter.Right.IsSimpleString ? Expression.Constant(filter.Right.ToString().ToType(property.Type)) as Expression : filter.Right;
             var methodExpression = func.Invoke(left, right);
             return (filter.Not)
                  ? Expression.Lambda<Func<TEntity, bool>>(Expression.Not(methodExpression), lambdaParameter)

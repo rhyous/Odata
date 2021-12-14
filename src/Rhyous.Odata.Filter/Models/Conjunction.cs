@@ -1,4 +1,4 @@
-﻿namespace Rhyous.Odata
+﻿namespace Rhyous.Odata.Filter
 {
     /// <summary>An enum representing common $filter conjunction operators</summary>
     public enum Conjunction

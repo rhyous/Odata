@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Rhyous.Odata
+namespace Rhyous.Odata.Filter
 {
     /// <summary>
     /// An exception for an invalid method type, which means a method that doesn't exist on a type.

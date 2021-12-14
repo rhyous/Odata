@@ -13,19 +13,19 @@ namespace Rhyous.Odata.Csdl
         /// <summary>
         /// JSON Schema Kind. Should always be EntityType.
         /// </summary>
-        [DataMember(Name = "$Kind")]
-        public string Kind { get; set; } = "EnumType";
+        [DataMember(Name = CsdlConstants.Kind)]
+        public string Kind { get; set; } = CsdlConstants.EntityType;
 
         /// <summary>
         /// Underlying type of the enum.
         /// </summary>
-        [DataMember(Name = "$UnderlyingType", Order=3)]
+        [DataMember(Name = CsdlConstants.UnderlyingType, Order=3)]
         public string UnderlyingType { get; set; }
 
         /// <summary>
         /// Specifies whether this enum is a flag.
         /// </summary>
-        [DataMember(Name = "$IsFlags", EmitDefaultValue = false)]
+        [DataMember(Name = CsdlConstants.IsFlags, EmitDefaultValue = false)]
         public bool IsFlags { get; set; }
 
         /// <summary>

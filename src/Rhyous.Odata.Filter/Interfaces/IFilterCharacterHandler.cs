@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Rhyous.Odata
+namespace Rhyous.Odata.Filter
 {
     /// <summary>
     /// An interface for character handlers when parsing $filter expressions character by character.

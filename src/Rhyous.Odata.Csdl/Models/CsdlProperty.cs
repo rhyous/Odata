@@ -15,14 +15,14 @@ namespace Rhyous.Odata.Csdl
         /// Specifies whether this property is nullable.
         /// </summary>
         /// <remarks>http://docs.oasis-open.org/odata/odata-csdl-json/v4.01/cs01/odata-csdl-json-v4.01-cs01.html#sec_Nullable</remarks>
-        [DataMember(Name = "$Nullable", EmitDefaultValue = false)]
+        [DataMember(Name = CsdlConstants.Nullable, EmitDefaultValue = false)]
         public bool Nullable { get; set; }
 
         /// <summary>
         /// Specifies whether this property is a collection.
         /// </summary>
         /// <remarks>http://docs.oasis-open.org/odata/odata-csdl-json/v4.01/cs01/odata-csdl-json-v4.01-cs01.html#sec_Type</remarks>
-        [DataMember(Name = "$Collection", EmitDefaultValue = false)]
+        [DataMember(Name = CsdlConstants.Collection, EmitDefaultValue = false)]
         public bool IsCollection { get; set; }
 
         /// <summary>
@@ -32,27 +32,27 @@ namespace Rhyous.Odata.Csdl
         /// length is specified, clients SHOULD expect arbitrary length.
         /// </summary>
         /// <remarks>http://docs.oasis-open.org/odata/odata-csdl-json/v4.01/cs01/odata-csdl-json-v4.01-cs01.html#sec_MaxLength</remarks>
-        [DataMember(Name = "$MaxLength", EmitDefaultValue = false)]
+        [DataMember(Name = CsdlConstants.MaxLength, EmitDefaultValue = false)]
         public ulong MaxLength { get; set; }
 
         /// <summary>
         /// JSON Schema types.
         /// </summary>
         /// <remarks>http://docs.oasis-open.org/odata/odata-csdl-json/v4.01/cs01/odata-csdl-json-v4.01-cs01.html#sec_Type</remarks>
-        [DefaultValue("Edm.String")]
-        [DataMember(Name = "$Type")]
+        [DefaultValue(CsdlConstants.EdmString)]
+        [DataMember(Name = CsdlConstants.Type)]
         public virtual string Type { get; set; }
 
-        [DataMember(Name = "$Precision", EmitDefaultValue = false)]
+        [DataMember(Name = CsdlConstants.Precision, EmitDefaultValue = false)]
         public uint Precision { get; set; }
 
-        [DataMember(Name = "$Scale", EmitDefaultValue = false)]
+        [DataMember(Name = CsdlConstants.Scale, EmitDefaultValue = false)]
         public int Scale { get; set; }
 
-        [DataMember(Name = "$Unicode", EmitDefaultValue = false)]
+        [DataMember(Name = CsdlConstants.Unicode, EmitDefaultValue = false)]
         public bool IsUnicode { get; set; }
 
-        [DataMember(Name = "$DefaultValue", EmitDefaultValue = false)]
+        [DataMember(Name = CsdlConstants.DefaultValue, EmitDefaultValue = false)]
         public object DefaultValue { get; set; }
 
         [JsonExtensionData]

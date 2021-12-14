@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Rhyous.Odata
+namespace Rhyous.Odata.Filter
 {
     /// <summary>
     /// An expection that can be thrown when the grouping in a $filter expression is invalid.

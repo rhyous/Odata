@@ -54,19 +54,19 @@ namespace Rhyous.Odata.Csdl
                              || a is IgnoreDataMemberAttribute);
         }
 
-        public static CsdlNavigationProperty ToNavigationProperty(this RelatedEntityAttribute relatedEntityAttribute, string schemaOrAlias = Constants.DefaultSchemaOrAlias, CustomPropertyDataFuncs CustomPropertyDataFuncs = null)
+        public static CsdlNavigationProperty ToNavigationProperty(this RelatedEntityAttribute relatedEntityAttribute, string schemaOrAlias = CsdlConstants.DefaultSchemaOrAlias, CustomPropertyDataFuncs CustomPropertyDataFuncs = null)
         {
             CustomPropertyDataFuncs = CustomPropertyDataFuncs ?? new CustomPropertyDataFuncs(); 
             return new RelatedEntityNavigationPropertyBuilder(CustomPropertyDataFuncs).Build(relatedEntityAttribute, schemaOrAlias);
         }
 
-        public static CsdlNavigationProperty ToNavigationProperty(this RelatedEntityForeignAttribute relatedEntityAttribute, string schemaOrAlias = Constants.DefaultSchemaOrAlias, CustomPropertyDataFuncs CustomPropertyDataFuncs = null)
+        public static CsdlNavigationProperty ToNavigationProperty(this RelatedEntityForeignAttribute relatedEntityAttribute, string schemaOrAlias = CsdlConstants.DefaultSchemaOrAlias, CustomPropertyDataFuncs CustomPropertyDataFuncs = null)
         {
             CustomPropertyDataFuncs = CustomPropertyDataFuncs ?? new CustomPropertyDataFuncs();
             return new RelatedEntityForeignNavigationPropertyBuilder(CustomPropertyDataFuncs).Build(relatedEntityAttribute, schemaOrAlias);
         }
 
-        public static CsdlNavigationProperty ToNavigationProperty(this RelatedEntityMappingAttribute relatedEntityAttribute, string schemaOrAlias = Constants.DefaultSchemaOrAlias, CustomPropertyDataFuncs CustomPropertyDataFuncs = null)
+        public static CsdlNavigationProperty ToNavigationProperty(this RelatedEntityMappingAttribute relatedEntityAttribute, string schemaOrAlias = CsdlConstants.DefaultSchemaOrAlias, CustomPropertyDataFuncs CustomPropertyDataFuncs = null)
         {
             CustomPropertyDataFuncs = CustomPropertyDataFuncs ?? new CustomPropertyDataFuncs();
             return new RelatedEntityMappingNavigationPropertyBuilder(CustomPropertyDataFuncs).Build(relatedEntityAttribute, schemaOrAlias);

@@ -1,50 +1,65 @@
 [
   {
-    "Name": "Search for two single quotes, unquoted",
-    "Value": "\"Name eq ''''\"",
+    "RunOrder": 1,
+    "TestName": "Search for two single quotes, unquoted",
+    "TestValue": "\"Name eq ''''\"",
     "Expected": "e => (e.Name == \"''\")",
     "Message": "Expression should result in this expression: {0}. 1. This should search for 1 single quote."
   },
   {
-    "Name": "Search for two single quotes",
-    "Value": "\"Name eq ''''\"",
+    "RunOrder": 2,
+    "TestName": "Search for two single quotes",
+    "TestValue": "\"Name eq ''''\"",
     "Expected": "e => (e.Name == \"''\")",
     "Message": "Expression should result in this expression: {0}. 1. This should search for 1 single quote."
   },
   {
-    "Name": "Search for one single quote, unquoted",
-    "Value": "\"Name eq '\"",
+    "RunOrder": 3,
+    "TestName": "Search for one single quote, unquoted",
+    "TestValue": "\"Name eq '\"",
     "Expected": "e => (e.Name == \"'\")",
     "Message": "Expression should result in this expression: {0}. 1. This should search for 1 single quote."
   },
   {
-    "Name": "Search for one double quote, not escaped not single-quoted.",
-    "Value": "\"Name eq \"\"", // outer quotes are Json quotes, inner quotes quote the entire expression, leaving 1 quote: Name eq "
+    "RunOrder": 4,
+    "TestName": "Search for one double quote, not escaped not single-quoted.",
+    "TestValue": "\"Name eq \"\"", // outer quotes are Json quotes, inner quotes quote the entire expression, leaving 1 quote: Name eq "
     "Expected": "e => (e.Name == \"\"\")",
     "Message": "Expression should result in this expression: {0}. 1. This should search for 1 single quote."
   },
   {
-    "Name": "Search for one double quote, not escaped and single-quoted.",
-    "Value": "\"Name eq '\"'\"",
+    "RunOrder": 5,
+    "TestName": "Search for one double quote, not escaped and single-quoted.",
+    "TestValue": "\"Name eq '\"'\"",
     "Expected": "e => (e.Name == \"\"\")",
     "Message": "Expression should result in this expression: {0}. 1. This should search for 1 single quote."
   },
   {
-    "Name": "Search for two double quote, escaped and single-quoted.",
-    "Value": "\"Name eq '\"\"\"'\"",
+    "RunOrder": 6,
+    "TestName": "Search for two double quote, escaped and single-quoted.",
+    "TestValue": "\"Name eq '\"\"\"'\"",
     "Expected": "e => (e.Name == \"\"\"\"\")",
     "Message": "Expression should result in this expression: {0}. 1. This should search for 1 single quote."
   },
   {
-    "Name": "Search for one double quote, escaped and single-quoted.",
-    "Value": "\"Name eq '\"'\"",
+    "RunOrder": 7,
+    "TestName": "Search for one double quote, escaped and single-quoted.",
+    "TestValue": "\"Name eq '\"'\"",
     "Expected": "e => (e.Name == \"\"\")",
     "Message": "Expression should result in this expression: {0}. 1. This should search for 1 single quote."
   },
   {
-    "Name": "Single quote in middle of string, unquoted.",
-    "Value": "\"Name eq O'Brien\"",
+    "RunOrder": 8,
+    "TestName": "Single quote in middle of string, unquoted.",
+    "TestValue": "\"Name eq O'Brien\"",
     "Expected": "e => (e.Name == \"O'Brien\")",
     "Message": "Expression should result in this expression: {0}. 1. This should search for the name with the single quote."
+  },
+  {
+    "RunOrder": 9,
+    "TestName": "Id eq 1 and Name eq 'Jared \"\"Rhyous\"\" Barneck'",
+    "TestValue": "Id eq 1 and Name eq 'Jared \"\"Rhyous\"\" Barneck'",
+    "Expected": "e => ((e.Id == 1) AndAlso (e.Name == \"Jared \"\"Rhyous\"\" Barneck\"))",
+    "Message": "Inside single quotes, double quotes should not be escaped. Expression should result in this expression: {0}."
   }
 ]

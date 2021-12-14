@@ -162,10 +162,10 @@ namespace Rhyous.Odata.Csdl.Tests.Extensions
             string r = "";
 
             // Act
-            var actual = RelatedEntityAttributeExtensions.GetValue(l, r, Constants.Id, string.IsNullOrWhiteSpace);
+            var actual = RelatedEntityAttributeExtensions.GetValue(l, r, CsdlConstants.Id, string.IsNullOrWhiteSpace);
 
             // Assert
-            Assert.AreEqual(Constants.Id, actual);
+            Assert.AreEqual(CsdlConstants.Id, actual);
         }
 
 

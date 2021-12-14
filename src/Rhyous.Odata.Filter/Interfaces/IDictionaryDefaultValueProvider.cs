@@ -1,6 +1,6 @@
 ﻿//using System.Collections.Generic;
 
-//namespace Rhyous.Odata
+//namespace Rhyous.Odata.Filter
 //{
 //    /// <summary>
 //    /// 

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Rhyous.Odata
+namespace Rhyous.Odata.Filter
 {
     /// <summary>An object for storing a grouping when parsing a $filter expression string.</summary>
     public class Group

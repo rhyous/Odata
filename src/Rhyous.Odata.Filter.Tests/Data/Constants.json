@@ -1,34 +1,42 @@
 [
   {
-    "Value": "Jared",
+    "TestName": "A string",
+    "TestValue": "Jared",
     "Message": "String should result in a constant: {0}. 1."
   },
   {
-    "Value": "'Jared Barneck'",
+    "TestName": "A string with a space",
+    "TestValue": "'Jared Barneck'",
     "Message": "Quoted string should result in a constant: {0}. 1."
   },
   {
-    "Value": "100",
+    "TestName": "An integer",
+    "TestValue": "100",
     "Message": "Integer should result in a constant: {0}. 1."
   },
   {
-    "Value": "5.5",
+    "TestName": "A double",
+    "TestValue": "5.5",
     "Message": "Double should result in a constant: {0}. 1."
   },
   {
-    "Value": "'Product A and Product B'",
-    "Message": "An an/or operator may be in a name should result in a constant: {0}. 1."
+    "TestName": "A string with the word 'and' in it",
+    "TestValue": "'Product A and Product B'",
+    "Message": "An and/or operator may be in a name should result in a constant: {0}. 1."
   },
   {
-    "Value": "'Product EQ 10'",
+    "TestName": "A string with the word 'EQ' in it",
+    "TestValue": "'Product EQ 10'",
     "Message": "An EQ operator may be in a name should result in a constant: {0}. 1."
   },
   {
-    "Value": "Product EQ 10",
+    "TestName": "A string with the word 'EQ' in it",
+    "TestValue": "Product EQ 10",
     "Message": "An EQ operator may be in a name should result in a constant: {0}. 1."
   },
   {
-    "Value": "'or Id eq 1'",
+    "TestName": "A quoted epression",
+    "TestValue": "'or Id eq 1'",
     "Message": "A quoted epression should result in a constant: {0}. 1."
   }
 ]

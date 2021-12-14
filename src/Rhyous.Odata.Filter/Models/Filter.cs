@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Rhyous.Odata
+namespace Rhyous.Odata.Filter
 {
     /// <summary>
     /// The Filter{TEntity} class, used to handle a $filter expression tree and convert it to an expression tree.
@@ -16,7 +16,9 @@ namespace Rhyous.Odata
         public Filter() { MyInstanceId = ++InstanceId; }
 
         #region Properties
-        private string NonFilter { get; set; }
+
+        /// <summary>The constant string that is not a filter.</summary>
+        public string NonFilter { get; set; }
 
         /// <summary>The parent Filter{TEntity}.</summary>
         public Filter<TEntity> Parent
@@ -87,6 +89,8 @@ namespace Rhyous.Odata
         public bool HasSubFilters { get { return (Right != null && !Right.IsSimpleString && !Right.IsArray) || (Left != null && !Left.IsSimpleString && !Right.IsArray); } }
         /// <summary>The length of this filter string.</summary>
         public int Length { get { return ToString().Length; } }
+        /// <summary>Whether this is a root filter or not.</summary>
+        public bool IsRoot { get { return Parent == null; } }
 
         #endregion
     }

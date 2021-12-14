@@ -50,10 +50,10 @@ namespace Rhyous.Odata.Csdl
 
         private static void RemoveIsRequiredIfItMatchesNullable(CsdlProperty prop)
         {
-            if (prop.CustomData.TryGetValue(Constants.UIRequired, out object isRequired))
+            if (prop.CustomData.TryGetValue(CsdlConstants.UIRequired, out object isRequired))
             {
                 if ((bool)isRequired != prop.Nullable)
-                    prop.CustomData.Remove(Constants.UIRequired);
+                    prop.CustomData.Remove(CsdlConstants.UIRequired);
             }
         }
     }

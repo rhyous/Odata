@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace Rhyous.Odata
+namespace Rhyous.Odata.Filter
 {
     /// <summary>
     /// A handler for parsing Quotes in a $Filter expression string.

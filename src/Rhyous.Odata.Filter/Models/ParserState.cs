@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Rhyous.StringLibrary;
+using System;
+using System.Linq;
 using System.Text;
 
-namespace Rhyous.Odata
+namespace Rhyous.Odata.Filter
 {
     /// <summary>
     /// On object to hold the state of parsing a $filter expression string.
@@ -82,7 +84,7 @@ namespace Rhyous.Odata
             return false;
         }
 
-        internal bool MethodIsInArray() { return "IN".Equals(CurrentFilter.Method, StringComparison.OrdinalIgnoreCase); }
+        internal bool MethodIsInArray() { return CurrentFilter != null && "IN".Equals(CurrentFilter.Method, StringComparison.OrdinalIgnoreCase); }
 
         internal bool AppendIfMethodIsInArray()
         {
@@ -137,7 +139,7 @@ namespace Rhyous.Odata
                 if (MethodIsInArray())
                     CurrentFilter.Right = new ArrayFilter<TEntity, string> { Array = rightExpression.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)};
                 else
-                    CurrentFilter.Right = rightExpression;
+                    CurrentFilter.Right = new Filter<TEntity> { NonFilter = rightExpression };
                 return true;
             }
             return false;

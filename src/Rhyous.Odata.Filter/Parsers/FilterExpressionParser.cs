@@ -2,29 +2,38 @@
 using Rhyous.Collections;
 using Rhyous.StringLibrary;
 using System;
-using System.Linq;
+using System.Collections.Specialized;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
-namespace Rhyous.Odata
+namespace Rhyous.Odata.Filter
 {
-    /// <summary>
-    /// A class to perform $filter expression parsing
-    /// </summary>
+    /// <summary>A class to perform $filter expression parsing</summary>
     /// <typeparam name="TEntity">The entity.</typeparam>
     public class FilterExpressionParser<TEntity> : IFilterExpressionParser<TEntity>
     {
         #region Singleton
 
-        private static readonly Lazy<FilterExpressionParser<TEntity>> Lazy = new Lazy<FilterExpressionParser<TEntity>>(() => new FilterExpressionParser<TEntity>());
+        private static readonly Lazy<FilterExpressionParser<TEntity>> Lazy = new Lazy<FilterExpressionParser<TEntity>>(()
+            => new FilterExpressionParser<TEntity>(FilterExpressionParserActionDictionary<TEntity>.Instance));
 
         /// <summary>This singleton instance</summary>
-        public static IFilterExpressionParser<TEntity> Instance { get { return Lazy.Value; } }
+        public static FilterExpressionParser<TEntity> Instance { get { return Lazy.Value; } }
 
-        internal FilterExpressionParser() { }
 
         #endregion
+
+        private readonly IFilterExpressionParserActionDictionary<TEntity> _ActionDictionary;
+
+        /// <summary>The constructor</summary>
+        /// <param name="actionDictionary">A dictioary of parser f ilter expression arser Actions.</param>
+        public FilterExpressionParser(IFilterExpressionParserActionDictionary<TEntity> actionDictionary)
+        {
+            _ActionDictionary = actionDictionary;
+        }
+
         /// <inheritdoc />
-        public Filter<TEntity> ParseAsFilter(string filterExpression, bool unquote = true)
+        public async Task<Filter<TEntity>> ParseAsFilterAsync(string filterExpression, bool unquote = true, ICustomFilterConvertersRunner<TEntity> customFilterConverterRunner = null)
         {
             var trimmedfilterExpression = filterExpression.Trim();
             if (trimmedfilterExpression.Length > 2 && unquote)
@@ -32,28 +41,35 @@ namespace Rhyous.Odata
             var state = new ParserState<TEntity>(trimmedfilterExpression);
             for (state.CharIndex = 0; state.CharIndex < state.FilterString.Length; state.CharIndex++)
             {
-                ActionDictionary.GetValueOrDefault(state.Char).Invoke(state);
+                _ActionDictionary.GetValueOrDefault(state.Char).Invoke(state);
             }
             state.LastApply(); // Final apply required to get the last value.
             var rootFilter = state.CurrentFilter;
             while (rootFilter.Parent != null)
                 rootFilter = rootFilter.Parent;
+            if (customFilterConverterRunner != null)
+                rootFilter = await customFilterConverterRunner.ConvertAsync(rootFilter);
             return rootFilter;
         }
 
         /// <inheritdoc />
-        public Expression<Func<TEntity, bool>> Parse(string filterExpression, bool unquote = true)
+        public async Task<Expression<Func<TEntity, bool>>> ParseAsync(string filterExpression, bool unquote = true, ICustomFilterConvertersRunner<TEntity> customFilterConverterRunner = null)
         {
-            var rootFilter = ParseAsFilter(filterExpression, unquote);
+            var rootFilter = await ParseAsFilterAsync(filterExpression, unquote, customFilterConverterRunner);
             var starter = PredicateBuilder.New<TEntity>();
             starter.Start(rootFilter);
             return starter;
         }
 
-        internal IDictionaryDefaultValueProvider<char, Action<ParserState<TEntity>>> ActionDictionary
+        /// <inheritdoc />
+        public async Task<Expression<Func<TEntity, bool>>> ParseAsync(NameValueCollection parameters, bool unquote, ICustomFilterConvertersRunner<TEntity> customFilterConverterRunner = null)
         {
-            get { return _ActionDictionary ?? (_ActionDictionary = FilterExpressionParserActionDictionary<TEntity>.Instance); }
-            set { _ActionDictionary = value; }
-        } private IDictionaryDefaultValueProvider<char, Action<ParserState<TEntity>>> _ActionDictionary;
+            if (parameters == null || parameters.Count == 0)
+                return null;
+            var filterString = parameters.Get("$filter", string.Empty);
+            if (string.IsNullOrWhiteSpace(filterString))
+                return null;
+            return await ParseAsync(filterString, unquote, customFilterConverterRunner);
+        }
     }
 }

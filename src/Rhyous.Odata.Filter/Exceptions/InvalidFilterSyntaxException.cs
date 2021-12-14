@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Rhyous.Odata
+namespace Rhyous.Odata.Filter
 {
     /// <summary>
     /// An exception for an invalid $filter expression syntax

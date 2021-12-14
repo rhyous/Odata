@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Rhyous.Odata
+namespace Rhyous.Odata.Filter
 {
     /// <summary>
     /// A paranthesis could exist for two reasons:

@@ -10,4 +10,10 @@
         [RelatedEntity("Entity3", RelatedEntityAlias = "E3")]
         public int Entity3Id { get; set; }
     }
+
+    public class Entity3
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+    }
 }

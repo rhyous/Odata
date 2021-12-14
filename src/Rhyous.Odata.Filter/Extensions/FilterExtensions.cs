@@ -1,8 +1,6 @@
 ﻿using Rhyous.StringLibrary;
-using System;
-using System.Linq.Expressions;
 
-namespace Rhyous.Odata
+namespace Rhyous.Odata.Filter
 {
     /// <summary>Extension methods for Filter{TEntity}.</summary>
     public static class FilterExtensions

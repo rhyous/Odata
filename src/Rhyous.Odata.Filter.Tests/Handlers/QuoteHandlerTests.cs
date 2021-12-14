@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Rhyous.Odata.Tests;
 
-namespace Rhyous.Odata.Tests.Handlers
+namespace Rhyous.Odata.Filter.Tests.Handlers
 {
     [TestClass]
     public class QuoteHandlerTests

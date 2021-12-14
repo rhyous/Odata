@@ -5,7 +5,7 @@ using System;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace Rhyous.Odata
+namespace Rhyous.Odata.Filter
 {
     internal class ConjunctionExpressionBuilder
     {

@@ -1,7 +1,7 @@
 ﻿using Rhyous.StringLibrary;
 using System;
 
-namespace Rhyous.Odata
+namespace Rhyous.Odata.Filter
 {
     /// <summary>
     /// Handles the delimiter character.

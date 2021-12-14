@@ -2,7 +2,7 @@
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace Rhyous.Odata
+namespace Rhyous.Odata.Filter
 {
     internal class PrimitiveAsStringExpressionBuilder
     {

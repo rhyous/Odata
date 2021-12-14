@@ -16,25 +16,25 @@ namespace Rhyous.Odata.Csdl
         /// <summary>
         /// JSON Schema Kind. Should always be EntityType.
         /// </summary>
-        [DataMember(Name = "$Kind")]
-        public string Kind { get; set; } = "EntityType";
+        [DataMember(Name = CsdlConstants.Kind)]
+        public string Kind { get; set; } = CsdlConstants.EntityType;
 
         /// <summary>
         /// Specifies whether this entity outputs data, such as a stream or image.
         /// </summary>        
-        [DataMember(Name = "$HasStream", EmitDefaultValue = false)]
+        [DataMember(Name = CsdlConstants.HasStream, EmitDefaultValue = false)]
         public bool HasStream { get; set; }
 
         /// <summary>
         /// Additional JSON Schema object keyword.
         /// </summary>
-        [DataMember(Name = "$OpenType", EmitDefaultValue = false)]
+        [DataMember(Name = CsdlConstants.OpenType, EmitDefaultValue = false)]
         public bool OpenType { get; set; }
 
         /// <summary>
         /// The key properties of this entity.
         /// </summary>
-        [DataMember(Name = "$Key", EmitDefaultValue = false)]
+        [DataMember(Name = CsdlConstants.Key, EmitDefaultValue = false)]
         public List<string> Keys
         {
             get { return _Keys ?? (_Keys = new List<string>()); }

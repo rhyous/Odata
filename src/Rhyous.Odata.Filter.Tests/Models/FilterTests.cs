@@ -1,12 +1,14 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Rhyous.Collections;
+using Rhyous.Odata.Tests;
 using Rhyous.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
-namespace Rhyous.Odata.Tests
+namespace Rhyous.Odata.Filter.Tests
 {
     [TestClass]
     public class FilterTests
@@ -278,7 +280,44 @@ namespace Rhyous.Odata.Tests
 
             // Assert
             Assert.AreEqual(s, f.ToString());
+            Assert.IsFalse(f.IsSimpleString);
+            Assert.IsTrue(f.Left.IsSimpleString);
+            Assert.AreEqual("eq", f.Method);
+            Assert.IsTrue(f.Right.IsSimpleString);
+        }
+
+        [TestMethod]
+        public void ImplicitOperatorStringToFilter_Wrapped_ValidTest()
+        {
+            // Arrange
+            string s = "'Id eq 1'"; // What if there was a database of filters and we wanted to find a filter in it?
+
+            // Act
+            Filter<User> f = s;
+
+            // Assert
+            Assert.AreEqual(s, f.ToString());
             Assert.IsTrue(f.IsSimpleString);
+            Assert.IsNull(f.Left);
+            Assert.IsNull(f.Method);
+            Assert.IsNull(f.Right);
+        }
+
+        [TestMethod]
+        public void ImplicitOperatorStringToFilter_EachPartQuoted_SoItLooksWrappedButIsNot_ValidTest()
+        {
+            // Arrange
+            string s = "'Id' eq '1'"; // What if there was a database of filters and we wanted to find a filter in it?
+            var expected = "Id eq 1";
+            // Act
+            Filter<User> f = s;
+
+            // Assert
+            Assert.AreEqual(expected, f.ToString());
+            Assert.IsFalse(f.IsSimpleString);
+            Assert.IsTrue(f.Left.IsSimpleString);
+            Assert.AreEqual("eq", f.Method);
+            Assert.IsTrue(f.Right.IsSimpleString);
         }
         #endregion
 
@@ -406,14 +445,15 @@ namespace Rhyous.Odata.Tests
         #region IEnumerable tests
 
         [TestMethod]
-        [JsonTestDataSource(typeof(List<Row<string, int>>), @"Data\IEnumerableQueryStrings.json")]
-        public void Filter_IEnumerable_Count(Row<string, int> row)
+        [JsonTestDataSource(typeof(List<TestDataRow<string, int>>), @"Data\IEnumerableQueryStrings.json")]
+        public async Task Filter_IEnumerable_Count(TestDataRow<string, int> row)
         {
             // Arrange
-            var filterstring = row.Value;
+            var filterstring = row.TestValue;
             var expected = row.Expected;
             var message = row.Message;
-            var filter = new FilterExpressionParser<Entity1>().ParseAsFilter(filterstring, true);
+            var parser = new FilterExpressionParser<Entity1>(FilterExpressionParserActionDictionary<Entity1>.Instance);
+            var filter = await parser.ParseAsFilterAsync(filterstring, true);
 
             // Act
             var count = filter.Count();

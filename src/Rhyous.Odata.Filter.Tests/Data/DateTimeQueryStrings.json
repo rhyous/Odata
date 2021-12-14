@@ -1,62 +1,73 @@
 ﻿[
   {
-    "Value": "CreateDate eq 1/1/2019",
+    "TestName": "CreateDate eq 1/1/2019",
+    "TestValue": "CreateDate eq 1/1/2019",
     "Expected": "e => (e.CreateDate == 1/1/2019 12:00:00 AM)",
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Value": "CreateDate ne 1/1/2019",
+    "TestName": "CreateDate ne 1/1/2019",
+    "TestValue": "CreateDate ne 1/1/2019",
     "Expected": "e => (e.CreateDate != 1/1/2019 12:00:00 AM)",
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Value": "CreateDate gt 1/1/2019",
+    "TestName": "CreateDate gt 1/1/2019",
+    "TestValue": "CreateDate gt 1/1/2019",
     "Expected": "e => (e.CreateDate > 1/1/2019 12:00:00 AM)",
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Value": "CreateDate ge 1/1/2019",
+    "TestName": "CreateDate ge 1/1/2019",
+    "TestValue": "CreateDate ge 1/1/2019",
     "Expected": "e => (e.CreateDate >= 1/1/2019 12:00:00 AM)",
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Value": "CreateDate lt 1/1/2019",
+    "TestName": "CreateDate lt 1/1/2019",
+    "TestValue": "CreateDate lt 1/1/2019",
     "Expected": "e => (e.CreateDate < 1/1/2019 12:00:00 AM)",
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Value": "CreateDate le 1/1/2019",
+    "TestName": "CreateDate le 1/1/2019",
+    "TestValue": "CreateDate le 1/1/2019",
     "Expected": "e => (e.CreateDate <= 1/1/2019 12:00:00 AM)",
     "Message": "Expression should result in this expression: {0}."
   },
-  //asdf
   {
-    "Value": "CreateDate eq 1-1-2019",
+    "TestName": "CreateDate eq 1-1-2019",
+    "TestValue": "CreateDate eq 1-1-2019",
     "Expected": "e => (e.CreateDate == 1/1/2019 12:00:00 AM)",
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Value": "CreateDate ne 1-1-2019",
+    "TestName": "CreateDate ne 1-1-2019",
+    "TestValue": "CreateDate ne 1-1-2019",
     "Expected": "e => (e.CreateDate != 1/1/2019 12:00:00 AM)",
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Value": "CreateDate gt 1-1-2019",
+    "TestName": "CreateDate gt 1-1-2019",
+    "TestValue": "CreateDate gt 1-1-2019",
     "Expected": "e => (e.CreateDate > 1/1/2019 12:00:00 AM)",
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Value": "CreateDate ge 1-1-2019",
+    "TestName": "CreateDate ge 1-1-2019",
+    "TestValue": "CreateDate ge 1-1-2019",
     "Expected": "e => (e.CreateDate >= 1/1/2019 12:00:00 AM)",
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Value": "CreateDate lt 1-1-2019",
+    "TestName": "CreateDate lt 1-1-2019",
+    "TestValue": "CreateDate lt 1-1-2019",
     "Expected": "e => (e.CreateDate < 1/1/2019 12:00:00 AM)",
     "Message": "Expression should result in this expression: {0}."
   },
   {
-    "Value": "CreateDate le 1-1-2019",
+    "TestName": "CreateDate le 1-1-2019",
+    "TestValue": "CreateDate le 1-1-2019",
     "Expected": "e => (e.CreateDate <= 1/1/2019 12:00:00 AM)",
     "Message": "Expression should result in this expression: {0}."
   }

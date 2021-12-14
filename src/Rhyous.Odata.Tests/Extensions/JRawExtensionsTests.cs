@@ -25,11 +25,11 @@ namespace Rhyous.Odata.Tests.Extensions
         }
 
         [TestMethod]
-        [JsonTestDataSource(typeof(List<Row<string>>), @"Data\JsonNullEmptyWhitespace.json")]
-        public void GetValue_JRaw_Null_Test(Row<string> row)
+        [JsonTestDataSource(typeof(List<TestDataRow<string>>), @"Data\JsonNullEmptyWhitespace.json")]
+        public void GetValue_JRaw_Null_Test(TestDataRow<string> row)
         {
             // Arrange
-            var json = row.Value;
+            var json = row.TestValue;
             JRaw raw = (json == null) ? null : new JRaw(json);
 
             // Act & Assert
@@ -37,11 +37,11 @@ namespace Rhyous.Odata.Tests.Extensions
         }
 
         [TestMethod]
-        [JsonTestDataSource(typeof(List<Row<string>>), @"Data\JsonNullEmptyWhitespace.json")]
-        public void GetValue_Property_NullEmptyOrWhitespace_Test(Row<string> row)
+        [JsonTestDataSource(typeof(List<TestDataRow<string>>), @"Data\JsonNullEmptyWhitespace.json")]
+        public void GetValue_Property_NullEmptyOrWhitespace_Test(TestDataRow<string> row)
         {
             // Arrange
-            var prop = row.Value;
+            var prop = row.TestValue;
             var msg = row.Message ?? row.Description;
             var raw = new JRaw("{ \"Id\" : 1, \"Prop1\" : \"Abc123\" }");
 

@@ -1,11 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Rhyous.Odata.Tests.Models
+namespace Rhyous.Odata.Filter.Tests.Models
 {
     [TestClass]
     public class GroupTests
