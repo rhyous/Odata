@@ -110,5 +110,84 @@ namespace Rhyous.Odata.Filter.Tests.Extensions
             Assert.IsFalse(actual);
         }
         #endregion
+
+        #region EscapeAndQuote
+        [TestMethod]
+        [PrimitiveList("NoSpace","Has Space")] // Doesn't check for space, that is a seperate responsibility
+        public void StingExtensions_EscapeAndQuote_Quoted_Test(string str)
+        {
+            // Arrange
+            // Act
+            var actual = str.EscapeAndQuote();
+
+            // Assert
+            Assert.AreEqual($"'{str}'", actual);
+        }
+
+        [TestMethod]
+        public void StingExtensions_EscapeAndQuote_HasSingleQuote_NotQuoted_Test()
+        {
+            // Arrange
+            string str = "O'Brien";
+
+            // Act
+            var actual = str.EscapeAndQuote();
+
+            // Assert
+            Assert.AreEqual("\"O'Brien\"", actual);
+        }
+
+        [TestMethod]
+        public void StingExtensions_EscapeAndQuote_HasDoubleQuote_NotQuoted_Test()
+        {
+            // Arrange
+            string str = "A \" B";
+
+            // Act
+            var actual = str.EscapeAndQuote();
+
+            // Assert
+            Assert.AreEqual("'A \" B'", actual);
+        }
+
+        [TestMethod]
+        public void StingExtensions_EscapeAndQuote_HasSingleAndDoubleQuote_NotQuoted_Test()
+        {
+            // Arrange
+            string str = "A '\"' B";
+
+            // Act
+            var actual = str.EscapeAndQuote();
+
+            // Assert
+            Assert.AreEqual("'A ''\"'' B'", actual);
+        }
+        #endregion
+
+        #region HasWhitespace
+        [TestMethod]
+        public void StingExtensions_HasWhitespace_True_Test()
+        {
+            // Arrange
+            string str = "Has Space";
+            // Act
+            var actual = str.HasWhitespace();
+
+            // Assert
+            Assert.IsTrue(actual);
+        }
+
+        [TestMethod]
+        public void StingExtensions_HasWhitespace_False_Test()
+        {
+            // Arrange
+            string str = "NoSpace";
+            // Act
+            var actual = str.HasWhitespace();
+
+            // Assert
+            Assert.IsFalse(actual);
+        }
+        #endregion
     }
 }

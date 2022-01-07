@@ -212,7 +212,7 @@ namespace Rhyous.Odata.Filter.Tests.Converters
             Filter<A> filter = new Filter<A> { Left = "B.Name", Method = "in", Right = new ArrayFilter<A, string> { Array = new[] { bName } } };
             _CsdlSchema.Entities.Add(typeof(A).Name, typeof(A).ToCsdl());
             _CsdlSchema.Entities.Add(typeof(B).Name, typeof(B).ToCsdl());
-            var expectedFilter = $"$Filter=Name in ({bName})";
+            var expectedFilter = $"$Filter=Name in ('{bName}')";
             var b27 = new B { Id = 27, Name = bName };
             var odataObjectB27 = new OdataObject();
             var b27Json = JsonConvert.SerializeObject(b27);

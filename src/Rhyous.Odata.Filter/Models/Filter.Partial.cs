@@ -63,7 +63,7 @@ namespace Rhyous.Odata.Filter
         {
             if (string.IsNullOrWhiteSpace(str))
                 return null;
-            if (str.IsQuoted() || str.None(c => char.IsWhiteSpace(c)))
+            if (str.IsQuoted() || !str.HasWhitespace())
                 return new Filter<TEntity> { NonFilter = str };
             return FilterExpressionParser<TEntity>.Instance.ParseAsFilterAsync(str, false).Result;
         }

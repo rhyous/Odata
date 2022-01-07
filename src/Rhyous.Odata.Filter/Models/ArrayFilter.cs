@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Rhyous.StringLibrary;
+using System;
+using System.Linq;
 
 namespace Rhyous.Odata.Filter
 {
@@ -17,22 +19,30 @@ namespace Rhyous.Odata.Filter
         public TArrayItem[] Array { get; set; }
         /// <summary>Whether this is an Array or not. This always returns true.</summary>
         public override bool IsArray => true;
+
         #region ToString
         /// <summary>Overrides ToString so that it returns the array expression as a string.</summary>
         /// <returns>The array expression as a string.</returns>
         /// <example>(1,2,3,4,5)</example>
         public override string ToString()
         {
-            if (Array != null)
+            if (Array == null)
+                return string.Empty;
+
+            TArrayItem[] tmpArray = Array;
+            if (typeof(TArrayItem) == typeof(string))
             {
-                return $"({string.Join(",", Array)})";
+                var stringArray = new string[Array.Length];
+                tmpArray = Array.Select(s => (s as string).HasWhitespace() && !(s as string).IsQuoted()
+                                           ? (s as string).EscapeAndQuote().To<TArrayItem>()
+                                           : s).ToArray();
             }
-            return $"{Left} {Method} {Right}";
+            return $"({string.Join(",", tmpArray)})";
         }
         #endregion
 
         /// <summary>An implicit cast from an array to an ArrayFilter{TEntity}.</summary>
-        public static implicit operator ArrayFilter<TEntity, TArrayItem>(TArrayItem[] array)             
+        public static implicit operator ArrayFilter<TEntity, TArrayItem>(TArrayItem[] array)
         {
             if (array is null)
                 return null;

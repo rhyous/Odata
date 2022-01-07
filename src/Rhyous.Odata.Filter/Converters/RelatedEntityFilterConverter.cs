@@ -7,7 +7,7 @@ namespace Rhyous.Odata.Filter
 {
     /// <summary>An IFilterConverter{TEntity} implementation that gets related entity data and uses that to convert the Filter{TEntity}.</summary>
     /// <typeparam name="TEntity">The type of the entity.</typeparam>
-    public class RelatedEntityFilterConverter<TEntity> : IFilterConverter<TEntity>
+    public class RelatedEntityFilterConverter<TEntity> : IRelatedEntityFilterConverter<TEntity>
     {
         private readonly CsdlSchema _CsdlSchema;
         private readonly IRelatedEntityFilterDataProvider _RelatedEntityProvider;
@@ -37,7 +37,7 @@ namespace Rhyous.Odata.Filter
         {
             return filter != null
                 && filter.IsComplete
-                && !filter.IsSimpleString 
+                && !filter.IsSimpleString
                 && !filter.IsArray
                 && filter.Left != null
                 && filter.Left.IsSimpleString
@@ -61,7 +61,8 @@ namespace Rhyous.Odata.Filter
             var newFilter = filter.Clone(true, false);
             var relatedEntityName = filter.Left.NonFilter.Split('.')[0];
             newFilter.Left = filter.Left.NonFilter.Split('.')[1];
-            if (newFilter.Right.IsSimpleString && !newFilter.Right.NonFilter.IsQuoted() && newFilter.Right.NonFilter.Any(c => char.IsWhiteSpace(c)))
+            // Escape quotes if: 1. It isn't already quotes. 2. There are quotes. 3. There is whitespace so quoting is needed
+            if (newFilter.Right.IsSimpleString && !newFilter.Right.NonFilter.IsQuoted() && newFilter.Right.NonFilter.HasWhitespace())
             {
                 if (newFilter.Right.NonFilter.Contains("'"))
                     newFilter.Right.NonFilter = newFilter.Right.NonFilter.Replace("'", "''"); // Escape quotes before adding them
@@ -84,13 +85,13 @@ namespace Rhyous.Odata.Filter
                 var type = (csdlLocalProperty as CsdlProperty).Type;
                 if (type == CsdlConstants.EdmString)
                 {
-                    localPropertyValues = localPropertyValues.Select(v => !v.IsQuoted() && v.Any(char.IsWhiteSpace) ? v.Replace("'", "''").Wrap("'") : v).ToArray();
+                    localPropertyValues = localPropertyValues.Select(v => !v.IsQuoted() && v.HasWhitespace() ? v.EscapeAndQuote() : v).ToArray();
                     return new Filter<TEntity>
                     {
                         Left = $"{localProperty}",
                         Method = "in",
                         Right = new ArrayFilter<TEntity, string> { Array = localPropertyValues }
-                    };                    
+                    };
                 }
             }
             Filter<TEntity> convertedFilter = $"{localProperty} in ({string.Join(",", localPropertyValues)})";

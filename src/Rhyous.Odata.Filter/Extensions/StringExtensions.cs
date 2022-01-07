@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using Rhyous.StringLibrary;
 
 namespace Rhyous.Odata.Filter
 {
@@ -29,9 +30,9 @@ namespace Rhyous.Odata.Filter
                 expression = parser.ParseAsync(value, false).Result;
                 if (expression.ToString() == "f => False")
                 {
-                    foreach (var innerQuote in new[] { '\'', '"'})
+                    foreach (var innerQuote in new[] { '\'', '"' })
                     {
-                        try 
+                        try
                         {
                             expression = parser.ParseAsync(value.Quote(innerQuote), false).Result;
                             if (expression.ToString() != "f => False")
@@ -79,6 +80,24 @@ namespace Rhyous.Odata.Filter
                     return false;
             }
             return true;
+        }
+
+        internal static string EscapeAndQuote(this string str)
+        {
+            if (str.IsQuoted()) // Return if already quoted
+                return str;
+            if (str.Contains("'") && str.Contains("\"")) // If both are found, escape single quotes and quote with single quotes
+                return str.Replace("'", "''").Quote('\''); // Two single quotes escape one single quote
+            if (str.Contains("'")) // If only single quotes are found, quote with doublequotes, no escaping needed
+                return str.Quote('"');
+            if (str.Contains("\""))  // If only double quotes are found, quote with singlequotes, no escaping needed
+                return str.Quote('\'');
+            return str.Quote('\'');
+        }
+
+        internal static bool HasWhitespace(this string str)
+        {
+            return str.Any(c => char.IsWhiteSpace(c));
         }
     }
 }
