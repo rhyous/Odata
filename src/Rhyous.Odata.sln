@@ -24,6 +24,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{88658B8A-701C-41E6-87FB-DC518ED8755C}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		..\appveyor.yml = ..\appveyor.yml
 	EndProjectSection
 EndProject
 Global
