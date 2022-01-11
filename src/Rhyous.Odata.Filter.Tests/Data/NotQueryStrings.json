@@ -1,0 +1,239 @@
+﻿[
+  {
+    "TestName": "Id noteq 1",
+    "TestValue": "Id noteq 1",
+    "Expected": "e => Not((e.Id == 1))",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "TestName": "Id noteq 2",
+    "TestValue": "Id noteq 2",
+    "Expected": "e => Not((e.Id == 2))",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Description": "Int not equals",
+    "TestName": "Id notne 1",
+    "TestValue": "Id notne 1",
+    "Expected": "e => Not((e.Id != 1))",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "TestName": "Id notne 20",
+    "TestValue": "Id notne 20",
+    "Expected": "e => Not((e.Id != 20))",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Description": "Int Greater than",
+    "TestName": "Id notgt 1",
+    "TestValue": "Id notgt 1",
+    "Expected": "e => Not((e.Id > 1))",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "TestName": "Id notgt 0",
+    "TestValue": "Id notgt 0",
+    "Expected": "e => Not((e.Id > 0))",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Description": "Int Greater than or equal to",
+    "TestName": "Id notge 2",
+    "TestValue": "Id notge 2",
+    "Expected": "e => Not((e.Id >= 2))",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "TestName": "Id notge 0",
+    "TestValue": "Id notge 0",
+    "Expected": "e => Not((e.Id >= 0))",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "TestName": "Id notge 100",
+    "TestValue": "Id notge 100",
+    "Expected": "e => Not((e.Id >= 100))",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Description": "Int less than",
+    "TestName": "Id notlt 100",
+    "TestValue": "Id notlt 100",
+    "Expected": "e => Not((e.Id < 100))",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "TestName": "Id notlt 0",
+    "TestValue": "Id notlt 0",
+    "Expected": "e => Not((e.Id < 0))",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Description": "Int less than or equal to",
+    "TestName": "Id notle 0",
+    "TestValue": "Id notle 0",
+    "Expected": "e => Not((e.Id <= 0))",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "TestName": "Id notle 0",
+    "TestValue": "Id notle 0",
+    "Expected": "e => Not((e.Id <= 0))",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Description": "String equals ",
+    "TestName": "Name noteq Jared",
+    "TestValue": "Name noteq Jared",
+    "Expected": "e => Not((e.Name == \"Jared\"))",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Description": "String not equals ",
+    "TestName": "Name notne Jared",
+    "TestValue": "Name notne Jared",
+    "Expected": "e => Not((e.Name != \"Jared\"))",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Description": "DateTime ",
+    "TestName": "Date noteq 01/01/2017",
+    "TestValue": "Date noteq 01/01/2017",
+    "Expected": "e => Not((e.Date == 1/1/2017 12:00:00 AM))",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Description": "Date Greater than",
+    "TestName": "Date notgt 01/01/2017",
+    "TestValue": "Date notgt 01/01/2017",
+    "Expected": "e => Not((e.Date > 1/1/2017 12:00:00 AM))",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Description": "Date Greater than or equal to",
+    "TestName": "Date notge 01/01/2017",
+    "TestValue": "Date notge 01/01/2017",
+    "Expected": "e => Not((e.Date >= 1/1/2017 12:00:00 AM))",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Description": "Date less than",
+    "TestName": "Date notlt 01/01/2017",
+    "TestValue": "Date notlt 01/01/2017",
+    "Expected": "e => Not((e.Date < 1/1/2017 12:00:00 AM))",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Description": "Date less than or equal to",
+    "TestName": "Date notle 01/01/2017",
+    "TestValue": "Date notle 01/01/2017",
+    "Expected": "e => Not((e.Date <= 1/1/2017 12:00:00 AM))",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Description": " Guid equals ",
+    "TestName": "Guid noteq {C1AA6176-425D-4981-BE4A-8F5C459E0FF9}",
+    "TestValue": "Guid noteq {C1AA6176-425D-4981-BE4A-8F5C459E0FF9}",
+    "Expected": "e => Not((e.Guid == c1aa6176-425d-4981-be4a-8f5c459e0ff9))",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Description": " Guid not equals ",
+    "TestName": "Guid notne {C1AA6176-425D-4981-BE4A-8F5C459E0FF9}",
+    "TestValue": "Guid notne {C1AA6176-425D-4981-BE4A-8F5C459E0FF9}",
+    "Expected": "e => Not((e.Guid != c1aa6176-425d-4981-be4a-8f5c459e0ff9))",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Description": "Double equals",
+    "TestName": "Cost noteq 1.10",
+    "TestValue": "Cost noteq 1.10",
+    "Expected": "e => Not((e.Cost == 1.1))",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "TestName": "Cost noteq 2.95",
+    "TestValue": "Cost noteq 2.95",
+    "Expected": "e => Not((e.Cost == 2.95))",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Description": "Double not equals",
+    "TestName": "Cost notne 1.10",
+    "TestValue": "Cost notne 1.10",
+    "Expected": "e => Not((e.Cost != 1.1))",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "TestName": "Cost notne 20.0",
+    "TestValue": "Cost notne 20.0",
+    "Expected": "e => Not((e.Cost != 20))",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Description": "Double Greater than",
+    "TestName": "Cost notgt 1.10",
+    "TestValue": "Cost notgt 1.10",
+    "Expected": "e => Not((e.Cost > 1.1))",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "TestName": "Cost notgt 0.0",
+    "TestValue": "Cost notgt 0.0",
+    "Expected": "e => Not((e.Cost > 0))",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Description": "Double Greater than or equal to",
+    "TestName": "Cost notge 2.15",
+    "TestValue": "Cost notge 2.15",
+    "Expected": "e => Not((e.Cost >= 2.15))",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "TestName": "Cost notge 0.0",
+    "TestValue": "Cost notge 0.0",
+    "Expected": "e => Not((e.Cost >= 0))",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "TestName": "Cost notge 100.0",
+    "TestValue": "Cost notge 100.0",
+    "Expected": "e => Not((e.Cost >= 100))",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Description": "Double less than",
+    "TestName": "Cost notlt 100.0",
+    "TestValue": "Cost notlt 100.0",
+    "Expected": "e => Not((e.Cost < 100))",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "TestName": "Cost notlt 0.0",
+    "TestValue": "Cost notlt 0.0",
+    "Expected": "e => Not((e.Cost < 0))",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Description": "Double less than or equal to",
+    "TestName": "Cost notle 0.0",
+    "TestValue": "Cost notle 0.0",
+    "Expected": "e => Not((e.Cost <= 0))",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "TestName": "Cost notle 0.0",
+    "TestValue": "Cost notle 0.0",
+    "Expected": "e => Not((e.Cost <= 0))",
+    "Message": "Expression should result in this expression: {0}."
+  },
+  {
+    "Description": " Extra spaces ignroed ",
+    "TestName": "Id   notne   1",
+    "TestValue": "Id   notne   1",
+    "Expected": "e => Not((e.Id != 1))",
+    "Message": "Expression should result in this expression: {0}."
+  }
+]

@@ -12,7 +12,7 @@ namespace Rhyous.Odata.Filter
     /// </summary>
     /// <typeparam name="TEntity">The entity type.</typeparam>
     /// <typeparam name="TArrayItem">The item type of the array, which should match the type of the property of TEntity that is in the query.</typeparam>
-    /// <remarks>This only works as a Filter{TEntity}.Right, so far.</remarks>
+    /// <remarks>This only works as a Filter{TEntity}.Right, so far. Not property is completly ignored.</remarks>
     public class ArrayFilter<TEntity, TArrayItem> : Filter<TEntity>
     {
         /// <summary>The array.</summary>
@@ -33,9 +33,8 @@ namespace Rhyous.Odata.Filter
             if (typeof(TArrayItem) == typeof(string))
             {
                 var stringArray = new string[Array.Length];
-                tmpArray = Array.Select(s => (s as string).HasWhitespace() && !(s as string).IsQuoted()
-                                           ? (s as string).EscapeAndQuote().To<TArrayItem>()
-                                           : s).ToArray();
+                tmpArray = Array.Select(s => (s as string).EscapeAndQuoteIfNeeded().To<TArrayItem>())
+                                .ToArray();
             }
             return $"({string.Join(",", tmpArray)})";
         }

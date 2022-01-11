@@ -138,7 +138,7 @@ namespace Rhyous.Odata.Filter.Tests.Converters
             // Arrange
             var relatedEntityFilterConverter = CreateRelatedEntityFilterConverter<A>();
             var bName = "My B 27";
-            Filter<A> filter = new Filter<A> { Left = "B.Name", Method = "EQ", Right = new ArrayFilter<A, string> { Array = new[] { bName} } };
+            Filter<A> filter = new Filter<A> { Left = "B.Name", Method = "EQ", Right = new ArrayFilter<A, string> { Array = new[] { bName } } };
             _CsdlSchema.Entities.Add(typeof(A).Name, typeof(A).ToCsdl());
             _CsdlSchema.Entities.Add(typeof(B).Name, typeof(B).ToCsdl());
 
@@ -153,12 +153,17 @@ namespace Rhyous.Odata.Filter.Tests.Converters
 
         #region Convert
         [TestMethod]
-        [PrimitiveList("'My B 27'", "My B 27")]
-        public async Task RelatedEntityFilterConverter_Convert_RelatedEntity_Works_WithOrWithoutQuotes(string bName)
+        public async Task RelatedEntityFilterConverter_Convert_RelatedEntity_Works()
         {
             // Arrange
-            var relatedEntityFilterConverter = CreateRelatedEntityFilterConverter<A>();
-            Filter<A> filter = new Filter<A> { Left = "B.Name", Method = "eq", Right = new Filter<A> { NonFilter = bName } };
+            var relatedEntityFilterConverter = CreateRelatedEntityFilterConverter<A>(); 
+            string bName = "My B 27";
+            Filter<A> filter = new Filter<A>
+            {
+                Left = new Filter<A> { NonFilter = "B.Name" },
+                Method = "eq",
+                Right = new Filter<A> { NonFilter = bName }
+            };
             _CsdlSchema.Entities.Add(typeof(A).Name, typeof(A).ToCsdl());
             _CsdlSchema.Entities.Add(typeof(B).Name, typeof(B).ToCsdl());
             var expectedFilter = $"$Filter=Name eq 'My B 27'";

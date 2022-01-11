@@ -8,6 +8,7 @@ namespace Rhyous.Odata.Filter
     /// The Filter{TEntity} class, used to handle a $filter expression tree and convert it to an expression tree.
     /// </summary>
     /// <typeparam name="TEntity">The Entity type to filter on.</typeparam>
+    /// <remarks>If it is a simple string, many properties, such as Not, are ignored.</remarks>
     public partial class Filter<TEntity> : IParent<Filter<TEntity>>, IEnumerable<Filter<TEntity>>
     {
         private static int InstanceId;

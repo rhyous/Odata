@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using Rhyous.StringLibrary;
 
 namespace Rhyous.Odata.Filter
 {
@@ -82,9 +81,9 @@ namespace Rhyous.Odata.Filter
             return true;
         }
 
-        internal static string EscapeAndQuote(this string str)
+        internal static string EscapeAndQuote(this string str, bool escapeExistingQuotes = false)
         {
-            if (str.IsQuoted()) // Return if already quoted
+            if (str.IsQuoted() && !escapeExistingQuotes) // Return if already quoted
                 return str;
             if (str.Contains("'") && str.Contains("\"")) // If both are found, escape single quotes and quote with single quotes
                 return str.Replace("'", "''").Quote('\''); // Two single quotes escape one single quote
@@ -98,6 +97,13 @@ namespace Rhyous.Odata.Filter
         internal static bool HasWhitespace(this string str)
         {
             return str.Any(c => char.IsWhiteSpace(c));
+        }
+
+        internal static string EscapeAndQuoteIfNeeded(this string str, bool escapeExistingQuotes = false)
+        {
+            return str.HasWhitespace()
+                   ? str.EscapeAndQuote(escapeExistingQuotes)
+                   : str;
         }
     }
 }

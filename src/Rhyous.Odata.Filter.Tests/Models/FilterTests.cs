@@ -18,7 +18,7 @@ namespace Rhyous.Odata.Filter.Tests
         public void FilterLengthTest()
         {
             // Arrange
-            Filter<Entity1> filter = new Filter<Entity1> { Left = "Id", Right = "1", Method = "10"};
+            Filter<Entity1> filter = new Filter<Entity1> { Left = "Id", Right = "1", Method = "eq" };
             var expected = 7;
 
             // Act
@@ -49,7 +49,7 @@ namespace Rhyous.Odata.Filter.Tests
             Filter<Entity1> filter = new Filter<Entity1> { Left = "Id" };
 
             // Act & Assert
-           Assert.IsFalse(filter.IsComplete);
+            Assert.IsFalse(filter.IsComplete);
         }
 
         [TestMethod]
@@ -138,10 +138,10 @@ namespace Rhyous.Odata.Filter.Tests
             Assert.AreEqual(backingField, child);
             Assert.AreEqual(child.Parent, parent);
         }
-        
+
         public class A : IParent<A>
         {
-            public A Parent { get ; set; }
+            public A Parent { get; set; }
         }
         #endregion
 
@@ -160,18 +160,84 @@ namespace Rhyous.Odata.Filter.Tests
             Assert.AreEqual(str, actual);
         }
 
-
         [TestMethod]
         public void Filter_ToString_Id_eq_27_Test()
         {
             // Arrange
-            Filter<Entity1> filter = new Filter<Entity1> { Left = "Id", Method = "eq", Right = "27"};
+            Filter<Entity1> filter = new Filter<Entity1> { Left = "Id", Method = "eq", Right = "27" };
 
             // Act
             var actual = filter.ToString();
 
             // Assert
             Assert.AreEqual("Id eq 27", actual);
+        }
+
+        /// <summary>
+        /// NotEQ is different than NEQ. With NEQ the Filter.Not property is false and the Filter.Method is NEQ. 
+        /// With NotEQ, the Filter.Not property is true, the "Not" prefix is removed from Filter.Method so it is EQ.
+        /// </summary>
+        [TestMethod]
+        public void Filter_ToString_Id_NotEQ_27_Test()
+        {
+            // Arrange
+            Filter<Entity1> filter = new Filter<Entity1> { Left = "Id", Method = "EQ", Right = "27", Not = true };
+
+            // Act
+            var actual = filter.ToString();
+
+            // Assert
+            Assert.AreEqual("Id NotEQ 27", actual);
+        }
+
+        [TestMethod]
+        public void Filter_ToString_MethodThatIsNotAnOperator_Test()
+        {
+            // Arrange
+            Filter<Entity1> filter = new Filter<Entity1> { Left = "Name", Method = "startsWith", Right = "Abc" };
+
+            // Act
+            var actual = filter.ToString();
+
+            // Assert
+            Assert.AreEqual("startsWith(Name, Abc)", actual);
+        }
+
+        [TestMethod]
+        public void Filter_ToString_MethodThatIsNotAnOperator_Space_Quoted_Test()
+        {
+            // Arrange
+            Filter<Entity1> filter = new Filter<Entity1>
+            {
+                Left = new Filter<Entity1> { NonFilter = "Name" },
+                Method = "startsWith",
+                Right = new Filter<Entity1> { NonFilter = "Abc def" }
+            };
+
+            // Act
+            var actual = filter.ToString();
+
+            // Assert
+            Assert.AreEqual("startsWith(Name, 'Abc def')", actual);
+        }
+
+
+        [TestMethod]
+        public void Filter_ToString_MethodThatIsNotAnOperator_Space_AlreadyQuoted_Test()
+        {
+            // Arrange
+            Filter<Entity1> filter = new Filter<Entity1>
+            {
+                Left = new Filter<Entity1> { NonFilter = "Name" },
+                Method = "startsWith",
+                Right = new Filter<Entity1> { NonFilter = "'Abc def'" }
+            };
+
+            // Act
+            var actual = filter.ToString();
+
+            // Assert
+            Assert.AreEqual("startsWith(Name, \"'Abc def'\")", actual);
         }
 
         [TestMethod]
@@ -329,7 +395,7 @@ namespace Rhyous.Odata.Filter.Tests
             Filter<User> f = null;
 
             // Act
-            Expression<Func<User,bool>> s = f;
+            Expression<Func<User, bool>> s = f;
 
             // Assert
             Assert.IsNull(s);
@@ -348,7 +414,7 @@ namespace Rhyous.Odata.Filter.Tests
             Assert.IsNull(s);
         }
         #endregion
-        
+
         #region Group tests
 
 

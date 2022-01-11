@@ -1,8 +1,9 @@
-﻿namespace Rhyous.Odata.Filter
+﻿using System;
+using System.Collections.Generic;
+
+namespace Rhyous.Odata.Filter
 {
-    /// <summary>
-    /// An enum repsenting common $filter operators
-    /// </summary>
+    /// <summary>An enum repsenting common $filter operators.</summary>
     public enum Operator
     {
         /// <summary>EQ is equals</summary>

@@ -60,14 +60,7 @@ namespace Rhyous.Odata.Filter
                 return null;
             var newFilter = filter.Clone(true, false);
             var relatedEntityName = filter.Left.NonFilter.Split('.')[0];
-            newFilter.Left = filter.Left.NonFilter.Split('.')[1];
-            // Escape quotes if: 1. It isn't already quotes. 2. There are quotes. 3. There is whitespace so quoting is needed
-            if (newFilter.Right.IsSimpleString && !newFilter.Right.NonFilter.IsQuoted() && newFilter.Right.NonFilter.HasWhitespace())
-            {
-                if (newFilter.Right.NonFilter.Contains("'"))
-                    newFilter.Right.NonFilter = newFilter.Right.NonFilter.Replace("'", "''"); // Escape quotes before adding them
-                newFilter.Right.NonFilter = newFilter.Right.NonFilter.Quote('\'');
-            }
+            newFilter.Left = filter.Left.NonFilter.Split('.')[1];            
             var urlParameters = $"$Filter={newFilter}";
             var relatedEntities = await _RelatedEntityProvider.ProvideAsync(relatedEntityName, urlParameters);
             if (relatedEntities == null || !relatedEntities.Any())

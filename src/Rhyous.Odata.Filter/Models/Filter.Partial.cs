@@ -9,17 +9,48 @@ namespace Rhyous.Odata.Filter
     public partial class Filter<TEntity>
     {
         #region ToString
-        /// <summary>Overrides ToString so that it returns the expression as a string.</summary>
-        /// <returns>The expression as a string.</returns>
+        /// <summary>Overrides ToString so that it returns the Filter as a string.</summary>
+        /// <returns>The Filter as a string.</returns>
         /// <example>Id eq 1</example>
         public override string ToString()
         {
-            if (!string.IsNullOrWhiteSpace(NonFilter))
+            if (IsSimpleString)
             {
                 return NonFilter;
             }
-            return $"{Left} {Method} {Right}";
+            var method = Not ? $"{nameof(Not)}{Method}" : Method;
+            var right = Right is null || Right.IsArray 
+                      ? Right?.ToString() 
+                      : Right?.ToString().EscapeAndQuoteIfNeeded(escapeExistingQuotes: true);
+            if (ValidOperators.Instance.Contains(Method))
+            {
+                return $"{Left} {method} {right}";
+            }
+            // It is a custom method (string or other)
+            return $"{method}({Left}, {right})";
         }
+        #endregion
+
+        #region ToUrlParameterString
+        /// <summary>Returns the Filter in Url Parameter format as a string.</summary>
+        /// <returns>The Filter as a string in Url Parameter format.</returns>
+        /// <remarks>It does NOT url encode the string.</remarks>
+        public string ToUrlParameterString()
+        {
+            if (IsSimpleString)
+            {
+                return NonFilter;
+            }
+            var method = Not ? $"Not{Method}" : Method;
+            var right = Right.ToString().EscapeAndQuoteIfNeeded();
+            if (ValidOperators.Instance.Contains(Method))
+            {
+                return $"{Left} {method} {right}";
+            }
+            // It is a custom method (string or other)
+            return $"{method}({Left}, {right})";
+        }
+
         #endregion
 
         #region IEnumerable

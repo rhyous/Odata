@@ -128,6 +128,23 @@ namespace Rhyous.Odata.Filter.Tests.Parsers
         }
 
         [TestMethod]
+        [JsonTestDataSource(typeof(List<TestDataRow<string>>), @"Data\NotQueryStrings.json")]
+        public async Task FilterExpressionParser_Naive_Not_FilterParserTests(TestDataRow<string> row)
+        {
+            // Arrange
+            var filterstring = row.TestValue;
+            var expected = row.Expected;
+            var message = row.Message;
+            var parser = CreateParser<Entity1>();
+
+            // Act
+            var actual = await parser.ParseAsync(filterstring);
+
+            // Assert
+            Assert.AreEqual(expected, actual.ToString(), message);
+        }
+
+        [TestMethod]
         [JsonTestDataSource(typeof(List<TestDataRow<string>>), @"Data\NaiveQueryStringsSymbolOperator.json")]
         public async Task FilterExpressionParser_NaiveFilterParser_SymbolOperator_Tests(TestDataRow<string> row)
         {
@@ -228,7 +245,6 @@ namespace Rhyous.Odata.Filter.Tests.Parsers
             // Assert
             Assert.AreEqual(expected, actual.ToString(), message);
         }
-
 
         [TestMethod]
         public async Task FilterExpressionParser_TwoAnds_FilterParserTests()
