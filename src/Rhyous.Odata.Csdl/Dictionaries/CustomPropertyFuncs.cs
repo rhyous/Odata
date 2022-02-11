@@ -3,7 +3,7 @@
     /// <summary>
     /// A class to store funcs that create additional metadata properties.
     /// </summary>
-    public class CustomPropertyFuncs : FuncList<string>
+    public class CustomPropertyFuncs : FuncList<string>, ICustomPropertyFuncs
     {
     }
 }

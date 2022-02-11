@@ -6,18 +6,18 @@ using System.Reflection;
 
 namespace Rhyous.Odata.Csdl
 {
-    public class PropertyBuilder : ICsdlBuilder<PropertyInfo, CsdlProperty>
+    public class PropertyBuilder : IPropertyBuilder
     {
-        private readonly IFuncDictionary<Type, MemberInfo> _PropertyDataAttributeDictionary;
-        private readonly IFuncList<string, string> _CustomPropertyDataFuncs;
-        private readonly IDictionary<string, string> _CsdlTypeDictionary;
+        private readonly ICustomCsdlFromAttributeAppender _CustomCsdlFromAttributeAppender;
+        private readonly ICustomPropertyDataAppender _CustomPropertDataAppender;
+        private readonly ICsdlTypeDictionary _CsdlTypeDictionary;
 
-        public PropertyBuilder(IFuncDictionary<Type, MemberInfo> propertyDataAttributeFuncDictionary,
-                               IFuncList<string, string> customPropertyDataFuncDictionary,
-                               IDictionary<string, string> csdlTypeDictionary)
+        public PropertyBuilder(ICustomCsdlFromAttributeAppender customCsdlFromAttributeAppender,
+                               ICustomPropertyDataAppender customPropertDataAppender,
+                               ICsdlTypeDictionary csdlTypeDictionary)
         {
-            _PropertyDataAttributeDictionary = propertyDataAttributeFuncDictionary;
-            _CustomPropertyDataFuncs = customPropertyDataFuncDictionary;
+            _CustomCsdlFromAttributeAppender = customCsdlFromAttributeAppender;
+            _CustomPropertDataAppender = customPropertDataAppender;
             _CsdlTypeDictionary = csdlTypeDictionary;
         }
 
@@ -42,8 +42,8 @@ namespace Rhyous.Odata.Csdl
                 MaxLength = csdlAttribute?.MaxLength ?? 0,
                 Precision = csdlAttribute?.Precision ?? 0,
             };
-            prop.CustomData.AddFromCustomDictionary(propInfo.ReflectedType.Name, propInfo.Name, _CustomPropertyDataFuncs);
-            prop.CustomData.AddFromAttributes(propInfo, _PropertyDataAttributeDictionary);
+            _CustomPropertDataAppender.Append(prop.CustomData, propInfo.ReflectedType.Name, propInfo.Name);
+            _CustomCsdlFromAttributeAppender.AppendPropertyDataFromAttributes(prop.CustomData, propInfo);
             RemoveIsRequiredIfItMatchesNullable(prop);
             return prop;
         }

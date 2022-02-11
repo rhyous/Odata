@@ -7,7 +7,7 @@ namespace Rhyous.Odata.Csdl
     /// </summary>
     /// <remarks>Needs to be rewritten accordin to this spec: http://docs.oasis-open.org/odata/odata-csdl-json/v4.01/odata-csdl-json-v4.01.html 
     /// </remarks>
-    public class CsdlTypeDictionary : ConcurrentDictionary<string, string>
+    public class CsdlTypeDictionary : ConcurrentDictionary<string, string>, ICsdlTypeDictionary
     {
         public CsdlTypeDictionary()
         {

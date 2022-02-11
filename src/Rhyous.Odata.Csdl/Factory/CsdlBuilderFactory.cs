@@ -1,63 +1,134 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
 
 namespace Rhyous.Odata.Csdl
 {
     public class CsdlBuilderFactory : ICsdlBuilderFactory
     {
-        public CsdlBuilderFactory() { }
+        #region Singleton
 
-        public CsdlBuilderFactory(IFuncList<string> customPropertyFuncs) 
-        {
-            CustomPropertyFuncs = customPropertyFuncs;
-        }
+        private static readonly Lazy<CsdlBuilderFactory> Lazy = new Lazy<CsdlBuilderFactory>(() => new CsdlBuilderFactory());
 
-        public CsdlBuilderFactory(IFuncDictionary<Type, MemberInfo> propertyDataAttributeDictionary,
-                                  IFuncDictionary<Type, MemberInfo> entityAttributeDictionary,
-                                  IFuncDictionary<Type, MemberInfo> propertyAttributeDictionary,
-                                  IFuncList<string> customPropertyFuncs,
-                                  IFuncList<string, string> customPropertyDataFuncs,
-                                  IDictionary<string, string> csdlTypeDictionary
+        /// <summary>This singleton instance</summary>
+        public static CsdlBuilderFactory Instance { get { return Lazy.Value; } }
+
+        internal CsdlBuilderFactory() { }
+
+        #endregion
+
+        public CsdlBuilderFactory(IEntityBuilder entityBuilder,
+                                  IPropertyBuilder propertyBuilder,
+                                  IEnumPropertyBuilder enumPropertyBuilder,
+                                  ICsdlTypeDictionary csdlTypeDictionary,
+                                  IEntityAttributeDictionary entityAttributeDictionary,
+                                  IPropertyAttributeDictionary propertyAttributeDictionary,
+                                  IPropertyDataAttributeDictionary propertyDataAttributeDictionary,
+                                  ICustomCsdlFromAttributeAppender customCsdlFromAttributeAppender,
+                                  ICustomPropertyFuncs customPropertyFuncs,
+                                  ICustomPropertyDataFuncs customPropertyDataFuncs,
+                                  IRelatedEntityNavigationPropertyBuilder relatedEntityNavigationPropertyBuilder,
+                                  IRelatedEntityForeignNavigationPropertyBuilder relatedEntityForeignNavigationPropertyBuilder,
+                                  IRelatedEntityMappingNavigationPropertyBuilder relatedEntityMappingNavigationPropertyBuilder
                                   )
         {
+            _EntityBuilder = entityBuilder;
+            _PropertyBuilder = propertyBuilder;
+            _EnumPropertyBuilder = enumPropertyBuilder;
+            CsdlTypeDictionary = csdlTypeDictionary;
+            _EntityAttributeDictionary = entityAttributeDictionary;
+            _PropertyAttributeDictionary = propertyAttributeDictionary;
             PropertyDataAttributeDictionary = propertyDataAttributeDictionary;
-            EntityAttributeDictionary = entityAttributeDictionary;
-            PropertyAttributeDictionary = propertyAttributeDictionary;
+            _CustomCsdlFromAttributeAppender = customCsdlFromAttributeAppender;
             CustomPropertyFuncs = customPropertyFuncs;
             CustomPropertyDataFuncs = customPropertyDataFuncs;
-            CsdlTypeDictionary = csdlTypeDictionary;
+            _RelatedEntityNavigationPropertyBuilder = relatedEntityNavigationPropertyBuilder;
+            RelatedEntityForeignNavigationPropertyBuilder = relatedEntityForeignNavigationPropertyBuilder;
+            RelatedEntityMappingNavigationPropertyBuilder = relatedEntityMappingNavigationPropertyBuilder;
         }
 
-        // Builders
-        public EntityBuilder EntityBuilder
+        #region Builders
+        public IEntityBuilder EntityBuilder
         {
-            get => _EntityBuilder ?? (_EntityBuilder = CreateEntityBuilder());
+            get => _EntityBuilder ?? (_EntityBuilder = new EntityBuilder(PropertyBuilder, EnumPropertyBuilder, CustomCsdlBuilder, CustomPropertyAppender));
             internal set => _EntityBuilder = value;
-        } private EntityBuilder _EntityBuilder;
+        } private IEntityBuilder _EntityBuilder;
 
-        public PropertyBuilder PropertyBuilder
+        public IPropertyBuilder PropertyBuilder
         {
-            get => _PropertyBuilder ?? (_PropertyBuilder = CreatePropertyBuilder());
+            get => _PropertyBuilder ?? (_PropertyBuilder = new PropertyBuilder(CustomCsdlBuilder, CustomPropertyDataAppender, CsdlTypeDictionary));
             internal set => _PropertyBuilder = value;
-        } private PropertyBuilder _PropertyBuilder;
+        } private IPropertyBuilder _PropertyBuilder;
 
-        public EnumPropertyBuilder EnumPropertyBuilder
+        public IEnumPropertyBuilder EnumPropertyBuilder
         {
-            get => _EnumPropertyBuilder ?? (_EnumPropertyBuilder = CreateEnumPropertyBuilder());
+            get => _EnumPropertyBuilder ?? (_EnumPropertyBuilder = new EnumPropertyBuilder(CustomCsdlBuilder, CustomPropertyDataAppender, CsdlTypeDictionary));
             internal set => _EnumPropertyBuilder = value;
-        } private EnumPropertyBuilder _EnumPropertyBuilder;
+        } private IEnumPropertyBuilder _EnumPropertyBuilder;
 
-        // Dictionaries - set by default
-        public IFuncDictionary<Type, MemberInfo> PropertyDataAttributeDictionary { get; } = new PropertyDataAttributeDictionary();
-        public IFuncDictionary<Type, MemberInfo> EntityAttributeDictionary { get; } = new EntityAttributeDictionary();
-        public IFuncDictionary<Type, MemberInfo> PropertyAttributeDictionary { get; } = new PropertyAttributeDictionary();
-        public IFuncList<string> CustomPropertyFuncs { get; } = new CustomPropertyFuncs();
-        public IFuncList<string, string> CustomPropertyDataFuncs { get; } = new CustomPropertyDataFuncs();
-        public IDictionary<string,string> CsdlTypeDictionary { get; } = new CsdlTypeDictionary();
+        public ICsdlTypeDictionary CsdlTypeDictionary { get; } = new CsdlTypeDictionary();
+        #endregion
 
-        internal EntityBuilder CreateEntityBuilder() => new EntityBuilder(PropertyBuilder, EnumPropertyBuilder, EntityAttributeDictionary, PropertyAttributeDictionary, CustomPropertyFuncs);
-        internal PropertyBuilder CreatePropertyBuilder() => new PropertyBuilder(PropertyDataAttributeDictionary, CustomPropertyDataFuncs, CsdlTypeDictionary);
-        internal EnumPropertyBuilder CreateEnumPropertyBuilder() => new EnumPropertyBuilder(PropertyDataAttributeDictionary, CustomPropertyDataFuncs, CsdlTypeDictionary);
+
+        #region Attribute Dictionaries
+
+        public IEntityAttributeDictionary EntityAttributeDictionary
+        {
+            get => _EntityAttributeDictionary ?? (_EntityAttributeDictionary = new EntityAttributeDictionary(RelatedEntityForeignNavigationPropertyBuilder, 
+                                                                                                             RelatedEntityMappingNavigationPropertyBuilder));
+            internal set => _EntityAttributeDictionary = value;
+        } private IEntityAttributeDictionary _EntityAttributeDictionary;
+
+        public IPropertyAttributeDictionary PropertyAttributeDictionary
+        {
+            get => _PropertyAttributeDictionary ?? (_PropertyAttributeDictionary = new PropertyAttributeDictionary(RelatedEntityNavigationPropertyBuilder));
+            internal set => _PropertyAttributeDictionary = value;
+        } private IPropertyAttributeDictionary _PropertyAttributeDictionary;
+
+        public IPropertyDataAttributeDictionary PropertyDataAttributeDictionary { get; } = new PropertyDataAttributeDictionary();
+
+        #endregion
+
+        #region Custom Builders
+
+        public ICustomCsdlFromAttributeAppender CustomCsdlBuilder
+        {
+            get => _CustomCsdlFromAttributeAppender ?? (_CustomCsdlFromAttributeAppender = new CustomCsdlFromAttributeAppender(EntityAttributeDictionary,
+                                                                                                                               PropertyAttributeDictionary,
+                                                                                                                               PropertyDataAttributeDictionary));
+            set => _CustomCsdlFromAttributeAppender = value;
+        } private ICustomCsdlFromAttributeAppender _CustomCsdlFromAttributeAppender;
+
+        public ICustomPropertyDataAppender CustomPropertyDataAppender
+        {
+            get => _CustomPropertyDataAppender ?? (_CustomPropertyDataAppender = new CustomPropertyDataAppender(CustomPropertyDataFuncs));
+            set => _CustomPropertyDataAppender = value;
+        }
+        private ICustomPropertyDataAppender _CustomPropertyDataAppender;
+
+        public ICustomPropertyAppender CustomPropertyAppender
+        {
+            get => _CustomPropertyAppender ?? (_CustomPropertyAppender = new CustomPropertyAppender(CustomPropertyFuncs));
+            set => _CustomPropertyAppender = value;
+        } private ICustomPropertyAppender _CustomPropertyAppender;
+
+        public ICustomPropertyFuncs CustomPropertyFuncs { get; } = new CustomPropertyFuncs();
+        public ICustomPropertyDataFuncs CustomPropertyDataFuncs { get; } = new CustomPropertyDataFuncs();
+        public IRelatedEntityNavigationPropertyBuilder RelatedEntityNavigationPropertyBuilder
+        {
+            get => _RelatedEntityNavigationPropertyBuilder ?? (_RelatedEntityNavigationPropertyBuilder = new RelatedEntityNavigationPropertyBuilder());
+            internal set => _RelatedEntityNavigationPropertyBuilder = value;
+        } private IRelatedEntityNavigationPropertyBuilder _RelatedEntityNavigationPropertyBuilder;
+
+        public IRelatedEntityForeignNavigationPropertyBuilder RelatedEntityForeignNavigationPropertyBuilder
+        {
+            get => _EntityForeignNavigationPropertyBuilder ?? (_EntityForeignNavigationPropertyBuilder = new RelatedEntityForeignNavigationPropertyBuilder(CustomPropertyDataAppender));
+            internal set => _EntityForeignNavigationPropertyBuilder = value;
+        } private IRelatedEntityForeignNavigationPropertyBuilder _EntityForeignNavigationPropertyBuilder;
+
+        public IRelatedEntityMappingNavigationPropertyBuilder RelatedEntityMappingNavigationPropertyBuilder
+        {
+            get => _EntityMappingNavigationPropertyBuilder ?? (_EntityMappingNavigationPropertyBuilder = new RelatedEntityMappingNavigationPropertyBuilder());
+            internal set => _EntityMappingNavigationPropertyBuilder = value;
+        } private IRelatedEntityMappingNavigationPropertyBuilder _EntityMappingNavigationPropertyBuilder;
+        #endregion
     }
 }

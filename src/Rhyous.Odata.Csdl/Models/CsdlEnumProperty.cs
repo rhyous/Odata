@@ -14,7 +14,7 @@ namespace Rhyous.Odata.Csdl
         /// JSON Schema Kind. Should always be EntityType.
         /// </summary>
         [DataMember(Name = CsdlConstants.Kind)]
-        public string Kind { get; set; } = CsdlConstants.EntityType;
+        public string Kind { get; set; } = CsdlConstants.EnumType;
 
         /// <summary>
         /// Underlying type of the enum.

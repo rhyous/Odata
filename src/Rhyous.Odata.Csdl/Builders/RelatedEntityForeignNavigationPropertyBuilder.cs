@@ -2,13 +2,13 @@
 
 namespace Rhyous.Odata.Csdl
 {
-    public class RelatedEntityForeignNavigationPropertyBuilder : ICsdlNavigationPropertyBuilder<RelatedEntityForeignAttribute, CsdlNavigationProperty>
+    public class RelatedEntityForeignNavigationPropertyBuilder : IRelatedEntityForeignNavigationPropertyBuilder
     {
-        private readonly IFuncList<string, string> _CustomPropertyDataFuncs;
+        private readonly ICustomPropertyDataAppender _CustomPropertyDataAppender;
 
-        public RelatedEntityForeignNavigationPropertyBuilder(IFuncList<string, string> CustomPropertyDataFuncs)
+        public RelatedEntityForeignNavigationPropertyBuilder(ICustomPropertyDataAppender customPropertyDataAppender)
         {
-            _CustomPropertyDataFuncs = CustomPropertyDataFuncs;
+            _CustomPropertyDataAppender = customPropertyDataAppender;
         }
 
         public CsdlNavigationProperty Build(RelatedEntityForeignAttribute relatedEntityAttribute, string schemaOrAlias = CsdlConstants.DefaultSchemaOrAlias)
@@ -21,8 +21,7 @@ namespace Rhyous.Odata.Csdl
                 IsCollection = true, // RelatedEntityForeignAttribute is always a collection.
                 Nullable = true    // Collections can always be empty
             };
-            navProp.CustomData.AddFromCustomDictionary(relatedEntityAttribute.Entity, relatedEntityAttribute.RelatedEntity, _CustomPropertyDataFuncs);
-            navProp.CustomData.AddFromCustomDictionary(relatedEntityAttribute.Entity, relatedEntityAttribute.RelatedEntity, _CustomPropertyDataFuncs);
+            _CustomPropertyDataAppender.Append(navProp.CustomData, relatedEntityAttribute.Entity, relatedEntityAttribute.RelatedEntity);
             navProp.CustomData.Add(CsdlConstants.EAFRelatedEntityType, CsdlConstants.Foreign);
             if (!string.IsNullOrWhiteSpace(relatedEntityAttribute.ForeignKeyProperty) && relatedEntityAttribute.ForeignKeyProperty != relatedEntityAttribute.Entity + CsdlConstants.Id)
                 navProp.CustomData.Add(CsdlConstants.EAFRelatedEntityForeignKeyProperty, relatedEntityAttribute.ForeignKeyProperty);

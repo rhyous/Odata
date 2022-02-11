@@ -10,7 +10,7 @@ namespace Rhyous.Odata.Tests
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }
-        [RelatedEntity("UserType")]
+        [RelatedEntity(nameof(UserType))]
         public int UserTypeId { get; set; }
     }
 }

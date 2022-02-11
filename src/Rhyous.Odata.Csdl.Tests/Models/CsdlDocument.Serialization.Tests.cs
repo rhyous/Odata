@@ -49,7 +49,7 @@ namespace Rhyous.Odata.Csdl.Tests.Models
             var service = new CsdlSchema();
             var doc = new CsdlDocument { Version = "4.01", EntityContainer = "EAF" };
             doc.Schemas.Add("EAF", service);
-            var expectedJson = "{\"$Version\":\"4.01\",\"$EntityContainer\":\"EAF\",\"EAF\":{\"$Alias\":\"self\",\"SuiteMembership\":{\"$Kind\":\"EntityType\",\"$Key\":[\"Id\"],\"Id\":{\"$Type\":\"Edm.Int32\"},\"ProductId\":{\"$Type\":\"Edm.Int32\",\"$NavigationKey\":\"Product\"},\"Product\":{\"$Type\":\"self.Product\",\"$Kind\":\"NavigationProperty\",\"$ReferentialConstraint\":{\"LocalProperty\":\"ProductId\",\"ForeignProperty\":\"Id\",\"ProductId\":\"Id\"},\"@EAF.RelatedEntity.Type\":\"Local\"},\"Quantity\":{\"$Type\":\"Edm.Double\"},\"QuantityType\":{\"$Kind\":\"EntityType\",\"$UnderlyingType\":\"Edm.Int32\",\"Inherited\":1,\"Fixed\":2,\"Percentage\":3},\"SuiteId\":{\"$Type\":\"Edm.Int32\"}}}}";
+            var expectedJson = "{\"$Version\":\"4.01\",\"$EntityContainer\":\"EAF\",\"EAF\":{\"$Alias\":\"self\",\"SuiteMembership\":{\"$Kind\":\"EntityType\",\"$Key\":[\"Id\"],\"Id\":{\"$Type\":\"Edm.Int32\"},\"ProductId\":{\"$Type\":\"Edm.Int32\",\"$NavigationKey\":\"Product\"},\"Product\":{\"$Type\":\"self.Product\",\"$Kind\":\"NavigationProperty\",\"$ReferentialConstraint\":{\"LocalProperty\":\"ProductId\",\"ForeignProperty\":\"Id\",\"ProductId\":\"Id\"},\"@EAF.RelatedEntity.Type\":\"Local\"},\"Quantity\":{\"$Type\":\"Edm.Double\"},\"QuantityType\":{\"$Kind\":\"EnumType\",\"$UnderlyingType\":\"Edm.Int32\",\"Inherited\":1,\"Fixed\":2,\"Percentage\":3},\"SuiteId\":{\"$Type\":\"Edm.Int32\"}}}}";
 
             // Act
             service.Entities.Add("SuiteMembership", typeof(SuiteMembership).ToCsdl());

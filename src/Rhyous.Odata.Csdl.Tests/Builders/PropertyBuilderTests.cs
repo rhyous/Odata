@@ -1,6 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using Rhyous.Odata.Tests;
 using Rhyous.Odata.Tests.Models;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
@@ -9,36 +11,61 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
     [TestClass]
     public class PropertyBuilderTests
     {
+        private MockRepository _MockRepository;
+
+        private Mock<ICustomCsdlFromAttributeAppender> _MockCustomCsdlFromAttributeAppender;
+        private Mock<ICustomPropertyDataAppender> _MockCustomPropertyDataAppender;
+        private CsdlTypeDictionary _CsdlTypeDictionary;
+
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            _MockRepository = new MockRepository(MockBehavior.Strict);
+
+            _MockCustomCsdlFromAttributeAppender = _MockRepository.Create<ICustomCsdlFromAttributeAppender>();
+            _MockCustomPropertyDataAppender = _MockRepository.Create<ICustomPropertyDataAppender>();
+            _CsdlTypeDictionary = new CsdlTypeDictionary();
+        }
+
+        private PropertyBuilder CreatePropertyBuilder()
+        {
+            return new PropertyBuilder(
+                _MockCustomCsdlFromAttributeAppender.Object,
+                _MockCustomPropertyDataAppender.Object,
+                _CsdlTypeDictionary);
+        }
+
         [TestMethod]
         public void PropertyBuilder_Build_Null_Test()
         {
             // Arrange
             PropertyInfo propInfo = null;
-            var propertyBuilder = new CsdlBuilderFactory().CreatePropertyBuilder();
+            var propertyBuilder = CreatePropertyBuilder();
 
             // Act
             var actual = propertyBuilder.Build(propInfo);
 
             // Assert
             Assert.IsNull(actual);
+            _MockRepository.VerifyAll();
         }
 
         [TestMethod]
         public void PropertyBuilder_Build_Test()
         {
             // Arrange
-            var propInfo = typeof(Token).GetProperty("UserId");
-            var propertyBuilder = new CsdlBuilderFactory().CreatePropertyBuilder();
+            var propInfo = typeof(Token).GetProperty(nameof(Token.UserId));
+            var propertyBuilder = CreatePropertyBuilder();
+            _MockCustomPropertyDataAppender.Setup(m => m.Append(It.IsAny<Dictionary<string, object>>(), typeof(Token).Name, nameof(Token.UserId)));
+            _MockCustomCsdlFromAttributeAppender.Setup(m => m.AppendPropertyDataFromAttributes(It.IsAny<Dictionary<string, object>>(), It.Is<PropertyInfo>(pi => pi.Name == propInfo.Name)));
 
             // Act
             var actual = propertyBuilder.Build(propInfo);
 
             // Assert
             Assert.AreEqual("Edm.Int64", actual.Type);
-            Assert.IsNull(actual.DefaultValue);
-            Assert.AreEqual(1, actual.CustomData.Count);
-            Assert.AreEqual("$NavigationKey", actual.CustomData.First().Key);
-            Assert.AreEqual("User", actual.CustomData.First().Value);
+            Assert.AreEqual(0, actual.CustomData.Count);
+            _MockRepository.VerifyAll();
         }
 
         internal class A { }
@@ -48,14 +75,15 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
         public void PropertyBuilder_Build_NotInList_Test()
         {
             // Arrange
-            var propInfo = typeof(B).GetProperty("A");
-            var propertyBuilder = new CsdlBuilderFactory().CreatePropertyBuilder();
+            var propInfo = typeof(B).GetProperty(nameof(B.A));
+            var propertyBuilder = CreatePropertyBuilder();
 
             // Act
             var actual = propertyBuilder.Build(propInfo);
 
             // Assert
             Assert.IsNull(actual);
+            _MockRepository.VerifyAll();
         }
 
         #region CsdlProperty
@@ -64,13 +92,16 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
         {
             // Arrange
             var propInfo = typeof(EntityWithCsdlPropertyAttribute).GetProperty(nameof(EntityWithCsdlPropertyAttribute.DefaultValue));
-            var propertyBuilder = new CsdlBuilderFactory().CreatePropertyBuilder();
+            var propertyBuilder = CreatePropertyBuilder();
+            _MockCustomPropertyDataAppender.Setup(m => m.Append(It.IsAny<Dictionary<string, object>>(), typeof(EntityWithCsdlPropertyAttribute).Name, nameof(EntityWithCsdlPropertyAttribute.DefaultValue)));
+            _MockCustomCsdlFromAttributeAppender.Setup(m => m.AppendPropertyDataFromAttributes(It.IsAny<Dictionary<string, object>>(), It.Is<PropertyInfo>(pi => pi.Name == propInfo.Name)));
 
             // Act
             var csdl = propertyBuilder.Build(propInfo);
 
             // Assert
             Assert.AreEqual(-1, csdl.DefaultValue);
+            _MockRepository.VerifyAll();
         }
 
         [TestMethod]
@@ -78,7 +109,10 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
         {
             // Arrange
             var propInfo = typeof(EntityWithCsdlPropertyAttribute).GetProperty(nameof(EntityWithCsdlPropertyAttribute.NotRequired));
-            var propertyBuilder = new CsdlBuilderFactory().CreatePropertyBuilder();
+            var propertyBuilder = CreatePropertyBuilder();
+            _MockCustomPropertyDataAppender.Setup(m => m.Append(It.IsAny<Dictionary<string, object>>(), typeof(EntityWithCsdlPropertyAttribute).Name, nameof(EntityWithCsdlPropertyAttribute.NotRequired)));
+            _MockCustomCsdlFromAttributeAppender.Setup(m => m.AppendPropertyDataFromAttributes(It.IsAny<Dictionary<string, object>>(), It.Is<PropertyInfo>(pi => pi.Name == propInfo.Name)));
+
 
             // Act
             var csdl = propertyBuilder.Build(propInfo);
@@ -86,6 +120,7 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
 
             // Assert
             Assert.IsFalse(isRequired);
+            _MockRepository.VerifyAll();
         }
 
         [TestMethod]
@@ -93,7 +128,13 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
         {
             // Arrange
             var propInfo = typeof(EntityWithCsdlPropertyAttribute).GetProperty(nameof(EntityWithCsdlPropertyAttribute.RequiredDespiteBeingNullable));
-            var propertyBuilder = new CsdlBuilderFactory().CreatePropertyBuilder();
+            var propertyBuilder = CreatePropertyBuilder();
+            _MockCustomPropertyDataAppender.Setup(m => m.Append(It.IsAny<Dictionary<string, object>>(), typeof(EntityWithCsdlPropertyAttribute).Name, nameof(EntityWithCsdlPropertyAttribute.RequiredDespiteBeingNullable)));
+            _MockCustomCsdlFromAttributeAppender.Setup(m => m.AppendPropertyDataFromAttributes(It.IsAny<Dictionary<string, object>>(), It.Is<PropertyInfo>(pi => pi.Name == propInfo.Name)))
+                                  .Callback((IDictionary<string, object> propertyDictionary, MemberInfo mi) => 
+                                  {
+                                      propertyDictionary.Add(CsdlConstants.UIRequired, true);
+                                  });
 
             // Act
             var csdl = propertyBuilder.Build(propInfo);
@@ -101,6 +142,7 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
             // Assert
             Assert.IsTrue(csdl.CustomData.TryGetValue(CsdlConstants.UIRequired, out object isRequiredValue));
             Assert.IsTrue((bool)isRequiredValue);
+            _MockRepository.VerifyAll();
         }
 
         [TestMethod]
@@ -108,13 +150,16 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
         {
             // Arrange
             var propInfo = typeof(EntityWithCsdlPropertyAttribute).GetProperty(nameof(EntityWithCsdlPropertyAttribute.RequiredNoMetadata));
-            var propertyBuilder = new CsdlBuilderFactory().CreatePropertyBuilder();
+            var propertyBuilder = CreatePropertyBuilder();
+            _MockCustomPropertyDataAppender.Setup(m => m.Append(It.IsAny<Dictionary<string, object>>(), typeof(EntityWithCsdlPropertyAttribute).Name, nameof(EntityWithCsdlPropertyAttribute.RequiredNoMetadata)));
+            _MockCustomCsdlFromAttributeAppender.Setup(m => m.AppendPropertyDataFromAttributes(It.IsAny<Dictionary<string, object>>(), It.Is<PropertyInfo>(pi => pi.Name == propInfo.Name)));
 
             // Act
             var csdl = propertyBuilder.Build(propInfo);
 
             // Assert
             Assert.IsFalse(csdl.CustomData.TryGetValue(CsdlConstants.UIRequired, out _));
+            _MockRepository.VerifyAll();
         }
 
         [TestMethod]
@@ -122,76 +167,35 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
         {
             // Arrange
             var propInfo = typeof(EntityWithCsdlPropertyAttribute).GetProperty(nameof(EntityWithCsdlPropertyAttribute.NotRequiredNoMetadata));
-            var propertyBuilder = new CsdlBuilderFactory().CreatePropertyBuilder();
+            var propertyBuilder = CreatePropertyBuilder();
+            _MockCustomPropertyDataAppender.Setup(m => m.Append(It.IsAny<Dictionary<string, object>>(), typeof(EntityWithCsdlPropertyAttribute).Name, nameof(EntityWithCsdlPropertyAttribute.NotRequiredNoMetadata)));
+            _MockCustomCsdlFromAttributeAppender.Setup(m => m.AppendPropertyDataFromAttributes(It.IsAny<Dictionary<string, object>>(), It.Is<PropertyInfo>(pi => pi.Name == propInfo.Name)));
 
             // Act
             var csdl = propertyBuilder.Build(propInfo);
 
             // Assert
             Assert.IsFalse(csdl.CustomData.TryGetValue(CsdlConstants.UIRequired, out _));
+            _MockRepository.VerifyAll();
         }
-
 
         [TestMethod]
         public void PropertyBuilder_Build_CsdlAttribute_ForceNullableToNotBeNullable_Test()
         {
             // Arrange
             var propInfo = typeof(EntityWithCsdlPropertyAttribute).GetProperty(nameof(EntityWithCsdlPropertyAttribute.ForceNullableToNotBeNullable));
-            var propertyBuilder = new CsdlBuilderFactory().CreatePropertyBuilder();
+            var propertyBuilder = CreatePropertyBuilder();
+            _MockCustomPropertyDataAppender.Setup(m => m.Append(It.IsAny<Dictionary<string, object>>(), typeof(EntityWithCsdlPropertyAttribute).Name, nameof(EntityWithCsdlPropertyAttribute.ForceNullableToNotBeNullable)));
+            _MockCustomCsdlFromAttributeAppender.Setup(m => m.AppendPropertyDataFromAttributes(It.IsAny<Dictionary<string, object>>(), It.Is<PropertyInfo>(pi => pi.Name == propInfo.Name)));
 
             // Act
             var csdl = propertyBuilder.Build(propInfo);
 
             // Assert
             Assert.IsFalse(csdl.Nullable);
+            _MockRepository.VerifyAll();
         }
 
-        [TestMethod]
-        public void PropertyBuilder_Build_CsdlAttribute_MinLength_Test()
-        {
-            // Arrange
-            var propInfo = typeof(EntityWithCsdlPropertyAttribute).GetProperty(nameof(EntityWithCsdlPropertyAttribute.MinLength));
-            var propertyBuilder = new CsdlBuilderFactory().CreatePropertyBuilder();
-            ulong expected = 5;
-
-            // Act
-            var csdl = propertyBuilder.Build(propInfo);
-
-            // Assert
-            Assert.IsTrue(csdl.CustomData.TryGetValue(CsdlConstants.UIMinLength, out object uiMinLength));
-            Assert.AreEqual(expected, uiMinLength);
-        }
-
-        [TestMethod]
-        public void PropertyBuilder_Build_CsdlAttribute_MaxLength_Test()
-        {
-            // Arrange
-            var propInfo = typeof(EntityWithCsdlPropertyAttribute).GetProperty(nameof(EntityWithCsdlPropertyAttribute.MaxLength));
-            var propertyBuilder = new CsdlBuilderFactory().CreatePropertyBuilder();
-            ulong expected = 10;
-
-            // Act
-            var csdl = propertyBuilder.Build(propInfo);
-
-            // Assert
-            Assert.AreEqual(expected, csdl.MaxLength);
-            Assert.IsTrue(csdl.CustomData.TryGetValue(CsdlConstants.UIMaxLength, out object uiMaxLength));
-            Assert.AreEqual(expected, uiMaxLength);
-        }
-
-        [TestMethod]
-        public void PropertyBuilder_Build_CsdlAttribute_CustomTypePassword_Test()
-        {
-            // Arrange
-            var propInfo = typeof(EntityWithCsdlPropertyAttribute).GetProperty(nameof(EntityWithCsdlPropertyAttribute.Password));
-            var propertyBuilder = new CsdlBuilderFactory().CreatePropertyBuilder();
-
-            // Act
-            var csdl = propertyBuilder.Build(propInfo);
-
-            // Assert
-            Assert.AreEqual("Edm.Password", csdl.Type);
-        }
         #endregion
     }
 }

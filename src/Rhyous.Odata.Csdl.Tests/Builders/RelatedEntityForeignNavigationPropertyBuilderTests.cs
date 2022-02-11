@@ -1,20 +1,38 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using Rhyous.Odata;
 using Rhyous.Odata.Csdl;
 using System;
+using System.Collections.Generic;
 
 namespace Rhyous.Odata.Csdl.Tests.Builders
 {
     [TestClass]
     public class RelatedEntityForeignNavigationPropertyBuilderTests
     {
+        private MockRepository _MockRepository;
+
+        private Mock<ICustomPropertyDataAppender> _MockCustomPropertyDataAppender;
+
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            _MockRepository = new MockRepository(MockBehavior.Strict);
+
+            _MockCustomPropertyDataAppender = _MockRepository.Create<ICustomPropertyDataAppender>();
+        }
+
+        private RelatedEntityForeignNavigationPropertyBuilder CreateRelatedEntityForeignNavigationPropertyBuilder()
+        {
+            return new RelatedEntityForeignNavigationPropertyBuilder(_MockCustomPropertyDataAppender.Object);
+        }
+
+        #region Build
         [TestMethod]
         public void RelatedEntityForeignNavigationPropertyBuilder_Build_NullAttribute_Test()
         {
             // Arrange
             var funcs = new FuncList<string, string>();
-            var unitUnderTest = new RelatedEntityForeignNavigationPropertyBuilder(funcs);
+            var unitUnderTest = CreateRelatedEntityForeignNavigationPropertyBuilder();
             RelatedEntityForeignAttribute relatedEntityAttribute = null;
 
             // Act
@@ -22,6 +40,7 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
 
             // Assert
             Assert.IsNull(result);
+            _MockRepository.VerifyAll();
         }
 
         [TestMethod]
@@ -29,8 +48,9 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
         {
             // Arrange
             var funcs = new FuncList<string, string>();
-            var unitUnderTest = new RelatedEntityForeignNavigationPropertyBuilder(funcs);
+            var unitUnderTest = CreateRelatedEntityForeignNavigationPropertyBuilder();
             var relatedEntityAttribute = new RelatedEntityForeignAttribute("Entity2", "Entity1");
+            _MockCustomPropertyDataAppender.Setup(m => m.Append(It.IsAny<Dictionary<string, object>>(), relatedEntityAttribute.Entity, relatedEntityAttribute.RelatedEntity));
 
             // Act
             var result = unitUnderTest.Build(relatedEntityAttribute);
@@ -41,6 +61,7 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
             Assert.AreEqual(CsdlConstants.NavigationProperty, result.Kind);
             Assert.IsTrue(result.IsCollection);
             Assert.IsTrue(result.Nullable);
+            _MockRepository.VerifyAll();
         }
 
         [TestMethod]
@@ -48,10 +69,11 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
         {
             // Arrange
             var funcs = new FuncList<string, string>();
-            var unitUnderTest = new RelatedEntityForeignNavigationPropertyBuilder(funcs);
+            var unitUnderTest = CreateRelatedEntityForeignNavigationPropertyBuilder();
             const string filter = "A eq 1";
             const string displayCondition = "B eq 2";
             var relatedEntityAttribute = new RelatedEntityForeignAttribute("Entity2", "Entity1", "CustomProp") { Filter = filter, DisplayCondition = displayCondition };
+            _MockCustomPropertyDataAppender.Setup(m => m.Append(It.IsAny<Dictionary<string, object>>(), relatedEntityAttribute.Entity, relatedEntityAttribute.RelatedEntity));
 
             // Act
             var result = unitUnderTest.Build(relatedEntityAttribute);
@@ -63,6 +85,7 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
             Assert.AreEqual(odataFilter, filter);
             Assert.IsTrue(result.CustomData.TryGetValue(CsdlConstants.OdataDisplayCondition, out object odataDisplayCondition));
             Assert.AreEqual(odataDisplayCondition, displayCondition);
+            _MockRepository.VerifyAll();
         }
 
         [TestMethod]
@@ -70,14 +93,17 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
         {
             // Arrange
             var funcs = new FuncList<string, string>();
-            var unitUnderTest = new RelatedEntityForeignNavigationPropertyBuilder(funcs);
+            var unitUnderTest = CreateRelatedEntityForeignNavigationPropertyBuilder();
             var relatedEntityAttribute = new RelatedEntityForeignAttribute("Entity2", "Entity1", "Entity1Id");
+            _MockCustomPropertyDataAppender.Setup(m => m.Append(It.IsAny<Dictionary<string, object>>(), relatedEntityAttribute.Entity, relatedEntityAttribute.RelatedEntity));
 
             // Act
             var result = unitUnderTest.Build(relatedEntityAttribute);
 
             // Assert
             Assert.IsFalse(result.CustomData.TryGetValue(CsdlConstants.EAFRelatedEntityForeignKeyProperty, out object prop));
+            _MockRepository.VerifyAll();
         }
+        #endregion
     }
 }

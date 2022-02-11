@@ -10,7 +10,7 @@ namespace Rhyous.Odata.Csdl
     /// Creates additional properties or annotations inside a property based on a property's attributes.
     /// </summary>
     /// <remarks>Try to use attributes from System.ComponentModel.DataAnnotations before creating new ones.</remarks>
-    public class PropertyDataAttributeDictionary : AttributeFuncDictionary
+    public class PropertyDataAttributeDictionary : AttributeFuncDictionary, IPropertyDataAttributeDictionary
     {
         #region Constructor
 
@@ -59,7 +59,7 @@ namespace Rhyous.Odata.Csdl
             return navKeyList;
         }
 
-        private IEnumerable<KeyValuePair<string, object>> GetRequiredProperty(MemberInfo mi)
+        internal IEnumerable<KeyValuePair<string, object>> GetRequiredProperty(MemberInfo mi)
         {
             if (mi == null)
                 return null;
@@ -69,7 +69,7 @@ namespace Rhyous.Odata.Csdl
             return new[] { new KeyValuePair<string, object>(CsdlConstants.UIRequired, true) };
         }
 
-        private IEnumerable<KeyValuePair<string, object>> HandleCsdPropertyAttribute(MemberInfo mi)
+        internal IEnumerable<KeyValuePair<string, object>> HandleCsdPropertyAttribute(MemberInfo mi)
         {
             if (mi == null)
                 return null;
@@ -90,7 +90,7 @@ namespace Rhyous.Odata.Csdl
             return data;
         }
 
-        private IEnumerable<KeyValuePair<string, object>> GetMinLengthProperty(MemberInfo mi)
+        internal IEnumerable<KeyValuePair<string, object>> GetMinLengthProperty(MemberInfo mi)
         {
             if (mi == null)
                 return null;
@@ -100,7 +100,7 @@ namespace Rhyous.Odata.Csdl
             return new[] { new KeyValuePair<string, object>(CsdlConstants.UIMinLength, attribute.Length) };
         }
 
-        private IEnumerable<KeyValuePair<string, object>> GetMaxLengthProperty(MemberInfo mi)
+        internal IEnumerable<KeyValuePair<string, object>> GetMaxLengthProperty(MemberInfo mi)
         {
             if (mi == null)
                 return null;
@@ -110,7 +110,7 @@ namespace Rhyous.Odata.Csdl
             return new[] { new KeyValuePair<string, object>(CsdlConstants.UIMaxLength, attribute.Length) };
         }
 
-        private IEnumerable<KeyValuePair<string, object>> GetStringLengthProperty(MemberInfo mi)
+        internal IEnumerable<KeyValuePair<string, object>> GetStringLengthProperty(MemberInfo mi)
         {
             if (mi == null)
                 return null;
@@ -124,7 +124,7 @@ namespace Rhyous.Odata.Csdl
             };
         }
 
-        private IEnumerable<KeyValuePair<string, object>> GetRangeProperty(MemberInfo mi)
+        internal IEnumerable<KeyValuePair<string, object>> GetRangeProperty(MemberInfo mi)
         {
 
             if (mi == null)
@@ -135,7 +135,7 @@ namespace Rhyous.Odata.Csdl
             return new[] { new KeyValuePair<string, object>(CsdlConstants.UIRange, new { attribute.Minimum, attribute.Maximum }) };
         }
 
-        private IEnumerable<KeyValuePair<string, object>> GetUIHintProperty(MemberInfo mi)
+        internal IEnumerable<KeyValuePair<string, object>> GetUIHintProperty(MemberInfo mi)
         {
             if (mi == null)
                 return null;

@@ -1,17 +1,37 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using Rhyous.Odata.Csdl;
+using System;
 
 namespace Rhyous.Odata.Csdl.Tests.Builders
 {
-    [TestClass]    
+    [TestClass]
     public class RelatedEntityMappingNavigationPropertyBuilderTests
     {
+        private MockRepository _MockRepository;
+
+
+
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            _MockRepository = new MockRepository(MockBehavior.Strict);
+
+
+        }
+
+        private RelatedEntityMappingNavigationPropertyBuilder CreateRelatedEntityMappingNavigationPropertyBuilder()
+        {
+            return new RelatedEntityMappingNavigationPropertyBuilder();
+        }
+
+        #region Build
         [TestMethod]
         public void RelatedEntityMappingNavigationPropertyBuilder_Build_NullAttribute_Test()
         {
             // Arrange
             var mockFuncEnumerable = new Mock<IFuncList<string, string>>();
-            var unitUnderTest = new RelatedEntityMappingNavigationPropertyBuilder(mockFuncEnumerable.Object);
+            var unitUnderTest = CreateRelatedEntityMappingNavigationPropertyBuilder();
             RelatedEntityMappingAttribute relatedEntityAttribute = null;
 
             // Act
@@ -26,7 +46,7 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
         {
             // Arrange
             var mockFuncEnumerable = new Mock<IFuncList<string, string>>();
-            var unitUnderTest = new RelatedEntityMappingNavigationPropertyBuilder(mockFuncEnumerable.Object);
+            var unitUnderTest = CreateRelatedEntityMappingNavigationPropertyBuilder();
             var relatedEntityAttribute = new RelatedEntityMappingAttribute("Entity2", "Entity1To2Map", "Entity1");
             // Act
             var result = unitUnderTest.Build(relatedEntityAttribute);
@@ -44,7 +64,7 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
         {
             // Arrange
             var mockFuncEnumerable = new Mock<IFuncList<string, string>>();
-            var unitUnderTest = new RelatedEntityMappingNavigationPropertyBuilder(mockFuncEnumerable.Object);
+            var unitUnderTest = CreateRelatedEntityMappingNavigationPropertyBuilder();
             const string filter = "A eq 1";
             const string displayCondition = "B eq 2";
             var relatedEntityAttribute = new RelatedEntityMappingAttribute("Entity2", "Entity1To2Map", "Entity1") { MappingEntityAlias = "E1E2Map", Filter = filter, DisplayCondition = displayCondition };
@@ -59,5 +79,6 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
             Assert.IsTrue(result.CustomData.TryGetValue(CsdlConstants.OdataDisplayCondition, out object odataDisplayCondition));
             Assert.AreEqual(odataDisplayCondition, displayCondition);
         }
+        #endregion
     }
 }

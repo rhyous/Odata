@@ -4,30 +4,25 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.Serialization;
 
 namespace Rhyous.Odata.Csdl
 {
-    public class EntityBuilder : ICsdlBuilder<Type, CsdlEntity>
+    public class EntityBuilder : IEntityBuilder
     {
-        private readonly ICsdlBuilder<PropertyInfo, CsdlProperty> _PropertyBuilder;
-        private readonly ICsdlBuilder<PropertyInfo, CsdlEnumProperty> _EnumPropertyBuilder;
-        private readonly IFuncDictionary<Type, MemberInfo> _EntityAttributeFuncDictionary;
-        private readonly IFuncDictionary<Type, MemberInfo> _PropertyAttributeFuncDictionary;
-        private readonly IFuncList<string> _CustomPropertyFuncs;
+        private readonly IPropertyBuilder _PropertyBuilder;
+        private readonly IEnumPropertyBuilder _EnumPropertyBuilder;
+        private readonly ICustomCsdlFromAttributeAppender _CustomCsdlFromAttributeAppender;
+        private readonly ICustomPropertyAppender _CustomerPropertyAppender;
 
-        public EntityBuilder(ICsdlBuilder<PropertyInfo, CsdlProperty> propertyBuilder,
-                             ICsdlBuilder<PropertyInfo, CsdlEnumProperty> enumPropertyBuilder, 
-                             IFuncDictionary<Type, MemberInfo> entityAttributeFuncDictionary,
-                             IFuncDictionary<Type, MemberInfo> propertyAttributeFuncDictionary,
-                             IFuncList<string> customPropertyFuncs
-                            )
+        public EntityBuilder(IPropertyBuilder propertyBuilder,
+                             IEnumPropertyBuilder enumPropertyBuilder,
+                             ICustomCsdlFromAttributeAppender customCsdlFromAttributeAppender,
+                             ICustomPropertyAppender customerPropertyAppender)
         {
             _PropertyBuilder = propertyBuilder;
             _EnumPropertyBuilder = enumPropertyBuilder;
-            _EntityAttributeFuncDictionary = entityAttributeFuncDictionary;
-            _PropertyAttributeFuncDictionary = propertyAttributeFuncDictionary;
-            _CustomPropertyFuncs = customPropertyFuncs;
+            _CustomCsdlFromAttributeAppender = customCsdlFromAttributeAppender;
+            _CustomerPropertyAppender = customerPropertyAppender;
         }
 
         /// <summary>
@@ -50,11 +45,11 @@ namespace Rhyous.Odata.Csdl
                 // Add a property based on this PropertyInfo.
                 AddFromPropertyInfo(entity.Properties, propInfo);
                 // Add new properties based on this Property's attributes
-                entity.Properties.AddFromAttributes(propInfo, _PropertyAttributeFuncDictionary);
+                _CustomCsdlFromAttributeAppender.AppendPropertiesFromPropertyAttributes(entity.Properties, propInfo);
             }
             // Add new properties based on this Entity's attributes
-            entity.Properties.AddFromCustomDictionary(entityType.Name, _CustomPropertyFuncs);
-            entity.Properties.AddFromAttributes(entityType, _EntityAttributeFuncDictionary);
+            _CustomerPropertyAppender.Append(entity.Properties, entityType.Name);
+            _CustomCsdlFromAttributeAppender.AppendPropertiesFromEntityAttributes(entity.Properties, entityType);
             return entity;
         }
 
