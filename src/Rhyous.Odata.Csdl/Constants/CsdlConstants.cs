@@ -15,6 +15,7 @@
         public const string EAFMappingEntityType = "@EAF.RelatedEntity.MappingEntityType";
 
         public const string EdmString = "Edm.String";
+        public const string EdmInt32 = "Edm.Int32";
 
 
         public const string EntityContainer = "$EntityContainer";

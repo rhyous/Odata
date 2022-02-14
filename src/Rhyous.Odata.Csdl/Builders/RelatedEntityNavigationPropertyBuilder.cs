@@ -3,13 +3,10 @@ using System.Collections.Generic;
 
 namespace Rhyous.Odata.Csdl
 {
-    public class RelatedEntityNavigationPropertyBuilder : ICsdlNavigationPropertyBuilder<RelatedEntityAttribute, CsdlNavigationProperty>
+    public class RelatedEntityNavigationPropertyBuilder : IRelatedEntityNavigationPropertyBuilder
     {
-        private readonly IFuncList<string, string> _CustomPropertyDataFuncs;
-
-        public RelatedEntityNavigationPropertyBuilder(IFuncList<string, string> CustomPropertyDataFuncs)
+        public RelatedEntityNavigationPropertyBuilder()
         {
-            _CustomPropertyDataFuncs = CustomPropertyDataFuncs;
         }
 
         public CsdlNavigationProperty Build(RelatedEntityAttribute relatedEntityAttribute, string schemaOrAlias = CsdlConstants.DefaultSchemaOrAlias)

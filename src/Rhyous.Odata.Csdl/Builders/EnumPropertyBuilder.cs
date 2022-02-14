@@ -6,18 +6,18 @@ using System.Reflection;
 
 namespace Rhyous.Odata.Csdl
 {
-    public class EnumPropertyBuilder : ICsdlBuilder<PropertyInfo, CsdlEnumProperty>
+    public class EnumPropertyBuilder : IEnumPropertyBuilder
     {
-        private readonly IFuncDictionary<Type, MemberInfo> _PropertyDataAttributeDictionary;
-        private readonly IFuncList<string, string> _CustomPropertyDataFuncs;
-        private readonly IDictionary<string, string> _CsdlTypeDictionary;
+        private readonly ICustomCsdlFromAttributeAppender _CustomCsdlFromAttributeAppender;
+        private readonly ICustomPropertyDataAppender _CustomPropertDataAppender;
+        private readonly ICsdlTypeDictionary _CsdlTypeDictionary;
 
-        public EnumPropertyBuilder(IFuncDictionary<Type, MemberInfo> propertyDataAttributeFuncDictionary,
-                                  IFuncList<string, string> customPropertyDataFuncDictionary,
-                                  IDictionary<string, string> csdlTypeDictionary)
+        public EnumPropertyBuilder(ICustomCsdlFromAttributeAppender customCsdlFromAttributeAppender,
+                                   ICustomPropertyDataAppender customPropertDataAppender,
+                                   ICsdlTypeDictionary csdlTypeDictionary)
         {
-            _PropertyDataAttributeDictionary = propertyDataAttributeFuncDictionary;
-            _CustomPropertyDataFuncs = customPropertyDataFuncDictionary;
+            _CustomCsdlFromAttributeAppender = customCsdlFromAttributeAppender;
+            _CustomPropertDataAppender = customPropertDataAppender;
             _CsdlTypeDictionary = csdlTypeDictionary;
         }
 
@@ -34,8 +34,8 @@ namespace Rhyous.Odata.Csdl
                 CustomData = propertyType.ToDictionary(),
                 IsFlags = propertyType.GetCustomAttributes<FlagsAttribute>().Any()
             };
-            prop.CustomData.AddFromCustomDictionary(propInfo.DeclaringType.Name, propInfo.Name, _CustomPropertyDataFuncs);
-            prop.CustomData.AddFromAttributes(propInfo, _PropertyDataAttributeDictionary);
+            _CustomPropertDataAppender.Append(prop.CustomData, propInfo.DeclaringType.Name, propInfo.Name);
+            _CustomCsdlFromAttributeAppender.AppendPropertiesFromEntityAttributes(prop.CustomData, propInfo);
             return prop;
         }
     }

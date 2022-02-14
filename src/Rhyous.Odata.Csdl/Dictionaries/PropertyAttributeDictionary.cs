@@ -8,18 +8,20 @@ namespace Rhyous.Odata.Csdl
     /// Creates additional properties or annotations on the entity based on a property's attributes.
     /// </summary>
     /// <remarks>Try to use attributes from System.ComponentModel.DataAnnotations before creating new ones.</remarks>
-    public class PropertyAttributeDictionary : AttributeFuncDictionary
+    public class PropertyAttributeDictionary : AttributeFuncDictionary, IPropertyAttributeDictionary
     {
+        private readonly IRelatedEntityNavigationPropertyBuilder _RelatedEntityNavigationPropertyBuilder;
         #region Constructor
 
-        public PropertyAttributeDictionary()
+        public PropertyAttributeDictionary(IRelatedEntityNavigationPropertyBuilder relatedEntityNavigationPropertyBuilder)
         {
+            _RelatedEntityNavigationPropertyBuilder = relatedEntityNavigationPropertyBuilder;
             Add(typeof(RelatedEntityAttribute), GetRelatedEntityProperties);
         }
 
         #endregion
-        
-        internal IEnumerable<KeyValuePair<string, object>> GetRelatedEntityProperties(MemberInfo mi)
+
+        public IEnumerable<KeyValuePair<string, object>> GetRelatedEntityProperties(MemberInfo mi)
         {
             var relatedEntityAttributes = mi?.GetCustomAttributes<RelatedEntityAttribute>() // This method is never null
                                              .GroupBy(a => a.Entity);
@@ -30,7 +32,7 @@ namespace Rhyous.Odata.Csdl
             {
                 var mergedAttribute = group.Merge();
                 var relatedEntityName = string.IsNullOrWhiteSpace(mergedAttribute.RelatedEntityAlias) ? mergedAttribute.RelatedEntity : mergedAttribute.RelatedEntityAlias;
-                var navProp = mergedAttribute.ToNavigationProperty(CsdlConstants.DefaultSchemaOrAlias);
+                var navProp = _RelatedEntityNavigationPropertyBuilder.Build(mergedAttribute, CsdlConstants.DefaultSchemaOrAlias);
                 navProp.CustomData.Add(CsdlConstants.EAFRelatedEntityType, CsdlConstants.Local);
                 navKeyList.Add(new KeyValuePair<string, object>(relatedEntityName, navProp));
             }

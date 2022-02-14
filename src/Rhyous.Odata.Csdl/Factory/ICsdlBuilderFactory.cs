@@ -1,23 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
-
-namespace Rhyous.Odata.Csdl
+﻿namespace Rhyous.Odata.Csdl
 {
     public interface ICsdlBuilderFactory
     {
-        // Builders
-        EntityBuilder EntityBuilder { get; }
-        PropertyBuilder PropertyBuilder { get; }
-        EnumPropertyBuilder EnumPropertyBuilder { get; }
-
-        // Dictionaries
-        IFuncList<string> CustomPropertyFuncs { get; }
-        IFuncList<string, string> CustomPropertyDataFuncs { get; }
-
-        IFuncDictionary<Type, MemberInfo> EntityAttributeDictionary { get; }
-        IFuncDictionary<Type, MemberInfo> PropertyAttributeDictionary { get; }
-        IFuncDictionary<Type, MemberInfo> PropertyDataAttributeDictionary { get; }
-        IDictionary<string, string> CsdlTypeDictionary { get; }
+        ICsdlTypeDictionary CsdlTypeDictionary { get; }
+        ICustomCsdlFromAttributeAppender CustomCsdlBuilder { get; set; }
+        ICustomPropertyDataFuncs CustomPropertyDataFuncs { get; }
+        ICustomPropertyFuncs CustomPropertyFuncs { get; }
+        IEntityAttributeDictionary EntityAttributeDictionary { get; }
+        IEntityBuilder EntityBuilder { get; }
+        IEnumPropertyBuilder EnumPropertyBuilder { get; }
+        IPropertyAttributeDictionary PropertyAttributeDictionary { get; }
+        IPropertyBuilder PropertyBuilder { get; }
+        IPropertyDataAttributeDictionary PropertyDataAttributeDictionary { get; }
+        IRelatedEntityForeignNavigationPropertyBuilder RelatedEntityForeignNavigationPropertyBuilder { get; }
+        IRelatedEntityMappingNavigationPropertyBuilder RelatedEntityMappingNavigationPropertyBuilder { get; }
+        IRelatedEntityNavigationPropertyBuilder RelatedEntityNavigationPropertyBuilder { get; }
     }
 }

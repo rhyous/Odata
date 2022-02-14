@@ -2,13 +2,11 @@
 
 namespace Rhyous.Odata.Csdl
 {
-    public class RelatedEntityMappingNavigationPropertyBuilder : ICsdlNavigationPropertyBuilder<RelatedEntityMappingAttribute, CsdlNavigationProperty>
+    public class RelatedEntityMappingNavigationPropertyBuilder : IRelatedEntityMappingNavigationPropertyBuilder
     {
-        private readonly IFuncList<string, string> _CustomPropertyDataFuncs;
 
-        public RelatedEntityMappingNavigationPropertyBuilder(IFuncList<string, string> CustomPropertyDataFuncs)
+        public RelatedEntityMappingNavigationPropertyBuilder()
         {
-            _CustomPropertyDataFuncs = CustomPropertyDataFuncs;
         }
 
         public CsdlNavigationProperty Build(RelatedEntityMappingAttribute relatedEntityAttribute, string schemaOrAlias = CsdlConstants.DefaultSchemaOrAlias)

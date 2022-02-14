@@ -10,12 +10,17 @@ namespace Rhyous.Odata.Csdl
     /// </summary>
     /// <remarks>Try to use attributes from System.ComponentModel.DataAnnotations before creating new ones.</remarks>
 
-    public class EntityAttributeDictionary : AttributeFuncDictionary
+    public class EntityAttributeDictionary : AttributeFuncDictionary, IEntityAttributeDictionary
     {
+        private readonly IRelatedEntityForeignNavigationPropertyBuilder _RelatedEntityForeignNavigationPropertyBuilder;
+        private readonly IRelatedEntityMappingNavigationPropertyBuilder _RelatedEntityMappingNavigationPropertyBuilder;
         #region Constructor
 
-        public EntityAttributeDictionary()
+        public EntityAttributeDictionary(IRelatedEntityForeignNavigationPropertyBuilder relatedEntityForeignNavigationPropertyBuilder,
+                                         IRelatedEntityMappingNavigationPropertyBuilder relatedEntityMappingNavigationPropertyBuilder)
         {
+            _RelatedEntityForeignNavigationPropertyBuilder = relatedEntityForeignNavigationPropertyBuilder;
+            _RelatedEntityMappingNavigationPropertyBuilder = relatedEntityMappingNavigationPropertyBuilder;
             Add(typeof(DisplayColumnAttribute), GetDisplayProperty);
             Add(typeof(ReadOnlyEntityAttribute), GetReadOnlyProperty);
             Add(typeof(RequiredAttribute), GetRequiredProperty);
@@ -25,7 +30,7 @@ namespace Rhyous.Odata.Csdl
 
         #endregion
 
-        internal IEnumerable<KeyValuePair<string, object>> GetDisplayProperty(MemberInfo mi)
+        public IEnumerable<KeyValuePair<string, object>> GetDisplayProperty(MemberInfo mi)
         {
             if (mi == null)
                 return null;
@@ -35,7 +40,7 @@ namespace Rhyous.Odata.Csdl
             return new[] { new KeyValuePair<string, object>("@UI.DisplayProperty", displayColumnAttribute.DisplayColumn) };
         }
 
-        internal IEnumerable<KeyValuePair<string, object>> GetReadOnlyProperty(MemberInfo mi)
+        public IEnumerable<KeyValuePair<string, object>> GetReadOnlyProperty(MemberInfo mi)
         {
             if (mi == null)
                 return null;
@@ -45,7 +50,7 @@ namespace Rhyous.Odata.Csdl
             return new[] { new KeyValuePair<string, object>("@UI.ReadOnly", true) };
         }
 
-        private IEnumerable<KeyValuePair<string, object>> GetRequiredProperty(MemberInfo mi)
+        public IEnumerable<KeyValuePair<string, object>> GetRequiredProperty(MemberInfo mi)
         {
             if (mi == null)
                 return null;
@@ -55,7 +60,7 @@ namespace Rhyous.Odata.Csdl
             return new[] { new KeyValuePair<string, object>("@UI.Required", true) };
         }
 
-        internal IEnumerable<KeyValuePair<string, object>> GetRelatedEntityForeignProperties(MemberInfo mi)
+        public IEnumerable<KeyValuePair<string, object>> GetRelatedEntityForeignProperties(MemberInfo mi)
         {
             if (mi == null)
                 yield break;
@@ -63,11 +68,11 @@ namespace Rhyous.Odata.Csdl
             {
                 var relatedEntityName = string.IsNullOrWhiteSpace(relatedEntityAttribute.RelatedEntityAlias) ? relatedEntityAttribute.RelatedEntity : relatedEntityAttribute.RelatedEntityAlias;
                 var pluralizedRelatedEntityName = relatedEntityName.Pluralize();
-                yield return new KeyValuePair<string, object>(pluralizedRelatedEntityName, relatedEntityAttribute.ToNavigationProperty());
+                yield return new KeyValuePair<string, object>(pluralizedRelatedEntityName, _RelatedEntityForeignNavigationPropertyBuilder.Build(relatedEntityAttribute));
             }
         }
 
-        internal IEnumerable<KeyValuePair<string, object>> GetRelatedEntityMappingProperties(MemberInfo mi)
+        public IEnumerable<KeyValuePair<string, object>> GetRelatedEntityMappingProperties(MemberInfo mi)
         {
             if (mi == null)
                 yield break;
@@ -75,7 +80,7 @@ namespace Rhyous.Odata.Csdl
             {
                 var relatedEntityName = string.IsNullOrWhiteSpace(relatedEntityAttribute.RelatedEntityAlias) ? relatedEntityAttribute.RelatedEntity : relatedEntityAttribute.RelatedEntityAlias;
                 var pluralizedRelatedEntityName = relatedEntityName.Pluralize();
-                yield return new KeyValuePair<string, object>(pluralizedRelatedEntityName, relatedEntityAttribute.ToNavigationProperty());
+                yield return new KeyValuePair<string, object>(pluralizedRelatedEntityName, _RelatedEntityMappingNavigationPropertyBuilder.Build(relatedEntityAttribute));
             }
         }
     }

@@ -1,6 +1,5 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using Rhyous.Odata;
 using Rhyous.Odata.Csdl;
 using System;
 
@@ -9,12 +8,29 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
     [TestClass]
     public class RelatedEntityNavigationPropertyBuilderTests
     {
+        private MockRepository _MockRepository;
+
+
+
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            _MockRepository = new MockRepository(MockBehavior.Strict);
+
+
+        }
+
+        private RelatedEntityNavigationPropertyBuilder CreateRelatedEntityNavigationPropertyBuilder()
+        {
+            return new RelatedEntityNavigationPropertyBuilder();
+        }
+
+        #region Build
         [TestMethod]
         public void RelatedEntityNavigationPropertyBuilder_Build_NullAttribute_Test()
         {
             // Arrange
-            var funcs = new FuncList<string, string>();
-            var unitUnderTest = new RelatedEntityNavigationPropertyBuilder(funcs);
+            var unitUnderTest = CreateRelatedEntityNavigationPropertyBuilder();
             RelatedEntityAttribute relatedEntityAttribute = null;
 
             // Act
@@ -28,8 +44,7 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
         public void RelatedEntityNavigationPropertyBuilder_Build_ValidAttribute_Test()
         {
             // Arrange
-            var funcs = new FuncList<string, string>();
-            var unitUnderTest = new RelatedEntityNavigationPropertyBuilder(funcs);
+            var unitUnderTest = CreateRelatedEntityNavigationPropertyBuilder();
             var relatedEntityAttribute = new RelatedEntityAttribute("Entity2");
 
             // Act
@@ -48,8 +63,7 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
         public void RelatedEntityNavigationPropertyBuilder_Build_ValidAttribute_RelatedEntityMustExistFalse_NullableTrue_Test()
         {
             // Arrange
-            var funcs = new FuncList<string, string>();
-            var unitUnderTest = new RelatedEntityNavigationPropertyBuilder(funcs);
+            var unitUnderTest = CreateRelatedEntityNavigationPropertyBuilder();
             var relatedEntityAttribute = new RelatedEntityAttribute("Entity2")
             {
                 RelatedEntityMustExist = false,
@@ -71,8 +85,7 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
         public void RelatedEntityNavigationPropertyBuilder_Build_ValidAttribute_AllowNonExistantValue_Test()
         {
             // Arrange
-            var funcs = new FuncList<string, string>();
-            var unitUnderTest = new RelatedEntityNavigationPropertyBuilder(funcs);
+            var unitUnderTest = CreateRelatedEntityNavigationPropertyBuilder();
             var relatedEntityAttribute = new RelatedEntityAttribute("Entity2")
             {
                 AllowedNonExistentValue = 0
@@ -96,8 +109,7 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
         public void RelatedEntityNavigationPropertyBuilder_Build_ValidAttribute_AllowNonExistantValue_Renamed_Test()
         {
             // Arrange
-            var funcs = new FuncList<string, string>();
-            var unitUnderTest = new RelatedEntityNavigationPropertyBuilder(funcs);
+            var unitUnderTest = CreateRelatedEntityNavigationPropertyBuilder();
             var relatedEntityAttribute = new RelatedEntityAttribute("Entity2")
             {
                 AllowedNonExistentValue = 0,
@@ -117,5 +129,6 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
             Assert.IsFalse(result.IsCollection);
             Assert.IsFalse(result.Nullable);
         }
+        #endregion
     }
 }
