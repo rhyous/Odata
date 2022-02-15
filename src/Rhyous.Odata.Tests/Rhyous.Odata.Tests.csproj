@@ -20,7 +20,6 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>    
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="Rhyous.Collections" Version="1.2.3" />
     <PackageReference Include="Rhyous.StringLibrary" Version="1.2.17" />
   </ItemGroup>
 

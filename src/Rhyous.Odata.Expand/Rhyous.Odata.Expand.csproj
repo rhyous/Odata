@@ -19,7 +19,7 @@
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.*" />
-    <PackageReference Include="Rhyous.Collections" Version="1.2.3" />
+    <PackageReference Include="Rhyous.Collections" Version="1.2.7" />
     <PackageReference Include="Rhyous.StringLibrary" Version="1.2.17" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="4.7.0" />
   </ItemGroup>
