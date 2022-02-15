@@ -16,15 +16,15 @@ namespace Rhyous.Odata.Csdl
 
         public PropertyDataAttributeDictionary()
         {
-            Add(typeof(EditableAttribute), GetReadOnlyProperty);
-            Add(typeof(RelatedEntityAttribute), GetRelatedEntityPropertyData);
-            Add(typeof(RequiredAttribute), GetRequiredProperty);
-            Add(typeof(CsdlPropertyAttribute), HandleCsdPropertyAttribute);
-            Add(typeof(MinLengthAttribute), GetMinLengthProperty);
-            Add(typeof(MaxLengthAttribute), GetMaxLengthProperty);
-            Add(typeof(StringLengthAttribute), GetStringLengthProperty);
-            Add(typeof(RangeAttribute), GetRangeProperty);
-            Add(typeof(UIHintAttribute), GetUIHintProperty);
+            GetOrAdd(typeof(EditableAttribute), GetReadOnlyProperty);
+            GetOrAdd(typeof(RelatedEntityAttribute), GetRelatedEntityPropertyData);
+            GetOrAdd(typeof(RequiredAttribute), GetRequiredProperty);
+            GetOrAdd(typeof(CsdlPropertyAttribute), HandleCsdPropertyAttribute);
+            GetOrAdd(typeof(MinLengthAttribute), GetMinLengthProperty);
+            GetOrAdd(typeof(MaxLengthAttribute), GetMaxLengthProperty);
+            GetOrAdd(typeof(StringLengthAttribute), GetStringLengthProperty);
+            GetOrAdd(typeof(RangeAttribute), GetRangeProperty);
+            GetOrAdd(typeof(UIHintAttribute), GetUIHintProperty);
         }
 
         #endregion

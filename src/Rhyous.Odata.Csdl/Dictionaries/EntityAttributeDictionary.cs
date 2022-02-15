@@ -21,11 +21,11 @@ namespace Rhyous.Odata.Csdl
         {
             _RelatedEntityForeignNavigationPropertyBuilder = relatedEntityForeignNavigationPropertyBuilder;
             _RelatedEntityMappingNavigationPropertyBuilder = relatedEntityMappingNavigationPropertyBuilder;
-            Add(typeof(DisplayColumnAttribute), GetDisplayProperty);
-            Add(typeof(ReadOnlyEntityAttribute), GetReadOnlyProperty);
-            Add(typeof(RequiredAttribute), GetRequiredProperty);
-            Add(typeof(RelatedEntityForeignAttribute), GetRelatedEntityForeignProperties);
-            Add(typeof(RelatedEntityMappingAttribute), GetRelatedEntityMappingProperties);
+            GetOrAdd(typeof(DisplayColumnAttribute), GetDisplayProperty);
+            GetOrAdd(typeof(ReadOnlyEntityAttribute), GetReadOnlyProperty);
+            GetOrAdd(typeof(RequiredAttribute), GetRequiredProperty);
+            GetOrAdd(typeof(RelatedEntityForeignAttribute), GetRelatedEntityForeignProperties);
+            GetOrAdd(typeof(RelatedEntityMappingAttribute), GetRelatedEntityMappingProperties);
         }
 
         #endregion

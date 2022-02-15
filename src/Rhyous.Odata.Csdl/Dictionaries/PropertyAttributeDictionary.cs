@@ -16,7 +16,7 @@ namespace Rhyous.Odata.Csdl
         public PropertyAttributeDictionary(IRelatedEntityNavigationPropertyBuilder relatedEntityNavigationPropertyBuilder)
         {
             _RelatedEntityNavigationPropertyBuilder = relatedEntityNavigationPropertyBuilder;
-            Add(typeof(RelatedEntityAttribute), GetRelatedEntityProperties);
+            GetOrAdd(typeof(RelatedEntityAttribute), GetRelatedEntityProperties);
         }
 
         #endregion
