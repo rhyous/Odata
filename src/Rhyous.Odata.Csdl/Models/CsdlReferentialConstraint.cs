@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Rhyous.Collections;
 using System.Collections.Generic;
 
 namespace Rhyous.Odata.Csdl
@@ -9,10 +10,10 @@ namespace Rhyous.Odata.Csdl
         public string LocalProperty { get; set; }
         public string ForeignProperty { get; set; }
         [JsonExtensionData]
-        public Dictionary<string, object> CustomData
+        public SortedConcurrentDictionary<string, object> CustomData
         {
-            get { return _CustomData ?? (_CustomData = new Dictionary<string, object>()); }
+            get { return _CustomData ?? (_CustomData = new SortedConcurrentDictionary<string, object>()); }
             set { _CustomData = value; }
-        } private Dictionary<string, object> _CustomData;
+        } private SortedConcurrentDictionary<string, object> _CustomData;
     }
 }

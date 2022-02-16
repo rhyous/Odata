@@ -14,7 +14,7 @@ namespace Rhyous.Odata.Csdl
             _CustomPropertyFuncs = customPropertyFuncs;
         }
 
-        public void Append(IDictionary<string, object> dictionary, string entity)
+        public void Append(IConcurrentDictionary<string, object> dictionary, string entity)
         {
             if (dictionary == null
              || string.IsNullOrWhiteSpace(entity)
@@ -23,13 +23,18 @@ namespace Rhyous.Odata.Csdl
                 return;
             foreach (var func in _CustomPropertyFuncs)
             {
-                var items = func(entity);
-                if (items != null && items.Any())
-                    dictionary.AddRange(items);
+                var kvps = func(entity);
+                if (kvps != null && kvps.Any())
+                {
+                    foreach (var kvp in kvps)
+                    {
+                        dictionary.TryAdd(kvp.Key, kvp.Value);
+                    }
+                }
             }
         }
 
-        public void Append<T>(IDictionary<string, object> dictionary, T inT, params Func<T, IEnumerable<KeyValuePair<string, object>>>[] customPropertyBuilders)
+        public void Append<T>(IConcurrentDictionary<string, object> dictionary, T inT, params Func<T, IEnumerable<KeyValuePair<string, object>>>[] customPropertyBuilders)
         {
             if (inT == null || dictionary == null || customPropertyBuilders == null || !customPropertyBuilders.Any())
                 return;
@@ -40,7 +45,7 @@ namespace Rhyous.Odata.Csdl
                 var list = builder.Invoke(inT);
                 foreach (var kvp in list)
                 {
-                    dictionary.AddIfNewAndNotNull(kvp.Key, kvp.Value);
+                    dictionary.TryAdd(kvp.Key, kvp.Value);
                 }
             }
         }

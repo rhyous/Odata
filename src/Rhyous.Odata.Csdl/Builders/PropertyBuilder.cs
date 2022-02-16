@@ -53,7 +53,7 @@ namespace Rhyous.Odata.Csdl
             if (prop.CustomData.TryGetValue(CsdlConstants.UIRequired, out object isRequired))
             {
                 if ((bool)isRequired != prop.Nullable)
-                    prop.CustomData.Remove(CsdlConstants.UIRequired);
+                    prop.CustomData.TryRemove(CsdlConstants.UIRequired, out _);
             }
         }
     }

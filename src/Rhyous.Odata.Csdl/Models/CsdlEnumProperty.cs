@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Rhyous.Collections;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
@@ -32,10 +33,10 @@ namespace Rhyous.Odata.Csdl
         /// This is used for listing all enum options as well as custom data.
         /// </summary>
         [JsonExtensionData]
-        public Dictionary<string, object> CustomData
+        public SortedConcurrentDictionary<string, object> CustomData
         {
-            get { return _CustomData ?? (_CustomData = new Dictionary<string, object>()); }
+            get { return _CustomData ?? (_CustomData = new SortedConcurrentDictionary<string, object>()); }
             set { _CustomData = value; }
-        } private Dictionary<string, object> _CustomData;
+        } private SortedConcurrentDictionary<string, object> _CustomData;
     }
 }

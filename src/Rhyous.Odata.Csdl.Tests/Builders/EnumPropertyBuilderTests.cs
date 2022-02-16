@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using Rhyous.Collections;
 using Rhyous.Odata.Csdl;
 using Rhyous.Odata.Tests;
 using System;
@@ -44,8 +45,8 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
             var enumPropertyBuilder = CreateEnumPropertyBuilder();
             var type = typeof(EntityWithEnum);
             PropertyInfo propInfo = type.GetProperty(nameof(EntityWithEnum.Type));
-            _MockCustomPropertyDataAppender.Setup(m => m.Append(It.IsAny<Dictionary<string, object>>(), type.Name, nameof(EntityWithEnum.Type)));
-            _MockCustomCsdlFromAttributeAppenderr.Setup(m => m.AppendPropertiesFromEntityAttributes(It.IsAny<Dictionary<string, object>>(), propInfo));
+            _MockCustomPropertyDataAppender.Setup(m => m.Append(It.IsAny<IConcurrentDictionary<string, object>>(), type.Name, nameof(EntityWithEnum.Type)));
+            _MockCustomCsdlFromAttributeAppenderr.Setup(m => m.AppendPropertiesFromEntityAttributes(It.IsAny<IConcurrentDictionary<string, object>>(), propInfo));
 
             // Act
             var result = enumPropertyBuilder.Build(propInfo);

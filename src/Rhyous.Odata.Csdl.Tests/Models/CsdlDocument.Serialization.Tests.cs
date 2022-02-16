@@ -1,7 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Serialization;
 using Rhyous.Odata.Tests;
+using System.Linq;
 
 namespace Rhyous.Odata.Csdl.Tests.Models
 {
@@ -14,11 +16,11 @@ namespace Rhyous.Odata.Csdl.Tests.Models
             // Arrange
             var service = new CsdlSchema();
             var doc = new CsdlDocument { Version = "4.01", EntityContainer = "EAF" };
-            doc.Schemas.Add("EAF", service);
-            var expectedJson = "{\"$Version\":\"4.01\",\"$EntityContainer\":\"EAF\",\"EAF\":{\"$Alias\":\"self\",\"User\":{\"$Kind\":\"EntityType\",\"$Key\":[\"Id\"],\"Id\":{\"$Type\":\"Edm.Int32\"},\"Name\":{\"$Type\":\"Edm.String\"},\"UserTypeId\":{\"$Type\":\"Edm.Int32\",\"$NavigationKey\":\"UserType\"},\"UserType\":{\"$Type\":\"self.UserType\",\"$Kind\":\"NavigationProperty\",\"$ReferentialConstraint\":{\"LocalProperty\":\"UserTypeId\",\"ForeignProperty\":\"Id\",\"UserTypeId\":\"Id\"},\"@EAF.RelatedEntity.Type\":\"Local\"},\"UserRoles\":{\"$Type\":\"self.UserRole\",\"$Kind\":\"NavigationProperty\",\"$Nullable\":true,\"$Collection\":true,\"@EAF.RelatedEntity.Type\":\"Mapping\",\"@EAF.RelatedEntity.MappingEntityType\":\"self.UserRoleMembership\"},\"UserGroups\":{\"$Type\":\"self.UserGroup\",\"$Kind\":\"NavigationProperty\",\"$Nullable\":true,\"$Collection\":true,\"@EAF.RelatedEntity.Type\":\"Mapping\",\"@EAF.RelatedEntity.MappingEntityType\":\"self.UserGroupMembership\"}}}}";
+            doc.Schemas.TryAdd("EAF", service);
+            var expectedJson = "{\"$Version\":\"4.01\",\"$EntityContainer\":\"EAF\",\"EAF\":{\"$Alias\":\"self\",\"User\":{\"$Kind\":\"EntityType\",\"$Key\":[\"Id\"],\"Id\":{\"$Type\":\"Edm.Int32\"},\"Name\":{\"$Type\":\"Edm.String\"},\"UserGroups\":{\"$Type\":\"self.UserGroup\",\"$Kind\":\"NavigationProperty\",\"$Nullable\":true,\"$Collection\":true,\"@EAF.RelatedEntity.MappingEntityType\":\"self.UserGroupMembership\",\"@EAF.RelatedEntity.Type\":\"Mapping\"},\"UserRoles\":{\"$Type\":\"self.UserRole\",\"$Kind\":\"NavigationProperty\",\"$Nullable\":true,\"$Collection\":true,\"@EAF.RelatedEntity.MappingEntityType\":\"self.UserRoleMembership\",\"@EAF.RelatedEntity.Type\":\"Mapping\"},\"UserType\":{\"$Type\":\"self.UserType\",\"$Kind\":\"NavigationProperty\",\"$ReferentialConstraint\":{\"LocalProperty\":\"UserTypeId\",\"ForeignProperty\":\"Id\",\"UserTypeId\":\"Id\"},\"@EAF.RelatedEntity.Type\":\"Local\"},\"UserTypeId\":{\"$Type\":\"Edm.Int32\",\"$NavigationKey\":\"UserType\"}}}}";
+            service.Entities.TryAdd("User", typeof(User).ToCsdl());
 
             // Act
-            service.Entities.Add("User", typeof(User).ToCsdl());
             var json = JsonConvert.SerializeObject(doc);
 
             // Assert
@@ -31,11 +33,11 @@ namespace Rhyous.Odata.Csdl.Tests.Models
             // Arrange
             var service = new CsdlSchema();
             var doc = new CsdlDocument { Version = "4.01", EntityContainer = "EAF" };
-            doc.Schemas.Add("EAF", service);
-            var expectedJson = "{\"$Version\":\"4.01\",\"$EntityContainer\":\"EAF\",\"EAF\":{\"$Alias\":\"self\",\"User\":{\"$Kind\":\"EntityType\",\"$Key\":[\"Id\"],\"Id\":{\"$Type\":\"Edm.Int32\"},\"Name\":{},\"UserTypeId\":{\"$Type\":\"Edm.Int32\",\"$NavigationKey\":\"UserType\"},\"UserType\":{\"$Type\":\"self.UserType\",\"$Kind\":\"NavigationProperty\",\"$ReferentialConstraint\":{\"LocalProperty\":\"UserTypeId\",\"ForeignProperty\":\"Id\",\"UserTypeId\":\"Id\"},\"@EAF.RelatedEntity.Type\":\"Local\"},\"UserRoles\":{\"$Type\":\"self.UserRole\",\"$Kind\":\"NavigationProperty\",\"$Nullable\":true,\"$Collection\":true,\"@EAF.RelatedEntity.Type\":\"Mapping\",\"@EAF.RelatedEntity.MappingEntityType\":\"self.UserRoleMembership\"},\"UserGroups\":{\"$Type\":\"self.UserGroup\",\"$Kind\":\"NavigationProperty\",\"$Nullable\":true,\"$Collection\":true,\"@EAF.RelatedEntity.Type\":\"Mapping\",\"@EAF.RelatedEntity.MappingEntityType\":\"self.UserGroupMembership\"}}}}";
+            doc.Schemas.TryAdd("EAF", service);
+            var expectedJson = "{\"$Version\":\"4.01\",\"$EntityContainer\":\"EAF\",\"EAF\":{\"$Alias\":\"self\",\"User\":{\"$Kind\":\"EntityType\",\"$Key\":[\"Id\"],\"Id\":{\"$Type\":\"Edm.Int32\"},\"Name\":{},\"UserGroups\":{\"$Type\":\"self.UserGroup\",\"$Kind\":\"NavigationProperty\",\"$Nullable\":true,\"$Collection\":true,\"@EAF.RelatedEntity.MappingEntityType\":\"self.UserGroupMembership\",\"@EAF.RelatedEntity.Type\":\"Mapping\"},\"UserRoles\":{\"$Type\":\"self.UserRole\",\"$Kind\":\"NavigationProperty\",\"$Nullable\":true,\"$Collection\":true,\"@EAF.RelatedEntity.MappingEntityType\":\"self.UserRoleMembership\",\"@EAF.RelatedEntity.Type\":\"Mapping\"},\"UserType\":{\"$Type\":\"self.UserType\",\"$Kind\":\"NavigationProperty\",\"$ReferentialConstraint\":{\"LocalProperty\":\"UserTypeId\",\"ForeignProperty\":\"Id\",\"UserTypeId\":\"Id\"},\"@EAF.RelatedEntity.Type\":\"Local\"},\"UserTypeId\":{\"$Type\":\"Edm.Int32\",\"$NavigationKey\":\"UserType\"}}}}";
 
             // Act
-            service.Entities.Add("User", typeof(User).ToCsdl());
+            service.Entities.TryAdd("User", typeof(User).ToCsdl());
             var json = JsonConvert.SerializeObject(doc, new JsonSerializerSettings { DefaultValueHandling = DefaultValueHandling.Ignore });
 
             // Assert
@@ -46,14 +48,17 @@ namespace Rhyous.Odata.Csdl.Tests.Models
         public void CsdlDocument_Serialization_SuiteMembership_Test()
         {
             // Arrange
-            var service = new CsdlSchema();
             var doc = new CsdlDocument { Version = "4.01", EntityContainer = "EAF" };
-            doc.Schemas.Add("EAF", service);
-            var expectedJson = "{\"$Version\":\"4.01\",\"$EntityContainer\":\"EAF\",\"EAF\":{\"$Alias\":\"self\",\"SuiteMembership\":{\"$Kind\":\"EntityType\",\"$Key\":[\"Id\"],\"Id\":{\"$Type\":\"Edm.Int32\"},\"ProductId\":{\"$Type\":\"Edm.Int32\",\"$NavigationKey\":\"Product\"},\"Product\":{\"$Type\":\"self.Product\",\"$Kind\":\"NavigationProperty\",\"$ReferentialConstraint\":{\"LocalProperty\":\"ProductId\",\"ForeignProperty\":\"Id\",\"ProductId\":\"Id\"},\"@EAF.RelatedEntity.Type\":\"Local\"},\"Quantity\":{\"$Type\":\"Edm.Double\"},\"QuantityType\":{\"$Kind\":\"EnumType\",\"$UnderlyingType\":\"Edm.Int32\",\"Inherited\":1,\"Fixed\":2,\"Percentage\":3},\"SuiteId\":{\"$Type\":\"Edm.Int32\"}}}}";
+            var service = new CsdlSchema();
+            service.Entities.TryAdd("SuiteMembership", typeof(SuiteMembership).ToCsdl());
+            doc.Schemas.TryAdd("EAF", service);
+
+            var expectedJson = "{\"$EntityContainer\":\"EAF\",\"$Version\":\"4.01\",\"EAF\":{\"$Alias\":\"self\",\"SuiteMembership\":{\"$Key\":[\"Id\"],\"$Kind\":\"EntityType\",\"Id\":{\"$Type\":\"Edm.Int32\"},\"Product\":{\"$Kind\":\"NavigationProperty\",\"$ReferentialConstraint\":{\"ForeignProperty\":\"Id\",\"LocalProperty\":\"ProductId\",\"ProductId\":\"Id\"},\"$Type\":\"self.Product\",\"@EAF.RelatedEntity.Type\":\"Local\"},\"ProductId\":{\"$Type\":\"Edm.Int32\",\"$NavigationKey\":\"Product\"},\"Quantity\":{\"$Type\":\"Edm.Double\"},\"QuantityType\":{\"$UnderlyingType\":\"Edm.Int32\",\"$Kind\":\"EnumType\",\"Fixed\":2,\"Inherited\":1,\"Percentage\":3},\"SuiteId\":{\"$Type\":\"Edm.Int32\"}}}}";
+
+            var jsonSerializerSettings = new JsonSerializerSettings { ContractResolver = new OrderedContractResolver() };
 
             // Act
-            service.Entities.Add("SuiteMembership", typeof(SuiteMembership).ToCsdl());
-            var json = JsonConvert.SerializeObject(doc);
+            var json = JsonConvert.SerializeObject(doc, jsonSerializerSettings);
 
             // Assert
             Assert.AreEqual(expectedJson, json);
@@ -65,15 +70,28 @@ namespace Rhyous.Odata.Csdl.Tests.Models
             // Arrange
             var service = new CsdlSchema();
             var doc = new CsdlDocument { Version = "1.0", EntityContainer = "EAF" };
-            doc.Schemas.Add("UserService", service);
+            doc.Schemas.TryAdd("UserService", service);
             var expectedJson = "{\"$Version\":\"1.0\",\"$EntityContainer\":\"EAF\",\"UserService\":{\"$Alias\":\"self\",\"User\":{\"Custom\":\"Json\"}}}";
 
             // Act
-            service.Entities.Add("User", JToken.Parse("{ \"Custom\": \"Json\" }"));
+            service.Entities.TryAdd("User", JToken.Parse("{ \"Custom\": \"Json\" }"));
             var json = JsonConvert.SerializeObject(doc);
 
             // Assert
             Assert.AreEqual(expectedJson, json);
+        }
+    }
+
+    public class OrderedContractResolver : DefaultContractResolver
+    {
+        protected override System.Collections.Generic.IList<JsonProperty> CreateProperties(System.Type type, MemberSerialization memberSerialization)
+        {
+            var @base = base.CreateProperties(type, memberSerialization);
+            var ordered = @base
+                .OrderBy(p => p.Order ?? int.MaxValue)
+                .ThenBy(p => p.PropertyName)
+                .ToList();
+            return ordered;
         }
     }
 }

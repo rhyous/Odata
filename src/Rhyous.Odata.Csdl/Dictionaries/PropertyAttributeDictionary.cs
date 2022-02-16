@@ -33,7 +33,7 @@ namespace Rhyous.Odata.Csdl
                 var mergedAttribute = group.Merge();
                 var relatedEntityName = string.IsNullOrWhiteSpace(mergedAttribute.RelatedEntityAlias) ? mergedAttribute.RelatedEntity : mergedAttribute.RelatedEntityAlias;
                 var navProp = _RelatedEntityNavigationPropertyBuilder.Build(mergedAttribute, CsdlConstants.DefaultSchemaOrAlias);
-                navProp.CustomData.Add(CsdlConstants.EAFRelatedEntityType, CsdlConstants.Local);
+                navProp.CustomData.TryAdd(CsdlConstants.EAFRelatedEntityType, CsdlConstants.Local);
                 navKeyList.Add(new KeyValuePair<string, object>(relatedEntityName, navProp));
             }
             return navKeyList;

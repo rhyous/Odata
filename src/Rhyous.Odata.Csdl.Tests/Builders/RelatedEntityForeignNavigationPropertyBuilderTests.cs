@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using Rhyous.Collections;
 using Rhyous.Odata.Csdl;
 using System;
 using System.Collections.Generic;
@@ -50,7 +51,7 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
             var funcs = new FuncList<string, string>();
             var unitUnderTest = CreateRelatedEntityForeignNavigationPropertyBuilder();
             var relatedEntityAttribute = new RelatedEntityForeignAttribute("Entity2", "Entity1");
-            _MockCustomPropertyDataAppender.Setup(m => m.Append(It.IsAny<Dictionary<string, object>>(), relatedEntityAttribute.Entity, relatedEntityAttribute.RelatedEntity));
+            _MockCustomPropertyDataAppender.Setup(m => m.Append(It.IsAny<IConcurrentDictionary<string, object>>(), relatedEntityAttribute.Entity, relatedEntityAttribute.RelatedEntity));
 
             // Act
             var result = unitUnderTest.Build(relatedEntityAttribute);
@@ -73,7 +74,7 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
             const string filter = "A eq 1";
             const string displayCondition = "B eq 2";
             var relatedEntityAttribute = new RelatedEntityForeignAttribute("Entity2", "Entity1", "CustomProp") { Filter = filter, DisplayCondition = displayCondition };
-            _MockCustomPropertyDataAppender.Setup(m => m.Append(It.IsAny<Dictionary<string, object>>(), relatedEntityAttribute.Entity, relatedEntityAttribute.RelatedEntity));
+            _MockCustomPropertyDataAppender.Setup(m => m.Append(It.IsAny<IConcurrentDictionary<string, object>>(), relatedEntityAttribute.Entity, relatedEntityAttribute.RelatedEntity));
 
             // Act
             var result = unitUnderTest.Build(relatedEntityAttribute);
@@ -95,7 +96,7 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
             var funcs = new FuncList<string, string>();
             var unitUnderTest = CreateRelatedEntityForeignNavigationPropertyBuilder();
             var relatedEntityAttribute = new RelatedEntityForeignAttribute("Entity2", "Entity1", "Entity1Id");
-            _MockCustomPropertyDataAppender.Setup(m => m.Append(It.IsAny<Dictionary<string, object>>(), relatedEntityAttribute.Entity, relatedEntityAttribute.RelatedEntity));
+            _MockCustomPropertyDataAppender.Setup(m => m.Append(It.IsAny<IConcurrentDictionary<string, object>>(), relatedEntityAttribute.Entity, relatedEntityAttribute.RelatedEntity));
 
             // Act
             var result = unitUnderTest.Build(relatedEntityAttribute);

@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using System.Collections.Generic;
+using Rhyous.Collections;
 using System.Runtime.Serialization;
 
 namespace Rhyous.Odata.Csdl
@@ -14,10 +14,10 @@ namespace Rhyous.Odata.Csdl
         public string EntityContainer { get; set; }
 
         [JsonExtensionData]
-        public Dictionary<string, object> Schemas
+        public SortedConcurrentDictionary<string, object> Schemas
         {
-            get { return _Schemas ?? (_Schemas = new Dictionary<string, object>()); }
+            get { return _Schemas ?? (_Schemas = new SortedConcurrentDictionary<string, object>()); }
             set { _Schemas = value; }
-        } private Dictionary<string, object> _Schemas;
+        } private SortedConcurrentDictionary<string, object> _Schemas;
     }
 }

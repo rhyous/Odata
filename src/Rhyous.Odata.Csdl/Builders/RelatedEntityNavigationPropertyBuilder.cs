@@ -22,9 +22,9 @@ namespace Rhyous.Odata.Csdl
                 {
                     LocalProperty = relatedEntityAttribute.Property,
                     ForeignProperty = relatedEntityAttribute.ForeignKeyProperty,
-                    CustomData = new Dictionary<string, object> { { relatedEntityAttribute.Property, relatedEntityAttribute.ForeignKeyProperty } }
                 }
             };
+            navProp.ReferentialConstraint.CustomData.GetOrAdd(relatedEntityAttribute.Property, relatedEntityAttribute.ForeignKeyProperty);
             if (!string.IsNullOrWhiteSpace(relatedEntityAttribute.Filter))
                 navProp.CustomData.AddIfNew(CsdlConstants.OdataFilter, relatedEntityAttribute.Filter);
             if (!string.IsNullOrWhiteSpace(relatedEntityAttribute.DisplayCondition))

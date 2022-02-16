@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Rhyous.Collections;
 
 namespace Rhyous.Odata.Csdl.Tests.Models
 {
@@ -22,7 +23,7 @@ namespace Rhyous.Odata.Csdl.Tests.Models
         {
             // Arrange
             var prop = new CsdlEnumProperty();
-            var expectedCustomData = new System.Collections.Generic.Dictionary<string, object>();
+            var expectedCustomData = new SortedConcurrentDictionary<string, object>();
             prop.CustomData = expectedCustomData;
 
             // Act

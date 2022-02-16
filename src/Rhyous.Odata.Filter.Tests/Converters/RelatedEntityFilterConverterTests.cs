@@ -120,8 +120,8 @@ namespace Rhyous.Odata.Filter.Tests.Converters
             var relatedEntityFilterConverter = CreateRelatedEntityFilterConverter<A>();
             var bName = "My B 27";
             Filter<A> filter = new Filter<A> { Left = "B.Name", Method = "EQ", Right = bName };
-            _CsdlSchema.Entities.Add(typeof(A).Name, typeof(A).ToCsdl());
-            _CsdlSchema.Entities.Add(typeof(B).Name, typeof(B).ToCsdl());
+            _CsdlSchema.Entities.TryAdd(typeof(A).Name, typeof(A).ToCsdl());
+            _CsdlSchema.Entities.TryAdd(typeof(B).Name, typeof(B).ToCsdl());
 
 
             // Act
@@ -139,8 +139,8 @@ namespace Rhyous.Odata.Filter.Tests.Converters
             var relatedEntityFilterConverter = CreateRelatedEntityFilterConverter<A>();
             var bName = "My B 27";
             Filter<A> filter = new Filter<A> { Left = "B.Name", Method = "EQ", Right = new ArrayFilter<A, string> { Array = new[] { bName } } };
-            _CsdlSchema.Entities.Add(typeof(A).Name, typeof(A).ToCsdl());
-            _CsdlSchema.Entities.Add(typeof(B).Name, typeof(B).ToCsdl());
+            _CsdlSchema.Entities.TryAdd(typeof(A).Name, typeof(A).ToCsdl());
+            _CsdlSchema.Entities.TryAdd(typeof(B).Name, typeof(B).ToCsdl());
 
             // Act
             var result = relatedEntityFilterConverter.CanConvert(filter);
@@ -164,8 +164,8 @@ namespace Rhyous.Odata.Filter.Tests.Converters
                 Method = "eq",
                 Right = new Filter<A> { NonFilter = bName }
             };
-            _CsdlSchema.Entities.Add(typeof(A).Name, typeof(A).ToCsdl());
-            _CsdlSchema.Entities.Add(typeof(B).Name, typeof(B).ToCsdl());
+            _CsdlSchema.Entities.TryAdd(typeof(A).Name, typeof(A).ToCsdl());
+            _CsdlSchema.Entities.TryAdd(typeof(B).Name, typeof(B).ToCsdl());
             var expectedFilter = $"$Filter=Name eq 'My B 27'";
             var b27 = new B { Id = 27, Name = bName };
             var odataObjectB27 = new OdataObject();
@@ -189,8 +189,8 @@ namespace Rhyous.Odata.Filter.Tests.Converters
             // Arrange
             var relatedEntityFilterConverter = CreateRelatedEntityFilterConverter<User2>();
             Filter<User2> filter = new Filter<User2> { Left = "UserType.Id", Method = "eq", Right = "3" };
-            _CsdlSchema.Entities.Add(typeof(User2).Name, typeof(User2).ToCsdl());
-            _CsdlSchema.Entities.Add(typeof(UserType).Name, typeof(UserType).ToCsdl());
+            _CsdlSchema.Entities.TryAdd(typeof(User2).Name, typeof(User2).ToCsdl());
+            _CsdlSchema.Entities.TryAdd(typeof(UserType).Name, typeof(UserType).ToCsdl());
             var expectedUrlParams = $"$Filter=Id eq 3";
             var userType3 = new B { Id = 27, Name = "Name 3" };
             var odataObjectUserType3 = new OdataObject();
@@ -215,8 +215,8 @@ namespace Rhyous.Odata.Filter.Tests.Converters
             var relatedEntityFilterConverter = CreateRelatedEntityFilterConverter<A>();
             var bName = "My B 27";
             Filter<A> filter = new Filter<A> { Left = "B.Name", Method = "in", Right = new ArrayFilter<A, string> { Array = new[] { bName } } };
-            _CsdlSchema.Entities.Add(typeof(A).Name, typeof(A).ToCsdl());
-            _CsdlSchema.Entities.Add(typeof(B).Name, typeof(B).ToCsdl());
+            _CsdlSchema.Entities.TryAdd(typeof(A).Name, typeof(A).ToCsdl());
+            _CsdlSchema.Entities.TryAdd(typeof(B).Name, typeof(B).ToCsdl());
             var expectedFilter = $"$Filter=Name in ('{bName}')";
             var b27 = new B { Id = 27, Name = bName };
             var odataObjectB27 = new OdataObject();

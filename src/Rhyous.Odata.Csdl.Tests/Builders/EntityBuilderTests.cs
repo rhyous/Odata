@@ -83,7 +83,7 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
             var propInfo = typeof(Token).GetProperty("UserId");
             var entityBuilder = CreateEntityBuilder();
             var csdlProperty = new CsdlProperty();
-            _MockPropertyBuilder.Setup(m=>m.Build(propInfo))
+            _MockPropertyBuilder.Setup(m => m.Build(propInfo))
                                 .Returns(csdlProperty);
 
             // Act
@@ -115,20 +115,21 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
                     continue;
                 var csdlProperty = new CsdlProperty();
                 csdlProperties.Add(csdlProperty);
-                _MockPropertyBuilder.Setup(m => m.Build(It.Is<PropertyInfo>(pi=> pi.Name == propInfo.Name)))
+                _MockPropertyBuilder.Setup(m => m.Build(It.Is<PropertyInfo>(pi => pi.Name == propInfo.Name)))
                                     .Returns(csdlProperty);
-                _MockCustomCsdlFromAttributeAppender.Setup(m => m.AppendPropertiesFromPropertyAttributes(It.IsAny<Dictionary<string, object>>(), propInfo));
+                _MockCustomCsdlFromAttributeAppender.Setup(m => m.AppendPropertiesFromPropertyAttributes(It.IsAny<IConcurrentDictionary<string, object>>(), propInfo));
             }
-            _MockCustomPropertyAppender.Setup(m => m.Append(It.IsAny<Dictionary<string, object>>(), type.Name));
-            _MockCustomCsdlFromAttributeAppender.Setup(m => m.AppendPropertiesFromEntityAttributes(It.IsAny<Dictionary<string, object>>(), type));
+            _MockCustomPropertyAppender.Setup(m => m.Append(It.IsAny<IConcurrentDictionary<string, object>>(), type.Name));
+            _MockCustomCsdlFromAttributeAppender.Setup(m => m.AppendPropertiesFromEntityAttributes(It.IsAny<IConcurrentDictionary<string, object>>(), type));
 
             // Act 
             var actual = entityBuilder.Build(type);
 
             // Assert
             Assert.AreEqual(2, actual.Properties.Count);
-            Assert.AreEqual("Id", actual.Properties.Keys.First());
-            Assert.AreEqual("Name", actual.Properties.Keys.Skip(1).First());
+            var keys = actual.Properties.Keys.OrderBy(x => x);
+            Assert.AreEqual("Id", keys.First());
+            Assert.AreEqual("Name", keys.Skip(1).First());
             _MockRepository.VerifyAll();
         }
 
@@ -136,7 +137,7 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
         public void EntityBuilder_CreateCsdl_Test()
         {
             // Arrange
-            var entityBuilder = CreateEntityBuilder();            
+            var entityBuilder = CreateEntityBuilder();
             var type = typeof(User);
 
             var csdlProperties = new List<CsdlProperty>();
@@ -148,10 +149,10 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
                 csdlProperties.Add(csdlProperty);
                 _MockPropertyBuilder.Setup(m => m.Build(It.Is<PropertyInfo>(pi => pi.Name == propInfo.Name)))
                                     .Returns(csdlProperty);
-                _MockCustomCsdlFromAttributeAppender.Setup(m => m.AppendPropertiesFromPropertyAttributes(It.IsAny<Dictionary<string, object>>(), propInfo));
+                _MockCustomCsdlFromAttributeAppender.Setup(m => m.AppendPropertiesFromPropertyAttributes(It.IsAny<IConcurrentDictionary<string, object>>(), propInfo));
             }
-            _MockCustomPropertyAppender.Setup(m => m.Append(It.IsAny<Dictionary<string, object>>(), type.Name));
-            _MockCustomCsdlFromAttributeAppender.Setup(m => m.AppendPropertiesFromEntityAttributes(It.IsAny<Dictionary<string, object>>(), type));
+            _MockCustomPropertyAppender.Setup(m => m.Append(It.IsAny<IConcurrentDictionary<string, object>>(), type.Name));
+            _MockCustomCsdlFromAttributeAppender.Setup(m => m.AppendPropertiesFromEntityAttributes(It.IsAny<IConcurrentDictionary<string, object>>(), type));
 
 
             // Act
@@ -159,9 +160,10 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
 
             // Assert
             Assert.AreEqual(3, actual.Properties.Count);
-            Assert.AreEqual("Id", actual.Properties.Keys.First());
-            Assert.AreEqual("Name", actual.Properties.Keys.Second());
-            Assert.AreEqual("UserTypeId", actual.Properties.Keys.Third());
+            var keys = actual.Properties.Keys.OrderBy(x => x);
+            Assert.AreEqual("Id", keys.OrderBy(x => x).First());
+            Assert.AreEqual("Name", keys.Second());
+            Assert.AreEqual("UserTypeId", keys.Third());
             _MockRepository.VerifyAll();
         }
         #endregion

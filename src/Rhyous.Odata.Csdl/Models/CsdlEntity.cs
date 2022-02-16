@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Rhyous.Collections;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
@@ -45,10 +46,10 @@ namespace Rhyous.Odata.Csdl
         /// The properties of this entity.
         /// </summary>
         [JsonExtensionData]
-        public Dictionary<string, object> Properties
+        public SortedConcurrentDictionary<string, object> Properties
         {
-            get { return _Properties ?? (_Properties = new Dictionary<string, object>()); }
+            get { return _Properties ?? (_Properties = new SortedConcurrentDictionary<string, object>()); }
             set { _Properties = value; }
-        } private Dictionary<string, object> _Properties;
+        } private SortedConcurrentDictionary<string, object> _Properties;
     }
 }

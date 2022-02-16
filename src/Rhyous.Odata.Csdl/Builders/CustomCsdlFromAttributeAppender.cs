@@ -26,7 +26,7 @@ namespace Rhyous.Odata.Csdl
         /// <summary>
         /// Adds property data from an attribute. Type and PropertyInfo both inherit MemberInfo.
         /// </summary>
-        public void AppendPropertyDataFromAttributes(IDictionary<string, object> propertyDictionary, MemberInfo mi)
+        public void AppendPropertyDataFromAttributes(IConcurrentDictionary<string, object> propertyDictionary, MemberInfo mi)
         {
             AppendFromAttributes(propertyDictionary, mi, _PropertyDataAttributeDictionary);
         }
@@ -34,7 +34,7 @@ namespace Rhyous.Odata.Csdl
         /// <summary>
         /// Adds a property from an attribute. Type and PropertyInfo both inherit MemberInfo.
         /// </summary>
-        public void AppendPropertiesFromEntityAttributes(IDictionary<string, object> propertyDictionary, MemberInfo mi)
+        public void AppendPropertiesFromEntityAttributes(IConcurrentDictionary<string, object> propertyDictionary, MemberInfo mi)
         {
             AppendFromAttributes(propertyDictionary, mi, _EntityAttributeDictionary);
         }
@@ -42,12 +42,12 @@ namespace Rhyous.Odata.Csdl
         /// <summary>
         /// Adds a property from an attribute. Type and PropertyInfo both inherit MemberInfo.
         /// </summary>
-        public void AppendPropertiesFromPropertyAttributes(IDictionary<string, object> propertyDictionary, MemberInfo mi)
+        public void AppendPropertiesFromPropertyAttributes(IConcurrentDictionary<string, object> propertyDictionary, MemberInfo mi)
         {
             AppendFromAttributes(propertyDictionary, mi, _PropertyAttributeDictionary);
         }
 
-        private void AppendFromAttributes(IDictionary<string, object> propertyDictionary, MemberInfo mi, IFuncDictionary<Type, MemberInfo> attributeFuncDictionary)
+        private void AppendFromAttributes(IConcurrentDictionary<string, object> propertyDictionary, MemberInfo mi, IFuncDictionary<Type, MemberInfo> attributeFuncDictionary)
         {
             if (propertyDictionary == null || mi == null || attributeFuncDictionary == null || !attributeFuncDictionary.Any())
                 return;
@@ -62,9 +62,7 @@ namespace Rhyous.Odata.Csdl
                     foreach (var prop in propertyList)
                     {
                         // Don't add an attribute if already added.
-                        if (propertyDictionary.TryGetValue(prop.Key, out object _))
-                            continue;
-                        propertyDictionary.AddIfNewAndNotNull(prop.Key, prop.Value);
+                        propertyDictionary.TryAdd(prop.Key, prop.Value);
                     }
                 }
             }

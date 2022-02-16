@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using Rhyous.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.Serialization;
@@ -61,10 +62,10 @@ namespace Rhyous.Odata.Csdl
         public OnDelete OnDelete { get; set; }
 
         [JsonExtensionData]
-        public Dictionary<string, object> CustomData
+        public SortedConcurrentDictionary<string, object> CustomData
         {
-            get { return _CustomData ?? (_CustomData = new Dictionary<string, object>()); }
+            get { return _CustomData ?? (_CustomData = new SortedConcurrentDictionary<string, object>()); }
             set { _CustomData = value; }
-        } private Dictionary<string, object> _CustomData;
+        } private SortedConcurrentDictionary<string, object> _CustomData;
     }
 }

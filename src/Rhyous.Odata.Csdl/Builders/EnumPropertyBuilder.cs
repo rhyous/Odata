@@ -31,9 +31,12 @@ namespace Rhyous.Odata.Csdl
             var prop = new CsdlEnumProperty
             {
                 UnderlyingType = _CsdlTypeDictionary[propertyType.GetEnumUnderlyingType().FullName],
-                CustomData = propertyType.ToDictionary(),
                 IsFlags = propertyType.GetCustomAttributes<FlagsAttribute>().Any()
             };
+            foreach (var kvp in propertyType.ToDictionary())
+            {
+                prop.CustomData.GetOrAdd(kvp.Key, kvp.Value);
+            }                    
             _CustomPropertDataAppender.Append(prop.CustomData, propInfo.DeclaringType.Name, propInfo.Name);
             _CustomCsdlFromAttributeAppender.AppendPropertiesFromEntityAttributes(prop.CustomData, propInfo);
             return prop;

@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using Rhyous.Collections;
 using Rhyous.Odata.Tests;
 using Rhyous.Odata.Tests.Models;
 using System.Collections.Generic;
@@ -56,8 +57,8 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
             // Arrange
             var propInfo = typeof(Token).GetProperty(nameof(Token.UserId));
             var propertyBuilder = CreatePropertyBuilder();
-            _MockCustomPropertyDataAppender.Setup(m => m.Append(It.IsAny<Dictionary<string, object>>(), typeof(Token).Name, nameof(Token.UserId)));
-            _MockCustomCsdlFromAttributeAppender.Setup(m => m.AppendPropertyDataFromAttributes(It.IsAny<Dictionary<string, object>>(), It.Is<PropertyInfo>(pi => pi.Name == propInfo.Name)));
+            _MockCustomPropertyDataAppender.Setup(m => m.Append(It.IsAny<IConcurrentDictionary<string, object>>(), typeof(Token).Name, nameof(Token.UserId)));
+            _MockCustomCsdlFromAttributeAppender.Setup(m => m.AppendPropertyDataFromAttributes(It.IsAny<IConcurrentDictionary<string, object>>(), It.Is<PropertyInfo>(pi => pi.Name == propInfo.Name)));
 
             // Act
             var actual = propertyBuilder.Build(propInfo);
@@ -93,8 +94,8 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
             // Arrange
             var propInfo = typeof(EntityWithCsdlPropertyAttribute).GetProperty(nameof(EntityWithCsdlPropertyAttribute.DefaultValue));
             var propertyBuilder = CreatePropertyBuilder();
-            _MockCustomPropertyDataAppender.Setup(m => m.Append(It.IsAny<Dictionary<string, object>>(), typeof(EntityWithCsdlPropertyAttribute).Name, nameof(EntityWithCsdlPropertyAttribute.DefaultValue)));
-            _MockCustomCsdlFromAttributeAppender.Setup(m => m.AppendPropertyDataFromAttributes(It.IsAny<Dictionary<string, object>>(), It.Is<PropertyInfo>(pi => pi.Name == propInfo.Name)));
+            _MockCustomPropertyDataAppender.Setup(m => m.Append(It.IsAny<IConcurrentDictionary<string, object>>(), typeof(EntityWithCsdlPropertyAttribute).Name, nameof(EntityWithCsdlPropertyAttribute.DefaultValue)));
+            _MockCustomCsdlFromAttributeAppender.Setup(m => m.AppendPropertyDataFromAttributes(It.IsAny<IConcurrentDictionary<string, object>>(), It.Is<PropertyInfo>(pi => pi.Name == propInfo.Name)));
 
             // Act
             var csdl = propertyBuilder.Build(propInfo);
@@ -110,8 +111,8 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
             // Arrange
             var propInfo = typeof(EntityWithCsdlPropertyAttribute).GetProperty(nameof(EntityWithCsdlPropertyAttribute.NotRequired));
             var propertyBuilder = CreatePropertyBuilder();
-            _MockCustomPropertyDataAppender.Setup(m => m.Append(It.IsAny<Dictionary<string, object>>(), typeof(EntityWithCsdlPropertyAttribute).Name, nameof(EntityWithCsdlPropertyAttribute.NotRequired)));
-            _MockCustomCsdlFromAttributeAppender.Setup(m => m.AppendPropertyDataFromAttributes(It.IsAny<Dictionary<string, object>>(), It.Is<PropertyInfo>(pi => pi.Name == propInfo.Name)));
+            _MockCustomPropertyDataAppender.Setup(m => m.Append(It.IsAny<IConcurrentDictionary<string, object>>(), typeof(EntityWithCsdlPropertyAttribute).Name, nameof(EntityWithCsdlPropertyAttribute.NotRequired)));
+            _MockCustomCsdlFromAttributeAppender.Setup(m => m.AppendPropertyDataFromAttributes(It.IsAny<IConcurrentDictionary<string, object>>(), It.Is<PropertyInfo>(pi => pi.Name == propInfo.Name)));
 
 
             // Act
@@ -129,8 +130,8 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
             // Arrange
             var propInfo = typeof(EntityWithCsdlPropertyAttribute).GetProperty(nameof(EntityWithCsdlPropertyAttribute.RequiredDespiteBeingNullable));
             var propertyBuilder = CreatePropertyBuilder();
-            _MockCustomPropertyDataAppender.Setup(m => m.Append(It.IsAny<Dictionary<string, object>>(), typeof(EntityWithCsdlPropertyAttribute).Name, nameof(EntityWithCsdlPropertyAttribute.RequiredDespiteBeingNullable)));
-            _MockCustomCsdlFromAttributeAppender.Setup(m => m.AppendPropertyDataFromAttributes(It.IsAny<Dictionary<string, object>>(), It.Is<PropertyInfo>(pi => pi.Name == propInfo.Name)))
+            _MockCustomPropertyDataAppender.Setup(m => m.Append(It.IsAny<IConcurrentDictionary<string, object>>(), typeof(EntityWithCsdlPropertyAttribute).Name, nameof(EntityWithCsdlPropertyAttribute.RequiredDespiteBeingNullable)));
+            _MockCustomCsdlFromAttributeAppender.Setup(m => m.AppendPropertyDataFromAttributes(It.IsAny<IConcurrentDictionary<string, object>>(), It.Is<PropertyInfo>(pi => pi.Name == propInfo.Name)))
                                   .Callback((IDictionary<string, object> propertyDictionary, MemberInfo mi) => 
                                   {
                                       propertyDictionary.Add(CsdlConstants.UIRequired, true);
@@ -151,8 +152,8 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
             // Arrange
             var propInfo = typeof(EntityWithCsdlPropertyAttribute).GetProperty(nameof(EntityWithCsdlPropertyAttribute.RequiredNoMetadata));
             var propertyBuilder = CreatePropertyBuilder();
-            _MockCustomPropertyDataAppender.Setup(m => m.Append(It.IsAny<Dictionary<string, object>>(), typeof(EntityWithCsdlPropertyAttribute).Name, nameof(EntityWithCsdlPropertyAttribute.RequiredNoMetadata)));
-            _MockCustomCsdlFromAttributeAppender.Setup(m => m.AppendPropertyDataFromAttributes(It.IsAny<Dictionary<string, object>>(), It.Is<PropertyInfo>(pi => pi.Name == propInfo.Name)));
+            _MockCustomPropertyDataAppender.Setup(m => m.Append(It.IsAny<IConcurrentDictionary<string, object>>(), typeof(EntityWithCsdlPropertyAttribute).Name, nameof(EntityWithCsdlPropertyAttribute.RequiredNoMetadata)));
+            _MockCustomCsdlFromAttributeAppender.Setup(m => m.AppendPropertyDataFromAttributes(It.IsAny<IConcurrentDictionary<string, object>>(), It.Is<PropertyInfo>(pi => pi.Name == propInfo.Name)));
 
             // Act
             var csdl = propertyBuilder.Build(propInfo);
@@ -168,8 +169,8 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
             // Arrange
             var propInfo = typeof(EntityWithCsdlPropertyAttribute).GetProperty(nameof(EntityWithCsdlPropertyAttribute.NotRequiredNoMetadata));
             var propertyBuilder = CreatePropertyBuilder();
-            _MockCustomPropertyDataAppender.Setup(m => m.Append(It.IsAny<Dictionary<string, object>>(), typeof(EntityWithCsdlPropertyAttribute).Name, nameof(EntityWithCsdlPropertyAttribute.NotRequiredNoMetadata)));
-            _MockCustomCsdlFromAttributeAppender.Setup(m => m.AppendPropertyDataFromAttributes(It.IsAny<Dictionary<string, object>>(), It.Is<PropertyInfo>(pi => pi.Name == propInfo.Name)));
+            _MockCustomPropertyDataAppender.Setup(m => m.Append(It.IsAny<IConcurrentDictionary<string, object>>(), typeof(EntityWithCsdlPropertyAttribute).Name, nameof(EntityWithCsdlPropertyAttribute.NotRequiredNoMetadata)));
+            _MockCustomCsdlFromAttributeAppender.Setup(m => m.AppendPropertyDataFromAttributes(It.IsAny<IConcurrentDictionary<string, object>>(), It.Is<PropertyInfo>(pi => pi.Name == propInfo.Name)));
 
             // Act
             var csdl = propertyBuilder.Build(propInfo);
@@ -185,8 +186,8 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
             // Arrange
             var propInfo = typeof(EntityWithCsdlPropertyAttribute).GetProperty(nameof(EntityWithCsdlPropertyAttribute.ForceNullableToNotBeNullable));
             var propertyBuilder = CreatePropertyBuilder();
-            _MockCustomPropertyDataAppender.Setup(m => m.Append(It.IsAny<Dictionary<string, object>>(), typeof(EntityWithCsdlPropertyAttribute).Name, nameof(EntityWithCsdlPropertyAttribute.ForceNullableToNotBeNullable)));
-            _MockCustomCsdlFromAttributeAppender.Setup(m => m.AppendPropertyDataFromAttributes(It.IsAny<Dictionary<string, object>>(), It.Is<PropertyInfo>(pi => pi.Name == propInfo.Name)));
+            _MockCustomPropertyDataAppender.Setup(m => m.Append(It.IsAny<IConcurrentDictionary<string, object>>(), typeof(EntityWithCsdlPropertyAttribute).Name, nameof(EntityWithCsdlPropertyAttribute.ForceNullableToNotBeNullable)));
+            _MockCustomCsdlFromAttributeAppender.Setup(m => m.AppendPropertyDataFromAttributes(It.IsAny<IConcurrentDictionary<string, object>>(), It.Is<PropertyInfo>(pi => pi.Name == propInfo.Name)));
 
             // Act
             var csdl = propertyBuilder.Build(propInfo);

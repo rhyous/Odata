@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using Rhyous.Collections;
 using Rhyous.Odata.Csdl;
 using Rhyous.Odata.Tests;
 using System;
@@ -37,7 +38,7 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
         {
             // Arrange
             var customCsdlBuilder = CreateCustomPropertyAppender();
-            Dictionary<string, object> dictionary = null;
+            IConcurrentDictionary<string, object> dictionary = null;
             Type type = typeof(User);
             bool func1WasCalled = false;
             IEnumerable<KeyValuePair<string, object>> func1(Type t)
@@ -60,7 +61,7 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
         {
             // Arrange
             var customCsdlBuilder = CreateCustomPropertyAppender();
-            var dictionary = new Dictionary<string, object>();
+            var dictionary = new ConcurrentDictionaryWrapper<string, object>();
             Type type = null;
             bool func1WasCalled = false;
             IEnumerable<KeyValuePair<string, object>> func1(Type t)
@@ -83,7 +84,7 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
         {
             // Arrange
             var customCsdlBuilder = CreateCustomPropertyAppender();
-            var dictionary = new Dictionary<string, object>();
+            var dictionary = new ConcurrentDictionaryWrapper<string, object>();
             Type type = typeof(User);
             bool func1WasCalled = false;
             Func<Type, IEnumerable<KeyValuePair<string, object>>>[] funcs = null;
@@ -102,7 +103,7 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
         {
             // Arrange
             var customCsdlBuilder = CreateCustomPropertyAppender();
-            var dictionary = new Dictionary<string, object>();
+            var dictionary = new ConcurrentDictionaryWrapper<string, object>();
             Type type = typeof(User);
             bool func1WasCalled = false;
             var funcs = new Func<Type, IEnumerable<KeyValuePair<string, object>>>[0];
@@ -121,7 +122,7 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
         {
             // Arrange
             var customCsdlBuilder = CreateCustomPropertyAppender();
-            var dictionary = new Dictionary<string, object>();
+            var dictionary = new ConcurrentDictionaryWrapper<string, object>();
             Type type = typeof(User);
             bool func1WasCalled = false;
             Func<Type, IEnumerable<KeyValuePair<string, object>>> func1 = null;
@@ -140,7 +141,7 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
         {
             // Arrange
             var customCsdlBuilder = CreateCustomPropertyAppender();
-            var dictionary = new Dictionary<string, object>();
+            var dictionary = new SortedConcurrentDictionary<string, object>();
             Type type = typeof(User);
             bool func1WasCalled = false;
             Func<Type, IEnumerable<KeyValuePair<string, object>>> func1 = (Type t) =>
