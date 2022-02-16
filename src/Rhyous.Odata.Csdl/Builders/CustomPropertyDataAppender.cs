@@ -13,7 +13,7 @@ namespace Rhyous.Odata.Csdl
             _CustomPropertyDataFuncs = customPropertyDataFuncs;
         }
 
-        public void Append(IDictionary<string, object> dictionary, string entity, string property)
+        public void Append(IConcurrentDictionary<string, object> dictionary, string entity, string property)
         {
             if (dictionary == null
              || string.IsNullOrWhiteSpace(entity)
@@ -23,9 +23,14 @@ namespace Rhyous.Odata.Csdl
                 return;
             foreach (var func in _CustomPropertyDataFuncs)
             {
-                var items = func(entity, property);
-                if (items != null && items.Any())
-                    dictionary.AddRange(items);
+                var kvps = func(entity, property);
+                if (kvps != null && kvps.Any())
+                {
+                    foreach (var kvp in kvps)
+                    {
+                        dictionary.TryAdd(kvp.Key, kvp.Value);
+                    }
+                }
             }
         }
     }

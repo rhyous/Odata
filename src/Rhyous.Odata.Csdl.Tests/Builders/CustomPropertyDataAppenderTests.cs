@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using Rhyous.Collections;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,7 +34,7 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
         {
             // Arrange
             var customPropertyDataAppender = CreateCustomPropertyDataAppender();
-            Dictionary<string, object> dictionary = null;
+            SortedConcurrentDictionary<string, object> dictionary = null;
             var entity = "Entity1";
             var prop = "Prop1";
             IFuncList<string, string> funcs = new FuncList<string, string>()
@@ -53,7 +54,7 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
         public void CustomPropertyDataAppender_AddFromCustomDictionary_FuncsEmpty_Test()
         {
             // Arrange
-            var dictionary = new Dictionary<string, object>(); var customPropertyDataAppender = CreateCustomPropertyDataAppender();
+            var dictionary = new SortedConcurrentDictionary<string, object>(); var customPropertyDataAppender = CreateCustomPropertyDataAppender();
             var entity = "Entity1";
             var prop = "Prop1";
             ICustomPropertyDataFuncs funcs = new CustomPropertyDataFuncs();
@@ -72,7 +73,7 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
         public void CustomPropertyDataAppender_AddFromCustomDictionary_PropNull_Test()
         {
             // Arrange
-            var dictionary = new Dictionary<string, object>();
+            var dictionary = new SortedConcurrentDictionary<string, object>();
             var customPropertyDataAppender = CreateCustomPropertyDataAppender();
             var entity = "Entity1";
             string prop = null;
@@ -93,7 +94,7 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
         public void CustomPropertyDataAppender_AddFromCustomDictionary_PropEmpty_Test()
         {
             // Arrange
-            var dictionary = new Dictionary<string, object>();
+            var dictionary = new SortedConcurrentDictionary<string, object>();
             var customPropertyDataAppender = CreateCustomPropertyDataAppender();
             var entity = "Entity1";
             var prop = "";
@@ -114,7 +115,7 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
         public void CustomPropertyDataAppender_AddFromCustomDictionary_EntityNull_Test()
         {
             // Arrange
-            var dictionary = new Dictionary<string, object>(); var customPropertyDataAppender = CreateCustomPropertyDataAppender();
+            var dictionary = new SortedConcurrentDictionary<string, object>(); var customPropertyDataAppender = CreateCustomPropertyDataAppender();
             string entity = null;
             var prop = "prop1";
             IFuncList<string, string> funcs = new FuncList<string, string>()
@@ -134,7 +135,7 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
         public void CustomPropertyDataAppender_AddFromCustomDictionary_EntityEmpty_Test()
         {
             // Arrange
-            var dictionary = new Dictionary<string, object>(); var customPropertyDataAppender = CreateCustomPropertyDataAppender();
+            var dictionary = new SortedConcurrentDictionary<string, object>(); var customPropertyDataAppender = CreateCustomPropertyDataAppender();
             var entity = "";
             var prop = "prop1";
             IFuncList<string, string> funcs = new FuncList<string, string>()
@@ -154,7 +155,7 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
         public void CustomPropertyDataAppender_AddFromCustomDictionary_Valid_Test()
         {
             // Arrange
-            var dictionary = new Dictionary<string, object>();
+            var dictionary = new SortedConcurrentDictionary<string, object>();
             
             var entity = "Entity1";
             var prop = "prop1";

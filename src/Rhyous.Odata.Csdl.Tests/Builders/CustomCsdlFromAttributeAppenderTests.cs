@@ -45,7 +45,7 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
         {
             // Arrange
             var customCsdlFromAttributeAppender = CreateCustomCsdlFromAttributeAppender();
-            var dictionary = new ConcurrentDictionaryWrapper<string, object>();
+            var dictionary = new SortedConcurrentDictionary<string, object>();
             var propInfo = typeof(Token).GetProperty("UserId");
             var actionDictionary = new ConcurrentDictionaryWrapper<Type, Func<MemberInfo, IEnumerable<KeyValuePair<string, object>>>>();
             Func<MemberInfo, IEnumerable<KeyValuePair<string, object>>> func = (MemberInfo mi) => { return new[] { new KeyValuePair<string, object>("1", "a") }; };

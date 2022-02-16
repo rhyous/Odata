@@ -53,14 +53,14 @@ namespace Rhyous.Odata.Csdl
             return entity;
         }
 
-        internal void AddFromPropertyInfo(IDictionary<string, object> dictionary, PropertyInfo propInfo)
+        internal void AddFromPropertyInfo(IConcurrentDictionary<string, object> dictionary, PropertyInfo propInfo)
         {
             if (dictionary == null) throw new ArgumentNullException(nameof(dictionary));
             if (propInfo == null) throw new ArgumentNullException(nameof(propInfo));
             if (propInfo.PropertyType.IsEnum)
-                dictionary.AddIfNewAndNotNull(propInfo.Name, _EnumPropertyBuilder.Build(propInfo));
+                dictionary.TryAdd(propInfo.Name, _EnumPropertyBuilder.Build(propInfo));
             else
-                dictionary.AddIfNewAndNotNull(propInfo.Name, _PropertyBuilder.Build(propInfo));
+                dictionary.TryAdd(propInfo.Name, _PropertyBuilder.Build(propInfo));
         }
     }
 }

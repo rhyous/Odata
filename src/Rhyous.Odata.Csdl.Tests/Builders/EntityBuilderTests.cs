@@ -45,7 +45,7 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
         public void EntityBuilder_AddFromPropertyInfo_DictionaryNull_Test()
         {
             // Arrange
-            Dictionary<string, object> dictionary = null;
+            SortedConcurrentDictionary<string, object> dictionary = null;
             PropertyInfo propInfo = null;
             var entityBuilder = CreateEntityBuilder();
 
@@ -62,7 +62,7 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
         public void EntityBuilder_AddFromPropertyInfo_PropInfoNull_Test()
         {
             // Arrange
-            var dictionary = new Dictionary<string, object>();
+            var dictionary = new SortedConcurrentDictionary<string, object>();
             PropertyInfo propInfo = null;
             var entityBuilder = CreateEntityBuilder();
 
@@ -79,7 +79,7 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
         public void EntityBuilder_AddFromPropertyInfo_Test()
         {
             // Arrange
-            var dictionary = new Dictionary<string, object>();
+            var dictionary = new SortedConcurrentDictionary<string, object>();
             var propInfo = typeof(Token).GetProperty("UserId");
             var entityBuilder = CreateEntityBuilder();
             var csdlProperty = new CsdlProperty();
