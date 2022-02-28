@@ -71,7 +71,11 @@ namespace Rhyous.Odata
 
         public void RemoveAt(int index) => Entities.RemoveAt(index);
 
-        public void Clear() => Entities.Clear();
+        public override void Clear()
+        {
+            Entities.Clear();
+            base.Clear();
+        }
 
         public bool Contains(OdataObject item) => Entities.Contains(item);
 
@@ -85,7 +89,7 @@ namespace Rhyous.Odata
 
         [DataMember]
         [JsonProperty]
-        public override int Count { get { return Entities.Count; } internal set { } }
+        public override int Count { get { return Entities.Count; } protected set { } }
 
         [JsonIgnore]
         [IgnoreDataMember]

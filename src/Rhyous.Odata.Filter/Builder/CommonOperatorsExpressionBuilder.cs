@@ -1,5 +1,6 @@
 ﻿using Rhyous.StringLibrary;
 using System;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace Rhyous.Odata.Filter
@@ -20,11 +21,23 @@ namespace Rhyous.Odata.Filter
         {
             var lambdaParameter = Expression.Parameter(typeof(TEntity), "e");
             var possiblePropName = filter.Left.ToString();
-            var property = Expression.Property(lambdaParameter, possiblePropName);
-            Expression left = filter.Left.IsSimpleString ? Expression.Property(lambdaParameter, possiblePropName) as Expression : filter.Left;
-            if (property.Type != typeof(string) && filter.Right.IsSimpleString)
-                filter.Right.NonFilter.Unquote();
-            Expression right = filter.Right.IsSimpleString ? Expression.Constant(filter.Right.ToString().ToType(property.Type)) as Expression : filter.Right;
+            Expression left = null;
+            Expression right = null;
+            if (possiblePropName.All(c => char.IsDigit(c)))
+            {
+                left = Expression.Constant(possiblePropName.To<int>());
+                right = Expression.Constant(filter.Right.ToString().To<int>());
+            }
+            else
+            {
+                var property = Expression.Property(lambdaParameter, possiblePropName);
+                left = filter.Left.IsSimpleString ? Expression.Property(lambdaParameter, possiblePropName) as Expression : filter.Left;
+                if (property.Type != typeof(string) && filter.Right.IsSimpleString)
+                    filter.Right.NonFilter.Unquote();
+                right = filter.Right.IsSimpleString
+                      ? Expression.Constant(filter.Right.ToString().ToType(property.Type)) as Expression
+                      : filter.Right;
+            }
             var methodExpression = func.Invoke(left, right);
             return (filter.Not)
                  ? Expression.Lambda<Func<TEntity, bool>>(Expression.Not(methodExpression), lambdaParameter)

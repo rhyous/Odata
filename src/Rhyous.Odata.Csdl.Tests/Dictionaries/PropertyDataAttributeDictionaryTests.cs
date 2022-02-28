@@ -59,5 +59,20 @@ namespace Rhyous.Odata.Csdl.Tests.Dictionaries
             Assert.AreEqual("E3", actual.First().Value);
         }
         #endregion
+
+        #region GetHrefProperty
+        [TestMethod]
+        public void PropertyDataAttributeDictionary_GetHrefProperty_StringAsHtmlLink_Test()
+        {
+            // Arrange
+            // Act
+            var actual = new PropertyDataAttributeDictionary().GetHrefProperty(typeof(EntityWithHref).GetProperty(nameof(EntityWithHref.Link)));
+
+            // Assert
+            Assert.AreEqual(1, actual.Count());
+            Assert.AreEqual("@StringType", actual.First().Key);
+            Assert.AreEqual("href", actual.First().Value);
+        }
+        #endregion
     }
 }

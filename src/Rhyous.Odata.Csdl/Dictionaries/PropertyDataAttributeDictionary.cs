@@ -25,6 +25,7 @@ namespace Rhyous.Odata.Csdl
             GetOrAdd(typeof(StringLengthAttribute), GetStringLengthProperty);
             GetOrAdd(typeof(RangeAttribute), GetRangeProperty);
             GetOrAdd(typeof(UIHintAttribute), GetUIHintProperty);
+            GetOrAdd(typeof(HRefAttribute), GetHrefProperty);
         }
 
         #endregion
@@ -143,6 +144,14 @@ namespace Rhyous.Odata.Csdl
             if (attribute == null)
                 return null;
             return new[] { new KeyValuePair<string, object>(CsdlConstants.UIMaxLength, attribute.UIHint) };
+        }
+
+        internal IEnumerable<KeyValuePair<string, object>> GetHrefProperty(MemberInfo mi)
+        {
+            var hrefAttrib = mi.GetCustomAttribute<HRefAttribute>();
+            if (hrefAttrib == null)
+                return null;
+            return new[] { new KeyValuePair<string, object>("@StringType", "href") };
         }
     }
 }

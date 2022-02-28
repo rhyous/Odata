@@ -1,4 +1,6 @@
-﻿namespace Rhyous.Odata.Tests
+﻿using Rhyous.Odata.Csdl;
+
+namespace Rhyous.Odata.Tests
 {
     public class EntityWithDuplicateRelatedEntityOneAlias
     {

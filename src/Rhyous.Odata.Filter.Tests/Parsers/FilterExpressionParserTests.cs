@@ -54,6 +54,36 @@ namespace Rhyous.Odata.Filter.Tests.Parsers
         }
 
         [TestMethod]
+        public async Task FilterExpressionParser_SimpleParser_False_Test()
+        {
+            // Arrange
+            var parser = CreateParser<IUser>();
+            var expression = "1 eq 0";
+            string expected = "e => (1 == 0)";
+
+            // Act
+            var actual = await parser.ParseAsync(expression);
+
+            // Assert
+            Assert.AreEqual(expected, actual.ToString());
+        }
+
+        [TestMethod]
+        public async Task FilterExpressionParser_SimpleParser_True_Test()
+        {
+            // Arrange
+            var parser = CreateParser<IUser>();
+            var expression = "1 eq 1";
+            string expected = "e => (1 == 1)";
+
+            // Act
+            var actual = await parser.ParseAsync(expression);
+
+            // Assert
+            Assert.AreEqual(expected, actual.ToString());
+        }
+
+        [TestMethod]
         public async Task FilterExpressionParser_SimpleParser_IN_Test()
         {
             // Arrange

@@ -1,5 +1,4 @@
 ﻿using Rhyous.Odata.Csdl;
-using Rhyous.StringLibrary;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -19,8 +18,8 @@ namespace Rhyous.Odata.Filter
         public RelatedEntityFilterConverter(CsdlSchema csdlSchema,
                                             IRelatedEntityFilterDataProvider relatedEntityProvider)
         {
-            _CsdlSchema = csdlSchema ?? throw new System.ArgumentNullException(nameof(csdlSchema));
-            _RelatedEntityProvider = relatedEntityProvider ?? throw new System.ArgumentNullException(nameof(relatedEntityProvider));
+            _CsdlSchema = csdlSchema;
+            _RelatedEntityProvider = relatedEntityProvider;
         }
 
         /// <summary>
@@ -36,21 +35,10 @@ namespace Rhyous.Odata.Filter
         public bool CanConvert(Filter<TEntity> filter)
         {
             return filter != null
-                && filter.IsComplete
-                && !filter.IsSimpleString
-                && !filter.IsArray
-                && filter.Left != null
-                && filter.Left.IsSimpleString
-                && filter.Left.NonFilter.Count(s => s == '.') == 1
-                && filter.Left.NonFilter.IndexOf('.') != 0 // The . is not the first character
-                && filter.Left.NonFilter.IndexOf('.') != filter.Left.NonFilter.Length - 1 // The . is not the last character
-                && _CsdlSchema.Entities.TryGetValue(typeof(TEntity).Name, out object objCsdl)
-                && (objCsdl as CsdlEntity) != null
-                && (objCsdl as CsdlEntity).Properties.TryGetValue(filter.Left.NonFilter.Split('.')[0], out object objCsdlProperty)
-                && (objCsdlProperty as CsdlNavigationProperty) != null
-                && (objCsdlProperty as CsdlNavigationProperty).Kind == CsdlConstants.NavigationProperty
-                && (objCsdlProperty as CsdlNavigationProperty).CustomData.TryGetValue(CsdlConstants.EAFRelatedEntityType, out object value)
-                && value.ToString() == CsdlConstants.Local;
+                && _CsdlSchema != null
+                && _RelatedEntityProvider != null
+                && DotSyntaxIsValid(filter)
+                && IsCsdlSchemaValid(filter);
         }
 
         /// <inheritdoc />
@@ -89,6 +77,35 @@ namespace Rhyous.Odata.Filter
             }
             Filter<TEntity> convertedFilter = $"{localProperty} in ({string.Join(",", localPropertyValues)})";
             return convertedFilter;
+        }
+
+        /// <summary>Makes sure the synax is correct: {RelatedEntity}.{Property}</summary>
+        /// <param name="filter">The Filter.</param>
+        /// <returns>True if the dot syntax is correct, false otherwise.</returns>
+        private static bool DotSyntaxIsValid(Filter<TEntity> filter)
+        {
+            return filter.IsComplete
+                && !filter.IsSimpleString
+                && !filter.IsArray
+                && filter.Left != null
+                && filter.Left.IsSimpleString
+                && filter.Left.NonFilter.Count(s => s == '.') == 1
+                && filter.Left.NonFilter.IndexOf('.') != 0 // The . is not the first character
+                && filter.Left.NonFilter.IndexOf('.') != filter.Left.NonFilter.Length - 1; // The . is not the last character;
+        }
+
+        /// <summary>Makes sure the Schema is valid and that the schema is for a Related Entity.</summary>
+        /// <param name="filter">The Filter.</param>
+        /// <returns>True if the schema is valid and is for a related entity. False otherwise.</returns>
+        private bool IsCsdlSchemaValid(Filter<TEntity> filter)
+        {
+            return _CsdlSchema.Entities.TryGetValue(typeof(TEntity).Name, out object objCsdl)
+                && (objCsdl as CsdlEntity) != null
+                && (objCsdl as CsdlEntity).Properties.TryGetValue(filter.Left.NonFilter.Split('.')[0], out object objCsdlProperty)
+                && (objCsdlProperty as CsdlNavigationProperty) != null
+                && (objCsdlProperty as CsdlNavigationProperty).Kind == CsdlConstants.NavigationProperty
+                && (objCsdlProperty as CsdlNavigationProperty).CustomData.TryGetValue(CsdlConstants.EAFRelatedEntityType, out object value)
+                && value.ToString() == CsdlConstants.Local;
         }
     }
 }

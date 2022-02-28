@@ -6,7 +6,7 @@ namespace Rhyous.Odata
 {
     [JsonObject]
     [DataContract]
-    public abstract class OdataObjectCollectionBase
+    public abstract class OdataObjectCollectionBase : IClearable, ICountable
     {
         public OdataObjectCollectionBase() { }
         public OdataObjectCollectionBase(string entity) => Entity = entity;
@@ -20,7 +20,7 @@ namespace Rhyous.Odata
 
         [DataMember]
         [JsonProperty]
-        public virtual int Count { get; internal set; }
+        public abstract int Count { get; protected set; }
 
         /// <summary>
         /// This provides a place to put a total count when $top is called.
@@ -36,6 +36,10 @@ namespace Rhyous.Odata
             { return _TotalCount < Count ? Count : _TotalCount; }
             set { _TotalCount = value; }
         } private int _TotalCount;
+
+        /// <summary>Clears the elements.</summary>
+        public virtual void Clear() { RelatedEntityCollection.Clear(); }
+
 
         /// <summary>
         /// A list of RelatedEntityCollections. This provides a place for common entities to be included,

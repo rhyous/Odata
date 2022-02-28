@@ -28,7 +28,7 @@ namespace Rhyous.Odata
             get { return _Entities ?? (_Entities = new ParentedList<OdataObject<TEntity, TId>>()); }
             set { _Entities = value; }
         } private ParentedList<OdataObject<TEntity, TId>> _Entities;
-        
+
         #region Implicit Operator
         /// <summary>
         /// This will convert an ODataObjectCollection to a RelatedEntityCollection, but it won't know
@@ -40,8 +40,8 @@ namespace Rhyous.Odata
             if (c == null)
                 return null;
             var rec = new RelatedEntityCollection()
-            {                
-                RelatedEntity = c.Entity                
+            {
+                RelatedEntity = c.Entity
             };
             rec.RelatedEntities.AddRange(c.Entities.Select(e => (RelatedEntity)e));
             return rec;
@@ -74,7 +74,11 @@ namespace Rhyous.Odata
 
         public void RemoveAt(int index) => Entities.RemoveAt(index);
 
-        public void Clear() => Entities.Clear();
+        public override void Clear()
+        {
+            Entities.Clear();
+            base.Clear();
+        }
 
         public bool Contains(OdataObject<TEntity, TId> item) => Entities.Contains(item);
 
@@ -88,7 +92,7 @@ namespace Rhyous.Odata
 
         [DataMember]
         [JsonProperty]
-        public override int Count { get { return Entities.Count; } internal set { } }
+        public override int Count { get { return Entities.Count; } protected set { } }
         
         [JsonIgnore]
         [IgnoreDataMember]
