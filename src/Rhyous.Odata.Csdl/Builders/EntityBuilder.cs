@@ -58,9 +58,9 @@ namespace Rhyous.Odata.Csdl
             if (dictionary == null) throw new ArgumentNullException(nameof(dictionary));
             if (propInfo == null) throw new ArgumentNullException(nameof(propInfo));
             if (propInfo.PropertyType.IsEnum)
-                dictionary.TryAdd(propInfo.Name, _EnumPropertyBuilder.Build(propInfo));
+                dictionary.TryAddIfNotNull(propInfo.Name, _EnumPropertyBuilder.Build(propInfo));
             else
-                dictionary.TryAdd(propInfo.Name, _PropertyBuilder.Build(propInfo));
+                dictionary.TryAddIfNotNull(propInfo.Name, _PropertyBuilder.Build(propInfo));
         }
     }
 }

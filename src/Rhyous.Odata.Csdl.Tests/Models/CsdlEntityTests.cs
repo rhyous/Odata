@@ -54,5 +54,25 @@ namespace Rhyous.Odata.Csdl.Tests.Models
             // Assert
             Assert.AreEqual(expectedProps, doc.Properties);
         }
+
+        [TestMethod]
+        public void CsdlEntity_Properties_SortedCorrectly_Test()
+        {
+            // Arrange
+            var doc = new CsdlEntity();
+            doc.Properties.Add("@CustomProperty1", new CsdlProperty());
+            doc.Properties.Add("Id", new CsdlProperty());
+            doc.Properties.Add("Name", new CsdlProperty());
+            doc.Properties.Add("$Kind", new CsdlProperty());
+
+            // Act
+            var list = doc.Properties.ToList();
+
+            // Assert
+            Assert.AreEqual("$Kind", list[0].Key);
+            Assert.AreEqual("Id", list[1].Key);
+            Assert.AreEqual("Name", list[2].Key);
+            Assert.AreEqual("@CustomProperty1", list[3].Key);
+        }
     }
 }

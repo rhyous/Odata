@@ -127,9 +127,37 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
 
             // Assert
             Assert.AreEqual(2, actual.Properties.Count);
-            var keys = actual.Properties.Keys.OrderBy(x => x);
+            var keys = actual.Properties.Keys;
             Assert.AreEqual("Id", keys.First());
             Assert.AreEqual("Name", keys.Skip(1).First());
+            _MockRepository.VerifyAll();
+        }
+
+        [TestMethod]
+        public void EntityBuilder_Build_CsdlNull_NotAddedToDictionary_Test()
+        {
+            // Arrange
+            var entityBuilder = CreateEntityBuilder();
+            var type = typeof(EntityWithByteArray);
+
+            var csdlProperties = new List<CsdlProperty>();
+
+            var propInfo = type.GetProperty(nameof(EntityWithByteArray.Data));
+
+            CsdlProperty csdlProperty = null;
+            csdlProperties.Add(csdlProperty);
+            _MockPropertyBuilder.Setup(m => m.Build(It.Is<PropertyInfo>(pi => pi.Name == propInfo.Name)))
+                                .Returns(csdlProperty);
+            _MockCustomCsdlFromAttributeAppender.Setup(m => m.AppendPropertiesFromPropertyAttributes(It.IsAny<IConcurrentDictionary<string, object>>(), propInfo));
+
+            _MockCustomPropertyAppender.Setup(m => m.Append(It.IsAny<IConcurrentDictionary<string, object>>(), type.Name));
+            _MockCustomCsdlFromAttributeAppender.Setup(m => m.AppendPropertiesFromEntityAttributes(It.IsAny<IConcurrentDictionary<string, object>>(), type));
+
+            // Act 
+            var actual = entityBuilder.Build(type);
+
+            // Assert
+            Assert.AreEqual(0, actual.Properties.Count);
             _MockRepository.VerifyAll();
         }
 
@@ -160,12 +188,14 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
 
             // Assert
             Assert.AreEqual(3, actual.Properties.Count);
-            var keys = actual.Properties.Keys.OrderBy(x => x);
+            var keys = actual.Properties.Keys;
             Assert.AreEqual("Id", keys.OrderBy(x => x).First());
             Assert.AreEqual("Name", keys.Second());
             Assert.AreEqual("UserTypeId", keys.Third());
             _MockRepository.VerifyAll();
         }
+
+
         #endregion
     }
 }

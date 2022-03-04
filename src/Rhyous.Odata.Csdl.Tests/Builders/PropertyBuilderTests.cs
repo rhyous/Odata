@@ -197,6 +197,21 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
             _MockRepository.VerifyAll();
         }
 
+        [TestMethod]
+        public void PropertyBuilder_Build_PropertyIsByteArray_Test()
+        {
+            // Arrange
+            var propInfo = typeof(EntityWithByteArray).GetProperty(nameof(EntityWithByteArray.Data));
+            var propertyBuilder = CreatePropertyBuilder();
+
+            // Act
+            var csdl = propertyBuilder.Build(propInfo);
+
+            // Assert
+            Assert.IsNull(csdl);
+            _MockRepository.VerifyAll();
+        }
+
         #endregion
     }
 }
