@@ -25,12 +25,12 @@ namespace Rhyous.Odata.Csdl
                 }
             };
             navProp.ReferentialConstraint.CustomData.GetOrAdd(relatedEntityAttribute.Property, relatedEntityAttribute.ForeignKeyProperty);
-            if (!string.IsNullOrWhiteSpace(relatedEntityAttribute.Filter))
-                navProp.CustomData.AddIfNew(CsdlConstants.OdataFilter, relatedEntityAttribute.Filter);
-            if (!string.IsNullOrWhiteSpace(relatedEntityAttribute.DisplayCondition))
-                navProp.CustomData.AddIfNew(CsdlConstants.OdataDisplayCondition, relatedEntityAttribute.DisplayCondition);
+
+            navProp.AddBaseRelatedEntityPropertyData(relatedEntityAttribute, schemaOrAlias);
+
             if (relatedEntityAttribute.Nullable)
                 navProp.CustomData.AddIfNew(CsdlConstants.Default, null);
+
             if (relatedEntityAttribute.AllowedNonExistentValue != null)
             {
                 navProp.CustomData.AddOrReplace(CsdlConstants.Default, new CsdlNameValue

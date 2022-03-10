@@ -1,7 +1,7 @@
 ﻿using Rhyous.Odata.Csdl;
 using System.Drawing;
 
-namespace Rhyous.Odata.Tests.Models
+namespace Rhyous.Odata.Tests
 {
     public class EntityWithCsdlPropertyAttribute
     {

@@ -48,7 +48,7 @@ namespace Rhyous.Odata.Csdl
         [JsonExtensionData]
         public SortedConcurrentDictionary<string, object> Properties
         {
-            get { return _Properties ?? (_Properties = new SortedConcurrentDictionary<string, object>(new CertainFirstCharactersLastComparer('@'))); }
+            get { return _Properties ?? (_Properties = new SortedConcurrentDictionary<string, object>(@LastComparer.Instance)); }
             set { _Properties = value; }
         } private SortedConcurrentDictionary<string, object> _Properties;
     }

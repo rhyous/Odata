@@ -5,7 +5,6 @@ using Newtonsoft.Json.Linq;
 using Rhyous.Odata.Csdl;
 using Rhyous.Odata.Filter;
 using Rhyous.Odata.Tests;
-using Rhyous.Odata.Tests.Models;
 using Rhyous.UnitTesting;
 using System;
 using System.Threading.Tasks;

@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Rhyous.Odata.Tests;
-using Rhyous.Odata.Tests.Models;
 using System;
 using System.Linq;
 using System.Reflection;

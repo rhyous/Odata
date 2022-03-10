@@ -23,12 +23,11 @@ namespace Rhyous.Odata.Csdl
             };
             _CustomPropertyDataAppender.Append(navProp.CustomData, relatedEntityAttribute.Entity, relatedEntityAttribute.RelatedEntity);
             navProp.CustomData.TryAdd(CsdlConstants.EAFRelatedEntityType, CsdlConstants.Foreign);
+
+            navProp.AddBaseRelatedEntityPropertyData(relatedEntityAttribute, schemaOrAlias);
+
             if (!string.IsNullOrWhiteSpace(relatedEntityAttribute.ForeignKeyProperty) && relatedEntityAttribute.ForeignKeyProperty != relatedEntityAttribute.Entity + CsdlConstants.Id)
                 navProp.CustomData.TryAdd(CsdlConstants.EAFRelatedEntityForeignKeyProperty, relatedEntityAttribute.ForeignKeyProperty);
-            if (!string.IsNullOrWhiteSpace(relatedEntityAttribute.Filter))
-                navProp.CustomData.TryAdd(CsdlConstants.OdataFilter, relatedEntityAttribute.Filter);
-            if (!string.IsNullOrWhiteSpace(relatedEntityAttribute.DisplayCondition))
-                navProp.CustomData.TryAdd(CsdlConstants.OdataDisplayCondition, relatedEntityAttribute.DisplayCondition);
 
             return navProp;
         }

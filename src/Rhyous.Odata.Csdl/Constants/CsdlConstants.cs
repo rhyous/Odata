@@ -9,6 +9,7 @@
         public const string Default = "$Default";
         public const string DefaultValue = "$DefaultValue";
         public const string EAFEntityAlias = "@EAF.Entity.Alias";
+        public const string EAFRelatedEntityAlias = "@EAF.RelatedEntity.Alias";
         public const string EAFRelatedEntityType = "@EAF.RelatedEntity.Type";
         public const string EAFRelatedEntityForeignKeyProperty = "@EAF.RelatedEntity.ForeignKeyProperty";
         public const string EAFMappingEntityAlias = "@EAF.RelatedEntity.MappingEntityAlias";

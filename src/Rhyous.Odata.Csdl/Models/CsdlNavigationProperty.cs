@@ -64,7 +64,7 @@ namespace Rhyous.Odata.Csdl
         [JsonExtensionData]
         public SortedConcurrentDictionary<string, object> CustomData
         {
-            get { return _CustomData ?? (_CustomData = new SortedConcurrentDictionary<string, object>()); }
+            get { return _CustomData ?? (_CustomData = new SortedConcurrentDictionary<string, object>(@LastComparer.Instance)); }
             set { _CustomData = value; }
         } private SortedConcurrentDictionary<string, object> _CustomData;
     }

@@ -6,22 +6,25 @@ using System.Reflection;
 
 namespace Rhyous.Odata.Csdl
 {
+    /// <summary>An CSDL appender, that appends custom CSDL data from attributes.</summary>
     public class CustomCsdlFromAttributeAppender : ICustomCsdlFromAttributeAppender
     {
         private readonly IEntityAttributeDictionary _EntityAttributeDictionary;
         private readonly IPropertyAttributeDictionary _PropertyAttributeDictionary;
         private readonly IPropertyDataAttributeDictionary _PropertyDataAttributeDictionary;
 
+        /// <summary>The constructor</summary>
+        /// <param name="entityAttributeDictionary">A dictionary of common EntityAttributes mapped to methods to add Entity csdl for those attributes.</param>
+        /// <param name="propertyAttributeDictionary">A dictionary of common EntityAttributes mapped to methods to add Property csdl for those attributes.</param>
+        /// <param name="propertyDataAttributeDictionary">A dictionary of common EntityAttributes mapped to methods to add Property Data csdl for those attributes.</param>
         public CustomCsdlFromAttributeAppender(IEntityAttributeDictionary entityAttributeDictionary,
-                                 IPropertyAttributeDictionary propertyAttributeDictionary,
-                                 IPropertyDataAttributeDictionary propertyDataAttributeDictionary)
+                                               IPropertyAttributeDictionary propertyAttributeDictionary,
+                                               IPropertyDataAttributeDictionary propertyDataAttributeDictionary)
         {
             _EntityAttributeDictionary = entityAttributeDictionary;
             _PropertyAttributeDictionary = propertyAttributeDictionary;
             _PropertyDataAttributeDictionary = propertyDataAttributeDictionary;
-        }
-
-        
+        }        
 
         /// <summary>
         /// Adds property data from an attribute. Type and PropertyInfo both inherit MemberInfo.

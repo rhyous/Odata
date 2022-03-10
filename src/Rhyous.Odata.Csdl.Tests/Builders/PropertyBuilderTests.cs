@@ -2,7 +2,6 @@
 using Moq;
 using Rhyous.Collections;
 using Rhyous.Odata.Tests;
-using Rhyous.Odata.Tests.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;

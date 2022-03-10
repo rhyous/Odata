@@ -6,8 +6,8 @@ namespace Rhyous.Odata.Csdl
     /// <summary>Allows for strings starting with certain characters to be sorted last.</summary>
     public class CertainFirstCharactersLastComparer : IComparer<string>
     {
-        public HashSet<char> _SortLastChars;
-        public Dictionary<char, int> _CharIntValues;
+        protected readonly HashSet<char> _SortLastChars;
+        protected readonly Dictionary<char, int> _CharIntValues;
 
         /// <summary>The constructor.</summary>
         /// <param name="sortLastChars">The characters to sort last.</param>
