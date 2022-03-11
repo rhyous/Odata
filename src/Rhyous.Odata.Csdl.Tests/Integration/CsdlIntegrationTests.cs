@@ -130,5 +130,86 @@ namespace Rhyous.Odata.Csdl.Tests.Models
             Assert.AreEqual("Y", navProp.CustomData["@EAF.Entity.Alias"]);
             Assert.AreEqual("Foreign", navProp.CustomData["@EAF.RelatedEntity.Type"]);
         }
+
+        [TestMethod]
+        public void Create_Csdl_EntityWithLookupAttribute_Default_Test()
+        {
+            // Arrange
+            var type = typeof(EntityWithLookupDefault);
+
+            // Act
+            var csdl = type.ToCsdl();
+
+            // Assert
+            Assert.AreEqual("EntityType", csdl.Kind);
+            CollectionAssert.AreEqual(new List<string> { "Id" }, csdl.Keys);
+            Assert.IsFalse(csdl.HasStream);
+            Assert.IsFalse(csdl.OpenType);
+            var properties = type.GetProperties(System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public);
+            var propertyNames = properties.Select(p => p.Name).ToList();
+            propertyNames.Add(CsdlConstants.EafEntityType);
+            propertyNames.Add(CsdlConstants.UIMaxCountToBehaveAsEnum);
+            CollectionAssert.AreEquivalent(propertyNames, csdl.Properties.Keys.ToList());
+            Assert.AreEqual(CsdlConstants.Lookup, csdl.Properties[CsdlConstants.EafEntityType]);
+            Assert.AreEqual(LookupEntityAttribute.DefaultMaxCountToBehaveAsEnum, csdl.Properties[CsdlConstants.UIMaxCountToBehaveAsEnum]);
+        }
+
+        [TestMethod]
+        public void Create_Csdl_EntityWithLookupAttribute_Configured_Test()
+        {
+            // Arrange
+            var type = typeof(EntityWithLookupConfigured);
+
+            // Act
+            var csdl = type.ToCsdl();
+
+            // Assert
+            Assert.AreEqual("EntityType", csdl.Kind);
+            CollectionAssert.AreEqual(new List<string> { "Id" }, csdl.Keys);
+            Assert.IsFalse(csdl.HasStream);
+            Assert.IsFalse(csdl.OpenType);
+            var properties = type.GetProperties(System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public);
+            var propertyNames = properties.Select(p => p.Name).ToList();
+            propertyNames.Add(CsdlConstants.EafEntityType);
+            propertyNames.Add(CsdlConstants.UIMaxCountToBehaveAsEnum);
+            CollectionAssert.AreEquivalent(propertyNames, csdl.Properties.Keys.ToList());
+            Assert.AreEqual(CsdlConstants.Lookup, csdl.Properties[CsdlConstants.EafEntityType]);
+            Assert.AreEqual(10, csdl.Properties[CsdlConstants.UIMaxCountToBehaveAsEnum]);
+        }
+
+        [TestMethod]
+        public void Create_Csdl_EntityWithLookupAttribute_Mapping_Hierarchy_Test()
+        {
+            // Arrange
+            var type = typeof(GroupAHierarchy);
+
+            // Act
+            var csdl = type.ToCsdl();
+
+            // Assert
+            Assert.AreEqual("EntityType", csdl.Kind);
+            CollectionAssert.AreEqual(new List<string> { "Id" }, csdl.Keys);
+            Assert.IsFalse(csdl.HasStream);
+            Assert.IsFalse(csdl.OpenType);
+            var properties = type.GetProperties(System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public);
+            var propertyNames = properties.Select(p => p.Name).ToList();
+            propertyNames.Add(CsdlConstants.EafEntityType);
+            propertyNames.Add(CsdlConstants.EAFMappedEntity1);
+            propertyNames.Add(CsdlConstants.EAFMappedEntity2);
+            propertyNames.Add("ParentGroupA");
+            propertyNames.Add("ChildGroupA");
+            CollectionAssert.AreEquivalent(propertyNames, csdl.Properties.Keys.ToList());
+            Assert.AreEqual(CsdlConstants.Mapping, csdl.Properties[CsdlConstants.EafEntityType]);
+
+            var mappedEntity1 = csdl.Properties[CsdlConstants.EAFMappedEntity1] as MappedEntity;
+            Assert.AreEqual(nameof(GroupA), mappedEntity1.Name);
+            Assert.AreEqual(nameof(GroupAHierarchy.ParentGroupAId), mappedEntity1.MappingProperty);
+            Assert.AreEqual("ParentGroupA", mappedEntity1.Alias);
+
+            var mappedEntity2 = csdl.Properties[CsdlConstants.EAFMappedEntity2] as MappedEntity;
+            Assert.AreEqual(nameof(GroupA), mappedEntity2.Name);
+            Assert.AreEqual(nameof(GroupAHierarchy.ChildGroupAId), mappedEntity2.MappingProperty);
+            Assert.AreEqual("ChildGroupA", mappedEntity2.Alias);
+        }
     }
 }

@@ -15,6 +15,8 @@ namespace Rhyous.Odata.Tests
         public string Description { get; set; }
     }
 
+    [MappingEntity(Entity1 = nameof(GroupA), Entity1MappingProperty = nameof(ParentGroupAId), Entity1Alias = "ParentGroupA",
+                   Entity2 = nameof(GroupA), Entity2MappingProperty = nameof(ChildGroupAId), Entity2Alias = "ChildGroupA")]
     public class GroupAHierarchy
     {
         /// <inhertidoc />

@@ -8,7 +8,11 @@
         public const string DefaultSchemaOrAlias = "self";
         public const string Default = "$Default";
         public const string DefaultValue = "$DefaultValue";
+
         public const string EAFEntityAlias = "@EAF.Entity.Alias";
+        public const string EafEntityType = "@EAF.Entity.Type";
+        public const string EAFMappedEntity1 = "@EAF.Mapped.Entity1";
+        public const string EAFMappedEntity2 = "@EAF.Mapped.Entity2";
         public const string EAFRelatedEntityAlias = "@EAF.RelatedEntity.Alias";
         public const string EAFRelatedEntityType = "@EAF.RelatedEntity.Type";
         public const string EAFRelatedEntityForeignKeyProperty = "@EAF.RelatedEntity.ForeignKeyProperty";
@@ -29,6 +33,7 @@
         public const string Kind = "$Kind";
         public const string Key = "$Key";
         public const string Local = nameof(Local);
+        public const string Lookup = nameof(Lookup);
         public const string Mapping = nameof(Mapping);
         public const string MaxLength = "$MaxLength";
         public const string NavigationKey = "$NavigationKey";
@@ -45,7 +50,9 @@
         public const string ReferentialConstraint = "$ReferentialConstraint";
         public const string Scale = "$Scale";
         public const string Type = "$Type";
+        public const string UIDisplayProperty = "@UI.DisplayProperty";
         public const string UIHint = "@UI.Hint";
+        public const string UIMaxCountToBehaveAsEnum = "@UI.MaxCountToBehaveAsEnum";
         public const string UIMinLength = "@UI.MinLength";
         public const string UIMaxLength = "@UI.MaxLength";
         public const string UIRange = "@UI.Range";
