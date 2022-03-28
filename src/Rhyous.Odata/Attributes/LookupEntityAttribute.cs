@@ -3,7 +3,7 @@
 namespace Rhyous.Odata
 {
     /// <summary>This attribute should be added to any Entity that is a lookup Entity.</summary>
-    [AttributeUsage(AttributeTargets.Class)]
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Interface)]
     public class LookupEntityAttribute : Attribute
     {
 

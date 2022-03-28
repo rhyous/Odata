@@ -70,8 +70,55 @@ namespace Rhyous.Odata.Csdl.Tests.Dictionaries
 
             // Assert
             Assert.AreEqual(1, actual.Count());
-            Assert.AreEqual("@StringType", actual.First().Key);
-            Assert.AreEqual("href", actual.First().Value);
+            Assert.AreEqual(CsdlConstants.StringType, actual.First().Key);
+            Assert.AreEqual(CsdlConstants.Href, actual.First().Value);
+        }
+        #endregion
+
+        #region HandleCsdStringPropertyAttribute
+        [TestMethod]
+        public void PropertyDataAttributeDictionary_HandleCsdStringPropertyAttribute_StringType_Test()
+        {
+            // Arrange
+            var dict = new PropertyDataAttributeDictionary();
+
+            // Act
+            var actual = dict.HandleCsdStringPropertyAttribute(typeof(EntityWithStringType).GetProperty(nameof(EntityWithStringType.Desciption)));
+
+            // Assert
+            Assert.AreEqual(1, actual.Count());
+            Assert.AreEqual(CsdlConstants.StringType, actual.First().Key);
+            Assert.AreEqual(CsdlConstants.TextArea, actual.First().Value);
+        }
+
+        [TestMethod]
+        public void PropertyDataAttributeDictionary_HandleCsdStringPropertyAttribute_StringType_InInterface_Test()
+        {
+            // Arrange
+            var dict = new PropertyDataAttributeDictionary();
+
+            // Act
+            var actual = dict.HandleCsdStringPropertyAttribute(typeof(EntityWithStringTypeInInterface).GetProperty(nameof(EntityWithStringTypeInInterface.Desciption)));
+
+            // Assert
+            Assert.AreEqual(1, actual.Count());
+            Assert.AreEqual(CsdlConstants.StringType, actual.First().Key);
+            Assert.AreEqual(CsdlConstants.TextArea, actual.First().Value);
+        }
+
+        [TestMethod]
+        public void PropertyDataAttributeDictionary_HandleCsdStringPropertyAttribute_StringType_InSubInterface_Test()
+        {
+            // Arrange
+            var dict = new PropertyDataAttributeDictionary();
+
+            // Act
+            var actual = dict.HandleCsdStringPropertyAttribute(typeof(EntityWithStringTypeInSubInterface).GetProperty(nameof(EntityWithStringTypeInSubInterface.Desciption)));
+
+            // Assert
+            Assert.AreEqual(1, actual.Count());
+            Assert.AreEqual(CsdlConstants.StringType, actual.First().Key);
+            Assert.AreEqual(CsdlConstants.TextArea, actual.First().Value);
         }
         #endregion
     }

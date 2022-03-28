@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Rhyous.Collections;
-using System.Collections.Generic;
+using System.ComponentModel;
 using System.Runtime.Serialization;
 
 namespace Rhyous.Odata.Csdl
@@ -16,6 +16,14 @@ namespace Rhyous.Odata.Csdl
         /// </summary>
         [DataMember(Name = CsdlConstants.Kind)]
         public string Kind { get; set; } = CsdlConstants.EnumType;
+
+        /// <summary>
+        /// JSON Schema types.
+        /// </summary>
+        /// <remarks>http://docs.oasis-open.org/odata/odata-csdl-json/v4.01/cs01/odata-csdl-json-v4.01-cs01.html#sec_Type</remarks>
+        [DefaultValue(CsdlConstants.EdmEnum)]
+        [DataMember(Name = CsdlConstants.Type)]
+        public virtual string Type { get; set; }
 
         /// <summary>
         /// Underlying type of the enum.

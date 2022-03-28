@@ -19,11 +19,11 @@ namespace Rhyous.Odata.Csdl
         {
             var type = pi.PropertyType;
             // Use what is specified in CsdlPropertyAttribute
-            csdlPropertyAttribute = csdlPropertyAttribute ?? pi.GetCustomAttribute<CsdlPropertyAttribute>();
+            csdlPropertyAttribute = csdlPropertyAttribute ?? pi.GetAttributeWithInterfaceInheritance<CsdlPropertyAttribute>();
             if (csdlPropertyAttribute != null && csdlPropertyAttribute.NullableSet)
                 return csdlPropertyAttribute.Nullable;
             // The required Attribute means, NOT nullable
-            if (pi?.GetCustomAttribute<RequiredAttribute>() != null)
+            if (pi?.GetAttributeWithInterfaceInheritance<RequiredAttribute>() != null)
                 return false;
             // Types such as string or Nullable<T> are nullable
             if (type == typeof(string) || (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>)))
@@ -34,7 +34,7 @@ namespace Rhyous.Odata.Csdl
 
         public static bool ExcludeFromMetadata(this PropertyInfo propInfo)
         {
-            return propInfo.GetCustomAttributes(true)
+            return propInfo.GetAttributesWithInterfaceInheritance()
                            .Any(a =>
                                (a is CsdlPropertyAttribute && (a as CsdlPropertyAttribute).ExcludeFromMetadata)
                              || a is ExcludeFromMetadataAttribute

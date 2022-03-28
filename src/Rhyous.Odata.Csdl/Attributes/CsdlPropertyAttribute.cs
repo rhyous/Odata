@@ -7,10 +7,18 @@ namespace Rhyous.Odata.Csdl
     /// </summary>
     /// <remarks>This attribut replaces the ReadonlyAttribute and ExcludeFromMetadataAttribute</remarks>
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
+    public class CsdlStringPropertyAttribute : CsdlPropertyAttribute
+    {
+        public string StringType { get; set; }
+    }
+
+    /// <summary>
+    /// An attribute to help configure csdl.
+    /// </summary>
+    /// <remarks>This attribut replaces the ReadonlyAttribute and ExcludeFromMetadataAttribute</remarks>
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
     public class CsdlPropertyAttribute : Attribute
     {
-
-
         /// <summary>
         /// Whether UI input to this property is required or not. This adds @UI.Required to the metadata
         /// if it is not the default. The default is !Nullable.
@@ -68,11 +76,11 @@ namespace Rhyous.Odata.Csdl
         /// <summary>This allows for a custom metadata type.</summary>
         public string CsdlType { get; set; }
 
-        /// <summary>This sets the @UI.MinLength value in csdl metadata..</summary>
+        /// <summary>This sets the @UI.MinLength value in csdl metadata.</summary>
         public ulong MinLength { get; set; }
 
         /// <summary>
-        /// This sets both the the standard Odata $Maxlength and the custom @UI.MaxLength value in csdl metadata.
+        /// This sets the standard Odata $Maxlength value in csdl metadata.
         /// </summary>
         public ulong MaxLength { get; set; }
 

@@ -21,7 +21,7 @@ namespace Rhyous.Odata.Csdl.Tests.Factory
 
         private CsdlBuilderFactory CreateFactory()
         {
-            return new CsdlBuilderFactory(); ;
+            return new CsdlBuilderFactory();
         }
 
         #region Tests

@@ -24,7 +24,7 @@ namespace Rhyous.Odata.Csdl
             _EntityAttributeDictionary = entityAttributeDictionary;
             _PropertyAttributeDictionary = propertyAttributeDictionary;
             _PropertyDataAttributeDictionary = propertyDataAttributeDictionary;
-        }        
+        }
 
         /// <summary>
         /// Adds property data from an attribute. Type and PropertyInfo both inherit MemberInfo.
@@ -54,7 +54,11 @@ namespace Rhyous.Odata.Csdl
         {
             if (propertyDictionary == null || mi == null || attributeFuncDictionary == null || !attributeFuncDictionary.Any())
                 return;
-            var attribs = mi.GetCustomAttributes(true);
+            var attribs = mi.GetAttributesWithInterfaceInheritance().ToList();
+            var distinctAttribTypes = attribs.Select(a => a.GetType()).Distinct();
+            var overriddenAttributeTypes = new HashSet<Type>(distinctAttribTypes);
+
+            
             if (attribs == null)
                 return;
             foreach (var attrib in attribs)

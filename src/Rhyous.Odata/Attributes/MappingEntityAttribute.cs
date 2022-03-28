@@ -6,7 +6,7 @@ namespace Rhyous.Odata
     /// This attribute must be added to any Entity that is a mapping Entity.
     /// A mapping entity maps two entities using many to many.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class)]
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Interface)]
     public class MappingEntityAttribute : Attribute
     {
         /// <summary>

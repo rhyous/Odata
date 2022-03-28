@@ -27,6 +27,17 @@ namespace Rhyous.Odata.Csdl
         public bool IsCollection { get; set; }
 
         /// <summary>
+        /// A positive integer value specifying the minimum length of a binary, stream 
+        /// or string value. For binary or stream values this is the octet length of the
+        /// binary data, for string values it is the character length. If no minimum 
+        /// length is specified, clients SHOULD expect arbitrary length.
+        /// </summary>
+        /// <remarks>There was no MinLength in OData spec so I copied MaxLength.
+        /// http://docs.oasis-open.org/odata/odata-csdl-json/v4.01/cs01/odata-csdl-json-v4.01-cs01.html#sec_MaxLength</remarks>
+        [DataMember(Name = CsdlConstants.MinLength, EmitDefaultValue = false)]
+        public ulong MinLength { get; set; }
+
+        /// <summary>
         /// A positive integer value specifying the maximum length of a binary, stream 
         /// or string value. For binary or stream values this is the octet length of the
         /// binary data, for string values it is the character length. If no maximum 

@@ -211,5 +211,21 @@ namespace Rhyous.Odata.Csdl.Tests.Models
             Assert.AreEqual(nameof(GroupAHierarchy.ChildGroupAId), mappedEntity2.MappingProperty);
             Assert.AreEqual("ChildGroupA", mappedEntity2.Alias);
         }
+
+        [TestMethod]
+        public void Create_Csdl_EntityWithAttributeInInteface_NameStringLength_Test()
+        {
+            // Arrange
+            var type = typeof(EntityWithName);
+
+            // Act
+            var csdl = type.ToCsdl();
+
+            // Assert
+            Assert.AreEqual("EntityType", csdl.Kind);
+            var nameCsdlProp = csdl.Properties["Name"] as CsdlProperty;
+            Assert.AreEqual((ulong)100, nameCsdlProp.MaxLength);
+            Assert.AreEqual((ulong)4, nameCsdlProp.MinLength);
+        }
     }
 }

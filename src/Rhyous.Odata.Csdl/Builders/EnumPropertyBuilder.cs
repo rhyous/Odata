@@ -30,8 +30,9 @@ namespace Rhyous.Odata.Csdl
                 return null;
             var prop = new CsdlEnumProperty
             {
+                Type = CsdlConstants.EdmEnum,
                 UnderlyingType = _CsdlTypeDictionary[propertyType.GetEnumUnderlyingType().FullName],
-                IsFlags = propertyType.GetCustomAttributes<FlagsAttribute>().Any()
+                IsFlags = propertyType.GetAttributesWithInterfaceInheritance<FlagsAttribute>().Any()
             };
             foreach (var kvp in propertyType.ToDictionary())
             {

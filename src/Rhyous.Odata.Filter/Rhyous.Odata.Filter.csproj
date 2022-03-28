@@ -4,9 +4,9 @@
     <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
     <Authors>Jared Barneck (Rhyous)</Authors>
     <Company>Rhyous Publishing LLC</Company>
-    <Version>1.2.15</Version>
-    <AssemblyVersion>1.2.15.0</AssemblyVersion>
-    <FileVersion>1.2.15.0</FileVersion>
+    <Version>1.2.17</Version>
+    <AssemblyVersion>1.2.17.0</AssemblyVersion>
+    <FileVersion>1.2.17.0</FileVersion>
     <Description>A library to aid in meeting the odata specification for $filter.</Description>
     <Copyright>Copyright Jared Barneck (Rhyous) 2017</Copyright>
     <PackageProjectUrl>https://github.com/rhyous/Odata</PackageProjectUrl>

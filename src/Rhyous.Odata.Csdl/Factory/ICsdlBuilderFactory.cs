@@ -3,7 +3,7 @@
     public interface ICsdlBuilderFactory
     {
         ICsdlTypeDictionary CsdlTypeDictionary { get; }
-        ICustomCsdlFromAttributeAppender CustomCsdlBuilder { get; set; }
+        ICustomCsdlFromAttributeAppender CustomCsdlFromAttributeAppender { get; }
         ICustomPropertyDataFuncs CustomPropertyDataFuncs { get; }
         ICustomPropertyFuncs CustomPropertyFuncs { get; }
         IEntityAttributeDictionary EntityAttributeDictionary { get; }

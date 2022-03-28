@@ -1,4 +1,5 @@
 ﻿using Rhyous.StringLibrary.Pluralization;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
@@ -34,30 +35,24 @@ namespace Rhyous.Odata.Csdl
 
         public IEnumerable<KeyValuePair<string, object>> GetDisplayProperty(MemberInfo mi)
         {
-            if (mi == null)
+            var attribute = mi.GetAttributeWithInterfaceInheritance<DisplayColumnAttribute>();
+            if (attribute == null)
                 return null;
-            var displayColumnAttribute = mi.GetCustomAttribute<DisplayColumnAttribute>(true);
-            if (displayColumnAttribute == null)
-                return null;
-            return new[] { new KeyValuePair<string, object>(CsdlConstants.UIDisplayProperty, displayColumnAttribute.DisplayColumn) };
+            return new[] { new KeyValuePair<string, object>(CsdlConstants.UIDisplayProperty, attribute.DisplayColumn) };
         }
 
         public IEnumerable<KeyValuePair<string, object>> GetReadOnlyProperty(MemberInfo mi)
         {
-            if (mi == null)
-                return null;
-            var editableAttribute = mi.GetCustomAttribute<ReadOnlyEntityAttribute>(true);
-            if (editableAttribute == null)
+            var attribute = mi.GetAttributeWithInterfaceInheritance<ReadOnlyEntityAttribute>();
+            if (attribute == null)
                 return null;
             return new[] { new KeyValuePair<string, object>(CsdlConstants.UIReadOnly, true) };
         }
 
         public IEnumerable<KeyValuePair<string, object>> GetRequiredProperty(MemberInfo mi)
         {
-            if (mi == null)
-                return null;
-            var requiredAttribute = mi.GetCustomAttribute<RequiredAttribute>(true);
-            if (requiredAttribute == null)
+            var attribute = mi.GetAttributeWithInterfaceInheritance<RequiredAttribute>();
+            if (attribute == null)
                 return null;
             return new[] { new KeyValuePair<string, object>(CsdlConstants.UIRequired, true) };
         }
@@ -66,7 +61,7 @@ namespace Rhyous.Odata.Csdl
         {
             if (mi == null)
                 yield break;
-            foreach (var relatedEntityAttribute in mi.GetCustomAttributes<RelatedEntityForeignAttribute>(true))
+            foreach (var relatedEntityAttribute in mi.GetAttributesWithInterfaceInheritance<RelatedEntityForeignAttribute>())
             {
                 var relatedEntityName = string.IsNullOrWhiteSpace(relatedEntityAttribute.RelatedEntityAlias) ? relatedEntityAttribute.RelatedEntity : relatedEntityAttribute.RelatedEntityAlias;
                 var pluralizedRelatedEntityName = relatedEntityName.Pluralize();
@@ -78,7 +73,7 @@ namespace Rhyous.Odata.Csdl
         {
             if (mi == null)
                 yield break;
-            foreach (var relatedEntityAttribute in mi.GetCustomAttributes<RelatedEntityMappingAttribute>(true))
+            foreach (var relatedEntityAttribute in mi.GetAttributesWithInterfaceInheritance<RelatedEntityMappingAttribute>())
             {
                 var relatedEntityName = string.IsNullOrWhiteSpace(relatedEntityAttribute.RelatedEntityAlias) ? relatedEntityAttribute.RelatedEntity : relatedEntityAttribute.RelatedEntityAlias;
                 var pluralizedRelatedEntityName = relatedEntityName.Pluralize();
@@ -90,7 +85,7 @@ namespace Rhyous.Odata.Csdl
         {
             if (mi == null)
                 return null;
-            var attribute = mi.GetCustomAttribute<MappingEntityAttribute>(true);
+            var attribute = mi.GetAttributeWithInterfaceInheritance<MappingEntityAttribute>();
             if (attribute == null)
                 return null;
             var entity1NameAndAlias = new MappedEntity
@@ -116,7 +111,7 @@ namespace Rhyous.Odata.Csdl
         {
             if (mi == null)
                 return null;
-            var attribute = mi.GetCustomAttribute<LookupEntityAttribute>(true);
+            var attribute = mi.GetAttributeWithInterfaceInheritance<LookupEntityAttribute>();
             if (attribute == null)
                 return null;
             return new[]

@@ -23,7 +23,7 @@ namespace Rhyous.Odata.Csdl
 
         public IEnumerable<KeyValuePair<string, object>> GetRelatedEntityProperties(MemberInfo mi)
         {
-            var relatedEntityAttributes = mi?.GetCustomAttributes<RelatedEntityAttribute>() // This method is never null
+            var relatedEntityAttributes = mi?.GetAttributesWithInterfaceInheritance<RelatedEntityAttribute>() // This method is never null
                                              .GroupBy(a => a.Entity);
             if (relatedEntityAttributes == null || !relatedEntityAttributes.Any())
                 return null;

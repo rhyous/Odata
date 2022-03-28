@@ -3,7 +3,6 @@ using Moq;
 using Rhyous.Collections;
 using Rhyous.Odata.Tests;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 
 namespace Rhyous.Odata.Csdl.Tests.Builders
@@ -15,7 +14,9 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
 
         private Mock<ICustomCsdlFromAttributeAppender> _MockCustomCsdlFromAttributeAppender;
         private Mock<ICustomPropertyDataAppender> _MockCustomPropertyDataAppender;
-        private CsdlTypeDictionary _CsdlTypeDictionary;
+        private Mock<ICsdlTypeDictionary> _MockCsdlTypeDictionary;
+        private Mock<IMinLengthAttributeDictionary> _MockMinLengthAttributeDictionary;
+        private Mock<IMaxLengthAttributeDictionary> _MockMaxLengthAttributeDictionary;
 
         [TestInitialize]
         public void TestInitialize()
@@ -24,7 +25,9 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
 
             _MockCustomCsdlFromAttributeAppender = _MockRepository.Create<ICustomCsdlFromAttributeAppender>();
             _MockCustomPropertyDataAppender = _MockRepository.Create<ICustomPropertyDataAppender>();
-            _CsdlTypeDictionary = new CsdlTypeDictionary();
+            _MockCsdlTypeDictionary = _MockRepository.Create<ICsdlTypeDictionary>();
+            _MockMinLengthAttributeDictionary = _MockRepository.Create<IMinLengthAttributeDictionary>();
+            _MockMaxLengthAttributeDictionary = _MockRepository.Create<IMaxLengthAttributeDictionary>();
         }
 
         private PropertyBuilder CreatePropertyBuilder()
@@ -32,7 +35,9 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
             return new PropertyBuilder(
                 _MockCustomCsdlFromAttributeAppender.Object,
                 _MockCustomPropertyDataAppender.Object,
-                _CsdlTypeDictionary);
+                _MockCsdlTypeDictionary.Object,
+                _MockMinLengthAttributeDictionary.Object,
+                _MockMaxLengthAttributeDictionary.Object);
         }
 
         [TestMethod]
@@ -58,7 +63,17 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
             var propertyBuilder = CreatePropertyBuilder();
             _MockCustomPropertyDataAppender.Setup(m => m.Append(It.IsAny<IConcurrentDictionary<string, object>>(), typeof(Token).Name, nameof(Token.UserId)));
             _MockCustomCsdlFromAttributeAppender.Setup(m => m.AppendPropertyDataFromAttributes(It.IsAny<IConcurrentDictionary<string, object>>(), It.Is<PropertyInfo>(pi => pi.Name == propInfo.Name)));
-
+            string edmType;
+            _MockCsdlTypeDictionary.Setup(m => m.TryGetValue(typeof(long).FullName, out edmType))
+                                   .Returns(new TryGetValueDelegate((string inName, out string outEdmType) =>
+                                   {
+                                       outEdmType = "Edm.Int64";
+                                       return true;
+                                   }));
+            _MockMinLengthAttributeDictionary.Setup(m => m.GetMinLength(It.IsAny<PropertyInfo>()))
+                                             .Returns((ulong)1);
+            _MockMaxLengthAttributeDictionary.Setup(m => m.GetMaxLength(It.IsAny<PropertyInfo>()))
+                                             .Returns((ulong)20);
             // Act
             var actual = propertyBuilder.Build(propInfo);
 
@@ -72,11 +87,18 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
         internal class B { public A A { get; set; }}
 
         [TestMethod]
-        public void PropertyBuilder_Build_NotInList_Test()
+        public void PropertyBuilder_Build_ComplexType_NotInList_Test()
         {
             // Arrange
             var propInfo = typeof(B).GetProperty(nameof(B.A));
             var propertyBuilder = CreatePropertyBuilder();
+            string edmType;
+            _MockCsdlTypeDictionary.Setup(m => m.TryGetValue(typeof(A).FullName, out edmType))
+                       .Returns(new TryGetValueDelegate((string inName, out string outEdmType) =>
+                       {
+                           outEdmType = null;
+                           return false;
+                       }));
 
             // Act
             var actual = propertyBuilder.Build(propInfo);
@@ -95,6 +117,17 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
             var propertyBuilder = CreatePropertyBuilder();
             _MockCustomPropertyDataAppender.Setup(m => m.Append(It.IsAny<IConcurrentDictionary<string, object>>(), typeof(EntityWithCsdlPropertyAttribute).Name, nameof(EntityWithCsdlPropertyAttribute.DefaultValue)));
             _MockCustomCsdlFromAttributeAppender.Setup(m => m.AppendPropertyDataFromAttributes(It.IsAny<IConcurrentDictionary<string, object>>(), It.Is<PropertyInfo>(pi => pi.Name == propInfo.Name)));
+            string edmType;
+            _MockCsdlTypeDictionary.Setup(m => m.TryGetValue(typeof(int).FullName, out edmType))
+                                   .Returns(new TryGetValueDelegate((string inName, out string outEdmType) => 
+                                   {
+                                       outEdmType = "Edm.Int32";
+                                       return true;
+                                   }));
+            _MockMinLengthAttributeDictionary.Setup(m => m.GetMinLength(It.IsAny<PropertyInfo>()))
+                                             .Returns((ulong)4);
+            _MockMaxLengthAttributeDictionary.Setup(m => m.GetMaxLength(It.IsAny<PropertyInfo>()))
+                                             .Returns((ulong)100);
 
             // Act
             var csdl = propertyBuilder.Build(propInfo);
@@ -102,7 +135,7 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
             // Assert
             Assert.AreEqual(-1, csdl.DefaultValue);
             _MockRepository.VerifyAll();
-        }
+        } delegate bool TryGetValueDelegate(string instr, out string outStr);
 
         [TestMethod]
         public void PropertyBuilder_Build_CsdlAttribute_NotRequired_Test()
@@ -112,7 +145,17 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
             var propertyBuilder = CreatePropertyBuilder();
             _MockCustomPropertyDataAppender.Setup(m => m.Append(It.IsAny<IConcurrentDictionary<string, object>>(), typeof(EntityWithCsdlPropertyAttribute).Name, nameof(EntityWithCsdlPropertyAttribute.NotRequired)));
             _MockCustomCsdlFromAttributeAppender.Setup(m => m.AppendPropertyDataFromAttributes(It.IsAny<IConcurrentDictionary<string, object>>(), It.Is<PropertyInfo>(pi => pi.Name == propInfo.Name)));
-
+            string edmType;
+            _MockCsdlTypeDictionary.Setup(m => m.TryGetValue(typeof(int).FullName, out edmType))
+                                   .Returns(new TryGetValueDelegate((string inName, out string outEdmType) =>
+                                   {
+                                       outEdmType = "Edm.Int32";
+                                       return true;
+                                   }));
+            _MockMinLengthAttributeDictionary.Setup(m => m.GetMinLength(It.IsAny<PropertyInfo>()))
+                                             .Returns((ulong)4);
+            _MockMaxLengthAttributeDictionary.Setup(m => m.GetMaxLength(It.IsAny<PropertyInfo>()))
+                                             .Returns((ulong)100);
 
             // Act
             var csdl = propertyBuilder.Build(propInfo);
@@ -135,6 +178,17 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
                                   {
                                       propertyDictionary.Add(CsdlConstants.UIRequired, true);
                                   });
+            string edmType;
+            _MockCsdlTypeDictionary.Setup(m => m.TryGetValue(typeof(int).FullName, out edmType))
+                                   .Returns(new TryGetValueDelegate((string inName, out string outEdmType) =>
+                                   {
+                                       outEdmType = "Edm.Int32";
+                                       return true;
+                                   }));
+            _MockMinLengthAttributeDictionary.Setup(m => m.GetMinLength(It.IsAny<PropertyInfo>()))
+                                             .Returns((ulong)4);
+            _MockMaxLengthAttributeDictionary.Setup(m => m.GetMaxLength(It.IsAny<PropertyInfo>()))
+                                             .Returns((ulong)100);
 
             // Act
             var csdl = propertyBuilder.Build(propInfo);
@@ -153,6 +207,17 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
             var propertyBuilder = CreatePropertyBuilder();
             _MockCustomPropertyDataAppender.Setup(m => m.Append(It.IsAny<IConcurrentDictionary<string, object>>(), typeof(EntityWithCsdlPropertyAttribute).Name, nameof(EntityWithCsdlPropertyAttribute.RequiredNoMetadata)));
             _MockCustomCsdlFromAttributeAppender.Setup(m => m.AppendPropertyDataFromAttributes(It.IsAny<IConcurrentDictionary<string, object>>(), It.Is<PropertyInfo>(pi => pi.Name == propInfo.Name)));
+            string edmType;
+            _MockCsdlTypeDictionary.Setup(m => m.TryGetValue(typeof(int).FullName, out edmType))
+                                   .Returns(new TryGetValueDelegate((string inName, out string outEdmType) =>
+                                   {
+                                       outEdmType = "Edm.Int32";
+                                       return true;
+                                   }));
+            _MockMinLengthAttributeDictionary.Setup(m => m.GetMinLength(It.IsAny<PropertyInfo>()))
+                                             .Returns((ulong)4);
+            _MockMaxLengthAttributeDictionary.Setup(m => m.GetMaxLength(It.IsAny<PropertyInfo>()))
+                                             .Returns((ulong)100);
 
             // Act
             var csdl = propertyBuilder.Build(propInfo);
@@ -170,6 +235,17 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
             var propertyBuilder = CreatePropertyBuilder();
             _MockCustomPropertyDataAppender.Setup(m => m.Append(It.IsAny<IConcurrentDictionary<string, object>>(), typeof(EntityWithCsdlPropertyAttribute).Name, nameof(EntityWithCsdlPropertyAttribute.NotRequiredNoMetadata)));
             _MockCustomCsdlFromAttributeAppender.Setup(m => m.AppendPropertyDataFromAttributes(It.IsAny<IConcurrentDictionary<string, object>>(), It.Is<PropertyInfo>(pi => pi.Name == propInfo.Name)));
+            string edmType;
+            _MockCsdlTypeDictionary.Setup(m => m.TryGetValue(typeof(int).FullName, out edmType))
+                                   .Returns(new TryGetValueDelegate((string inName, out string outEdmType) =>
+                                   {
+                                       outEdmType = "Edm.Int32";
+                                       return true;
+                                   }));
+            _MockMinLengthAttributeDictionary.Setup(m => m.GetMinLength(It.IsAny<PropertyInfo>()))
+                                             .Returns((ulong)4);
+            _MockMaxLengthAttributeDictionary.Setup(m => m.GetMaxLength(It.IsAny<PropertyInfo>()))
+                                             .Returns((ulong)100);
 
             // Act
             var csdl = propertyBuilder.Build(propInfo);
@@ -187,6 +263,17 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
             var propertyBuilder = CreatePropertyBuilder();
             _MockCustomPropertyDataAppender.Setup(m => m.Append(It.IsAny<IConcurrentDictionary<string, object>>(), typeof(EntityWithCsdlPropertyAttribute).Name, nameof(EntityWithCsdlPropertyAttribute.ForceNullableToNotBeNullable)));
             _MockCustomCsdlFromAttributeAppender.Setup(m => m.AppendPropertyDataFromAttributes(It.IsAny<IConcurrentDictionary<string, object>>(), It.Is<PropertyInfo>(pi => pi.Name == propInfo.Name)));
+            string edmType;
+            _MockCsdlTypeDictionary.Setup(m => m.TryGetValue(typeof(int).FullName, out edmType))
+                                   .Returns(new TryGetValueDelegate((string inName, out string outEdmType) =>
+                                   {
+                                       outEdmType = "Edm.Int32";
+                                       return true;
+                                   }));
+            _MockMinLengthAttributeDictionary.Setup(m => m.GetMinLength(It.IsAny<PropertyInfo>()))
+                                             .Returns((ulong)4);
+            _MockMaxLengthAttributeDictionary.Setup(m => m.GetMaxLength(It.IsAny<PropertyInfo>()))
+                                             .Returns((ulong)100);
 
             // Act
             var csdl = propertyBuilder.Build(propInfo);
@@ -202,6 +289,13 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
             // Arrange
             var propInfo = typeof(EntityWithByteArray).GetProperty(nameof(EntityWithByteArray.Data));
             var propertyBuilder = CreatePropertyBuilder();
+            string edmType;
+            _MockCsdlTypeDictionary.Setup(m => m.TryGetValue(typeof(byte[]).FullName, out edmType))
+                                   .Returns(new TryGetValueDelegate((string inName, out string outEdmType) =>
+                                   {
+                                       outEdmType = null;
+                                       return false;
+                                   }));
 
             // Act
             var csdl = propertyBuilder.Build(propInfo);

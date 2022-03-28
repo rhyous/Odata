@@ -53,7 +53,7 @@ namespace Rhyous.Odata.Csdl.Tests.Models
             service.Entities.TryAdd("SuiteMembership", typeof(SuiteMembership).ToCsdl());
             doc.Schemas.TryAdd("EAF", service);
 
-            var expectedJson = "{\"$EntityContainer\":\"EAF\",\"$Version\":\"4.01\",\"EAF\":{\"$Alias\":\"self\",\"SuiteMembership\":{\"$Key\":[\"Id\"],\"$Kind\":\"EntityType\",\"Id\":{\"$Type\":\"Edm.Int32\"},\"Product\":{\"$Kind\":\"NavigationProperty\",\"$ReferentialConstraint\":{\"ForeignProperty\":\"Id\",\"LocalProperty\":\"ProductId\",\"ProductId\":\"Id\"},\"$Type\":\"self.Product\",\"@EAF.RelatedEntity.Type\":\"Local\"},\"ProductId\":{\"$Type\":\"Edm.Int32\",\"$NavigationKey\":\"Product\"},\"Quantity\":{\"$Type\":\"Edm.Double\"},\"QuantityType\":{\"$UnderlyingType\":\"Edm.Int32\",\"$Kind\":\"EnumType\",\"Fixed\":2,\"Inherited\":1,\"Percentage\":3},\"SuiteId\":{\"$Type\":\"Edm.Int32\"}}}}";
+            var expectedJson = "{\"$EntityContainer\":\"EAF\",\"$Version\":\"4.01\",\"EAF\":{\"$Alias\":\"self\",\"SuiteMembership\":{\"$Key\":[\"Id\"],\"$Kind\":\"EntityType\",\"Id\":{\"$Type\":\"Edm.Int32\"},\"Product\":{\"$Kind\":\"NavigationProperty\",\"$ReferentialConstraint\":{\"ForeignProperty\":\"Id\",\"LocalProperty\":\"ProductId\",\"ProductId\":\"Id\"},\"$Type\":\"self.Product\",\"@EAF.RelatedEntity.Type\":\"Local\"},\"ProductId\":{\"$Type\":\"Edm.Int32\",\"$NavigationKey\":\"Product\"},\"Quantity\":{\"$Type\":\"Edm.Double\"},\"QuantityType\":{\"$UnderlyingType\":\"Edm.Int32\",\"$Kind\":\"EnumType\",\"$Type\":\"Edm.Enum\",\"Fixed\":2,\"Inherited\":1,\"Percentage\":3},\"SuiteId\":{\"$Type\":\"Edm.Int32\"}}}}";
 
             var jsonSerializerSettings = new JsonSerializerSettings { ContractResolver = new OrderedContractResolver() };
 
