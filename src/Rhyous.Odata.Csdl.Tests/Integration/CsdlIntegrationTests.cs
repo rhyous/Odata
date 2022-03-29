@@ -9,6 +9,7 @@ namespace Rhyous.Odata.Csdl.Tests.Models
     [TestClass]
     public class CsdlIntegrationTests
     {
+        #region ToCsdl
         [TestMethod]
         public void Create_Csdl_Entity_NoRelations_Test()
         {
@@ -227,5 +228,55 @@ namespace Rhyous.Odata.Csdl.Tests.Models
             Assert.AreEqual((ulong)100, nameCsdlProp.MaxLength);
             Assert.AreEqual((ulong)4, nameCsdlProp.MinLength);
         }
+
+        #endregion
+
+        #region Csdl Property
+
+        [TestMethod]
+        public void PropertyDataAttributeDictionary_EntityWithMinAndMaxLengthAttributes_Test()
+        {
+            // Arrange
+            var propertyBuilder = CsdlBuilderFactory.Instance.PropertyBuilder;
+            var type = typeof(EntityWithMinAndMaxLengthAttributes);
+
+            // Act
+            var actual = propertyBuilder.Build(type.GetProperty(nameof(EntityWithMinAndMaxLengthAttributes.Name)));
+
+            // Assert
+            Assert.AreEqual(2UL, actual.MinLength);
+            Assert.AreEqual(10UL, actual.MaxLength);
+        }
+
+        [TestMethod]
+        public void PropertyDataAttributeDictionary_EntityWithMinAndMaxLengthInStringLengthAttribute_Test()
+        {
+            // Arrange
+            var propertyBuilder = CsdlBuilderFactory.Instance.PropertyBuilder;
+            var type = typeof(EntityWithMinAndMaxLengthInStringLengthAttribute);
+
+            // Act
+            var actual = propertyBuilder.Build(type.GetProperty(nameof(EntityWithMinAndMaxLengthInStringLengthAttribute.Name)));
+
+            // Assert
+            Assert.AreEqual(2UL, actual.MinLength);
+            Assert.AreEqual(10UL, actual.MaxLength);
+        }
+
+        [TestMethod]
+        public void PropertyDataAttributeDictionary_EntityWithMinAndMaxLengthInCsdlPropertyAttribute_Test()
+        {
+            // Arrange
+            var propertyBuilder = CsdlBuilderFactory.Instance.PropertyBuilder;
+            var type = typeof(EntityWithMinAndMaxLengthInCsdlPropertyAttribute);
+
+            // Act
+            var actual = propertyBuilder.Build(type.GetProperty(nameof(EntityWithMinAndMaxLengthInCsdlPropertyAttribute.Name)));
+
+            // Assert
+            Assert.AreEqual(2UL, actual.MinLength);
+            Assert.AreEqual(10UL, actual.MaxLength);
+        }
+        #endregion
     }
 }

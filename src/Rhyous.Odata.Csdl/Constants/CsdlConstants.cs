@@ -30,7 +30,6 @@
         public const string Foreign = nameof(Foreign);
         public const string HasStream = "$HasStream";
         public const string Href = "href";
-        public const string TextArea = "TextArea";
         public const string Id = nameof(Id);
         public const string IsFlags = "$IsFlags";
         public const string Kind = "$Kind";

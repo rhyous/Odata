@@ -8,7 +8,7 @@ namespace Rhyous.Odata.Tests
 
         public string Name { get; set; }
 
-        [CsdlStringProperty(StringType = CsdlStringTypes.TextArea)]
+        [CsdlStringProperty(StringType = CsdlStringTypes.MultiLine)]
         public string Desciption { get; set; }
 
         [CsdlStringProperty(StringType = CsdlStringTypes.Href)]
@@ -36,7 +36,7 @@ namespace Rhyous.Odata.Tests
 
     public interface IDescription
     {
-        [CsdlStringProperty(StringType = CsdlStringTypes.TextArea)]
+        [CsdlStringProperty(StringType = CsdlStringTypes.MultiLine)]
         string Desciption { get; set; }
     }
 

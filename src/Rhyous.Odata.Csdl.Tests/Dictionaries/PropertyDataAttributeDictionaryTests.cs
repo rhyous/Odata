@@ -88,7 +88,7 @@ namespace Rhyous.Odata.Csdl.Tests.Dictionaries
             // Assert
             Assert.AreEqual(1, actual.Count());
             Assert.AreEqual(CsdlConstants.StringType, actual.First().Key);
-            Assert.AreEqual(CsdlConstants.TextArea, actual.First().Value);
+            Assert.AreEqual(CsdlStringTypes.MultiLine, actual.First().Value);
         }
 
         [TestMethod]
@@ -103,7 +103,7 @@ namespace Rhyous.Odata.Csdl.Tests.Dictionaries
             // Assert
             Assert.AreEqual(1, actual.Count());
             Assert.AreEqual(CsdlConstants.StringType, actual.First().Key);
-            Assert.AreEqual(CsdlConstants.TextArea, actual.First().Value);
+            Assert.AreEqual(CsdlStringTypes.MultiLine, actual.First().Value);
         }
 
         [TestMethod]
@@ -118,7 +118,7 @@ namespace Rhyous.Odata.Csdl.Tests.Dictionaries
             // Assert
             Assert.AreEqual(1, actual.Count());
             Assert.AreEqual(CsdlConstants.StringType, actual.First().Key);
-            Assert.AreEqual(CsdlConstants.TextArea, actual.First().Value);
+            Assert.AreEqual(CsdlStringTypes.MultiLine, actual.First().Value);
         }
         #endregion
     }

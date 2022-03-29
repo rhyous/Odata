@@ -2,7 +2,10 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
+using Rhyous.Collections;
 using Rhyous.Odata.Tests;
+using Rhyous.UnitTesting;
+using System;
 using System.Linq;
 
 namespace Rhyous.Odata.Csdl.Tests.Models
@@ -76,6 +79,25 @@ namespace Rhyous.Odata.Csdl.Tests.Models
             // Act
             service.Entities.TryAdd("User", JToken.Parse("{ \"Custom\": \"Json\" }"));
             var json = JsonConvert.SerializeObject(doc);
+
+            // Assert
+            Assert.AreEqual(expectedJson, json);
+        }
+
+        [TestMethod]
+        [PrimitiveList(typeof(EntityWithMinAndMaxLengthAttributes),
+                       typeof(EntityWithMinAndMaxLengthInCsdlPropertyAttribute),
+                       typeof(EntityWithMinAndMaxLengthInStringLengthAttribute))]
+        public void CsdlProperty_Serialization_MinAndMaxLength_Tests(Type type)
+        {
+            // Arrange
+            var propertyBuilder = CsdlBuilderFactory.Instance.PropertyBuilder;
+            var expectedJson = "{\"$Nullable\":true,\"$MinLength\":2,\"$MaxLength\":10,\"$Type\":\"Edm.String\"}";
+            var propInfo = type.GetProperty("Name");
+            var csdlProperty = propertyBuilder.Build(propInfo);
+
+            // Act
+            var json = JsonConvert.SerializeObject(csdlProperty);
 
             // Assert
             Assert.AreEqual(expectedJson, json);
