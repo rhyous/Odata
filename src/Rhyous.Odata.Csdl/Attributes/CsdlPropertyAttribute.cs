@@ -7,16 +7,6 @@ namespace Rhyous.Odata.Csdl
     /// </summary>
     /// <remarks>This attribut replaces the ReadonlyAttribute and ExcludeFromMetadataAttribute</remarks>
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
-    public class CsdlStringPropertyAttribute : CsdlPropertyAttribute
-    {
-        public string StringType { get; set; }
-    }
-
-    /// <summary>
-    /// An attribute to help configure csdl.
-    /// </summary>
-    /// <remarks>This attribut replaces the ReadonlyAttribute and ExcludeFromMetadataAttribute</remarks>
-    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
     public class CsdlPropertyAttribute : Attribute
     {
         /// <summary>
@@ -40,12 +30,12 @@ namespace Rhyous.Odata.Csdl
 
         /// <summary>
         /// This indicates that a field is nullable to the UI. However, it doesn't indicate the
-        /// field is nullable. This field is used so primitive property, such as "int", can be 
-        /// marked as nullable without changing the type to a nullable type, such as "int?". This
+        /// field is nullable. This field is used so that a primitive property, such as "int", can 
+        /// be marked as nullable without changing the type to a nullable type, such as "int?". This
         /// means the primitive default value will be used or the server side must provide a value.
         /// This field is used in conjunction with IsRequired.
         /// </summary>
-        /// <remarks>If you want the actual data to be nullable, make the type nullable.</remarks>
+        /// <remarks>If you want the actual data to be nullable, make the property use a nullable type.</remarks>
         public bool Nullable
         {
             get { return _Nullable ?? true; }
@@ -88,7 +78,7 @@ namespace Rhyous.Odata.Csdl
         /// <remarks>UI implementors can use this for hint popups.</remarks>
         public string UIHint { get; set; }
 
-        /// <summary>This sets the @Precision value in $Metadata.</summary>
-        public uint Precision { get; set; }
+        /// <summary>The order this property should display in.</summary>
+        public int UIOrder { get; set; }
     }
 }

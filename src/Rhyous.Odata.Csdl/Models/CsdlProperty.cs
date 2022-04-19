@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using Rhyous.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.Serialization;
 

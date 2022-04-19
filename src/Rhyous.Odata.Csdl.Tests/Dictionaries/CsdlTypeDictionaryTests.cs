@@ -15,7 +15,7 @@ namespace Rhyous.Odata.Csdl.Tests.Dictionaries
             unitUnderTest.Init();
 
             // Assert
-            Assert.AreEqual(68, unitUnderTest.Count);
+            Assert.AreEqual(74, unitUnderTest.Count);
         }
     }
 }

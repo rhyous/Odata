@@ -34,20 +34,20 @@ namespace Rhyous.Odata.Csdl
             var propertyType = propInfo.PropertyType;
             Type nullableType = propertyType.IsGenericType && propertyType.GetGenericTypeDefinition() == typeof(Nullable<>) ? propertyType.GetGenericArguments()[0] : null;
             var propTypeName = nullableType == null ? propertyType.FullName : nullableType.FullName;
-            var csdlAttribute = propInfo.GetAttributeWithInterfaceInheritance<CsdlPropertyAttribute>();
-            var csdlType = csdlAttribute?.CsdlType;
+            var csdlPropAttribute = propInfo.GetAttributeWithInterfaceInheritance<CsdlPropertyAttribute>();
+            var csdlType = csdlPropAttribute?.CsdlType;
             if (string.IsNullOrWhiteSpace(csdlType) && !_CsdlTypeDictionary.TryGetValue(propTypeName, out csdlType))
                 return null;
-            var isNullable = propInfo.IsNullable(csdlAttribute);
+            var isNullable = propInfo.IsNullable(csdlPropAttribute);
             var prop = new CsdlProperty
             {
                 Type = csdlType,
                 IsCollection = propertyType != typeof(string) && (propertyType.IsEnumerable() || propertyType.IsCollection()),
                 Nullable = isNullable,
-                DefaultValue = csdlAttribute?.DefaultValue,
+                DefaultValue = csdlPropAttribute?.DefaultValue,
                 MinLength = _MinLengthAttributeDictionary.GetMinLength(propInfo),
                 MaxLength = _MaxLengthAttributeDictionary.GetMaxLength(propInfo),
-                Precision = csdlAttribute?.Precision ?? 0,
+                Precision = propInfo.GetAttributeWithInterfaceInheritance<CsdlDecimalPropertyAttribute>()?.Precision ?? 0,
             };
             _CustomPropertDataAppender.Append(prop.CustomData, propInfo.ReflectedType.Name, propInfo.Name);
             _CustomCsdlFromAttributeAppender.AppendPropertyDataFromAttributes(prop.CustomData, propInfo);

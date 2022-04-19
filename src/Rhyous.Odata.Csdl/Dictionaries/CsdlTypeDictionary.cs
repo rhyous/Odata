@@ -27,8 +27,11 @@ namespace Rhyous.Odata.Csdl
             AddBidirectionally("System.Enum", "Edm.Enum");
             AddBidirectionally("System.Guid", "Edm.Guid");
             AddBidirectionally("System.Int16", "Edm.Int16");
+            AddBidirectionally("System.UInt16", "Edm.UInt16");
             AddBidirectionally("System.Int32", "Edm.Int32");
+            AddBidirectionally("System.UInt32", "Edm.UInt32");
             AddBidirectionally("System.Int64", "Edm.Int64");
+            AddBidirectionally("System.UInt64", "Edm.UInt64");
             AddBidirectionally("System.SByte", "Edm.SByte");
             AddBidirectionally("System.Single", "Edm.Single");
             AddBidirectionally("System.Stream", "Edm.Stream");

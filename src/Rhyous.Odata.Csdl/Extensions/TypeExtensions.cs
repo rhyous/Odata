@@ -7,6 +7,16 @@ namespace Rhyous.Odata.Csdl
 {
     internal static class TypeExtensions
     {
+        public static bool IsFloatingType(this Type t)
+        {
+            return FloatingTypes.Contains(t);
+        } private static HashSet<Type> FloatingTypes = new HashSet<Type> { typeof(decimal), typeof(double), typeof(float) };
+ 
+        public static bool IsIntegerType(this Type t)
+        {
+            return IntegerTypes.Contains(t);
+        } private static HashSet<Type> IntegerTypes = new HashSet<Type> { typeof(sbyte), typeof(byte), typeof(short), typeof(ushort), typeof(int), typeof(uint), typeof(long), typeof(ulong) };
+
         public static IEnumerable<Attribute> GetInterfaceAttributesNotOverridden(this Type type, HashSet<Type> overriddenAttributeTypes)
         {
             if (type is null) { throw new ArgumentNullException(nameof(type)); }
