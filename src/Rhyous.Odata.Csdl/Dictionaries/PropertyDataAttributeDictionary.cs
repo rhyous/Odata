@@ -21,6 +21,7 @@ namespace Rhyous.Odata.Csdl
             GetOrAdd(typeof(RequiredAttribute), GetRequiredProperty);
             GetOrAdd(typeof(CsdlPropertyAttribute), HandleCsdPropertyAttribute);
             GetOrAdd(typeof(CsdlStringPropertyAttribute), HandleCsdStringPropertyAttribute);
+            GetOrAdd(typeof(CsdlFilePropertyAttribute), HandleCsdFilePropertyAttribute);
             GetOrAdd(typeof(RangeAttribute), GetRangeProperty);
             GetOrAdd(typeof(UIHintAttribute), GetUIHintProperty);
             GetOrAdd(typeof(HRefAttribute), GetHrefProperty);
@@ -92,6 +93,18 @@ namespace Rhyous.Odata.Csdl
                 data.Add(new KeyValuePair<string, object>(CsdlConstants.StringType, attribute.StringType));
             return data;
 
+        }
+
+        internal IEnumerable<KeyValuePair<string, object>> HandleCsdFilePropertyAttribute(MemberInfo mi)
+        {
+            var attribute = mi.GetAttributeWithInterfaceInheritance<CsdlFilePropertyAttribute>();
+            if (attribute == null)
+                return null;
+            return new[] 
+            {
+                new KeyValuePair<string, object>(CsdlConstants.FileType, attribute.FileType),
+                new KeyValuePair<string, object>(CsdlConstants.AllowedFileExtensions, attribute.AllowedFileExtensions)
+            };
         }
 
         internal IEnumerable<KeyValuePair<string, object>> GetRangeProperty(MemberInfo mi)

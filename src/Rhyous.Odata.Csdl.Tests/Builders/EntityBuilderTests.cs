@@ -16,6 +16,7 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
         private MockRepository _MockRepository;
 
         private Mock<IPropertyBuilder> _MockPropertyBuilder;
+        private Mock<IArrayPropertyBuilder> _MockArrayPropertyBuilder;
         private Mock<IEnumPropertyBuilder> _MockEnumPropertyBuilder;
         private Mock<ICustomCsdlFromAttributeAppender> _MockCustomCsdlFromAttributeAppender;
         private Mock<ICustomPropertyAppender> _MockCustomPropertyAppender;
@@ -26,6 +27,7 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
             _MockRepository = new MockRepository(MockBehavior.Strict);
 
             _MockPropertyBuilder = _MockRepository.Create<IPropertyBuilder>();
+            _MockArrayPropertyBuilder = _MockRepository.Create<IArrayPropertyBuilder>();
             _MockEnumPropertyBuilder = _MockRepository.Create<IEnumPropertyBuilder>();
             _MockCustomCsdlFromAttributeAppender = _MockRepository.Create<ICustomCsdlFromAttributeAppender>();
             _MockCustomPropertyAppender = _MockRepository.Create<ICustomPropertyAppender>();
@@ -35,6 +37,7 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
         {
             return new EntityBuilder(
                 _MockPropertyBuilder.Object,
+                _MockArrayPropertyBuilder.Object,
                 _MockEnumPropertyBuilder.Object,
                 _MockCustomCsdlFromAttributeAppender.Object,
                 _MockCustomPropertyAppender.Object);
@@ -134,7 +137,7 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
         }
 
         [TestMethod]
-        public void EntityBuilder_Build_CsdlNull_NotAddedToDictionary_Test()
+        public void EntityBuilder_Build_CsdlByteArray_AddedToDictionaryAsCollection_Test()
         {
             // Arrange
             var entityBuilder = CreateEntityBuilder();
@@ -144,10 +147,10 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
 
             var propInfo = type.GetProperty(nameof(EntityWithByteArray.Data));
 
-            CsdlProperty csdlProperty = null;
-            csdlProperties.Add(csdlProperty);
-            _MockPropertyBuilder.Setup(m => m.Build(It.Is<PropertyInfo>(pi => pi.Name == propInfo.Name)))
-                                .Returns(csdlProperty);
+            CsdlArrayProperty csdlArrayProperty = new CsdlArrayProperty();
+            csdlProperties.Add(csdlArrayProperty);
+            _MockArrayPropertyBuilder.Setup(m => m.Build(It.Is<PropertyInfo>(pi => pi.Name == propInfo.Name)))
+                                     .Returns(csdlArrayProperty);
             _MockCustomCsdlFromAttributeAppender.Setup(m => m.AppendPropertiesFromPropertyAttributes(It.IsAny<IConcurrentDictionary<string, object>>(), propInfo));
 
             _MockCustomPropertyAppender.Setup(m => m.Append(It.IsAny<IConcurrentDictionary<string, object>>(), type.Name));
@@ -157,7 +160,7 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
             var actual = entityBuilder.Build(type);
 
             // Assert
-            Assert.AreEqual(0, actual.Properties.Count);
+            Assert.AreEqual(1, actual.Properties.Count);
             _MockRepository.VerifyAll();
         }
 

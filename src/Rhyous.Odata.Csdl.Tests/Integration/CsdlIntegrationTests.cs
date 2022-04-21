@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Rhyous.Collections;
 using Rhyous.Odata.Tests;
 using Rhyous.StringLibrary.Pluralization;
 using System.Collections.Generic;
@@ -269,13 +270,36 @@ namespace Rhyous.Odata.Csdl.Tests.Models
             // Arrange
             var propertyBuilder = CsdlBuilderFactory.Instance.PropertyBuilder;
             var type = typeof(EntityWithMinAndMaxLengthInCsdlPropertyAttribute);
+            var propInfo = type.GetProperty(nameof(EntityWithMinAndMaxLengthInCsdlPropertyAttribute.Name));
 
             // Act
-            var actual = propertyBuilder.Build(type.GetProperty(nameof(EntityWithMinAndMaxLengthInCsdlPropertyAttribute.Name)));
+            var actual = propertyBuilder.Build(propInfo);
 
             // Assert
             Assert.AreEqual(2UL, actual.MinLength);
             Assert.AreEqual(10UL, actual.MaxLength);
+        }
+
+        [TestMethod] 
+        public void PropertyDataAttributeDictionary_ImageFile_Test()
+        {
+            // Arrange
+            var arrayPropertyBuilder = CsdlBuilderFactory.Instance.ArrayPropertyBuilder;
+            var type = typeof(EntityWithImageFile);
+            var propInfo = type.GetProperty(nameof(EntityWithImageFile.Image));
+
+            // Act
+            var actual = arrayPropertyBuilder.Build(propInfo);
+
+            // Assert
+            Assert.IsNotNull(actual);
+            Assert.IsNotNull("Collection(byte)", actual.Type);
+            
+            Assert.AreEqual(CsdlConstants.AllowedFileExtensions, actual.CustomData.Keys.First());
+            Assert.AreEqual(CsdlConstants.FileType, actual.CustomData.Keys.Second());
+
+            Assert.AreEqual(FileTypes.Image, actual.CustomData[CsdlConstants.FileType]);
+            CollectionAssert.AreEqual(AllowedFileExtensions.Instance[FileTypes.Image].ToArray(), actual.CustomData[CsdlConstants.AllowedFileExtensions] as string[]);
         }
         #endregion
     }

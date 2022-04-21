@@ -3,6 +3,7 @@
     public class CsdlConstants
     {
         public const string Alias = "$Alias";
+        public const string AllowedFileExtensions = "@UI.AllowedFileExtensions";
         public const string Collection = "$Collection";
         public const string ContainsTarget = "$ContainsTarget";
         public const string DefaultSchemaOrAlias = "self";
@@ -27,6 +28,7 @@
         public const string EntityContainer = "$EntityContainer";
         public const string EntityType = nameof(EntityType);
         public const string EnumType = nameof(EnumType);
+        public const string FileType = "@UI.FileType";
         public const string Foreign = nameof(Foreign);
         public const string HasStream = "$HasStream";
         public const string Href = "href";

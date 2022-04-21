@@ -10,16 +10,19 @@ namespace Rhyous.Odata.Csdl
     public class EntityBuilder : IEntityBuilder
     {
         private readonly IPropertyBuilder _PropertyBuilder;
+        private readonly IArrayPropertyBuilder _ArrayPropertyBuilder;
         private readonly IEnumPropertyBuilder _EnumPropertyBuilder;
         private readonly ICustomCsdlFromAttributeAppender _CustomCsdlFromAttributeAppender;
         private readonly ICustomPropertyAppender _CustomerPropertyAppender;
 
         public EntityBuilder(IPropertyBuilder propertyBuilder,
+                             IArrayPropertyBuilder arrayPropertyBuilder,
                              IEnumPropertyBuilder enumPropertyBuilder,
                              ICustomCsdlFromAttributeAppender customCsdlFromAttributeAppender,
                              ICustomPropertyAppender customerPropertyAppender)
         {
             _PropertyBuilder = propertyBuilder;
+            _ArrayPropertyBuilder = arrayPropertyBuilder;
             _EnumPropertyBuilder = enumPropertyBuilder;
             _CustomCsdlFromAttributeAppender = customCsdlFromAttributeAppender;
             _CustomerPropertyAppender = customerPropertyAppender;
@@ -59,6 +62,8 @@ namespace Rhyous.Odata.Csdl
             if (propInfo == null) throw new ArgumentNullException(nameof(propInfo));
             if (propInfo.PropertyType.IsEnum)
                 dictionary.TryAddIfNotNull(propInfo.Name, _EnumPropertyBuilder.Build(propInfo));
+            else if (propInfo.PropertyType.IsArray)
+                dictionary.TryAddIfNotNull(propInfo.Name, _ArrayPropertyBuilder.Build(propInfo));
             else
                 dictionary.TryAddIfNotNull(propInfo.Name, _PropertyBuilder.Build(propInfo));
         }

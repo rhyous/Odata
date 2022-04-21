@@ -24,9 +24,10 @@ namespace Rhyous.Odata.Csdl
             PropertyAttributeDictionary = new PropertyAttributeDictionary(RelatedEntityNavigationPropertyBuilder);
             CustomCsdlFromAttributeAppender = new CustomCsdlFromAttributeAppender(EntityAttributeDictionary, PropertyAttributeDictionary, PropertyDataAttributeDictionary);
             PropertyBuilder = new PropertyBuilder(CustomCsdlFromAttributeAppender, CustomPropertyDataAppender, CsdlTypeDictionary, MinLengthAttributeDictionary, MaxLengthAttributeDictionary);
+            ArrayPropertyBuilder = new ArrayPropertyBuilder(CustomCsdlFromAttributeAppender, CustomPropertyDataAppender, CsdlTypeDictionary);
             EnumPropertyBuilder = new EnumPropertyBuilder(CustomCsdlFromAttributeAppender, CustomPropertyDataAppender, CsdlTypeDictionary);
             CustomPropertyAppender = new CustomPropertyAppender(CustomPropertyFuncs);
-            EntityBuilder = new EntityBuilder(PropertyBuilder, EnumPropertyBuilder, CustomCsdlFromAttributeAppender, CustomPropertyAppender);            
+            EntityBuilder = new EntityBuilder(PropertyBuilder, ArrayPropertyBuilder, EnumPropertyBuilder, CustomCsdlFromAttributeAppender, CustomPropertyAppender);            
         }
 
         /// <summary>This singleton instance</summary>
@@ -74,6 +75,7 @@ namespace Rhyous.Odata.Csdl
 
         public IPropertyBuilder PropertyBuilder { get; }
 
+        public IArrayPropertyBuilder ArrayPropertyBuilder { get; }
         public IEnumPropertyBuilder EnumPropertyBuilder { get; }
 
         public ICsdlTypeDictionary CsdlTypeDictionary { get; }

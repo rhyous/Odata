@@ -1,6 +1,4 @@
-﻿using Rhyous.Odata.Csdl;
-
-namespace Rhyous.Odata.Tests
+﻿namespace Rhyous.Odata.Tests
 {
     public class EntityWithByteArray
     {

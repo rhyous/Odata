@@ -2,6 +2,7 @@
 {
     public class CsdlStringTypes
     {
+        public const string Base64File = nameof(Base64File);
         public const string Email = nameof(Email);
         public const string Href = nameof(Href);
         public const string MultiLine = nameof(MultiLine);
