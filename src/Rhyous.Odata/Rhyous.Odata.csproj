@@ -18,7 +18,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
     <PackageReference Include="Rhyous.Collections" Version="1.2.12" />
     <PackageReference Include="Rhyous.StringLibrary" Version="1.2.43" />
   </ItemGroup>
