@@ -39,7 +39,7 @@ namespace Rhyous.Odata.Tests
             var actualCollections = sorterDictionary[RelatedEntity.Type.OneToMany](entities, relatedEntities, sortDetails);
 
             // Assert
-            Assert.AreEqual(2, actualCollections.Count);
+            Assert.HasCount(2, actualCollections);
 
             Assert.AreEqual("User", actualCollections[0].Entity);
             Assert.AreEqual("UserGroupMembership", actualCollections[0].RelatedEntity);
@@ -95,7 +95,7 @@ namespace Rhyous.Odata.Tests
             var actualCollections = sorterDictionary[RelatedEntity.Type.OneToMany](entities, relatedEntities, sortDetails);
 
             // Assert
-            Assert.AreEqual(2, actualCollections.Count);
+            Assert.HasCount(2, actualCollections);
 
             Assert.AreEqual("UserType", actualCollections[0].Entity);
             Assert.AreEqual("User2", actualCollections[0].RelatedEntity);

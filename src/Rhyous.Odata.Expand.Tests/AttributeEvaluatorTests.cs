@@ -20,7 +20,7 @@ namespace Rhyous.Odata.Expand.Tests
             var actual = evaluator.GetAttributesToExpand<RelatedEntityAttribute>(typeof(User), entitiesToExpand).ToList();
 
             // Assert
-            Assert.AreEqual(0, actual.Count);
+            Assert.IsEmpty(actual);
         }
 
         [TestMethod]
@@ -35,7 +35,7 @@ namespace Rhyous.Odata.Expand.Tests
             var actual = evaluator.GetAttributesToExpand<RelatedEntityAttribute>(typeof(Token), entitiesToExpand).ToList();
 
             // Assert
-            Assert.AreEqual(1, actual.Count);
+            Assert.HasCount(1, actual);
             foreach (var prop in typeof(RelatedEntityAttribute).GetProperties())
             {
                 Assert.AreEqual(prop.GetValue(expected), prop.GetValue(actual[0]));
@@ -54,7 +54,7 @@ namespace Rhyous.Odata.Expand.Tests
             var actual = evaluator.GetAttributesToExpand<RelatedEntityAttribute>(typeof(User), entitiesToExpand).ToList();
 
             // Assert
-            Assert.AreEqual(1, actual.Count);
+            Assert.HasCount(1, actual);
             foreach (var prop in typeof(RelatedEntityAttribute).GetProperties())
             {
                 Assert.AreEqual(prop.GetValue(expected), prop.GetValue(actual[0]));

@@ -206,7 +206,7 @@ namespace Rhyous.Odata.Csdl.Tests.Dictionaries
             var actual = CreateEntityAttributeDictionary().GetRelatedEntityMappingProperties(typeof(User)).ToList();
 
             // Assert
-            Assert.AreEqual(2, actual.Count);
+            Assert.HasCount(2, actual);
             Assert.AreEqual("UserRoles", actual[0].Key);
             Assert.AreEqual(typeof(CsdlNavigationProperty), actual[0].Value.GetType());
             Assert.AreEqual("UserGroups", actual[1].Key);
@@ -264,7 +264,7 @@ namespace Rhyous.Odata.Csdl.Tests.Dictionaries
             var result = entityAttributeDictionary.GetRequiredProperty(mi).ToList();
 
             // Assert
-            Assert.AreEqual(1, result.Count);
+            Assert.HasCount(1, result);
             _MockRepository.VerifyAll();
         }
         #endregion

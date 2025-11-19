@@ -21,7 +21,7 @@ namespace Rhyous.Odata.Csdl.Tests.Extensions
             var result = type.GetInterfaceAttributesNotOverridden(overriddenAttributeTypes).ToList();
 
             // Assert
-            Assert.AreEqual(1, result.Count);
+            Assert.HasCount(1, result);
             Assert.AreEqual(typeof(LookupEntityAttribute), result[0].GetType());
         }
 
@@ -36,7 +36,7 @@ namespace Rhyous.Odata.Csdl.Tests.Extensions
             var result = type.GetInterfaceAttributesNotOverridden(overriddenAttributeTypes).ToList();
 
             // Assert
-            Assert.AreEqual(0, result.Count);
+            Assert.IsEmpty(result);
         }
 
         [TestMethod]
@@ -50,7 +50,7 @@ namespace Rhyous.Odata.Csdl.Tests.Extensions
             var result = type.GetInterfaceAttributesNotOverridden(overriddenAttributeTypes).ToList();
 
             // Assert
-            Assert.AreEqual(0, result.Count);
+            Assert.IsEmpty(result);
         }
         #endregion
     }

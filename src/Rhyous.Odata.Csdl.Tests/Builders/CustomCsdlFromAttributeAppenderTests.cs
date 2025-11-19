@@ -100,7 +100,7 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
             customCsdlFromAttributeAppender.AppendPropertiesFromPropertyAttributes(dictionary, memberInfo);
 
             // Assert
-            Assert.AreEqual(0, dictionary.Count);
+            Assert.IsEmpty(dictionary);
             _MockRepository.VerifyAll();
         }
 
@@ -123,7 +123,7 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
             customCsdlFromAttributeAppender.AppendPropertiesFromPropertyAttributes(dictionary, propInfo);
 
             // Assert
-            Assert.AreEqual(0, dictionary.Count);
+            Assert.IsEmpty(dictionary);
             _MockRepository.VerifyAll();
         }
         #endregion

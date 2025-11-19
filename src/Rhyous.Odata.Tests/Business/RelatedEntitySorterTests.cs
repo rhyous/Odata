@@ -35,7 +35,7 @@ namespace Rhyous.Odata.Tests.Business
             var collection = sorter.Sort(users, relatedEntitites, sortDetails);
 
             // Assert
-            Assert.AreEqual(3, collection.Count);
+            Assert.HasCount(3, collection);
             Assert.AreEqual("User", collection[0].Entity);
             Assert.AreEqual("UserType", collection[0].RelatedEntity);
             Assert.AreEqual("1", collection[0].EntityId);
@@ -82,7 +82,7 @@ namespace Rhyous.Odata.Tests.Business
             var collection = sorter.Sort(users, relatedEntitites, sortDetails);
 
             // Assert
-            Assert.AreEqual(3, collection.Count);
+            Assert.HasCount(3, collection);
             Assert.AreEqual("User", collection[0].Entity);
             Assert.AreEqual("UserType", collection[0].RelatedEntity);
             Assert.AreEqual("1", collection[0].EntityId);

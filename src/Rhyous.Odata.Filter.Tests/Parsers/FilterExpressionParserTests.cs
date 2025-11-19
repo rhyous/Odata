@@ -107,7 +107,7 @@ namespace Rhyous.Odata.Filter.Tests.Parsers
 
             // Assert
             Assert.AreEqual(expected, actual.ToString());
-            Assert.AreEqual(2, usersFound.Count);
+            Assert.HasCount(2, usersFound);
             Assert.AreEqual(1, usersFound[0].Id);
             Assert.AreEqual(2, usersFound[1].Id);
         }
@@ -136,7 +136,7 @@ namespace Rhyous.Odata.Filter.Tests.Parsers
 
             // Assert
             Assert.AreEqual(expected, actual.ToString());
-            Assert.AreEqual(1, usersFound.Count);
+            Assert.HasCount(1, usersFound);
             Assert.AreEqual(7, usersFound[0].Id);
         }
 

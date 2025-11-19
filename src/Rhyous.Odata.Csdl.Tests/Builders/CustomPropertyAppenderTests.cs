@@ -74,7 +74,7 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
             customCsdlBuilder.Append(dictionary, type, func1);
 
             // Assert
-            Assert.AreEqual(0, dictionary.Count);
+            Assert.IsEmpty(dictionary);
             Assert.IsFalse(func1WasCalled);
             _MockRepository.VerifyAll();
         }
@@ -93,7 +93,7 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
             customCsdlBuilder.Append(dictionary, type, funcs);
 
             // Assert
-            Assert.AreEqual(0, dictionary.Count);
+            Assert.IsEmpty(dictionary);
             Assert.IsFalse(func1WasCalled);
             _MockRepository.VerifyAll();
         }
@@ -112,7 +112,7 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
             customCsdlBuilder.Append(dictionary, type, funcs);
 
             // Assert
-            Assert.AreEqual(0, dictionary.Count);
+            Assert.IsEmpty(dictionary);
             Assert.IsFalse(func1WasCalled);
             _MockRepository.VerifyAll();
         }
@@ -131,7 +131,7 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
             customCsdlBuilder.Append(dictionary, type, func1);
 
             // Assert
-            Assert.AreEqual(0, dictionary.Count);
+            Assert.IsEmpty(dictionary);
             Assert.IsFalse(func1WasCalled);
             _MockRepository.VerifyAll();
         }

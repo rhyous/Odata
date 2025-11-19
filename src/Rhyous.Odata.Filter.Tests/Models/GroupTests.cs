@@ -52,7 +52,7 @@ namespace Rhyous.Odata.Filter.Tests.Models
 
             // Assert
             Assert.IsTrue(group.IsOpen);
-            Assert.AreEqual(group.WrapChar, '(');
+            Assert.AreEqual('(', group.WrapChar);
         }
 
         [TestMethod]

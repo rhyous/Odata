@@ -22,13 +22,13 @@ namespace Rhyous.Odata.Filter.Tests.Models
             // Assert
             foreach (var op in Enum.GetValues(typeof(Operator)))
             {
-                Assert.IsTrue(validOperators.Contains(op.ToString()));
-                Assert.IsTrue(validOperators.Contains(op.ToString().ToLower()));
+                Assert.Contains(op.ToString(), validOperators);
+                Assert.Contains(op.ToString().ToLower(), validOperators);
             }
-            Assert.IsTrue(validOperators.Contains(Conjunction.And.ToString()));
-            Assert.IsTrue(validOperators.Contains(Conjunction.And.ToString().ToLower()));
-            Assert.IsTrue(validOperators.Contains(Conjunction.Or.ToString()));
-            Assert.IsTrue(validOperators.Contains(Conjunction.Or.ToString().ToLower()));
+            Assert.Contains(Conjunction.And.ToString(), validOperators);
+            Assert.Contains(Conjunction.And.ToString().ToLower(), validOperators);
+            Assert.Contains(Conjunction.Or.ToString(), validOperators);
+            Assert.Contains(Conjunction.Or.ToString().ToLower(), validOperators);
         }
         #endregion
     }

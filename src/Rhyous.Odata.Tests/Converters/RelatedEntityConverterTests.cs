@@ -49,7 +49,7 @@ namespace Rhyous.Odata.Tests.Converters
             Assert.AreEqual("User1", result.Object.Name);
             Assert.AreEqual(5, result.Object.UserTypeId);
             Assert.IsNotNull(result.PropertyUris);
-            Assert.AreEqual(1, result.PropertyUris.Count);
+            Assert.HasCount(1, result.PropertyUris);
             Assert.IsNotNull(result.RelatedEntityCollection);
         }
 
@@ -240,7 +240,7 @@ namespace Rhyous.Odata.Tests.Converters
 
             // Assert
             Assert.IsNotNull(result);
-            Assert.AreEqual(2, resultList.Count);
+            Assert.HasCount(2, resultList);
             Assert.AreEqual(1, resultList[0].Id);
             Assert.AreEqual("User1", resultList[0].Object.Name);
             Assert.AreEqual(2, resultList[1].Id);
@@ -272,7 +272,7 @@ namespace Rhyous.Odata.Tests.Converters
 
             // Assert
             Assert.IsNotNull(result);
-            Assert.AreEqual(0, resultList.Count);
+            Assert.IsEmpty(resultList);
         }
 
         #endregion
@@ -302,7 +302,7 @@ namespace Rhyous.Odata.Tests.Converters
             // Assert
             Assert.IsNotNull(result);
             Assert.IsNotNull(typedResult);
-            Assert.AreEqual(2, resultList.Count);
+            Assert.HasCount(2, resultList);
             Assert.AreEqual(1, resultList[0].Id);
             Assert.AreEqual("User1", resultList[0].Object.Name);
             Assert.AreEqual(2, resultList[1].Id);

@@ -73,11 +73,11 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
 
             // Assert
             Assert.IsTrue(result.CustomData.TryGetValue(CsdlConstants.EAFMappingEntityAlias, out object mappingEntityAlias));
-            Assert.AreEqual(mappingEntityAlias, "E1E2Map");
+            Assert.AreEqual("E1E2Map", mappingEntityAlias);
             Assert.IsTrue(result.CustomData.TryGetValue(CsdlConstants.OdataFilter, out object odataFilter));
-            Assert.AreEqual(odataFilter, filter);
+            Assert.AreEqual(filter, odataFilter);
             Assert.IsTrue(result.CustomData.TryGetValue(CsdlConstants.OdataDisplayCondition, out object odataDisplayCondition));
-            Assert.AreEqual(odataDisplayCondition, displayCondition);
+            Assert.AreEqual(displayCondition, odataDisplayCondition);
         }
         #endregion
     }

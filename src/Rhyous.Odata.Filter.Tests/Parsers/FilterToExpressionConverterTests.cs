@@ -51,7 +51,7 @@ namespace Rhyous.Odata.Filter.Tests.Parsers
 
             // Assert
             Assert.AreEqual("e => value(System.Int32[]).Contains(e.Id)", expressionString);
-            Assert.AreEqual(2, usersFound.Count);
+            Assert.HasCount(2, usersFound);
             Assert.AreEqual(1, usersFound[0].Id);
             Assert.AreEqual(2, usersFound[1].Id);
         }
@@ -76,7 +76,7 @@ namespace Rhyous.Odata.Filter.Tests.Parsers
 
             // Assert
             Assert.AreEqual("e => Not(value(System.Int32[]).Contains(e.Id))", expressionString);
-            Assert.AreEqual(1, usersNotFound.Count);
+            Assert.HasCount(1, usersNotFound);
             Assert.AreEqual(7, usersNotFound[0].Id);
         }
 
@@ -101,7 +101,7 @@ namespace Rhyous.Odata.Filter.Tests.Parsers
 
             // Assert
             Assert.AreEqual("e => value(System.String[]).Contains(e.Name)", expressionString);
-            Assert.AreEqual(2, usersFound.Count);
+            Assert.HasCount(2, usersFound);
             Assert.AreEqual(1, usersFound[0].Id);
             Assert.AreEqual(2, usersFound[1].Id);
         }
@@ -127,7 +127,7 @@ namespace Rhyous.Odata.Filter.Tests.Parsers
 
             // Assert
             Assert.AreEqual("e => value(System.String[]).Contains(e.Name)", expressionString);
-            Assert.AreEqual(2, usersFound.Count);
+            Assert.HasCount(2, usersFound);
             Assert.AreEqual(1, usersFound[0].Id);
             Assert.AreEqual(2, usersFound[1].Id);
         }
@@ -161,7 +161,7 @@ namespace Rhyous.Odata.Filter.Tests.Parsers
 
             // Assert
             Assert.AreEqual("e => value(System.String[]).Contains(e.Name)", expressionString);
-            Assert.AreEqual(1, usersFound.Count);
+            Assert.HasCount(1, usersFound);
             Assert.AreEqual(1, usersFound[0].Id);
         }
         #endregion

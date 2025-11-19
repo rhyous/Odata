@@ -81,11 +81,11 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
 
             // Assert
             Assert.IsTrue(result.CustomData.TryGetValue(CsdlConstants.EAFRelatedEntityForeignKeyProperty, out object prop));
-            Assert.AreEqual(prop, "CustomProp");
+            Assert.AreEqual("CustomProp", prop);
             Assert.IsTrue(result.CustomData.TryGetValue(CsdlConstants.OdataFilter, out object odataFilter));
-            Assert.AreEqual(odataFilter, filter);
+            Assert.AreEqual(filter, odataFilter);
             Assert.IsTrue(result.CustomData.TryGetValue(CsdlConstants.OdataDisplayCondition, out object odataDisplayCondition));
-            Assert.AreEqual(odataDisplayCondition, displayCondition);
+            Assert.AreEqual(displayCondition, odataDisplayCondition);
             _MockRepository.VerifyAll();
         }
 

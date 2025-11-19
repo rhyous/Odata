@@ -2,8 +2,10 @@
 using System.Globalization;
 using System.Threading;
 
+[assembly: Parallelize(Workers = 0, Scope = ExecutionScope.MethodLevel)]
+
 [TestClass]
-public class AssemblyInit
+public class TestAssemblyInit
 {
     [AssemblyInitialize]
     public static void AssemblyInit(TestContext context)

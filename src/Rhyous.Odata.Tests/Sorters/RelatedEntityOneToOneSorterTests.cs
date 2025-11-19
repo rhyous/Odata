@@ -34,7 +34,7 @@ namespace Rhyous.Odata.Tests
             var actualCollections = sorterDictionary[RelatedEntity.Type.OneToOne](entities, relatedEntities, sortDetails);
 
             // Assert
-            Assert.AreEqual(2, actualCollections.Count);
+            Assert.HasCount(2, actualCollections);
 
             Assert.AreEqual("User", actualCollections[0].Entity);
             Assert.AreEqual("UserType", actualCollections[0].RelatedEntity);

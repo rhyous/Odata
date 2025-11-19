@@ -31,7 +31,7 @@ namespace Rhyous.Odata.Csdl.Tests
             var csdl = typeof(Person).ToCsdl();
 
             // Assert
-            Assert.AreEqual(1, csdl.Keys.Count);
+            Assert.HasCount(1, csdl.Keys);
             Assert.AreEqual("Id", csdl.Keys[0]);
 
             var expectedPropertyCount = typeof(Person).GetProperties().Length;
@@ -67,7 +67,7 @@ namespace Rhyous.Odata.Csdl.Tests
             expectedPropertyCount += typeof(SuiteMembership).GetCustomAttributes<RelatedEntityMappingAttribute>().Count();
             Assert.AreEqual(expectedPropertyCount, csdl.Properties.Count);
 
-            Assert.AreEqual(1, csdl.Keys.Count);
+            Assert.HasCount(1, csdl.Keys);
             Assert.AreEqual("Id", csdl.Keys[0]);
 
             Assert.IsTrue(csdl.Properties.TryGetValue("Id", out object _));
