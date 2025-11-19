@@ -7,7 +7,7 @@ using System.Linq;
 namespace Rhyous.Odata.Csdl.Tests.Extensions
 {
     [TestClass]
-    internal class TypeExtensionsTests
+    public class TypeExtensionsTests
     {
         #region GetInterfaceAttributesNotOverridden
         [TestMethod]
