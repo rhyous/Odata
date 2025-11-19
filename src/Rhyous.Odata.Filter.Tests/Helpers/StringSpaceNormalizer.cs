@@ -10,12 +10,12 @@ namespace Rhyous.Odata.Filter.Tests.Helpers
         /// <summary>
         /// Default characters to replace with regular space:
         /// - Non-breaking space (U+00A0)
-        /// - Narrow No-Break Space (U+202F)
+        /// - Narrow No-Break Space (U+202F) - commonly used in DateTime formatting
         /// </summary>
         private static readonly char[] DefaultSpaceCharacters = new[]
         {
-            '\u00A0', // Non-breaking space
-            '\u202F'  // Narrow No-Break Space
+            '\u00A0', // Non-breaking space (NO-BREAK SPACE)
+            '\u202F'  // Narrow No-Break Space (NARROW NO-BREAK SPACE) - used in some cultures for DateTime formatting
         };
 
         /// <summary>

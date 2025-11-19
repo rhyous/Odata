@@ -155,7 +155,10 @@ namespace Rhyous.Odata.Filter.Tests.Parsers
             var actual = await parser.ParseAsync(filterstring);
 
             // Assert
-            Assert.AreEqual(expected, actual.ToString(), message);
+            // Normalize whitespace to handle culture differences (non-breaking space vs regular space)
+            var normalizedExpected = StringSpaceNormalizer.Normalize(expected);
+            var normalizedActual = StringSpaceNormalizer.Normalize(actual.ToString());
+            Assert.AreEqual(normalizedExpected, normalizedActual, message);
         }
 
         [TestMethod]
@@ -172,7 +175,10 @@ namespace Rhyous.Odata.Filter.Tests.Parsers
             var actual = await parser.ParseAsync(filterstring);
 
             // Assert
-            Assert.AreEqual(expected, actual.ToString(), message);
+            // Normalize whitespace to handle culture differences (non-breaking space vs regular space)
+            var normalizedExpected = StringSpaceNormalizer.Normalize(expected);
+            var normalizedActual = StringSpaceNormalizer.Normalize(actual.ToString());
+            Assert.AreEqual(normalizedExpected, normalizedActual, message);
         }
 
         [TestMethod]
@@ -189,7 +195,10 @@ namespace Rhyous.Odata.Filter.Tests.Parsers
             var actual = await parser.ParseAsync(filterstring);
 
             // Assert
-            Assert.AreEqual(expected, actual.ToString(), message);
+            // Normalize whitespace to handle culture differences (non-breaking space vs regular space)
+            var normalizedExpected = StringSpaceNormalizer.Normalize(expected);
+            var normalizedActual = StringSpaceNormalizer.Normalize(actual.ToString());
+            Assert.AreEqual(normalizedExpected, normalizedActual, message);
         }
 
         [TestMethod]

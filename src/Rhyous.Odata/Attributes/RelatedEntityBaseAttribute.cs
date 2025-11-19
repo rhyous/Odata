@@ -2,6 +2,7 @@
 
 namespace Rhyous.Odata
 {
+    /// <summary>The base class for related entity attributes.</summary>
     public abstract class RelatedEntityBaseAttribute : Attribute, IRelatedEntityAttribute
     {
         /// <inheritdoc />
