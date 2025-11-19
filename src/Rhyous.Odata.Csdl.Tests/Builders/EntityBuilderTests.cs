@@ -54,7 +54,7 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
 
             // Act
             // Assert
-            Assert.ThrowsException<ArgumentNullException>(() =>
+            Assert.Throws<ArgumentNullException>(() =>
             {
                 entityBuilder.AddFromPropertyInfo(dictionary, propInfo);
             });
@@ -71,7 +71,7 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
 
             // Act
             // Assert
-            Assert.ThrowsException<ArgumentNullException>(() =>
+            Assert.Throws<ArgumentNullException>(() =>
             {
                 entityBuilder.AddFromPropertyInfo(dictionary, propInfo);
             });

@@ -504,15 +504,15 @@ namespace Rhyous.Odata.Filter.Tests
             Filter<User> f1 = new Filter<User>();
 
             // Act & Assert
-            Assert.ThrowsException<Exception>(() => { f1.Parent = f1; });
+            Assert.Throws<Exception>(() => { f1.Parent = f1; });
         }
         #endregion
 
         #region IEnumerable tests
 
         [TestMethod]
-        [JsonTestDataSource(typeof(List<TestDataRow<string, int>>), @"Data\IEnumerableQueryStrings.json")]
-        public async Task Filter_IEnumerable_Count(TestDataRow<string, int> row)
+        [JsonTestDataSource(typeof(List<UnitTesting.TestDataRow<string, int>>), @"Data\IEnumerableQueryStrings.json")]
+        public async Task Filter_IEnumerable_Count(UnitTesting.TestDataRow<string, int> row)
         {
             // Arrange
             var filterstring = row.TestValue;

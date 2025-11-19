@@ -48,7 +48,7 @@ namespace Rhyous.Odata.Csdl.Tests.Extensions
 
             // Act
             // Assert
-            Assert.ThrowsException<ArgumentException>(() =>
+            Assert.Throws<ArgumentException>(() =>
             {
                 RelatedEntityAttributeExtensions.Merge(re1, re2);
             });
@@ -63,7 +63,7 @@ namespace Rhyous.Odata.Csdl.Tests.Extensions
 
             // Act
             // Assert
-            Assert.ThrowsException<ArgumentException>(() =>
+            Assert.Throws<ArgumentException>(() =>
             {
                 RelatedEntityAttributeExtensions.Merge(re1, re2);
             });

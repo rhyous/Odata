@@ -25,20 +25,20 @@ namespace Rhyous.Odata.Tests.Extensions
         }
 
         [TestMethod]
-        [JsonTestDataSource(typeof(List<TestDataRow<string>>), @"Data\JsonNullEmptyWhitespace.json")]
-        public void GetValue_JRaw_Null_Test(TestDataRow<string> row)
+        [JsonTestDataSource(typeof(List<UnitTesting.TestDataRow<string>>), @"Data\JsonNullEmptyWhitespace.json")]
+        public void GetValue_JRaw_Null_Test(UnitTesting.TestDataRow<string> row)
         {
             // Arrange
             var json = row.TestValue;
             JRaw raw = (json == null) ? null : new JRaw(json);
 
             // Act & Assert
-            Assert.ThrowsException<ArgumentNullException>(() => raw.GetValue("Id"));
+            Assert.Throws<ArgumentNullException>(() => raw.GetValue("Id"));
         }
 
         [TestMethod]
-        [JsonTestDataSource(typeof(List<TestDataRow<string>>), @"Data\JsonNullEmptyWhitespace.json")]
-        public void GetValue_Property_NullEmptyOrWhitespace_Test(TestDataRow<string> row)
+        [JsonTestDataSource(typeof(List<UnitTesting.TestDataRow<string>>), @"Data\JsonNullEmptyWhitespace.json")]
+        public void GetValue_Property_NullEmptyOrWhitespace_Test(UnitTesting.TestDataRow<string> row)
         {
             // Arrange
             var prop = row.TestValue;
@@ -46,7 +46,7 @@ namespace Rhyous.Odata.Tests.Extensions
             var raw = new JRaw("{ \"Id\" : 1, \"Prop1\" : \"Abc123\" }");
 
             // Act & Assert
-            Assert.ThrowsException<ArgumentNullException>(() => raw.GetValue(prop), msg);
+            Assert.Throws<ArgumentNullException>(() => raw.GetValue(prop), msg);
         }
     }
 }

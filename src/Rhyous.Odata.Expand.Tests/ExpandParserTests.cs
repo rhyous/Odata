@@ -170,7 +170,7 @@ namespace Rhyous.Odata.Expand.Tests
 
             // Act
             // Assert
-            Assert.ThrowsException<ArgumentException>(() => { parser.Parse(paramValue); });
+            Assert.Throws<ArgumentException>(() => { parser.Parse(paramValue); });
         }
     }
 }

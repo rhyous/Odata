@@ -62,7 +62,7 @@ namespace Rhyous.Odata.Filter.Tests.Models
             var group = new Group('(', ')');
 
             // Act & Assert
-            Assert.ThrowsException<InvalidGroupingException>(() => { group.Open(')'); });
+            Assert.Throws<InvalidGroupingException>(() => { group.Open(')'); });
         }
 
         [TestMethod]
@@ -88,7 +88,7 @@ namespace Rhyous.Odata.Filter.Tests.Models
             group.Open('(');
 
             // Act & Assert
-            Assert.ThrowsException<InvalidGroupingException>(() => { group.Close('('); });
+            Assert.Throws<InvalidGroupingException>(() => { group.Close('('); });
         }
 
         [TestMethod]
@@ -98,7 +98,7 @@ namespace Rhyous.Odata.Filter.Tests.Models
             var group = new Group('(', ')');
 
             // Act & Assert
-            Assert.ThrowsException<InvalidGroupingException>(() => { group.Close(')'); });
+            Assert.Throws<InvalidGroupingException>(() => { group.Close(')'); });
         }
     }
 }

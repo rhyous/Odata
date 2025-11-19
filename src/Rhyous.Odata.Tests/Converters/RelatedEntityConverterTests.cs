@@ -196,25 +196,23 @@ namespace Rhyous.Odata.Tests.Converters
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void Convert_NonGeneric_SingleObject_NullEntityType_ThrowsException_Test()
+        public void Convert_NonGeneric_SingleObject_NullEntityType_Throws_Test()
         {
             // Arrange
             var relatedEntity = new RelatedEntity { Id = "1" };
 
-            // Act
-            _converter.Convert(relatedEntity, null, typeof(int));
+            // Act & Assert
+            Assert.Throws<ArgumentNullException>(() => _converter.Convert(relatedEntity, null, typeof(int)));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void Convert_NonGeneric_SingleObject_NullIdType_ThrowsException_Test()
+        public void Convert_NonGeneric_SingleObject_NullIdType_Throws_Test()
         {
             // Arrange
             var relatedEntity = new RelatedEntity { Id = "1" };
 
-            // Act
-            _converter.Convert(relatedEntity, typeof(User), null);
+            // Act & Assert
+            Assert.Throws<ArgumentNullException>(() => _converter.Convert(relatedEntity, typeof(User), null));
         }
 
         #endregion
@@ -325,28 +323,25 @@ namespace Rhyous.Odata.Tests.Converters
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void Convert_NonGeneric_Collection_NullEntityType_ThrowsException_Test()
+        public void Convert_NonGeneric_Collection_NullEntityType_Throws_Test()
         {
             // Arrange
             var odataObjects = new List<RelatedEntity> { new OdataObject { Id = "1" } };
 
-            // Act
-            _converter.Convert(odataObjects, null, typeof(int));
+            // Act & Assert
+            Assert.Throws<ArgumentNullException>(() => _converter.Convert(odataObjects, null, typeof(int)));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void Convert_NonGeneric_Collection_NullIdType_ThrowsException_Test()
+        public void Convert_NonGeneric_Collection_NullIdType_Throws_Test()
         {
             // Arrange
             var relatedEntities = new List<RelatedEntity> { new RelatedEntity { Id = "1" } };
 
-            // Act
-            _converter.Convert(relatedEntities, typeof(User), null);
+            // Act & Assert
+            Assert.Throws<ArgumentNullException>(() => _converter.Convert(relatedEntities, typeof(User), null));
         }
 
         #endregion
     }
 }
-
