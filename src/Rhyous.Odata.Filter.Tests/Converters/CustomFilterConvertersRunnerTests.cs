@@ -59,7 +59,7 @@ namespace Rhyous.Odata.Filter.Tests.Converters
             var converters = new List<IFilterConverter<IUser>> { cloneConverter };
             _MockCustomFilterConverterCollection.Setup(m => m.Converters).Returns(converters);
 
-            Filter<IUser> filter = new ArrayFilter<IUser, int> { Array = new[] { 1, 2, 3, 4, 5 } };
+            Filter<IUser> filter = new ArrayFilter<IUser, int> { Array = [1, 2, 3, 4, 5] };
 
             // Act
             var actual = await converter.ConvertAsync(filter);
@@ -170,7 +170,7 @@ namespace Rhyous.Odata.Filter.Tests.Converters
             _MockCustomFilterConverterCollection.Setup(m => m.Converters).Returns(converters);
 
             Filter<IUser> leftFilter = new Filter<IUser> { Left = "Id", Method = "eq", Right = "27" };
-            var rightArrayFilter = new ArrayFilter<IUser, int> { Array = new[] { 28, 29 } };
+            var rightArrayFilter = new ArrayFilter<IUser, int> { Array = [28, 29] };
             Filter<IUser> rightFilter = new Filter<IUser> { Left = "Id", Method = "IN", Right = rightArrayFilter };
             Filter<IUser> orFilter = new Filter<IUser> { Left = leftFilter, Method = "or", Right = rightFilter };
 

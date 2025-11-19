@@ -15,7 +15,7 @@ namespace Rhyous.Odata.Csdl.Tests.Extensions
             // Arrange
             var re1 = new RelatedEntityAttribute("Entity2");
             var re2 = new RelatedEntityAttribute("Entity2");
-            IEnumerable<RelatedEntityAttribute> relatedEntityAttribs = new[] { re1, re2};
+            IEnumerable<RelatedEntityAttribute> relatedEntityAttribs = [re1, re2];
             var group = relatedEntityAttribs.GroupBy(a => a.Entity).FirstOrDefault();
 
             // Act

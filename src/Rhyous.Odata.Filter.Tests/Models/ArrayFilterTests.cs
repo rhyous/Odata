@@ -38,7 +38,7 @@ namespace Rhyous.Odata.Filter.Tests.Models
         {
             // Arrange
             var arrayFilter = CreateArrayFilter<A, int>();
-            arrayFilter.Array = new[] { 10, 11, 12 };
+            arrayFilter.Array = [10, 11, 12];
             // Act
             var result = arrayFilter.ToString();
 
@@ -51,7 +51,7 @@ namespace Rhyous.Odata.Filter.Tests.Models
         {
             // Arrange
             var arrayFilter = CreateArrayFilter<A, string>();
-            arrayFilter.Array = new[] { "Val1", "Val 2", "Val3" }; // Val 2 has a space
+            arrayFilter.Array = ["Val1", "Val 2", "Val3"]; // Val 2 has a space
 
             // Act
             var result = arrayFilter.ToString();
@@ -65,7 +65,7 @@ namespace Rhyous.Odata.Filter.Tests.Models
         {
             // Arrange
             var arrayFilter = CreateArrayFilter<A, string>();
-            arrayFilter.Array = new[] { "Val1", "Val '2'", "Val3" }; // Val 2 has a space
+            arrayFilter.Array = ["Val1", "Val '2'", "Val3"]; // Val 2 has a space
 
             // Act
             var result = arrayFilter.ToString();

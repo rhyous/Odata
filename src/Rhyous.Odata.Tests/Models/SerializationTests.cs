@@ -88,9 +88,9 @@ namespace Rhyous.Odata.Tests.Models
             var odataObject2 = user2.AsOdata<User, int>();
             var odataObject3 = user3.AsOdata<User, int>();
             var collection = new OdataObjectCollection<User, int>();
-            collection.AddRange(new[] { odataObject1, odataObject2, odataObject3 });
+            collection.AddRange([odataObject1, odataObject2, odataObject3]);
             var expected = "{\"Count\":3,\"Entity\":\"User\",\"RelatedEntityCollection\":[],\"TotalCount\":3,\"Entities\":[{\"Uri\":null,\"Id\":1,\"Object\":{\"Id\":1,\"Name\":\"User1\",\"UserTypeId\":0},\"RelatedEntityCollection\":[],\"PropertyUris\":[]},{\"Uri\":null,\"Id\":2,\"Object\":{\"Id\":2,\"Name\":\"User2\",\"UserTypeId\":0},\"RelatedEntityCollection\":[],\"PropertyUris\":[]},{\"Uri\":null,\"Id\":3,\"Object\":{\"Id\":3,\"Name\":\"User3\",\"UserTypeId\":0},\"RelatedEntityCollection\":[],\"PropertyUris\":[]}]}";
-            var serializer = new DataContractJsonSerializer(typeof(OdataObjectCollection<User, int>), new[] { typeof(OdataObject<User, int>) });
+            var serializer = new DataContractJsonSerializer(typeof(OdataObjectCollection<User, int>), [typeof(OdataObject<User, int>)]);
 
             // Act
             var json = Serialize(collection, serializer);
@@ -105,7 +105,7 @@ namespace Rhyous.Odata.Tests.Models
             // Arrange
             var json = "{\"Count\":3,\"Entities\":[{\"Uri\":null,\"Id\":1,\"Object\":{\"Id\":1,\"Name\":\"User1\",\"UserTypeId\":0},\"RelatedEntities\":[],\"PropertyUris\":[]},{\"Uri\":null,\"Id\":2,\"Object\":{\"Id\":2,\"Name\":\"User2\",\"UserTypeId\":0},\"RelatedEntities\":[],\"PropertyUris\":[]},{\"Uri\":null,\"Id\":3,\"Object\":{\"Id\":3,\"Name\":\"User3\",\"UserTypeId\":0},\"RelatedEntities\":[],\"PropertyUris\":[]}],\"Entity\":\"User\",\"RelatedEntities\":[]}";
 
-            var serializer = new DataContractJsonSerializer(typeof(OdataObjectCollection<User, int>), new[] { typeof(OdataObject<User, int>) });
+            var serializer = new DataContractJsonSerializer(typeof(OdataObjectCollection<User, int>), [typeof(OdataObject<User, int>)]);
 
             // Act
             var actual = Deserialize<OdataObjectCollection<User, int>>(json, serializer);
@@ -139,7 +139,7 @@ namespace Rhyous.Odata.Tests.Models
             var odataObject3 = user3.AsOdata<User, int>();
             var expected = "{\"Count\":3,\"Entities\":[{\"Id\":1,\"Object\":{\"Id\":1,\"Name\":\"User1\",\"UserTypeId\":0},\"Uri\":null},{\"Id\":2,\"Object\":{\"Id\":2,\"Name\":\"User2\",\"UserTypeId\":0},\"Uri\":null},{\"Id\":3,\"Object\":{\"Id\":3,\"Name\":\"User3\",\"UserTypeId\":0},\"Uri\":null}],\"Entity\":\"User\",\"TotalCount\":3}";
             var collection = new OdataObjectCollection<User, int>();
-            collection.AddRange(new[] { odataObject1, odataObject2, odataObject3 });            
+            collection.AddRange([odataObject1, odataObject2, odataObject3]);            
             var settings = new JsonSerializerSettings() { ContractResolver = new OrderedContractResolver() };
 
             // Act

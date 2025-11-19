@@ -48,12 +48,12 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
             var dictionary = new SortedConcurrentDictionary<string, object>();
             var propInfo = typeof(Token).GetProperty("UserId");
             var actionDictionary = new ConcurrentDictionaryWrapper<Type, Func<MemberInfo, IEnumerable<KeyValuePair<string, object>>>>();
-            Func<MemberInfo, IEnumerable<KeyValuePair<string, object>>> func = (MemberInfo mi) => { return new[] { new KeyValuePair<string, object>("1", "a") }; };
+            Func<MemberInfo, IEnumerable<KeyValuePair<string, object>>> func = (MemberInfo mi) => { return [new KeyValuePair<string, object>("1", "a")]; };
             
             actionDictionary.TryAdd(typeof(RelatedEntityAttribute), func);
 
             var mockEnumerator = _MockRepository.Create<IEnumerator<KeyValuePair<Type, Func<MemberInfo, IEnumerable<KeyValuePair<string, object>>>>>>();
-            _MockPropertyAttributeDictionary.Setup(m => m.GetEnumerator()).Returns(actionDictionary.GetEnumerator());
+            _MockPropertyAttributeDictionary.Setup(m => m.Count).Returns(actionDictionary.Count);
 
             _MockPropertyAttributeDictionary.Setup(m=>m.TryGetValue(typeof(RelatedEntityAttribute), out func))
                                             .Returns(true);
@@ -76,7 +76,7 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
             ConcurrentDictionaryWrapper<string, object> dictionary = null;
             var propInfo = typeof(Token).GetProperty("UserId");
             var actionDictionary = new ConcurrentDictionaryWrapper<Type, Func<MemberInfo, IEnumerable<KeyValuePair<string, object>>>>();
-            actionDictionary.TryAdd(typeof(RelatedEntityAttribute), (MemberInfo mi) => { return new[] { new KeyValuePair<string, object>("1", "a") }; });
+            actionDictionary.TryAdd(typeof(RelatedEntityAttribute), (MemberInfo mi) => { return [new KeyValuePair<string, object>("1", "a")]; });
 
             // Act
             customCsdlFromAttributeAppender.AppendPropertiesFromPropertyAttributes(dictionary, propInfo);
@@ -94,7 +94,7 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
             var dictionary = new ConcurrentDictionaryWrapper<string, object>();
             MemberInfo memberInfo = null;
             var actionDictionary = new ConcurrentDictionaryWrapper<Type, Func<MemberInfo, IEnumerable<KeyValuePair<string, object>>>>();
-            actionDictionary.TryAdd(typeof(RelatedEntityAttribute), (MemberInfo mi) => { return new[] { new KeyValuePair<string, object>("1", "a") }; });
+            actionDictionary.TryAdd(typeof(RelatedEntityAttribute), (MemberInfo mi) => { return [new KeyValuePair<string, object>("1", "a")]; });
 
             // Act
             customCsdlFromAttributeAppender.AppendPropertiesFromPropertyAttributes(dictionary, memberInfo);
@@ -113,11 +113,11 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
             var propInfo = typeof(Token).GetProperty("Text");
 
             var actionDictionary = new ConcurrentDictionaryWrapper<Type, Func<MemberInfo, IEnumerable<KeyValuePair<string, object>>>>();
-            Func<MemberInfo, IEnumerable<KeyValuePair<string, object>>> func = (MemberInfo mi) => { return new[] { new KeyValuePair<string, object>("1", "a") }; };
+            Func<MemberInfo, IEnumerable<KeyValuePair<string, object>>> func = (MemberInfo mi) => { return [new KeyValuePair<string, object>("1", "a")]; };
             actionDictionary.TryAdd(typeof(RelatedEntityAttribute), func);
 
             var mockEnumerator = _MockRepository.Create<IEnumerator<KeyValuePair<Type, Func<MemberInfo, IEnumerable<KeyValuePair<string, object>>>>>>();
-            _MockPropertyAttributeDictionary.Setup(m => m.GetEnumerator()).Returns(actionDictionary.GetEnumerator());
+            _MockPropertyAttributeDictionary.Setup(m => m.Count).Returns(actionDictionary.Count);
 
             // Act
             customCsdlFromAttributeAppender.AppendPropertiesFromPropertyAttributes(dictionary, propInfo);

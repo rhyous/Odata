@@ -147,7 +147,7 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
             Func<Type, IEnumerable<KeyValuePair<string, object>>> func1 = (Type t) =>
             {
                 func1WasCalled = true;
-                return new[] { new KeyValuePair<string, object>("a", "b") };
+                return [new KeyValuePair<string, object>("a", "b")];
             };
 
             // Act

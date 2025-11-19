@@ -54,12 +54,13 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
         public void CustomPropertyDataAppender_AddFromCustomDictionary_FuncsEmpty_Test()
         {
             // Arrange
-            var dictionary = new SortedConcurrentDictionary<string, object>(); var customPropertyDataAppender = CreateCustomPropertyDataAppender();
+            var dictionary = new SortedConcurrentDictionary<string, object>();
+            var customPropertyDataAppender = CreateCustomPropertyDataAppender();
             var entity = "Entity1";
             var prop = "Prop1";
             ICustomPropertyDataFuncs funcs = new CustomPropertyDataFuncs();
             var mockEnumerator = _MockRepository.Create<IEnumerator<KeyValuePair<Type, Func<MemberInfo, IEnumerable<KeyValuePair<string, object>>>>>>();
-            _MockCustomPropertyDataFuncs.Setup(m => m.GetEnumerator()).Returns(funcs.GetEnumerator());
+            _MockCustomPropertyDataFuncs.Setup(m => m.Count).Returns(dictionary.Count);
 
             // Act
             customPropertyDataAppender.Append(dictionary, entity, prop);
@@ -161,7 +162,7 @@ namespace Rhyous.Odata.Csdl.Tests.Builders
             var prop = "prop1";
             ICustomPropertyDataFuncs funcs = new CustomPropertyDataFuncs()
             {
-                (e, p) => { return new [] { new KeyValuePair<string,object>("1", "a")}; }
+                (e, p) => { return [new KeyValuePair<string,object>("1", "a")]; }
             };
             var customPropertyDataAppender = CreateCustomPropertyDataAppender(funcs); 
 
