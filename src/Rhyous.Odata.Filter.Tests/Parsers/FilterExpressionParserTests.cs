@@ -141,7 +141,7 @@ namespace Rhyous.Odata.Filter.Tests.Parsers
         }
 
         [TestMethod]
-        [JsonTestDataSource(typeof(List<UnitTesting.TestDataRow<string>>), @"Data\NaiveQueryStrings.json")]
+        [JsonTestDataSource(typeof(List<UnitTesting.TestDataRow<string>>), @"Data/NaiveQueryStrings.json")]
         public async Task FilterExpressionParser_NaiveFilterParserTests(UnitTesting.TestDataRow<string> row)
         {
             // Arrange
@@ -158,7 +158,7 @@ namespace Rhyous.Odata.Filter.Tests.Parsers
         }
 
         [TestMethod]
-        [JsonTestDataSource(typeof(List<UnitTesting.TestDataRow<string>>), @"Data\NotQueryStrings.json")]
+        [JsonTestDataSource(typeof(List<UnitTesting.TestDataRow<string>>), @"Data/NotQueryStrings.json")]
         public async Task FilterExpressionParser_Naive_Not_FilterParserTests(UnitTesting.TestDataRow<string> row)
         {
             // Arrange
@@ -175,7 +175,7 @@ namespace Rhyous.Odata.Filter.Tests.Parsers
         }
 
         [TestMethod]
-        [JsonTestDataSource(typeof(List<UnitTesting.TestDataRow<string>>), @"Data\NaiveQueryStringsSymbolOperator.json")]
+        [JsonTestDataSource(typeof(List<UnitTesting.TestDataRow<string>>), @"Data/NaiveQueryStringsSymbolOperator.json")]
         public async Task FilterExpressionParser_NaiveFilterParser_SymbolOperator_Tests(UnitTesting.TestDataRow<string> row)
         {
             // Arrange
@@ -192,7 +192,7 @@ namespace Rhyous.Odata.Filter.Tests.Parsers
         }
 
         [TestMethod]
-        [JsonTestDataSource(typeof(List<UnitTesting.TestDataRow<string>>), @"Data\ComplexQueryStrings.json")]
+        [JsonTestDataSource(typeof(List<UnitTesting.TestDataRow<string>>), @"Data/ComplexQueryStrings.json")]
         public async Task FilterExpressionParser_ComplexFilterParserTests(UnitTesting.TestDataRow<string> row)
         {
             // Arrange 
@@ -226,7 +226,7 @@ namespace Rhyous.Odata.Filter.Tests.Parsers
         }
 
         [TestMethod]
-        [JsonTestDataSource(typeof(List<UnitTesting.TestDataRow<string>>), @"Data\QuoteQueryStrings.json")]
+        [JsonTestDataSource(typeof(List<UnitTesting.TestDataRow<string>>), @"Data/QuoteQueryStrings.json")]
         public async Task FilterExpressionParser_ComplexFilterParser_Quotes_Tests(UnitTesting.TestDataRow<string> row)
         {
             // Arrange
@@ -243,7 +243,7 @@ namespace Rhyous.Odata.Filter.Tests.Parsers
         }
 
         [TestMethod]
-        [JsonTestDataSource(typeof(List<UnitTesting.TestDataRow<string>>), @"Data\GroupedQueryStrings.json")]
+        [JsonTestDataSource(typeof(List<UnitTesting.TestDataRow<string>>), @"Data/GroupedQueryStrings.json")]
         public async Task FilterExpressionParser_GroupedFilterParserTests(UnitTesting.TestDataRow<string> row)
         {
             // Arrange
@@ -260,7 +260,7 @@ namespace Rhyous.Odata.Filter.Tests.Parsers
         }
 
         [TestMethod]
-        [JsonTestDataSource(typeof(List<UnitTesting.TestDataRow<string>>), @"Data\StringMethodQueryStrings.json")]
+        [JsonTestDataSource(typeof(List<UnitTesting.TestDataRow<string>>), @"Data/StringMethodQueryStrings.json")]
         public async Task FilterExpressionParser_StringMethodFilterParserTests(UnitTesting.TestDataRow<string> row)
         {
             // Arrange
@@ -339,7 +339,7 @@ namespace Rhyous.Odata.Filter.Tests.Parsers
         }
 
         [TestMethod]
-        [JsonTestDataSource(typeof(List<UnitTesting.TestDataRow<string>>), @"Data\DateTimeQueryStrings.json")]
+        [JsonTestDataSource(typeof(List<UnitTesting.TestDataRow<string>>), @"Data/DateTimeQueryStrings.json")]
         public async Task FilterExpressionParser_DateTime_FilterParserTests(UnitTesting.TestDataRow<string> row)
         {
             // Arrange
@@ -356,7 +356,7 @@ namespace Rhyous.Odata.Filter.Tests.Parsers
         }
 
         [TestMethod]
-        [JsonTestDataSource(typeof(List<UnitTesting.TestDataRow<string>>), @"Data\DateTimeOffsetQueryStrings.json")]
+        [JsonTestDataSource(typeof(List<UnitTesting.TestDataRow<string>>), @"Data/DateTimeOffsetQueryStrings.json")]
         public async Task FilterExpressionParser_DateTimeOffset_FilterParserTests(UnitTesting.TestDataRow<string> row)
         {
             // Arrange

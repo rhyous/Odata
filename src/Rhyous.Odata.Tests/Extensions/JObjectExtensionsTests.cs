@@ -12,7 +12,7 @@ namespace Rhyous.Odata.Tests.Extensions
         public TestContext TestContext { get; set; }
 
         [TestMethod]
-        [JsonTestDataSource(typeof(List<UnitTesting.TestDataRow<string>>), @"Data\JsonNullEmptyWhitespace.json")]
+        [JsonTestDataSource(typeof(List<UnitTesting.TestDataRow<string>>), @"Data/JsonNullEmptyWhitespace.json")]
         public void GetIdDynamic_IdProperty_Null_Empty_Whitespace_Test(UnitTesting.TestDataRow<string> row)
         {
             // Arrange

@@ -10,7 +10,7 @@ namespace Rhyous.Odata.Filter.Tests.Extensions
     {
         #region EnforceConstant
         [TestMethod]
-        [JsonTestDataSource(typeof(List<UnitTesting.TestDataRow<string>>), @"Data\Constants.json")]
+        [JsonTestDataSource(typeof(List<UnitTesting.TestDataRow<string>>), @"Data/Constants.json")]
         public void StringExtensions_EnforceConstant_IsConstant_ReturnsSameValue_Test(UnitTesting.TestDataRow<string> row)
         {
             // Arrange
@@ -25,7 +25,7 @@ namespace Rhyous.Odata.Filter.Tests.Extensions
         }
 
         [TestMethod]
-        [JsonTestDataSource(typeof(List<UnitTesting.TestDataRow<string>>), @"Data\NaiveQueryStrings.json")]
+        [JsonTestDataSource(typeof(List<UnitTesting.TestDataRow<string>>), @"Data/NaiveQueryStrings.json")]
         public void StringExtensions_EnforceConstant_IsNotConstant_Throws_Test(UnitTesting.TestDataRow<string> row)
         {
             // Arrange
@@ -41,7 +41,7 @@ namespace Rhyous.Odata.Filter.Tests.Extensions
         }
 
         [TestMethod]
-        [JsonTestDataSource(typeof(List<UnitTesting.TestDataRow<string>>), @"Data\OdataQueryInjectionAttempts.json")]
+        [JsonTestDataSource(typeof(List<UnitTesting.TestDataRow<string>>), @"Data/OdataQueryInjectionAttempts.json")]
         public void StringExtensions_EnforceConstant_AppendingQueryToConstant_Throws_Test(UnitTesting.TestDataRow<string> row)
         {
             // Arrange

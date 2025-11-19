@@ -25,7 +25,7 @@ namespace Rhyous.Odata.Tests.Extensions
         }
 
         [TestMethod]
-        [JsonTestDataSource(typeof(List<UnitTesting.TestDataRow<string>>), @"Data\JsonNullEmptyWhitespace.json")]
+        [JsonTestDataSource(typeof(List<UnitTesting.TestDataRow<string>>), @"Data/JsonNullEmptyWhitespace.json")]
         public void GetValue_JRaw_Null_Test(UnitTesting.TestDataRow<string> row)
         {
             // Arrange
@@ -37,7 +37,7 @@ namespace Rhyous.Odata.Tests.Extensions
         }
 
         [TestMethod]
-        [JsonTestDataSource(typeof(List<UnitTesting.TestDataRow<string>>), @"Data\JsonNullEmptyWhitespace.json")]
+        [JsonTestDataSource(typeof(List<UnitTesting.TestDataRow<string>>), @"Data/JsonNullEmptyWhitespace.json")]
         public void GetValue_Property_NullEmptyOrWhitespace_Test(UnitTesting.TestDataRow<string> row)
         {
             // Arrange

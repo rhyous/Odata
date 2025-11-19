@@ -511,7 +511,7 @@ namespace Rhyous.Odata.Filter.Tests
         #region IEnumerable tests
 
         [TestMethod]
-        [JsonTestDataSource(typeof(List<UnitTesting.TestDataRow<string, int>>), @"Data\IEnumerableQueryStrings.json")]
+        [JsonTestDataSource(typeof(List<UnitTesting.TestDataRow<string, int>>), @"Data/IEnumerableQueryStrings.json")]
         public async Task Filter_IEnumerable_Count(UnitTesting.TestDataRow<string, int> row)
         {
             // Arrange
