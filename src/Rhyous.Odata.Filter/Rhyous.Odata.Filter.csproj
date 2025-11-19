@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <Authors>Jared Barneck (Rhyous)</Authors>
     <Company>Rhyous Publishing LLC</Company>
-    <Version>1.2.19</Version>
-    <AssemblyVersion>1.2.19.0</AssemblyVersion>
-    <FileVersion>1.2.19.0</FileVersion>
+    <Version>1.3.0</Version>
+    <AssemblyVersion>1.3.0.0</AssemblyVersion>
+    <FileVersion>1.3.0.0</FileVersion>
     <Description>A library to aid in meeting the odata specification for $filter.</Description>
     <Copyright>Copyright Jared Barneck (Rhyous) 2017</Copyright>
     <PackageProjectUrl>https://github.com/rhyous/Odata</PackageProjectUrl>
@@ -22,7 +22,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="LINQKit.Core" Version="1.1.17" />
+    <PackageReference Include="LINQKit.Core" Version="1.2.9" />
   </ItemGroup>
 
   <ItemGroup>

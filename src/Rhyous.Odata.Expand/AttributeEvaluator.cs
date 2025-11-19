@@ -5,15 +5,11 @@ using System.Reflection;
 
 namespace Rhyous.Odata.Expand
 {
-    /// <summary>
-    /// Evalutes the Attributes against the $expand parameter and determines which related entities to expand.
-    /// </summary>
+    /// <summary>Evalutes the Attributes against the $expand parameter and determines which related entities to expand.</summary>
     /// <remarks>This doesn't use an interface because everything is already passed in to this class. It is already safe.</remarks>
-    public class AttributeEvaluator
+    public class AttributeEvaluator : IAttributeEvaluator
     {
-        /// <summary>
-        /// Looks for RelatedEntity attributes to expand.
-        /// </summary>
+        /// <summary>Looks for RelatedEntity attributes to expand.</summary>
         /// <param name="entityType">The type that might have an Attribute of type IRelatedEntity applied to the class.</param>
         /// <param name="entitiesToExpand"></param>
         /// <returns>A list of Attributes of type IRelatedEntity to expand.</returns>
@@ -26,9 +22,7 @@ namespace Rhyous.Odata.Expand
             return GetAttributesToExpand(entitiesToExpand, attribs);
         }
 
-        /// <summary>
-        /// Looks for an attribute to expand where the attribute implements IRelatedEntity.
-        /// </summary>
+        /// <summary>Looks for an attribute to expand where the attribute implements IRelatedEntity.</summary>
         /// <param name="t">The actually attribute type of the attribute that implements IRelatedEntity.</param>
         /// <param name="entitiesToExpand"></param>
         /// <param name="attribs">The attributes.</param>
@@ -38,9 +32,9 @@ namespace Rhyous.Odata.Expand
         {
             var safeAttribs = attribs.Where(a => a != null);
             if (entitiesToExpand == null || !entitiesToExpand.Any())
-                return safeAttribs.Where(a =>a.AutoExpand);
+                return safeAttribs.Where(a => a.AutoExpand);
             else
-                return safeAttribs.Where(a => (entitiesToExpand.Contains(a.RelatedEntity) && string.IsNullOrWhiteSpace(a.RelatedEntityAlias)) 
+                return safeAttribs.Where(a => (entitiesToExpand.Contains(a.RelatedEntity) && string.IsNullOrWhiteSpace(a.RelatedEntityAlias))
                                            || entitiesToExpand.Contains(a.RelatedEntityAlias)
                                            || entitiesToExpand.Contains(ExpandConstants.WildCard));
         }

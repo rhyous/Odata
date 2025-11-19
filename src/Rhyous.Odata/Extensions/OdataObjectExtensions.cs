@@ -62,7 +62,7 @@ namespace Rhyous.Odata
             var retObj = new OdataObject<TEntity, TId>();
             retObj.Id = obj.Id.To<TId>();
             retObj.IdProperty = obj.IdProperty;
-            retObj.Object = JsonConvert.DeserializeObject<TEntity>(obj.Object.ToString());
+            retObj.Object = obj.Object == null ? default : JsonConvert.DeserializeObject<TEntity>(obj.Object.ToString());
             retObj.PropertyUris = obj.PropertyUris;
             retObj.RelatedEntityCollection = obj.RelatedEntityCollection;
             retObj.Uri = obj.Uri;
@@ -91,7 +91,7 @@ namespace Rhyous.Odata
             var retObj = new OdataObject<TEntity, TId>();
             retObj.Id = obj.Id.To<TId>();
             retObj.IdProperty = obj.IdProperty;
-            retObj.Object = JsonConvert.DeserializeObject<TEntity>(obj.Object.ToString());            
+            retObj.Object = obj.Object == null ? default : JsonConvert.DeserializeObject<TEntity>(obj.Object.ToString());
             retObj.PropertyUris = obj.PropertyUris;
             retObj.RelatedEntityCollection = obj.RelatedEntityCollection;
             retObj.Uri = obj.Uri;
@@ -117,7 +117,7 @@ namespace Rhyous.Odata
             var collection = new OdataObjectCollection<TRelatedEntity, TRelatedEntityId>();
             foreach (var item in relatedEntityCollection)
             {
-                var obj = JsonConvert.DeserializeObject<TRelatedEntity>(item.Object.ToString());
+                var obj = item.Object == null ? default : JsonConvert.DeserializeObject<TRelatedEntity>(item.Object.ToString());
                 var odataItem = item.ToOdataObject<TRelatedEntity, TRelatedEntityId>();
                 collection.Add(odataItem);
             }
